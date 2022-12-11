@@ -23,7 +23,7 @@ class DrawerScreen extends StatelessWidget {
                 elevation: 1,
                 child: Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: Column(
                     children: [
                       CircleAvatar(
@@ -39,22 +39,15 @@ class DrawerScreen extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "Angelina Afriyie",
+                        "Angelina Abena Darling Afriyie",
                         style: GoogleFonts.sarabun().copyWith(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
+                        textAlign: TextAlign.center,
                       ),
                       Text(
                         "@CardiB",
-                        style: GoogleFonts.sarabun().copyWith(
-                          fontSize: 16,
-                          color: Colors.black54,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      Text(
-                        "angebabe@gmail.com",
                         style: GoogleFonts.sarabun().copyWith(
                           fontSize: 16,
                           color: Colors.black54,
