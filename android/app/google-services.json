@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "900049755309",
+    "project_id": "infoctess-koneqt",
+    "storage_bucket": "infoctess-koneqt.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:900049755309:android:33634445e19b3aff34fa24",
+        "android_client_info": {
+          "package_name": "com.arksoft.infoctess_koneqt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "900049755309-c8c662omdq9hc2p1tf4a5jl2hm2n6ufr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDn_vFFaVI0oE11Gf_CVSJlp5841TsKeEY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "900049755309-c8c662omdq9hc2p1tf4a5jl2hm2n6ufr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
