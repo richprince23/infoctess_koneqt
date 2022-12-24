@@ -14,8 +14,8 @@ workflows:
     - name: Flutter build ipa
       script: | 
         # flutter build ipa --release \
-        flutter build ipa --debug --no-codesign
-          --build-name=1.0.0 \
+        flutter build ipa --debug --no-codesign \
+          # --build-name=1.0.0 \
           --export-options-plist=/Users/builder/export_options.plist
     artifacts:
       - build/ios/ipa/*.ipa
