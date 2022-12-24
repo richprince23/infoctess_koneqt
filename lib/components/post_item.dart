@@ -14,7 +14,9 @@ class PostItem extends StatefulWidget {
 class _PostItemState extends State<PostItem> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return InkWell( onTap: () {
+      
+    },
       child: Container(
         margin: const EdgeInsets.all(10),
         child: Material(

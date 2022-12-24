@@ -29,6 +29,13 @@
             {
               "client_id": "900049755309-c8c662omdq9hc2p1tf4a5jl2hm2n6ufr.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "900049755309-rep3v01m12kd4nbp27cuulq346neqdv8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.arksoft.infoctessKoneqt"
+              }
             }
           ]
         }

@@ -47,12 +47,13 @@ class DrawerScreen extends StatelessWidget {
                         textAlign: TextAlign.center,
                       ),
                       Text(
-                        "@CardiB",
+                        "@CardiB", // @username
                         style: GoogleFonts.sarabun().copyWith(
                           fontSize: 16,
                           color: Colors.black54,
                           fontWeight: FontWeight.w400,
                         ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                       Text(
                         "Level 300 Group 5",
@@ -130,11 +131,13 @@ class DrawerScreen extends StatelessWidget {
               ),
               ListTile(
                 leading: Icon(
-                  CupertinoIcons.info_circle,
+                  Platform.isIOS
+                      ? CupertinoIcons.settings
+                      : Icons.settings_outlined,
                   color: AppTheme.themeData(true, context).focusColor,
                 ),
                 title: Text(
-                  "About",
+                  "Settings",
                   style: GoogleFonts.sarabun().copyWith(
                     fontSize: 16,
                     color: AppTheme.themeData(true, context).focusColor,
@@ -144,13 +147,11 @@ class DrawerScreen extends StatelessWidget {
               ),
               ListTile(
                 leading: Icon(
-                  Platform.isIOS
-                      ? CupertinoIcons.settings
-                      : Icons.settings_outlined,
+                  CupertinoIcons.info_circle,
                   color: AppTheme.themeData(true, context).focusColor,
                 ),
                 title: Text(
-                  "Settings",
+                  "About",
                   style: GoogleFonts.sarabun().copyWith(
                     fontSize: 16,
                     color: AppTheme.themeData(true, context).focusColor,

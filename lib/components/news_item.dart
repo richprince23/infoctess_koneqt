@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:infoctess_koneqt/components/comment_input.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 
-class NewsItem extends StatelessWidget {
+class NewsItem extends StatefulWidget {
   const NewsItem({super.key});
 
   @override
+  State<NewsItem> createState() => _NewsItemState();
+}
+
+class _NewsItemState extends State<NewsItem> {
+  @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap: () {
+        print("tapped");
+        showModalBottomSheet(
+            context: context, builder: (context) => CommentInput());
+      },
       child: Container(
         margin: const EdgeInsets.all(10),
         child: Material(
