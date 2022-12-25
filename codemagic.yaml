@@ -12,9 +12,9 @@ workflows:
     - name: Get Flutter packages
       script: | 
         flutter packages pub get
-    - name: Install pods
-      script: | 
-        pod install && cd ios && pod install && cd ..
+    # - name: Install pods
+    #   script: | 
+    #     pod install && cd ios && pod install && cd ..
 
     - name: Install pods
       script: | 
