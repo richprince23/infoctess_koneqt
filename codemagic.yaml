@@ -11,7 +11,7 @@ workflows:
         xcode-project use-profiles
     - name: Get Flutter packages
       script: | 
-        flutter pub get
+        flutter packages pub get
     - name: Install pods
       script: | 
         cd ios && pod install && cd ..
