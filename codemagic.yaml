@@ -1,6 +1,13 @@
 workflows:
   my-workflow:
     name: My workflow
+    cache:
+      cache-paths:
+        - $FLUTTER_ROOT/.pub-cache
+        - $HOME/Library/Caches/CocoaPods
+      cache-flutter-packages: true
+    environment:
+
     scripts:
     - name: Set up code signing settings on Xcode project
       script: | 
@@ -14,9 +21,9 @@ workflows:
     - name: Flutter build ipa
       script: | 
         # flutter build ipa --release \
-        flutter build ipa --debug --no-codesign \
+        flutter build ios --debug --no-codesign
           # --build-name=1.0.0 \
-          --export-options-plist=/Users/builder/export_options.plist
+          # --export-options-plist=/Users/builder/export_options.plist
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
