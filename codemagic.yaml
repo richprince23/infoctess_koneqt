@@ -2,12 +2,9 @@ workflows:
   my-workflow:
     name: My workflow
     cache:
-      cache-paths:
+      cache_paths:
         - $FLUTTER_ROOT/.pub-cache
         - $HOME/Library/Caches/CocoaPods
-      cache-flutter-packages: true
-    environment:
-
     scripts:
     - name: Set up code signing settings on Xcode project
       script: | 
