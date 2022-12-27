@@ -10,18 +10,16 @@ class NotificationsSceen extends StatefulWidget {
 class _NotificationsSceenState extends State<NotificationsSceen> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: const Text("Notifications"),
-          centerTitle: true,
-        ),
-        body: Container(
-          color: Colors.white,
-          child: Center(
-            child: const Text("Notifications"),
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: const Text("Notifications"),
+        centerTitle: true,
+      ),
+      body: Container(
+        color: Colors.white,
+        child: Center(
+          child: const Text("Notifications"),
         ),
       ),
     );

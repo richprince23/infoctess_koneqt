@@ -16,8 +16,11 @@ class _NewsItemState extends State<NewsItem> {
     return InkWell(
       onTap: () {
         print("tapped");
-        showModalBottomSheet(
-            context: context, builder: (context) => CommentInput());
+        showBottomSheet(
+            // barrierColor: Colors.transparent,
+            clipBehavior: Clip.antiAlias,
+            context: context,
+            builder: (context) => CommentInput());
       },
       child: Container(
         margin: const EdgeInsets.all(10),

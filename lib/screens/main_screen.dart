@@ -12,16 +12,15 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       appBar: AppBarScreen(),
       drawer: const DrawerScreen(),
       body: Consumer<PageControl>(
-        builder: ((context, value, child) {
-          return kMainPages[value.pageIndex];
-        }),
+    builder: ((context, value, child) {
+      return kMainPages[value.pageIndex];
+    }),
       ),
       bottomNavigationBar: const BottomNav(),
-    ));
+    );
   }
 }

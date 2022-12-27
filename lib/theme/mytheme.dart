@@ -10,6 +10,7 @@ class AppTheme {
       primaryColor: isDarkTheme ? Colors.black87 : Colors.white,
       primaryColorLight: isDarkTheme ? Colors.white : Colors.black87,
       primaryColorDark: isDarkTheme ? Colors.black87 : Colors.white,
+      dialogBackgroundColor: isDarkTheme? Colors.black45 : Colors.grey[100],
       backgroundColor: isDarkTheme
           ? const Color.fromRGBO(246, 7, 151, 1)
           : const Color.fromRGBO(74, 19, 193, 1),

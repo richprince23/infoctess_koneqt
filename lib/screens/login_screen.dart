@@ -20,17 +20,18 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-    return SafeArea(
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          Positioned(
-            top: 0,
-            height: size.height * 0.4,
-            child: Container(
-              width: size.width,
-              color: AppTheme.themeData(false, context).backgroundColor,
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        Positioned(
+          top: 0,
+          height: size.height * 0.4,
+          child: Container(
+            width: size.width,
+            color: AppTheme.themeData(false, context).backgroundColor,
+            child: Center(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image(
                     width: size.width * 0.3,
@@ -46,13 +47,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontWeight: FontWeight.normal,
                         decoration: TextDecoration.none),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
                   Text(
                     "Login to continue",
                     style: GoogleFonts.sarabun(
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.normal,
                         color: Colors.white,
                         decoration: TextDecoration.none),
@@ -61,123 +59,121 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-          Positioned(
-            height: MediaQuery.of(context).size.height * 0.65,
-            // height: 200,
-            // top: 100,
-            bottom: 0,
-            child: Material(
-              color: Colors.white,
-              clipBehavior: Clip.antiAlias,
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-              child: Container(
-                alignment: Alignment.topCenter,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                width: MediaQuery.of(context).size.width,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                ),
-                child: SingleChildScrollView(
-                    child: Form(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      InputControl(
-                        hintText: "Email Address",
-                        type: TextInputType.emailAddress,
-                        controller: _email,
-                        isPassword: false,
-                      ),
-                      InputControl(
-                        hintText: "Password",
-                        type: TextInputType.text,
-                        controller: _pass,
-                        isPassword: true,
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 20),
-                        height: 50,
-                        clipBehavior: Clip.antiAlias,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color: Color.fromRGBO(74, 19, 193, 1)),
-                        width: size.width,
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MainScreen()));
-                          },
-                          child: const Text(
-                            "login",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 20,
-                                color: Colors.white),
-                          ),
+        ),
+        Positioned(
+          height: MediaQuery.of(context).size.height * 0.65,
+          // height: 200,
+          // top: 100,
+          bottom: 0,
+          child: Material(
+            color: Colors.white,
+            clipBehavior: Clip.antiAlias,
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+            child: Container(
+              alignment: Alignment.topCenter,
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+              width: MediaQuery.of(context).size.width,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+              ),
+              child: SingleChildScrollView(
+                  child: Form(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    InputControl(
+                      hintText: "Email Address",
+                      type: TextInputType.emailAddress,
+                      controller: _email,
+                      isPassword: false,
+                    ),
+                    InputControl(
+                      hintText: "Password",
+                      type: TextInputType.text,
+                      controller: _pass,
+                      isPassword: true,
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      height: 50,
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color: Color.fromRGBO(74, 19, 193, 1)),
+                      width: size.width,
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MainScreen()));
+                        },
+                        child: const Text(
+                          "login",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 20,
+                              color: Colors.white),
                         ),
                       ),
-                      Container(
-                        alignment: Alignment.center,
-                        margin: const EdgeInsets.only(top: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            GestureDetector(
-                              onTap: (() => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => LoginScreen(),
-                                    ),
-                                  )),
-                              child: Text(
-                                "Reset Password",
-                                style: GoogleFonts.sarabun(
-                                    textStyle: TextStyle(
-                                        decoration: TextDecoration.underline,
-                                        fontSize: 16,
-                                        color:
-                                            AppTheme.themeData(false, context)
-                                                .focusColor)),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            GestureDetector(
-                              onTap: (() => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const OnboardingScreen(),
-                                    ),
-                                  )),
-                              child: Text(
-                                "Create Account",
-                                style: GoogleFonts.sarabun(
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.only(top: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            onTap: (() => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => LoginScreen(),
+                                  ),
+                                )),
+                            child: Text(
+                              "Reset Password",
+                              style: GoogleFonts.sarabun(
                                   textStyle: TextStyle(
                                       decoration: TextDecoration.underline,
                                       fontSize: 16,
                                       color: AppTheme.themeData(false, context)
-                                          .backgroundColor),
-                                ),
+                                          .focusColor)),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          GestureDetector(
+                            onTap: (() => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const OnboardingScreen(),
+                                  ),
+                                )),
+                            child: Text(
+                              "Create Account",
+                              style: GoogleFonts.sarabun(
+                                textStyle: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    fontSize: 16,
+                                    color: AppTheme.themeData(false, context)
+                                        .backgroundColor),
                               ),
                             ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                )),
-              ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              )),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
