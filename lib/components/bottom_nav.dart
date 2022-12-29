@@ -20,8 +20,9 @@ class _BottomNavState extends State<BottomNav> {
     return Container(
       clipBehavior: Clip.antiAlias,
       decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+          // borderRadius: BorderRadius.only(
+          //     topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+          ),
       child: NavigationBar(
         backgroundColor: AppTheme.themeData(false, context).backgroundColor,
         elevation: 2,
@@ -60,11 +61,8 @@ class _BottomNavState extends State<BottomNav> {
                 });
               },
               child: pageIndex == 1
-                  ? NavItem(
-                      label: "Forum",
-                      icon: CupertinoIcons.bubble_left_bubble_right_fill)
-                  : const Icon(CupertinoIcons.bubble_left_bubble_right,
-                      color: Colors.white),
+                  ? NavItem(label: "Community", icon: CupertinoIcons.news_solid)
+                  : const Icon(CupertinoIcons.news, color: Colors.white),
             ),
           ),
           SizedBox(

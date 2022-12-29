@@ -16,6 +16,7 @@ class _CommentInputState extends State<CommentInput> {
   final commentText = TextEditingController();
   FocusNode focusNode = FocusNode();
   bool isEmtpyText = true;
+  
   // final scroll = ScrollController();
   @override
   Widget build(BuildContext context) {
@@ -57,7 +58,7 @@ class _CommentInputState extends State<CommentInput> {
                   maxLengthEnforcement: MaxLengthEnforcement.enforced,
                   keyboardType: TextInputType.multiline,
                   inputFormatters: [
-                    LengthLimitingTextInputFormatter(500),
+                    LengthLimitingTextInputFormatter(120),
                   ],
                   controller: commentText,
                   minLines: 1,

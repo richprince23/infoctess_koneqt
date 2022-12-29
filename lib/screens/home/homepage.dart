@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/screens/home/announcements_screen.dart';
+import 'package:infoctess_koneqt/screens/home/events_screen.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,10 +15,10 @@ class _HomePageState extends State<HomePage>
   late TabController _tabController;
   ScrollController _scrollController = ScrollController();
   var tabs = [
-    Tab(
+    const Tab(
       child: Text("News"),
     ),
-    Tab(
+    const Tab(
       child: Text("Events"),
     )
   ];
@@ -50,9 +51,7 @@ class _HomePageState extends State<HomePage>
             controller: _tabController,
             children: [
               NewsScreen(),
-              Container(
-                child: Center(child: Text("News")),
-              ),
+              EventsScreen(),
             ],
           ),
         )

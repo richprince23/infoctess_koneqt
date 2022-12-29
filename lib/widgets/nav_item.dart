@@ -34,7 +34,7 @@ class NavItem extends StatelessWidget {
           Text(label,
               style: TextStyle(
                 fontSize: 10,
-                color: AppTheme.themeData(false, context).focusColor,
+                color: AppTheme.themeData(false, context).primaryColor,
               )),
         ],
       ),
