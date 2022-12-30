@@ -162,25 +162,28 @@ class CreatePostState extends State<CreatePost> {
                   icon: const Icon(CupertinoIcons.keyboard),
                   iconSize: 18,
                 ),
-                IconButton(
-                  style: IconButton.styleFrom(
+                TextButton.icon(
+                  style: TextButton.styleFrom(
                     foregroundColor: Colors.black,
-                    // side: const BorderSide(color: Colors.grey, width: 1),
-                    // padding: const EdgeInsets.symmetric(horizontal: 4),
-                    // fixedSize: const Size(60, 20),
+                    side: const BorderSide(color: Colors.grey, width: 1),
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    fixedSize: const Size(80, 20),
                   ),
                   onPressed: () async {
                     await uploadImage().then((value) => cropImage());
-                    // cropImage();
                   },
                   icon: const Icon(
                     CupertinoIcons.camera,
-                    size: 16,
+                    size: 12,
+                  ),
+                  label: const Text(
+                    "image",
+                    style: TextStyle(fontSize: 12),
                   ),
                 ),
                 Expanded(
                   child: Text(
-                    "${postController.text.length}/ 500",
+                    " ${postController.text.length}/ 500",
                     style: const TextStyle(
                         fontSize: 10, fontStyle: FontStyle.italic),
                   ),
@@ -193,7 +196,9 @@ class CreatePostState extends State<CreatePost> {
                     padding: const EdgeInsets.all(0),
                     fixedSize: const Size(60, 20),
                     alignment: Alignment.center,
-                    backgroundColor: !isEmtpyText
+                    backgroundColor: !isEmtpyText ||
+                            selectedMedia != null ||
+                            croppedMedia != null
                         ? AppTheme.themeData(false, context).backgroundColor
                         : Colors.transparent,
                     foregroundColor: Colors.white,
@@ -216,7 +221,7 @@ class CreatePostState extends State<CreatePost> {
       return ConstrainedBox(
         constraints: BoxConstraints(
           maxWidth: 0.8 * screenWidth,
-          maxHeight: 0.4 * screenHeight,
+          maxHeight: 0.2 * screenHeight,
         ),
         child: Image.file(File(path)),
       );
@@ -225,7 +230,7 @@ class CreatePostState extends State<CreatePost> {
       return ConstrainedBox(
         constraints: BoxConstraints(
           maxWidth: 0.8 * screenWidth,
-          maxHeight: 0.4 * screenHeight,
+          maxHeight: 0.2 * screenHeight,
         ),
         child: Image.file(File(path)),
       );
