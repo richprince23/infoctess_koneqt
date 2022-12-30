@@ -5,9 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:infoctess_koneqt/screens/trimmer_view.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
-import 'package:video_player/video_player.dart';
 
 class CreatePost extends StatefulWidget {
   const CreatePost({super.key});
@@ -19,12 +17,11 @@ class CreatePost extends StatefulWidget {
 class CreatePostState extends State<CreatePost> {
   FocusNode focusNode = FocusNode();
   final postController = TextEditingController();
-  late VideoPlayerController vidController;
 
   bool isEmtpyText = true;
 
-  XFile? selectedImage;
-  XFile? selectedVideo;
+  // XFile? selectedImage;
+  // File? selectedVideo;
   // bool hasMedia = false;
   XFile? selectedMedia;
   CroppedFile? croppedMedia;
@@ -34,7 +31,7 @@ class CreatePostState extends State<CreatePost> {
       final croppedFile = await ImageCropper().cropImage(
         sourcePath: selectedMedia!.path,
         compressFormat: ImageCompressFormat.jpg,
-        compressQuality: 80,
+        compressQuality: 20,
         uiSettings: [
           AndroidUiSettings(
             toolbarTitle: 'Crop Media',
@@ -55,7 +52,7 @@ class CreatePostState extends State<CreatePost> {
       if (croppedFile != null) {
         setState(() {
           croppedMedia = croppedFile;
-          selectedMedia = croppedFile as XFile;
+          // selectedMedia = croppedFile as XFile;
         });
       }
     }
@@ -79,16 +76,6 @@ class CreatePostState extends State<CreatePost> {
   }
 
   /// Get video from gallery
-  Future uploadVideo() async {
-    XFile? pickedFile = await ImagePicker().pickVideo(
-        source: ImageSource.gallery, maxDuration: const Duration(seconds: 30));
-    setState(() {
-      selectedVideo = pickedFile;
-      selectedMedia = pickedFile;
-    });
-  }
-
-  Future trimVideo() async {}
 
   @override
   void initState() {
@@ -101,7 +88,6 @@ class CreatePostState extends State<CreatePost> {
     // TODO: implement dispose
     super.dispose();
     postController.dispose();
-    // vidController.dispose();
   }
 
   @override
@@ -192,25 +178,6 @@ class CreatePostState extends State<CreatePost> {
                     size: 16,
                   ),
                 ),
-                IconButton(
-                  style: OutlinedButton.styleFrom(
-                    textStyle: GoogleFonts.sarabun(),
-                    foregroundColor: Colors.black,
-                    // side: const BorderSide(color: Colors.grey, width: 1),
-                    // padding: const EdgeInsets.symmetric(horizontal: 4),
-                    // fixedSize: const Size(60, 20),
-                  ),
-                  onPressed: () async {
-                    await uploadVideo().then((value) => Navigator.of(context)
-                        .push(MaterialPageRoute(
-                            builder: ((context) =>
-                                TrimmerView(selectedVideo as File)))));
-                  },
-                  icon: const Icon(
-                    CupertinoIcons.film,
-                    size: 16,
-                  ),
-                ),
                 Expanded(
                   child: Text(
                     "${postController.text.length}/ 500",
@@ -242,32 +209,6 @@ class CreatePostState extends State<CreatePost> {
   }
 
   Widget _image() {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
-    if (croppedMedia != null) {
-      final path = croppedMedia!.path;
-      return ConstrainedBox(
-        constraints: BoxConstraints(
-          maxWidth: 0.8 * screenWidth,
-          maxHeight: 0.4 * screenHeight,
-        ),
-        child: Image.file(File(path)),
-      );
-    } else if (selectedMedia != null) {
-      final path = selectedMedia!.path;
-      return ConstrainedBox(
-        constraints: BoxConstraints(
-          maxWidth: 0.8 * screenWidth,
-          maxHeight: 0.4 * screenHeight,
-        ),
-        child: Image.file(File(path)),
-      );
-    } else {
-      return const SizedBox.shrink();
-    }
-  }
-
-  Widget _video() {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     if (croppedMedia != null) {
