@@ -24,7 +24,6 @@ dependencies:
   google_fonts: ^3.0.1
   image_picker: ^0.8.6
   image_cropper: ^3.0.1
-  video_trimmer: ^2.0.1
   video_player: ^2.4.10
   url_launcher: ^6.1.7
   go_router: ^6.0.0

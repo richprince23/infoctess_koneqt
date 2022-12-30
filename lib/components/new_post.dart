@@ -241,20 +241,26 @@ class CreatePostState extends State<CreatePost> {
 
   Widget _imageCard() {
     return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.end,
+      child: Stack(
         children: [
-          IconButton(
-            onPressed: clear,
-            icon: const Icon(CupertinoIcons.clear),
-            iconSize: 12,
-          ),
           Card(
-            elevation: 1.0,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: _image(),
+            // elevation: 1.0,
+            child: _image(),
+          ),
+          Positioned(
+            top: 4,
+            right: 4,
+            width: 20,
+            height: 20,
+            child: IconButton(
+              style: IconButton.styleFrom(
+                padding: const EdgeInsets.all(5),
+                backgroundColor: Colors.white,
+                // side: BorderSide(color: Colors.white, width: 1),
+              ),
+              onPressed: clear,
+              icon: const Icon(CupertinoIcons.clear),
+              iconSize: 12,
             ),
           ),
           // const SizedBox(height: 24.0),

@@ -190,20 +190,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
-  ffmpeg_kit_flutter:
-    dependency: transitive
-    description:
-      name: ffmpeg_kit_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.1.0"
-  ffmpeg_kit_flutter_platform_interface:
-    dependency: transitive
-    description:
-      name: ffmpeg_kit_flutter_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.1"
   file:
     dependency: transitive
     description:
@@ -805,13 +791,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.12"
-  transparent_image:
-    dependency: transitive
-    description:
-      name: transparent_image
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
   tuple:
     dependency: transitive
     description:
@@ -931,20 +910,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.13"
-  video_thumbnail:
-    dependency: transitive
-    description:
-      name: video_thumbnail
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.5.3"
-  video_trimmer:
-    dependency: "direct main"
-    description:
-      name: video_trimmer
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.1"
   watcher:
     dependency: transitive
     description:

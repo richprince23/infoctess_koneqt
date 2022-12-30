@@ -8,12 +8,15 @@ class NewsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: double.infinity,
-      child: ListView(
-        children: [
-          NewsItem(),
-          NewsItem(),
-          NewsItem(),
-        ],
+      child: RefreshIndicator(
+        onRefresh: () async => print("refreshed"),
+        child: ListView(
+          children: [
+            NewsItem(),
+            NewsItem(),
+            NewsItem(),
+          ],
+        ),
       ),
     );
   }
