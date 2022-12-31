@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:detectable_text_field/detectable_text_field.dart';
+import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,9 +16,8 @@ class PostItem extends StatefulWidget {
 class _PostItemState extends State<PostItem> {
   @override
   Widget build(BuildContext context) {
-    return InkWell( onTap: () {
-      
-    },
+    return InkWell(
+      onTap: () {},
       child: Container(
         margin: const EdgeInsets.all(10),
         child: Material(
@@ -78,14 +79,21 @@ class _PostItemState extends State<PostItem> {
                   child: RichText(
                     overflow: TextOverflow.ellipsis,
                     maxLines: 5,
-                    text: TextSpan(
+                    text: WidgetSpan(
+                      child: DetectableText(
                         text:
-                            "Do the best you can, and leave the rest to God; but also, be faithful to your loved ones",
-                        style: GoogleFonts.sarabun(
+                            "Do the best you can, and leave the rest to God; https://bukyia.com  but also, be faithful to your loved ones",
+                        detectionRegExp: detectionRegExp(
+                            atSign: true, hashtag: true, url: true)!,
+                        basicStyle: GoogleFonts.sarabun(
                             fontWeight: FontWeight.w400,
                             fontSize: 16,
                             color: AppTheme.themeData(false, context)
-                                .primaryColorLight)),
+                                .primaryColorLight),
+                        onTap: (p0) => print(p0),
+                        alwaysDetectTap: true,
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(

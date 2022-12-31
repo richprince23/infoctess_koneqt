@@ -36,23 +36,26 @@ class _HomePageState extends State<HomePage>
         body: CustomScrollView(
       controller: _scrollController,
       slivers: [
-        SliverToBoxAdapter(
-          child: Container(
-            height: 50,
-            child: TabBar(
-              indicatorColor: AppTheme.themeData(false, context).focusColor,
-              controller: _tabController,
-              tabs: tabs,
-            ),
+        SliverAppBar(
+          pinned: true,
+          floating: true,
+          automaticallyImplyLeading: false,
+          bottom: TabBar(
+            indicatorColor: AppTheme.themeData(false, context).focusColor,
+            controller: _tabController,
+            tabs: tabs,
           ),
         ),
         SliverFillRemaining(
-          child: TabBarView(
-            controller: _tabController,
-            children: [
-              NewsScreen(),
-              EventsScreen(),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20.0),
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                NewsScreen(),
+                EventsScreen(),
+              ],
+            ),
           ),
         )
       ],

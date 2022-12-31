@@ -6,6 +6,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
+import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
+import 'package:detectable_text_field/widgets/detectable_text.dart';
+import 'package:detectable_text_field/widgets/detectable_text_field.dart';
 
 class CreatePost extends StatefulWidget {
   const CreatePost({super.key});
@@ -105,7 +108,9 @@ class CreatePostState extends State<CreatePost> {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          TextField(
+          DetectableTextField(
+            detectionRegExp:
+                detectionRegExp(hashtag: true, atSign: true, url: true)!,
             onChanged: ((value) {
               postController.text.isEmpty
                   ? isEmtpyText = true
@@ -138,7 +143,7 @@ class CreatePostState extends State<CreatePost> {
                       color: AppTheme.themeData(false, context).focusColor),
                 ),
                 focusColor: AppTheme.themeData(false, context).focusColor),
-            style: GoogleFonts.sarabun(),
+            basicStyle: GoogleFonts.sarabun(),
           ),
           AnimatedContainer(
             duration: const Duration(seconds: 1),

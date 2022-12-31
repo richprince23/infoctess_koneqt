@@ -28,6 +28,7 @@ dependencies:
   url_launcher: ^6.1.7
   go_router: ^6.0.0
   animations: ^2.0.7
+  detectable_text_field: ^2.0.4
 
 dev_dependencies:
   flutter_test:
