@@ -1,76 +1,207 @@
+import 'package:animations/animations.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:infoctess_koneqt/components/comment_input.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 
-class NewsItem extends StatefulWidget {
+class NewsItem extends StatelessWidget {
   const NewsItem({super.key});
 
-  @override
-  State<NewsItem> createState() => _NewsItemState();
-}
+  void openNews(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const OpenWidget(),
+      ),
+    );
+  }
 
-class _NewsItemState extends State<NewsItem> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         print("tapped");
-        showBottomSheet(
-            // barrierColor: Colors.transparent,
-            clipBehavior: Clip.antiAlias,
-            context: context,
-            builder: (context) => CommentInput());
       },
-      child: Container(
-        margin: const EdgeInsets.all(10),
-        child: Material(
-          color: AppTheme.themeData(false, context).primaryColor,
-          elevation: 0.5,
-          borderRadius: BorderRadius.circular(15),
-          child: Container(
-            margin: const EdgeInsets.all(12),
-            padding: const EdgeInsets.all(10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Infoctess General Meeting",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color:
-                          AppTheme.themeData(false, context).primaryColorLight),
-                  textAlign: TextAlign.left,
-                ),
-                RichText(
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 4,
-                  text: TextSpan(
-                    text:
-                        "There is going to be a General Infoctess Meeting next month when scholl reopens. It is scheduled",
-                    style: GoogleFonts.sarabun(
-                        fontWeight: FontWeight.w400,
+      child: OpenContainer(
+        useRootNavigator: true,
+        openElevation: 5,
+        transitionType: ContainerTransitionType.fadeThrough,
+        closedBuilder: (BuildContext context, void Function() openAction) {
+          return const ClosedWidget();
+        },
+        openBuilder: (BuildContext context, void Function() action) {
+          return const OpenWidget();
+        },
+      ),
+    );
+  }
+}
+
+class ClosedWidget extends StatelessWidget {
+  const ClosedWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Card(
+        surfaceTintColor: Colors.white,
+        color: AppTheme.themeData(false, context).primaryColor,
+        elevation: 2,
+        // borderRadius: BorderRadius.circular(15),
+        child: Container(
+          margin: const EdgeInsets.all(12),
+          padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Infoctess General Meeting",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color:
+                        AppTheme.themeData(false, context).primaryColorLight),
+                textAlign: TextAlign.left,
+              ),
+              Divider(
+                color: AppTheme.themeData(false, context).focusColor,
+                thickness: 1,
+              ),
+              Text(
+                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                maxLines: 2,
+                style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 16,
+                    overflow: TextOverflow.ellipsis,
+                    color:
+                        AppTheme.themeData(false, context).primaryColorLight),
+                textAlign: TextAlign.left,
+              ),
+              const SizedBox(height: 10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Uptown"),
+                      Text("December 11, 2022, 11:34pm"),
+                    ],
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    child: OutlinedButton(
+                      onPressed: () {
+                        NewsItem().openNews(context);
+                      },
+                      style: OutlinedButton.styleFrom(
+                        backgroundColor:
+                            AppTheme.themeData(false, context).backgroundColor,
+                        foregroundColor:
+                            AppTheme.themeData(false, context).primaryColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        fixedSize: const Size(300, 30),
+                      ),
+                      child: const Text("Read More"),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class OpenWidget extends StatelessWidget {
+  const OpenWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      elevation: 2,
+      child: SingleChildScrollView(
+        child: Column(
+          // mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: IconButton(
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(CupertinoIcons.clear_circled_solid),
+              ),
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.red,
+                    ),
+                    child: Image.asset(
+                      "assets/images/img1.jpg",
+                      height: 200,
+                      width: MediaQuery.of(context).size.width,
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                  Text(
+                    "Infoctess General Meeting",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
                         fontSize: 16,
                         color: AppTheme.themeData(false, context)
                             .primaryColorLight),
+                    textAlign: TextAlign.left,
                   ),
-                ),
-                const SizedBox(height: 10),
-                Divider(
-                  color: AppTheme.themeData(false, context).focusColor,
-                  thickness: 1,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Uptown"),
-                    Text("December 11, 2022, 11:34pm"),
-                  ],
-                ),
-              ],
+                  const SizedBox(height: 10),
+                  Divider(
+                    color: AppTheme.themeData(false, context).focusColor,
+                    thickness: 1,
+                  ),
+                  RichText(
+                    textAlign: TextAlign.left,
+                    overflow: TextOverflow.visible,
+                    text: TextSpan(
+                      text:
+                          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed eu",
+                      style: GoogleFonts.sarabun(
+                          color: Colors.black, fontSize: 16),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Divider(
+                      color: AppTheme.themeData(false, context).focusColor,
+                      thickness: 1,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Uptown"),
+                      Text("December 11, 2022, 11:34pm"),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

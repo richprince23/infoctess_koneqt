@@ -126,7 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           GestureDetector(
-                            onTap: (() => Navigator.push(
+                            onTap: (() => Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => LoginScreen(),

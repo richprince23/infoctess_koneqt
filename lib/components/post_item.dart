@@ -4,7 +4,10 @@ import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:infoctess_koneqt/components/comment_input.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class PostItem extends StatefulWidget {
   const PostItem({super.key});
@@ -17,7 +20,13 @@ class _PostItemState extends State<PostItem> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        showBottomSheet(
+            // barrierColor: Colors.transparent,
+            clipBehavior: Clip.antiAlias,
+            context: context,
+            builder: (context) => const CommentInput());
+      },
       child: Container(
         margin: const EdgeInsets.all(10),
         child: Material(
@@ -90,8 +99,28 @@ class _PostItemState extends State<PostItem> {
                             fontSize: 16,
                             color: AppTheme.themeData(false, context)
                                 .primaryColorLight),
-                        onTap: (p0) => print(p0),
-                        alwaysDetectTap: true,
+                        callback: (bool readMore) {
+                          debugPrint('Read more >>>>>>> $readMore');
+                        },
+                        onTap: (tappedText) async {
+                          if (tappedText.startsWith('#')) {
+                            print('DetectableText >>>>>>> #');
+                          } else if (tappedText.startsWith('@')) {
+                            print('DetectableText >>>>>>> @');
+                          } else if (tappedText.startsWith('http')) {
+                            print('DetectableText >>>>>>> http');
+                            // final link = await LinkPreviewer.getPreview(tappedText);
+                            Uri url = Uri.parse(tappedText);
+                            if (await canLaunchUrl(url)) {
+                              await launchUrl(url);
+                            } else {
+                              throw 'Could not launch $tappedText';
+                            }
+                          } else {
+                            print("nothing");
+                          }
+                        },
+                        // alwaysDetectTap: true,
                       ),
                     ),
                   ),

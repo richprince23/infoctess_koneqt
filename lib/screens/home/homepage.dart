@@ -38,7 +38,11 @@ class _HomePageState extends State<HomePage>
       slivers: [
         SliverAppBar(
           pinned: true,
+          collapsedHeight: 0,
+          toolbarHeight: 0,
           floating: true,
+          backgroundColor: Colors.white,
+          surfaceTintColor: Colors.white,
           automaticallyImplyLeading: false,
           bottom: TabBar(
             indicatorColor: AppTheme.themeData(false, context).focusColor,
@@ -48,7 +52,7 @@ class _HomePageState extends State<HomePage>
         ),
         SliverFillRemaining(
           child: Padding(
-            padding: const EdgeInsets.only(top: 20.0),
+            padding: const EdgeInsets.only(top: 50.0),
             child: TabBarView(
               controller: _tabController,
               children: [

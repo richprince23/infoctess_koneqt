@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:infoctess_koneqt/components/event_item.dart';
 import 'package:infoctess_koneqt/components/news_item.dart';
+import 'package:infoctess_koneqt/components/event_item.dart';
 
 class EventsScreen extends StatelessWidget {
   const EventsScreen({super.key});
