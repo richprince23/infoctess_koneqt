@@ -55,13 +55,13 @@
 	<string>$(PRODUCT_NAME) would like to access your photo library</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to save photos to your photo library</string>
-	<key>LSApplicationQueriesSchemes</key>
+	<!-- <key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>sms</string>
 		<string>tel</string>
 		<string>mailto</string>
 		<string>https</string>
 		<string>http</string>
-	</array>
+	</array> -->
 </dict>
 </plist>

@@ -8,14 +8,6 @@ import 'package:infoctess_koneqt/theme/mytheme.dart';
 class NewsItem extends StatelessWidget {
   const NewsItem({super.key});
 
-  void openNews(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const OpenWidget(),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -23,6 +15,7 @@ class NewsItem extends StatelessWidget {
         print("tapped");
       },
       child: OpenContainer(
+        transitionDuration: const Duration(seconds: 1),
         useRootNavigator: true,
         openElevation: 5,
         transitionType: ContainerTransitionType.fadeThrough,
@@ -93,23 +86,9 @@ class ClosedWidget extends StatelessWidget {
                     ],
                   ),
                   Container(
+                    margin: const EdgeInsets.only(top: 10),
                     alignment: Alignment.center,
-                    child: OutlinedButton(
-                      onPressed: () {
-                        NewsItem().openNews(context);
-                      },
-                      style: OutlinedButton.styleFrom(
-                        backgroundColor:
-                            AppTheme.themeData(false, context).backgroundColor,
-                        foregroundColor:
-                            AppTheme.themeData(false, context).primaryColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        fixedSize: const Size(300, 30),
-                      ),
-                      child: const Text("Read More"),
-                    ),
+                    child: const Text("Read More"),
                   ),
                 ],
               ),
@@ -126,20 +105,19 @@ class OpenWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      elevation: 2,
-      child: SingleChildScrollView(
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("News Details"),
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: const Icon(CupertinoIcons.back),
+        ),
+      ),
+      body: SingleChildScrollView(
         child: Column(
           // mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: const Icon(CupertinoIcons.clear_circled_solid),
-              ),
-            ),
             Padding(
               padding:
                   const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 8.0),

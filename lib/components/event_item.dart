@@ -20,6 +20,7 @@ class _EventItemState extends State<EventItem> {
         print("tapped");
       },
       child: OpenContainer(
+        transitionDuration: const Duration(seconds: 1),
         closedBuilder: (context, action) => ClosedEventItem(),
         openBuilder: (context, action) => OpenEventItem(),
       ),
@@ -95,76 +96,71 @@ class OpenEventItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Event Details"),
+        title: const Text("Event Info"),
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
           icon: const Icon(CupertinoIcons.back),
         ),
       ),
-      body: Material(
-        elevation: 2,
-        child: SingleChildScrollView(
-          child: Container(
-            margin: const EdgeInsets.only(bottom: 110),
-            padding:
-                const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(bottom: 20),
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.red,
-                  ),
-                  child: Image.asset(
-                    "assets/images/img1.jpg",
-                    height: 200,
-                    width: MediaQuery.of(context).size.width,
-                    fit: BoxFit.fill,
-                  ),
+      body: SingleChildScrollView(
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 110),
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(bottom: 20),
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.red,
                 ),
-                Text(
-                  "Infoctess General Meeting",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color:
-                          AppTheme.themeData(false, context).primaryColorLight),
-                  textAlign: TextAlign.left,
+                child: Image.asset(
+                  "assets/images/img1.jpg",
+                  height: 200,
+                  width: MediaQuery.of(context).size.width,
+                  fit: BoxFit.fill,
                 ),
-                const SizedBox(height: 10),
-                Divider(
+              ),
+              Text(
+                "Infoctess General Meeting",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color:
+                        AppTheme.themeData(false, context).primaryColorLight),
+                textAlign: TextAlign.left,
+              ),
+              const SizedBox(height: 10),
+              Divider(
+                color: AppTheme.themeData(false, context).focusColor,
+                thickness: 1,
+              ),
+              RichText(
+                textAlign: TextAlign.left,
+                overflow: TextOverflow.visible,
+                text: TextSpan(
+                  text:
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc.                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. ",
+                  style: GoogleFonts.sarabun(color: Colors.black, fontSize: 16),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Divider(
                   color: AppTheme.themeData(false, context).focusColor,
                   thickness: 1,
                 ),
-                RichText(
-                  textAlign: TextAlign.left,
-                  overflow: TextOverflow.visible,
-                  text: TextSpan(
-                    text:
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc.                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. ",
-                    style:
-                        GoogleFonts.sarabun(color: Colors.black, fontSize: 16),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Divider(
-                    color: AppTheme.themeData(false, context).focusColor,
-                    thickness: 1,
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("President"),
-                    Text("December 11, 2022, 11:34pm"),
-                  ],
-                ),
-              ],
-            ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("President"),
+                  Text("December 11, 2022, 11:34pm"),
+                ],
+              ),
+            ],
           ),
         ),
       ),
