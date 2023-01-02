@@ -187,10 +187,6 @@ class PostDetails extends StatelessWidget {
                             onPressed: () {
                               scaffoldKey.currentState!
                                   .showBottomSheet((context) => CommentInput());
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => CommentInput()));
                             },
                             icon: Icon(
                               CupertinoIcons.chat_bubble,
