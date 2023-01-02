@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/components/comment_input.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:url_launcher/url_launcher_string.dart';
 
 class PostItem extends StatefulWidget {
   const PostItem({super.key});
@@ -20,8 +20,9 @@ class _PostItemState extends State<PostItem> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        // go to view
+      onTap: () async {
+        await Navigator.pushNamed(context, '/post-details');
+        print("Post Details");
       },
       child: Container(
         margin: const EdgeInsets.all(10),
@@ -79,7 +80,7 @@ class _PostItemState extends State<PostItem> {
                     ],
                   ),
                 ),
-                Container(),
+                // Container(),
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: RichText(
@@ -108,7 +109,6 @@ class _PostItemState extends State<PostItem> {
                             print('DetectableText >>>>>>> @');
                           } else if (tappedText.startsWith('http')) {
                             print('DetectableText >>>>>>> http');
-                            // final link = await LinkPreviewer.getPreview(tappedText);
                             Uri url = Uri.parse(tappedText);
                             if (await canLaunchUrl(url)) {
                               await launchUrl(url);
@@ -116,16 +116,17 @@ class _PostItemState extends State<PostItem> {
                               throw 'Could not launch $tappedText';
                             }
                           } else {
-                            print("nothing");
+                            await Navigator.pushNamed(context, '/post-details');
+                            print("Post Details");
                           }
                         },
-                        // alwaysDetectTap: true,
+                        alwaysDetectTap: true,
                       ),
                     ),
                   ),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 20,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

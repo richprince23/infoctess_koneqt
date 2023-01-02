@@ -105,10 +105,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: size.width,
                       child: TextButton(
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => MainScreen()));
+                          Navigator.pushReplacementNamed(
+                            context,
+                            "/main",
+                          );
                         },
                         child: const Text(
                           "login",

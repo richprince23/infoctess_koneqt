@@ -3,6 +3,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
 import 'package:infoctess_koneqt/controllers/page_controller.dart';
+import 'package:infoctess_koneqt/screens/main_screen.dart';
+import 'package:infoctess_koneqt/screens/onboarding.dart';
+import 'package:infoctess_koneqt/screens/post_page.dart';
 
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
@@ -17,12 +20,12 @@ void main() async {
     MultiProvider(providers: [
       ChangeNotifierProvider(create: (_) => OnboardingController()),
       ChangeNotifierProvider(create: (_) => PageControl()),
-    ], child: const MyApp()),
+    ], child: MyApp()),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +41,13 @@ class MyApp extends StatelessWidget {
           decoration: TextDecoration.none,
         ),
       ),
-      home: LoginScreen(),
-      
+      initialRoute: '/',
+      routes: {
+        '/': (context) => LoginScreen(),
+        "/main": (context) => MainScreen(),
+        "/onboarding": (context) => OnboardingScreen(),
+        "/post-details": (context) => PostDetails(),
+      },
     );
   }
 }

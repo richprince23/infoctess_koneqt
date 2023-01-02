@@ -172,7 +172,9 @@ class CreatePostState extends State<CreatePost> {
                     foregroundColor: Colors.black,
                     side: const BorderSide(color: Colors.grey, width: 1),
                     padding: const EdgeInsets.symmetric(horizontal: 4),
-                    fixedSize: const Size(80, 20),
+                    fixedSize: const Size(70, 26),
+                    minimumSize: const Size(70, 26),
+                    maximumSize: const Size(70, 26),
                   ),
                   onPressed: () async {
                     await uploadImage().then((value) => cropImage());

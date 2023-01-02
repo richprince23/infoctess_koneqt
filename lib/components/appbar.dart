@@ -21,7 +21,7 @@ class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
         style: GoogleFonts.sarabun(fontSize: 18),
       ),
       leadingWidth: 40,
-      leading: GestureDetector(
+      leading: InkWell(
         child: const CircleAvatar(
             radius: 5,
             backgroundImage: CachedNetworkImageProvider(
