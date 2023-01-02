@@ -1,3 +1,5 @@
+import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
+import 'package:detectable_text_field/widgets/detectable_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,8 +18,14 @@ class _CommentInputState extends State<CommentInput> {
   final commentText = TextEditingController();
   FocusNode focusNode = FocusNode();
   bool isEmtpyText = true;
-  
+
   // final scroll = ScrollController();
+  void dispose() {
+    commentText.dispose();
+    focusNode.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -47,7 +55,9 @@ class _CommentInputState extends State<CommentInput> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
-                TextField(
+                DetectableTextField(
+                  detectionRegExp:
+                      detectionRegExp(atSign: true, hashtag: true, url: true)!,
                   onChanged: ((value) {
                     commentText.text.isEmpty
                         ? isEmtpyText = true
@@ -75,7 +85,7 @@ class _CommentInputState extends State<CommentInput> {
                       ),
                       focusColor:
                           AppTheme.themeData(false, context).focusColor),
-                  style: GoogleFonts.sarabun(),
+                  basicStyle: GoogleFonts.sarabun(),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -96,6 +106,7 @@ class _CommentInputState extends State<CommentInput> {
                       TextButton(
                         onPressed: (() {
                           isEmtpyText ? null : print("sent");
+                          Navigator.pop(context);
                         }),
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.all(0),

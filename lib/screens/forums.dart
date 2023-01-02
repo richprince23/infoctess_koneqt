@@ -19,14 +19,14 @@ class _ForumsScreenState extends State<ForumsScreen> {
             child: AnimatedContainer(
                 // color: Colors.red,
                 padding: const EdgeInsets.all(5),
-                duration: const Duration(seconds: 1),
+                duration: const Duration(milliseconds: 300),
                 child: CreatePost()),
           ),
           SliverFillRemaining(
             child: Container(
               height: double.infinity,
               // margin: const EdgeInsets.only(top: 40),
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.only(top: 5, left: 10, right: 10),
               width: MediaQuery.of(context).size.width,
               child: RefreshIndicator(
                 onRefresh: () async {

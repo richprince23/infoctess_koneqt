@@ -1,9 +1,12 @@
 import 'package:animations/animations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:detectable_text_field/detectable_text_field.dart';
+import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NewsItem extends StatelessWidget {
   const NewsItem({super.key});
@@ -155,11 +158,31 @@ class OpenWidget extends StatelessWidget {
                   RichText(
                     textAlign: TextAlign.left,
                     overflow: TextOverflow.visible,
-                    text: TextSpan(
-                      text:
-                          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed eu",
-                      style: GoogleFonts.sarabun(
-                          color: Colors.black, fontSize: 16),
+                    text: WidgetSpan(
+                      child: DetectableText(
+                        detectionRegExp: detectionRegExp()!,
+                        text:
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed eu",
+                        basicStyle: GoogleFonts.sarabun(
+                            color: Colors.black, fontSize: 16),onTap: (tappedText) async {
+                          if (tappedText.startsWith('#')) {
+                            print('DetectableText >>>>>>> #');
+                          } else if (tappedText.startsWith('@')) {
+                            print('DetectableText >>>>>>> @');
+                          } else if (tappedText.startsWith('http')) {
+                            print('DetectableText >>>>>>> http');
+                            // final link = await LinkPreviewer.getPreview(tappedText);
+                            Uri url = Uri.parse(tappedText);
+                            if (await canLaunchUrl(url)) {
+                              await launchUrl(url);
+                            } else {
+                              throw 'Could not launch $tappedText';
+                            }
+                          } else {
+                            print("nothing");
+                          }
+                        },
+                      ),
                     ),
                   ),
                   Padding(
@@ -176,6 +199,7 @@ class OpenWidget extends StatelessWidget {
                       Text("December 11, 2022, 11:34pm"),
                     ],
                   ),
+                  const SizedBox(height: 10),
                 ],
               ),
             ),

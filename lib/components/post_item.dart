@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/components/comment_input.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+
 
 class PostItem extends StatefulWidget {
   const PostItem({super.key});
@@ -21,11 +21,7 @@ class _PostItemState extends State<PostItem> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        showBottomSheet(
-            // barrierColor: Colors.transparent,
-            clipBehavior: Clip.antiAlias,
-            context: context,
-            builder: (context) => const CommentInput());
+        // go to view
       },
       child: Container(
         margin: const EdgeInsets.all(10),
@@ -83,6 +79,7 @@ class _PostItemState extends State<PostItem> {
                     ],
                   ),
                 ),
+                Container(),
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: RichText(
@@ -91,9 +88,11 @@ class _PostItemState extends State<PostItem> {
                     text: WidgetSpan(
                       child: DetectableText(
                         text:
-                            "Do the best you can, and leave the rest to God; https://bukyia.com  but also, be faithful to your loved ones",
+                            "Do the best you can, and leave the rest to God; https://bukyia.com  but also, be faithful to your loved ones sglgh dklgd fgdfghd dfhgkdjfhgdkj",
                         detectionRegExp: detectionRegExp(
                             atSign: true, hashtag: true, url: true)!,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 3,
                         basicStyle: GoogleFonts.sarabun(
                             fontWeight: FontWeight.w400,
                             fontSize: 16,
@@ -178,7 +177,13 @@ class _PostItemState extends State<PostItem> {
                       ),
                     ),
                     TextButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        showBottomSheet(
+                            // barrierColor: Colors.transparent,
+                            clipBehavior: Clip.antiAlias,
+                            context: context,
+                            builder: (context) => const CommentInput());
+                      },
                       icon: Icon(
                         CupertinoIcons.chat_bubble,
                         color: AppTheme.themeData(false, context)

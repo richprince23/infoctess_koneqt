@@ -104,7 +104,7 @@ class OpenEventItem extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
-          margin: const EdgeInsets.only(bottom: 110),
+          margin: const EdgeInsets.only(bottom: 140),
           padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -173,12 +173,16 @@ class OpenEventItem extends StatelessWidget {
               padding: const EdgeInsets.all(4.0),
               child: Row(
                 children: [
-                  Text("Date: "),
+                  const Expanded(flex: 1, child: Text("Fee: ")),
                   Expanded(
-                      child: Text(
-                    "December 11, 2022, 11:34pm",
-                    style: TextStyle(overflow: TextOverflow.ellipsis),
-                  )),
+                    flex: 4,
+                    child: Text("GH₵ 10.00",
+                        style: GoogleFonts.sarabun(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                            color: AppTheme.themeData(false, context)
+                                .primaryColorLight)),
+                  ),
                 ],
               ),
             ),
@@ -186,8 +190,24 @@ class OpenEventItem extends StatelessWidget {
               padding: const EdgeInsets.all(4.0),
               child: Row(
                 children: [
-                  Text("Venue: "),
+                  const Expanded(flex: 1, child: Text("Date: ")),
                   Expanded(
+                    flex: 4,
+                    child: Text(
+                      "December 11, 2022, 11:34pm",
+                      style: TextStyle(overflow: TextOverflow.ellipsis),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Row(
+                children: [
+                  const Expanded(flex: 1, child: Text("Venue: ")),
+                  Expanded(
+                    flex: 4,
                     child: Text(
                       "1234 Main Street, New York, NY 10001 sdfhjksdhfjkshdjfhsjkdhfjsdhfjksdhfjk",
                       style: TextStyle(overflow: TextOverflow.ellipsis),
