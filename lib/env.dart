@@ -5,6 +5,7 @@ import 'package:infoctess_koneqt/screens/onboarding.dart';
 import 'package:infoctess_koneqt/screens/onboarding/acad_info.dart';
 import 'package:infoctess_koneqt/screens/onboarding/basic_info.dart';
 import 'package:infoctess_koneqt/screens/onboarding/profileinfo.dart';
+import 'package:infoctess_koneqt/screens/tools/utilies_screen.dart';
 
 extension Capitalized on String {
   String capitalized() =>
@@ -28,4 +29,5 @@ var kPages = [
 var kMainPages = <Widget>[
   HomePage(),
   ForumsScreen(),
+  UtilitiesScreen(),
 ];

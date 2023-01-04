@@ -10,7 +10,7 @@ class AppTheme {
       primaryColor: isDarkTheme ? Colors.black87 : Colors.white,
       primaryColorLight: isDarkTheme ? Colors.white : Colors.black87,
       primaryColorDark: isDarkTheme ? Colors.black87 : Colors.white,
-      dialogBackgroundColor: isDarkTheme? Colors.black45 : Colors.grey[100],
+      dialogBackgroundColor: isDarkTheme ? Colors.black45 : Colors.grey[100],
       backgroundColor: isDarkTheme
           ? const Color.fromRGBO(246, 7, 151, 1)
           : const Color.fromRGBO(74, 19, 193, 1),
@@ -32,7 +32,7 @@ class AppTheme {
         color: Colors.white,
       )),
       // textSelectionColor: isconst DarkTheme ? Colorsconst .white : Colors.black,
-      cardColor: isDarkTheme ? Color(0x1C1E26) : Color(0xffF1F5FB),
+      cardColor: isDarkTheme ? Color(0x1C1E26) : Colors.white,
       canvasColor: isDarkTheme ? Colors.black54 : Colors.grey[50],
       brightness: isDarkTheme ? Brightness.dark : Brightness.light,
       buttonTheme: Theme.of(context).buttonTheme.copyWith(

@@ -21,7 +21,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   void initState() {
     super.initState();
-    String buttonText = "next";
+     buttonText = "next";
   }
 
   @override
