@@ -168,12 +168,62 @@ class UtilitiesScreen extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Icon(CupertinoIcons.bubble_left_bubble_right,
+                      Icon(CupertinoIcons.person_2,
                           size: 50,
                           color: AppTheme.themeData(false, context)
                               .primaryColorLight),
                       Text(
                         "AI StudyMate",
+                        style: GoogleFonts.sarabun(
+                            color: AppTheme.themeData(false, context)
+                                .primaryColorLight,
+                            fontSize: 20),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Card(
+                surfaceTintColor: Colors.white.withOpacity(0.5),
+                color: AppTheme.themeData(false, context)
+                    .cardColor
+                    .withOpacity(0.5),
+                child: InkWell(
+                  onTap: () {},
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(CupertinoIcons.list_number,
+                          size: 50,
+                          color: AppTheme.themeData(false, context)
+                              .primaryColorLight),
+                      Text(
+                        "Practice Quiz",
+                        style: GoogleFonts.sarabun(
+                            color: AppTheme.themeData(false, context)
+                                .primaryColorLight,
+                            fontSize: 20),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Card(
+                surfaceTintColor: Colors.white.withOpacity(0.5),
+                color: AppTheme.themeData(false, context)
+                    .cardColor
+                    .withOpacity(0.5),
+                child: InkWell(
+                  onTap: () {},
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(CupertinoIcons.hammer,
+                          size: 50,
+                          color: AppTheme.themeData(false, context)
+                              .primaryColorLight),
+                      Text(
+                        "Other Resources",
                         style: GoogleFonts.sarabun(
                             color: AppTheme.themeData(false, context)
                                 .primaryColorLight,
