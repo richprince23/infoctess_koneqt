@@ -51,7 +51,15 @@ class _HomePageState extends State<HomePage>
           ),
         ),
         SliverFillRemaining(
-          child: Padding(
+          child: Container(
+            decoration: const BoxDecoration(
+              // color: Colors.blue,
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Colors.black, Colors.blue, Colors.pink],
+              ),
+            ),
             padding: const EdgeInsets.only(top: 50.0),
             child: TabBarView(
               controller: _tabController,

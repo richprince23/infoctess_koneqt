@@ -20,6 +20,7 @@ class _EventItemState extends State<EventItem> {
         print("tapped");
       },
       child: OpenContainer(
+        closedColor: Colors.transparent,
         transitionDuration: const Duration(seconds: 1),
         closedBuilder: (context, action) => ClosedEventItem(),
         openBuilder: (context, action) => OpenEventItem(),
@@ -38,7 +39,7 @@ class ClosedEventItem extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(10),
       child: Card(
-        color: AppTheme.themeData(false, context).primaryColor,
+        color: AppTheme.themeData(false, context).primaryColor.withOpacity(0.7),
         elevation: 2,
         surfaceTintColor: Colors.white,
         child: Container(
