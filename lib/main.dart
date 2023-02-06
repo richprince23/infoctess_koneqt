@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
 import 'package:infoctess_koneqt/controllers/page_controller.dart';
@@ -26,7 +25,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +45,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => LoginScreen(),
         "/main": (context) => MainScreen(),
-        "/onboarding": (context) => OnboardingScreen(),
+        "/onboarding": (context) => const OnboardingScreen(),
         "/post-details": (context) => PostDetails(),
       },
     );
