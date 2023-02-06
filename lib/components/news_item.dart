@@ -19,6 +19,8 @@ class NewsItem extends StatelessWidget {
       },
       child: OpenContainer(
         transitionDuration: const Duration(seconds: 1),
+        closedColor: Colors.transparent,
+        // AppTheme.themeData(false, context).primaryColor.withOpacity(0.5),
         useRootNavigator: true,
         openElevation: 5,
         transitionType: ContainerTransitionType.fadeThrough,
@@ -43,8 +45,8 @@ class ClosedWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Card(
+        color: AppTheme.themeData(false, context).primaryColor.withOpacity(0.7),
         surfaceTintColor: Colors.white,
-        color: AppTheme.themeData(false, context).primaryColor,
         elevation: 2,
         // borderRadius: BorderRadius.circular(15),
         child: Container(
@@ -164,7 +166,8 @@ class OpenWidget extends StatelessWidget {
                         text:
                             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed eu",
                         basicStyle: GoogleFonts.sarabun(
-                            color: Colors.black, fontSize: 16),onTap: (tappedText) async {
+                            color: Colors.black, fontSize: 16),
+                        onTap: (tappedText) async {
                           if (tappedText.startsWith('#')) {
                             print('DetectableText >>>>>>> #');
                           } else if (tappedText.startsWith('@')) {

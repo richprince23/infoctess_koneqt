@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/components/news_item.dart';
 
@@ -6,16 +8,34 @@ class NewsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Container(
       height: double.infinity,
-      child: RefreshIndicator(
-        onRefresh: () async => print("refreshed"),
-        child: ListView(
-          children: [
-            NewsItem(),
-            NewsItem(),
-            NewsItem(),
-          ],
+      width: size.width,
+      decoration: const BoxDecoration(
+        // color: Colors.blue,
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Colors.black, Colors.blue, Colors.pink],
+        ),
+      ),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 0),
+        child: RefreshIndicator(
+          onRefresh: () async => print("refreshed"),
+          child: ListView(
+            children: [
+              NewsItem(),
+              NewsItem(),
+              NewsItem(),
+              NewsItem(),
+              NewsItem(),
+              NewsItem(),
+              NewsItem(),
+              NewsItem(),
+            ],
+          ),
         ),
       ),
     );
