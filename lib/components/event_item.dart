@@ -36,8 +36,8 @@ class ClosedEventItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(10),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Card(
         color: AppTheme.themeData(false, context).primaryColor.withOpacity(0.7),
         elevation: 2,
