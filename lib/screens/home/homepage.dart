@@ -57,8 +57,8 @@ class _HomePageState extends State<HomePage>
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [Colors.black38, Colors.blue, Colors.pink],
-                stops: [0.1, 0.2, 1],
+                colors: [Colors.blue, Colors.pink],
+                stops: [0.2, 1],
               ),
             ),
             padding: const EdgeInsets.only(top: 50.0),

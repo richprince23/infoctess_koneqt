@@ -20,12 +20,13 @@ class UtilitiesScreen extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Colors.black, Colors.blue, Colors.pink],
+            colors: [Colors.blue, Colors.pink],
+            stops: [0.2, 1],
           ),
         ),
         padding: const EdgeInsets.all(20),
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 0),
+          filter: ImageFilter.blur(sigmaX: 2, sigmaY: 0),
           child: GridView.count(
             cacheExtent: 40,
             crossAxisCount: 2,

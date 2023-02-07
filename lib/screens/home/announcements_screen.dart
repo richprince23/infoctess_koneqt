@@ -17,12 +17,12 @@ class NewsScreen extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Colors.black38, Colors.blue, Colors.pink],
-          stops: [0.1, 0.2, 1],
+          colors: [Colors.blue, Colors.pink],
+          stops: [0.2, 1],
         ),
       ),
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 0),
+        filter: ImageFilter.blur(sigmaX: 2, sigmaY: 0),
         child: RefreshIndicator(
           onRefresh: () async => print("refreshed"),
           child: ListView(
