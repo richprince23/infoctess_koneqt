@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   var tabs = [
     const Tab(
       child: Text("News"),
@@ -57,13 +57,14 @@ class _HomePageState extends State<HomePage>
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [Colors.black, Colors.blue, Colors.pink],
+                colors: [Colors.black38, Colors.blue, Colors.pink],
+                stops: [0.1, 0.2, 1],
               ),
             ),
             padding: const EdgeInsets.only(top: 50.0),
             child: TabBarView(
               controller: _tabController,
-              children: [
+              children: const [
                 NewsScreen(),
                 EventsScreen(),
               ],

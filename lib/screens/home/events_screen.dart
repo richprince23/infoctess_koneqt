@@ -15,7 +15,8 @@ class EventsScreen extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Colors.black, Colors.blue, Colors.pink],
+          colors: [Colors.black38, Colors.blue, Colors.pink],
+          stops: [0.1, 0.2, 1],
         ),
       ),
       height: double.infinity,

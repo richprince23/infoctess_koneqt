@@ -102,7 +102,7 @@ class CreatePostState extends State<CreatePost> {
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
+        color: Colors.white.withOpacity(0.8),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,

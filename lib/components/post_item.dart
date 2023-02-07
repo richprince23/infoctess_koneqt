@@ -30,7 +30,8 @@ class _PostItemState extends State<PostItem> {
           borderRadius: BorderRadius.circular(15),
           elevation: 0.5,
           shadowColor: Colors.grey,
-          color: AppTheme.themeData(false, context).primaryColor,
+          color:
+              AppTheme.themeData(false, context).primaryColor.withOpacity(0.7),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6),
             child: Column(
@@ -39,7 +40,7 @@ class _PostItemState extends State<PostItem> {
                   padding: const EdgeInsets.all(10),
                   // height: 50,
                   decoration: BoxDecoration(
-                    color: Colors.grey[200],
+                    color: Colors.grey[400],
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Row(

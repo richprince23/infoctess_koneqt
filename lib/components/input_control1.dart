@@ -85,13 +85,13 @@ class _InputControlState extends State<InputControl> {
                 )
               },
               child: textLength > 0
-                  ? Icon(
+                  ? const Icon(
                       CupertinoIcons.clear_circled,
                       color: Colors.red,
                     )
-                  : Icon(null),
+                  : const Icon(null),
             ),
-            hintText: "your " + widget.hintText!.toLowerCase() ?? "",
+            hintText: "your ${widget.hintText!.toLowerCase()}",
             hintStyle: const TextStyle(
                 color: Colors.black54, fontWeight: FontWeight.w400),
             contentPadding:

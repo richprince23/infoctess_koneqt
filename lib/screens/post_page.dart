@@ -86,7 +86,7 @@ class PostDetails extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Container(),
+                      // Container(),
                       Container(
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: RichText(
@@ -121,8 +121,6 @@ class PostDetails extends StatelessWidget {
                                     throw 'Could not launch $tappedText';
                                   }
                                 } else {
-                                  await Navigator.pushNamed(
-                                      context, '/post-details');
                                   print("Post Details");
                                 }
                               },
