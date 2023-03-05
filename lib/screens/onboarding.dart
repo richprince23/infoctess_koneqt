@@ -21,51 +21,51 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   void initState() {
     super.initState();
-     buttonText = "next";
+    buttonText = "next";
   }
 
   @override
   Widget build(BuildContext context) {
-    // int curPageIndex = pageController.initialPage;
-
+    // int curPageIndex = pageController.initialPage
     var size = MediaQuery.of(context).size;
-
     return Scaffold(
-      body: PageView.builder(
-        padEnds: true,
-        physics: const NeverScrollableScrollPhysics(),
-        controller: pageController,
-        itemCount: kPages.length,
-        itemBuilder: (context, index) {
-          return Consumer<OnboardingController>(
-            builder: ((context, value, child) {
-              return kPages[value.curPageIndex];
-            }),
-          );
-        },
-        pageSnapping: true,
-        onPageChanged: (value) {
-          Provider.of<OnboardingController>(context, listen: false)
-              .curPageIndex = value;
-          setState(() {
-            if (value == kPages.length - 1) {
-              buttonText = "finish";
+      body: SafeArea(
+        child: PageView.builder(
+          padEnds: true,
+          physics: const NeverScrollableScrollPhysics(),
+          controller: pageController,
+          itemCount: kPages.length,
+          itemBuilder: (context, index) {
+            return Consumer<OnboardingController>(
+              builder: ((context, value, child) {
+                return kPages[value.curPageIndex];
+              }),
+            );
+          },
+          pageSnapping: true,
+          onPageChanged: (value) {
+            Provider.of<OnboardingController>(context, listen: false)
+                .curPageIndex = value;
+            setState(() {
+              if (value == kPages.length - 1) {
+                buttonText = "finish";
 
-              //todo
-              //some validations and savings
+                //todo
+                //some validations and savings
 
-            } else {
-              buttonText = "next";
-              //todo
-              //validations and savings
+              } else {
+                buttonText = "next";
+                //todo
+                //validations and savings
 
-            }
-          });
-        },
+              }
+            });
+          },
+        ),
       ),
       persistentFooterButtons: [
         Column(
-          key: Key("keys"),
+          key: const Key("column_key"),
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(

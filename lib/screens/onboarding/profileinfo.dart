@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
@@ -22,20 +23,48 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
   GlobalKey formKey = GlobalKey<FormState>();
   ImagePicker imagePicker = ImagePicker();
 
-  File? selectedImage;
+  XFile? selectedMedia;
+  CroppedFile? croppedMedia;
 
-  Future getImagefromGallery() async {
-    try {
-      final image = await imagePicker.pickImage(
-          source: ImageSource.gallery, imageQuality: 80);
-      if (image == null) return;
-      final tempImage = File(image.path);
+  Future<void> cropImage() async {
+    if (selectedMedia != null) {
+      final croppedFile = await ImageCropper().cropImage(
+        sourcePath: selectedMedia!.path,
+        compressFormat: ImageCompressFormat.jpg,
+        compressQuality: 20,
+        uiSettings: [
+          AndroidUiSettings(
+            toolbarTitle: 'Crop Media',
+            toolbarColor: Colors.black,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.ratio3x2,
+            lockAspectRatio: false,
+            showCropGrid: true,
+            hideBottomControls: false,
+          ),
+          IOSUiSettings(
+            title: 'Crop Media',
+            rotateButtonsHidden: false,
+            rotateClockwiseButtonHidden: false,
+          ),
+        ],
+      );
+      if (croppedFile != null) {
+        setState(() {
+          croppedMedia = croppedFile;
+          // selectedMedia = croppedFile as XFile;
+        });
+      }
+    }
+  }
 
+  Future<void> uploadImage() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
       setState(() {
-        selectedImage = tempImage;
+        selectedMedia = pickedFile;
       });
-    } on PlatformException catch (e) {
-      print('$e');
     }
   }
 
@@ -51,35 +80,32 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
           height: size.height * 0.20,
           child: Container(
             height: 40,
-            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             width: size.width,
             color: AppTheme.themeData(false, context).backgroundColor,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        // goBack();
-                        Provider.of<OnboardingController>(context,
-                                listen: false)
-                            .goBack();
-                      });
-                    },
-                    icon: const Icon(
-                      CupertinoIcons.back,
-                      size: 24,
-                      color: Colors.white,
-                    ),
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      // goBack();
+                      Provider.of<OnboardingController>(context, listen: false)
+                          .goBack();
+                    });
+                  },
+                  icon: const Icon(
+                    CupertinoIcons.back,
+                    // size: 24,
+                    color: Colors.white,
                   ),
+                  iconSize: 24,
                 ),
                 const SizedBox(
                   width: 10,
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(5),
+                  padding: const EdgeInsets.only(top: 5),
                   child: Text(
                     "3. Profile Info",
                     style: GoogleFonts.sarabun(
@@ -117,10 +143,10 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                         style: GoogleFonts.sarabun(fontSize: 18),
                       ),
                       const SizedBox(height: 10),
-                      selectedImage != null
+                      selectedMedia != null
                           ? ClipOval(
                               child: Image.file(
-                                selectedImage!.absolute,
+                                File(selectedMedia!.path),
                                 width: size.width * 0.35,
                                 height: size.width * 0.35,
                                 fit: BoxFit.cover,
@@ -146,7 +172,7 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                                 AppTheme.themeData(false, context)
                                     .indicatorColor)),
                         onPressed: () async {
-                          getImagefromGallery();
+                          await uploadImage().then((value) => cropImage());
                         },
                         child: RichText(
                           text: const TextSpan(

@@ -56,7 +56,7 @@ class _AcademicInfoScreenState extends State<AcademicInfoScreen> {
           height: size.height * 0.20,
           child: Container(
             height: 40,
-            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             width: size.width,
             color: AppTheme.themeData(false, context).backgroundColor,
             child: Row(

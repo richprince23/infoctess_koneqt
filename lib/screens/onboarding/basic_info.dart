@@ -2,11 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
-import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
-import 'package:infoctess_koneqt/env.dart';
-import 'package:infoctess_koneqt/screens/onboarding.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
-import 'package:provider/provider.dart';
 
 class BasicInfoScreen extends StatefulWidget {
   const BasicInfoScreen({super.key});
@@ -16,7 +12,7 @@ class BasicInfoScreen extends StatefulWidget {
 }
 
 class _BasicInfoScreenState extends State<BasicInfoScreen> {
-   GlobalKey formKey = GlobalKey<FormState>();
+  GlobalKey formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -30,30 +26,29 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
           height: size.height * 0.20,
           child: Container(
             height: 40,
-            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             width: size.width,
             color: AppTheme.themeData(false, context).backgroundColor,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: const Icon(
-                      CupertinoIcons.back,
-                      size: 24,
-                      color: Colors.white,
-                    ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: const Icon(
+                    CupertinoIcons.back,
+                    // size: 24,
+                    color: Colors.white,
                   ),
+                  iconSize: 24,
                 ),
                 const SizedBox(
                   width: 10,
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(5),
+                  padding: const EdgeInsets.only(top: 5),
                   child: Text(
                     "1. Basic Info",
                     style: GoogleFonts.sarabun(
