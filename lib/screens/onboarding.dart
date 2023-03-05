@@ -65,26 +65,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ),
       persistentFooterButtons: [
         Column(
+          mainAxisSize: MainAxisSize.max,
           key: const Key("column_key"),
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 25),
               width: size.width,
-              decoration: BoxDecoration(
-                  color: AppTheme.themeData(false, context).backgroundColor,
-                  borderRadius: BorderRadius.circular(30)),
-              clipBehavior: Clip.antiAlias,
               child: Builder(builder: (context) {
                 return TextButton(
-                  child: Text(
-                    buttonText,
-                    style: GoogleFonts.sarabun(
-                        textStyle: const TextStyle(
-                            fontWeight: FontWeight.w400,
-                            decoration: TextDecoration.none,
-                            fontSize: 20,
-                            color: Colors.white)),
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    backgroundColor:
+                        AppTheme.themeData(false, context).backgroundColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                   ),
                   onPressed: () {
                     print(context.read<OnboardingController>().selectedLevel);
@@ -101,6 +97,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           (Route<dynamic> route) => false);
                     }
                   },
+                  child: Text(
+                    buttonText,
+                    style: GoogleFonts.sarabun(
+                        textStyle: const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            decoration: TextDecoration.none,
+                            fontSize: 20,
+                            color: Colors.white)),
+                  ),
                 );
               }),
             ),
