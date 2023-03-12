@@ -26,7 +26,7 @@ class NewsScreen extends StatelessWidget {
         child: RefreshIndicator(
           onRefresh: () async => print("refreshed"),
           child: ListView(
-            children: [
+            children: const [
               NewsItem(),
               NewsItem(),
               NewsItem(),

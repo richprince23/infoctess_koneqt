@@ -113,9 +113,10 @@ class OpenWidget extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("News Details"),
+        centerTitle: true,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: const Icon(CupertinoIcons.back),
+          icon: const Icon(Icons.arrow_back),
         ),
       ),
       body: SingleChildScrollView(

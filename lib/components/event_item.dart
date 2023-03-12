@@ -22,8 +22,8 @@ class _EventItemState extends State<EventItem> {
       child: OpenContainer(
         closedColor: Colors.transparent,
         transitionDuration: const Duration(seconds: 1),
-        closedBuilder: (context, action) => ClosedEventItem(),
-        openBuilder: (context, action) => OpenEventItem(),
+        closedBuilder: (context, action) => const ClosedEventItem(),
+        openBuilder: (context, action) => const OpenEventItem(),
       ),
     );
   }
@@ -77,7 +77,7 @@ class ClosedEventItem extends StatelessWidget {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                children: const [
                   Text("Uptown"),
                   Text("December 11, 2022, 11:34pm"),
                 ],
@@ -98,9 +98,10 @@ class OpenEventItem extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Event Info"),
+        centerTitle: true,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: const Icon(CupertinoIcons.back),
+          icon: const Icon(Icons.arrow_back),
         ),
       ),
       body: SingleChildScrollView(
@@ -156,7 +157,7 @@ class OpenEventItem extends StatelessWidget {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                children: const [
                   Text("President"),
                   Text("December 11, 2022, 11:34pm"),
                 ],
@@ -190,8 +191,8 @@ class OpenEventItem extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(4.0),
               child: Row(
-                children: [
-                  const Expanded(flex: 1, child: Text("Date: ")),
+                children: const [
+                  Expanded(flex: 1, child: Text("Date: ")),
                   Expanded(
                     flex: 4,
                     child: Text(
@@ -205,8 +206,8 @@ class OpenEventItem extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(4.0),
               child: Row(
-                children: [
-                  const Expanded(flex: 1, child: Text("Venue: ")),
+                children: const [
+                  Expanded(flex: 1, child: Text("Venue: ")),
                   Expanded(
                     flex: 4,
                     child: Text(

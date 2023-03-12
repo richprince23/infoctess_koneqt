@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class UtilitiesScreen extends StatelessWidget {
   const UtilitiesScreen({super.key});
@@ -12,7 +14,7 @@ class UtilitiesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    // var size = MediaQuery.of(context).size;
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -40,7 +42,7 @@ class UtilitiesScreen extends StatelessWidget {
                     .cardColor
                     .withOpacity(0.5),
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () => Navigator.pushNamed(context, '/gpa-calculator'),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -65,7 +67,7 @@ class UtilitiesScreen extends StatelessWidget {
                     .cardColor
                     .withOpacity(0.5),
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () => Navigator.pushNamed(context, '/my-courses'),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -90,7 +92,7 @@ class UtilitiesScreen extends StatelessWidget {
                     .cardColor
                     .withOpacity(0.5),
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () => Navigator.pushNamed(context, '/my-schedules'),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -115,7 +117,7 @@ class UtilitiesScreen extends StatelessWidget {
                     .cardColor
                     .withOpacity(0.5),
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () => Navigator.pushNamed(context, '/my-notes'),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -140,7 +142,18 @@ class UtilitiesScreen extends StatelessWidget {
                     .cardColor
                     .withOpacity(0.5),
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () async {
+                    await canLaunchUrlString('https://www.pdfdrive.com/')
+                        ? await launchUrlString(
+                            'https://www.pdfdrive.com/',
+                            webViewConfiguration: const WebViewConfiguration(
+                              enableDomStorage: true,
+                              enableJavaScript: true,
+                            ),
+                            mode: LaunchMode.inAppWebView,
+                          )
+                        : throw 'Could not launch https://www.pdfdrive.com/';
+                  },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [

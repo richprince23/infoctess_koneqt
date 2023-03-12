@@ -16,15 +16,17 @@ class AppTheme {
           : const Color.fromRGBO(74, 19, 193, 1),
       indicatorColor: isDarkTheme
           ? const Color.fromRGBO(74, 19, 193, 1)
-          : Color.fromRGBO(246, 7, 151, 1),
-      hintColor: isDarkTheme ? Color(0xff280C0B) : Color(0xffEECED3),
+          : const Color.fromRGBO(246, 7, 151, 1),
+      hintColor:
+          isDarkTheme ? const Color(0xff280C0B) : const Color(0xffEECED3),
       highlightColor: isDarkTheme
           ? const Color.fromRGBO(74, 19, 193, 0.3)
-          : Color.fromRGBO(246, 7, 151, 0.3),
-      hoverColor: isDarkTheme ? Color(0xff3A3A3B) : Color(0xff4285F4),
+          : const Color.fromRGBO(246, 7, 151, 0.3),
+      hoverColor:
+          isDarkTheme ? const Color(0xff3A3A3B) : const Color(0xff4285F4),
       focusColor: isDarkTheme
           ? const Color.fromRGBO(74, 19, 193, 1)
-          : Color.fromRGBO(246, 7, 151, 1),
+          : const Color.fromRGBO(246, 7, 151, 1),
       disabledColor: Colors.grey,
       textTheme: TextTheme(
           button: GoogleFonts.sarabun(
@@ -32,11 +34,13 @@ class AppTheme {
         color: Colors.white,
       )),
       // textSelectionColor: isconst DarkTheme ? Colorsconst .white : Colors.black,
-      cardColor: isDarkTheme ? Color(0x1C1E26) : Colors.white,
+      cardColor: isDarkTheme ? const Color(0x001c1e26) : Colors.white,
       canvasColor: isDarkTheme ? Colors.black54 : Colors.grey[50],
       brightness: isDarkTheme ? Brightness.dark : Brightness.light,
       buttonTheme: Theme.of(context).buttonTheme.copyWith(
-          colorScheme: isDarkTheme ? ColorScheme.dark() : ColorScheme.light()),
+          colorScheme: isDarkTheme
+              ? const ColorScheme.dark()
+              : const ColorScheme.light()),
       appBarTheme: const AppBarTheme(elevation: 0.0, color: Colors.white),
     );
   }

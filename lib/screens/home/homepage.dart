@@ -4,7 +4,7 @@ import 'package:infoctess_koneqt/screens/home/events_screen.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -25,9 +25,8 @@ class _HomePageState extends State<HomePage>
 
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
     _tabController = TabController(length: tabs.length, vsync: this);
+    super.initState();
   }
 
   @override

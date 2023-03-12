@@ -95,7 +95,7 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                     });
                   },
                   icon: const Icon(
-                    CupertinoIcons.back,
+                    Icons.arrow_back,
                     // size: 24,
                     color: Colors.white,
                   ),

@@ -56,7 +56,7 @@ class _ForumsScreenState extends State<ForumsScreen> {
                     print("reloaded");
                   },
                   child: ListView(
-                    children: [
+                    children: const [
                       PostItem(),
                       PostItem(),
                       PostItem(),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/env.dart';
@@ -35,7 +34,7 @@ class _SelectControlState extends State<SelectControl> {
           height: 5,
         ),
         Text(
-          widget.hintText!.toString().capitalized() ?? "",
+          widget.hintText!.toString().capitalized(),
           style: GoogleFonts.sarabun(
               fontWeight: FontWeight.normal,
               color: Colors.black87,
@@ -50,7 +49,7 @@ class _SelectControlState extends State<SelectControl> {
           onChanged: widget.onChanged,
           validator: widget.validator,
           decoration: InputDecoration(
-            hintText: "your " + widget.hintText!.toLowerCase() ?? "",
+            hintText: "your ${widget.hintText!.toLowerCase()}",
             hintStyle: const TextStyle(
                 color: Colors.black54, fontWeight: FontWeight.w400),
             contentPadding:

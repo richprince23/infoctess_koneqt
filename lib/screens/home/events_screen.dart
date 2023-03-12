@@ -1,7 +1,5 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:infoctess_koneqt/components/news_item.dart';
 import 'package:infoctess_koneqt/components/event_item.dart';
 
 class EventsScreen extends StatelessWidget {
@@ -25,7 +23,7 @@ class EventsScreen extends StatelessWidget {
         child: RefreshIndicator(
           onRefresh: () async => print("refreshed"),
           child: ListView(
-            children: [
+            children: const [
               EventItem(),
               EventItem(),
               EventItem(),

@@ -46,7 +46,7 @@ class _InputControlState extends State<InputControl> {
           height: 5,
         ),
         Text(
-          widget.hintText!.toString().capitalized() ?? "",
+          widget.hintText!.toString().capitalized() ,
           style: GoogleFonts.sarabun(
               fontWeight: FontWeight.normal,
               color: Colors.black87,
@@ -66,7 +66,7 @@ class _InputControlState extends State<InputControl> {
             setState(() {
               textLength = value.length;
             }),
-            print(textLength)
+            
           },
           validator: widget.validator,
           keyboardType: widget.type ?? TextInputType.text,

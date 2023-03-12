@@ -74,7 +74,7 @@ class _AcademicInfoScreenState extends State<AcademicInfoScreen> {
                       });
                     },
                     icon: const Icon(
-                      CupertinoIcons.back,
+                      Icons.arrow_back,
                       size: 24,
                       color: Colors.white,
                     ),

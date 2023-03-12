@@ -38,7 +38,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                     Navigator.pop(context);
                   },
                   icon: const Icon(
-                    CupertinoIcons.back,
+                    Icons.arrow_back,
                     // size: 24,
                     color: Colors.white,
                   ),
