@@ -107,8 +107,11 @@ class AllSchedulesState extends State<AllSchedules> {
       expansionTiles.add(
         ExpansionTile(
           textColor: Colors.white,
-          collapsedBackgroundColor: Colors.white.withOpacity(0.3),
-          collapsedTextColor: Colors.black,
+          collapsedBackgroundColor: AppTheme.themeData(false, context)
+              .backgroundColor
+              .withOpacity(0.3),
+          collapsedTextColor: Colors.white,
+          // backgroundColor: Colors.black,
           subtitle: Text(allScehdules
                   .where((element) => element.day == weekday)
                   .toList()
@@ -132,9 +135,135 @@ class AllSchedulesState extends State<AllSchedules> {
                   List<Timetable> schedules = allScehdules
                       .where((element) => element.day == weekday)
                       .toList();
-                  return ListTile(
-                    title: Text(schedules[index].courseTitle ?? ''),
-                    subtitle: Text(schedules[index].startTime ?? ''),
+                  return Slidable(
+                    direction: Axis.horizontal,
+                    endActionPane: ActionPane(
+                      motion: const ScrollMotion(),
+                      children: [
+                        SlidableAction(
+                          // An action can be bigger than the others.
+                          flex: 1,
+                          onPressed: (context) async {
+                            Platform.isIOS
+                                ? showCupertinoDialog(
+                                    context: context,
+                                    builder: ((context) => CupertinoAlertDialog(
+                                          content:
+                                              const Text("Delete this course?"),
+                                          actions: [
+                                            CupertinoDialogAction(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: const Text("Cancel"),
+                                            ),
+                                            CupertinoDialogAction(
+                                              isDestructiveAction: true,
+                                              onPressed: () async {
+                                                Navigator.pop(context);
+                                                await AppDatabase.instance
+                                                    .deleteSchedule(
+                                                        schedules[index].id!)
+                                                    .then(
+                                                      (value) =>
+                                                          getAllSchedules()
+                                                              .then(
+                                                        (value) =>
+                                                            ScaffoldMessenger
+                                                                    .of(context)
+                                                                .showSnackBar(
+                                                          SnackBar(
+                                                            content: Text(
+                                                                "${schedules[index].courseTitle} deleted from timetable"),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    );
+                                              },
+                                              child: const Text("Delete"),
+                                            ),
+                                          ],
+                                        )),
+                                  )
+                                : showDialog(
+                                    context: context,
+                                    builder: ((context) => AlertDialog(
+                                          content:
+                                              const Text("Delete this course?"),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: const Text("Cancel"),
+                                            ),
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                  ),
+                                                  elevation: 0,
+                                                  foregroundColor: Colors.white,
+                                                  backgroundColor:
+                                                      Colors.red.shade600),
+                                              onPressed: () async {
+                                                Navigator.pop(context);
+                                                await AppDatabase.instance
+                                                    .deleteSchedule(
+                                                        schedules[index].id!)
+                                                    .then(
+                                                      (value) =>
+                                                          getAllSchedules()
+                                                              .then(
+                                                        (value) =>
+                                                            ScaffoldMessenger
+                                                                    .of(context)
+                                                                .showSnackBar(
+                                                          SnackBar(
+                                                            content: Text(
+                                                                "${schedules[index].courseTitle} deleted from timetable"),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    );
+                                              },
+                                              child: const Text("Delete"),
+                                            ),
+                                          ],
+                                        )),
+                                  );
+                          },
+                          borderRadius: BorderRadius.circular(10),
+                          backgroundColor: Colors.red.shade300,
+                          foregroundColor: Colors.white,
+                          icon: Icons.delete,
+                          label: 'Delete',
+                        ),
+                        SlidableAction(
+                          onPressed: (context) {},
+                          borderRadius: BorderRadius.circular(10),
+                          backgroundColor: Colors.blue.shade300,
+                          foregroundColor: Colors.white,
+                          icon: Icons.edit,
+                          label: 'Edit',
+                        ),
+                      ],
+                    ),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      surfaceTintColor: Colors.white.withOpacity(0.5),
+                      color: AppTheme.themeData(false, context)
+                          .cardColor
+                          .withOpacity(0.5),
+                      child: ListTile(
+                        title: Text(schedules[index].courseTitle ?? ''),
+                        subtitle: Text(schedules[index].startTime ?? ''),
+                      ),
+                    ),
                   );
                 },
               ),
@@ -146,185 +275,3 @@ class AllSchedulesState extends State<AllSchedules> {
     return expansionTiles;
   }
 }
-//   Widget buildAllSchedules() {
-//     Iterable<ExpansionTile> expansionTiles = [];
-//     Iterable<ExpansionTile> sortedExpansionTiles = [];
-//     return FutureBuilder(
-//       future: AppDatabase.instance.getAllSchedules(),
-//       builder: (context, AsyncSnapshot<List<Timetable>> snapshot) {
-//         if (!snapshot.hasData) {
-//           return const CircularProgressIndicator();
-//         }
-//         if (snapshot.data!.isEmpty) {
-//           return Center(
-//             child: Text(
-//               'No schedules yet',
-//               style: TextStyle(
-//                 color: AppTheme.themeData(false, context).backgroundColor,
-//               ),
-//             ),
-//           );
-//         }
-//         if (snapshot.data!.isNotEmpty) {
-//           List<String> weekdays = [
-//             'Monday',
-//             'Tuesday',
-//             'Wednesday',
-//             'Thursday',
-//             'Friday',
-//             'Saturday',
-//             'Sunday'
-//           ];
-//           expansionTiles = snapshot.data!.map((days) {
-//             inspect(sortedExpansionTiles.toList());
-//             return ExpansionTile(
-//               title: Text(days.day!),
-//               children: [
-//                 Slidable(
-//                     direction: Axis.horizontal,
-//                     endActionPane: ActionPane(
-//                       motion: const ScrollMotion(),
-//                       children: [
-//                         SlidableAction(
-//                           // An action can be bigger than the others.
-//                           flex: 1,
-//                           onPressed: (context) async {
-//                             Platform.isIOS
-//                                 ? showCupertinoDialog(
-//                                     context: context,
-//                                     builder: ((context) => CupertinoAlertDialog(
-//                                           content:
-//                                               const Text("Delete this course?"),
-//                                           actions: [
-//                                             CupertinoDialogAction(
-//                                               onPressed: () {
-//                                                 Navigator.pop(context);
-//                                               },
-//                                               child: const Text("Cancel"),
-//                                             ),
-//                                             CupertinoDialogAction(
-//                                               isDestructiveAction: true,
-//                                               onPressed: () async {
-//                                                 Navigator.pop(context);
-//                                                 await AppDatabase.instance
-//                                                     .deleteSchedule(days.id!)
-//                                                     .then(
-//                                                       (value) =>
-//                                                           getAllSchedules()
-//                                                               .then(
-//                                                         (value) =>
-//                                                             ScaffoldMessenger
-//                                                                     .of(context)
-//                                                                 .showSnackBar(
-//                                                           SnackBar(
-//                                                             content: Text(
-//                                                                 "${days.courseTitle} deleted from timetable"),
-//                                                           ),
-//                                                         ),
-//                                                       ),
-//                                                     );
-//                                               },
-//                                               child: const Text("Delete"),
-//                                             ),
-//                                           ],
-//                                         )),
-//                                   )
-//                                 : showDialog(
-//                                     context: context,
-//                                     builder: ((context) => AlertDialog(
-//                                           content:
-//                                               const Text("Delete this course?"),
-//                                           actions: [
-//                                             TextButton(
-//                                               onPressed: () {
-//                                                 Navigator.pop(context);
-//                                               },
-//                                               child: const Text("Cancel"),
-//                                             ),
-//                                             ElevatedButton(
-//                                               style: ElevatedButton.styleFrom(
-//                                                   shape: RoundedRectangleBorder(
-//                                                     borderRadius:
-//                                                         BorderRadius.circular(
-//                                                             10),
-//                                                   ),
-//                                                   elevation: 0,
-//                                                   foregroundColor: Colors.white,
-//                                                   backgroundColor:
-//                                                       Colors.red.shade600),
-//                                               onPressed: () async {
-//                                                 Navigator.pop(context);
-//                                                 await AppDatabase.instance
-//                                                     .deleteSchedule(days.id!)
-//                                                     .then(
-//                                                       (value) =>
-//                                                           getAllSchedules()
-//                                                               .then(
-//                                                         (value) =>
-//                                                             ScaffoldMessenger
-//                                                                     .of(context)
-//                                                                 .showSnackBar(
-//                                                           const SnackBar(
-//                                                             content: Text(
-//                                                                 "Schedule deleted from timetable"),
-//                                                           ),
-//                                                         ),
-//                                                       ),
-//                                                     );
-//                                               },
-//                                               child: const Text("Delete"),
-//                                             ),
-//                                           ],
-//                                         )),
-//                                   );
-//                           },
-//                           borderRadius: BorderRadius.circular(10),
-//                           backgroundColor: Colors.red.shade300,
-//                           foregroundColor: Colors.white,
-//                           icon: Icons.delete,
-//                           label: 'Delete',
-//                         ),
-//                         SlidableAction(
-//                           onPressed: (context) {},
-//                           borderRadius: BorderRadius.circular(10),
-//                           backgroundColor: Colors.blue.shade300,
-//                           foregroundColor: Colors.white,
-//                           icon: Icons.edit,
-//                           label: 'Edit',
-//                         ),
-//                       ],
-//                     ),
-//                     child: Card(
-//                       shape: RoundedRectangleBorder(
-//                         borderRadius: BorderRadius.circular(10),
-//                       ),
-//                       surfaceTintColor: Colors.white.withOpacity(0.5),
-//                       color: AppTheme.themeData(false, context)
-//                           .cardColor
-//                           .withOpacity(0.5),
-//                       child: ListTile(
-//                         title: Text(days.courseTitle!),
-//                         subtitle: Text(days.venue!),
-//                         trailing: Text(days.endTime!),
-//                       ),
-//                     )),
-//               ],
-//             );
-//           });
-//           sortedExpansionTiles = expansionTiles.toList()
-//             ..sort((a, b) =>
-//                 weekdays.indexOf(a.title.toString()) -
-//                 weekdays.indexOf(b.title.toString()));
-//         }
-//         for (var el in sortedExpansionTiles.toList()) {
-//           print(el.title);
-//         }
-//         return ListView(
-//           children: sortedExpansionTiles.toList(),
-//         );
-//       },
-//     );
-//   }
-// }
-
-
