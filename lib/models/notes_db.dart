@@ -1,6 +1,4 @@
-import 'dart:convert';
-
-final String notesTable = 'notes';
+const String notesTable = 'notes';
 
 class Note {
   final int? id;

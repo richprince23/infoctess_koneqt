@@ -1,21 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
-import 'package:infoctess_koneqt/screens/main_screen.dart';
+
 import 'package:infoctess_koneqt/screens/onboarding.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({super.key});
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
-  final _formKey = GlobalKey<FormState>();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _pass = TextEditingController();
+
+  @override
+  void dispose() {
+    _email.dispose();
+    _pass.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -25,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
       children: [
         Positioned(
           top: 0,
-          height: size.height * 0.4,
+          height: size.height * 0.6,
           child: Container(
             width: size.width,
             color: AppTheme.themeData(false, context).backgroundColor,
@@ -40,17 +48,20 @@ class _LoginScreenState extends State<LoginScreen> {
                         const AssetImage("assets/images/infoctess_logo_bg.png"),
                   ),
                   Text(
-                    "Welcome!",
+                    "Infoctess Koneqt",
                     style: GoogleFonts.sarabun(
                         fontSize: 24,
                         color: Colors.white,
                         fontWeight: FontWeight.normal,
                         decoration: TextDecoration.none),
                   ),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   Text(
-                    "Login to continue",
+                    "Login",
                     style: GoogleFonts.sarabun(
-                        fontSize: 16,
+                        fontSize: 22,
                         fontWeight: FontWeight.normal,
                         color: Colors.white,
                         decoration: TextDecoration.none),
@@ -61,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         Positioned(
-          height: MediaQuery.of(context).size.height * 0.65,
+          height: MediaQuery.of(context).size.height * 0.45,
           // height: 200,
           // top: 100,
           bottom: 0,
@@ -79,6 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               child: SingleChildScrollView(
                   child: Form(
+                key: _formKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,28 +107,29 @@ class _LoginScreenState extends State<LoginScreen> {
                       controller: _pass,
                       isPassword: true,
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 20),
-                      height: 50,
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(
+                          context,
+                          "/main",
+                        );
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor: const Color.fromRGBO(74, 19, 193, 1),
+                        shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50),
-                          color: Color.fromRGBO(74, 19, 193, 1)),
-                      width: size.width,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.pushReplacementNamed(
-                            context,
-                            "/main",
-                          );
-                        },
-                        child: const Text(
-                          "login",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 20,
-                              color: Colors.white),
                         ),
+                        minimumSize: Size(size.width, 50),
+                      ),
+                      child: const Text(
+                        "login",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 20,
+                            color: Colors.white),
                       ),
                     ),
                     Container(
@@ -129,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             onTap: (() => Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => LoginScreen(),
+                                    builder: (context) => const LoginScreen(),
                                   ),
                                 )),
                             child: Text(

@@ -8,9 +8,9 @@ class SelectControl extends StatefulWidget {
   final String? hintText;
   final FormFieldValidator<String>? validator;
   final List<DropdownMenuItem<String>> items;
-  void Function(String? value)? onChanged;
+  final void Function(String? value)? onChanged;
 
-  SelectControl(
+  const SelectControl(
       {Key? inputkey,
       this.hintText,
       this.validator,
@@ -49,7 +49,7 @@ class _SelectControlState extends State<SelectControl> {
           onChanged: widget.onChanged,
           validator: widget.validator,
           decoration: InputDecoration(
-            hintText: "your ${widget.hintText!.toLowerCase()}",
+            hintText: widget.hintText!.toLowerCase(),
             hintStyle: const TextStyle(
                 color: Colors.black54, fontWeight: FontWeight.w400),
             contentPadding:

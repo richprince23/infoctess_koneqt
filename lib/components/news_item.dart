@@ -1,5 +1,4 @@
 import 'package:animations/animations.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:detectable_text_field/detectable_text_field.dart';
 import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,7 +14,7 @@ class NewsItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        print("tapped");
+        
       },
       child: OpenContainer(
         transitionDuration: const Duration(seconds: 1),

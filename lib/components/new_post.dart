@@ -1,4 +1,7 @@
 import 'dart:io';
+
+import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
+import 'package:detectable_text_field/widgets/detectable_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,9 +9,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
-import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
-import 'package:detectable_text_field/widgets/detectable_text.dart';
-import 'package:detectable_text_field/widgets/detectable_text_field.dart';
 
 class CreatePost extends StatefulWidget {
   const CreatePost({super.key});
@@ -81,16 +81,12 @@ class CreatePostState extends State<CreatePost> {
   /// Get video from gallery
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
   void dispose() {
-    // TODO: implement dispose
-    super.dispose();
+    focusNode.dispose();
+    selectedMedia = null;
+    croppedMedia = null;
     postController.dispose();
+    super.dispose();
   }
 
   @override

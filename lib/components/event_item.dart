@@ -2,7 +2,6 @@ import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:infoctess_koneqt/components/comment_input.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 
 class EventItem extends StatefulWidget {
@@ -16,9 +15,7 @@ class _EventItemState extends State<EventItem> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        print("tapped");
-      },
+      onTap: () {},
       child: OpenContainer(
         closedColor: Colors.transparent,
         transitionDuration: const Duration(seconds: 1),
@@ -224,7 +221,7 @@ class OpenEventItem extends StatelessWidget {
                 OutlinedButton.icon(
                   icon: const Icon(CupertinoIcons.bell_fill),
                   onPressed: () {
-                    print("Reminded!");
+                    //TODO: Add notification functionality
                   },
                   label: const Text("Notify"),
                   style: OutlinedButton.styleFrom(

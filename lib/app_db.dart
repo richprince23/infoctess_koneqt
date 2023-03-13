@@ -1,4 +1,5 @@
 // import 'package:flutter/material.dart';
+import 'package:infoctess_koneqt/models/timetable_db.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:infoctess_koneqt/models/courses_db.dart';
@@ -15,7 +16,7 @@ class AppDatabase {
     if (_database != null) {
       return _database!;
     } else {
-      _database = await _initDB('portal3.db');
+      _database = await _initDB('test1.db');
       return _database!;
     }
   }
@@ -28,9 +29,9 @@ class AppDatabase {
   }
 
   Future createDB(Database db, int version) async {
-    final idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
-    final textType = "STRING NOT NULL";
-    final intType = "INTEGER NOT NULL";
+    const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
+    const textType = "STRING NOT NULL";
+    const intType = "INTEGER NOT NULL";
 
     await db.execute('''
   CREATE TABLE $coursesTable(
@@ -43,6 +44,13 @@ class AppDatabase {
     await db.execute('''CREATE TABLE $notesTable(
       ${NoteFields.id} $idType, ${NoteFields.title} $textType,
       ${NoteFields.content} $textType, ${NoteFields.createdAt} $textType
+    )''');
+
+    await db.execute('''CREATE TABLE $schedulesTable(
+      ${TimetableFields.id} $idType, ${TimetableFields.courseCode} $textType,
+      ${TimetableFields.courseTitle} $textType, ${TimetableFields.lecturer} $textType,
+      ${TimetableFields.venue} $textType, ${TimetableFields.day} $textType,
+      ${TimetableFields.startTime} $textType, ${TimetableFields.endTime} $textType
     )''');
   }
 
@@ -80,6 +88,7 @@ class AppDatabase {
     final db = await instance.database;
     return await db.delete("courses", where: 'id = ?', whereArgs: [id]);
   }
+
   //notes operations
 
   Future<Note> addNote(Note note) async {
@@ -110,6 +119,35 @@ class AppDatabase {
     return await db.delete("notes", where: 'id = ?', whereArgs: [id]);
   }
 
+  //timetable operations
+  Future<Timetable> addSchedule(Timetable subject) async {
+    final db = await instance.database;
+
+    final id = await db.insert(schedulesTable, subject.toJson());
+    return subject.copy(id: id);
+  }
+
+  Future<List<Timetable>> getTodaySchedule(String day) async {
+    final db = await instance.database;
+    final res = await db.query("timetable",
+        columns: [TimetableFields.day.toString()],
+        where: 'day = ?',
+        whereArgs: [day]);
+    return res.map((json) => Timetable.fromJson(json)).toList();
+  }
+
+  Future<List<Timetable>> getAllSchedules() async {
+    final db = await instance.database;
+    final res = await db.query('timetable');
+    return res.map((json) => Timetable.fromJson(json)).toList();
+  }
+
+  Future deleteSchedule(int id) async {
+    final db = await instance.database;
+    return await db.delete("timetable", where: 'id = ?', whereArgs: [id]);
+  }
+
+//close database
   Future close() async {
     final db = await instance.database;
     db.close();

@@ -1,4 +1,10 @@
+import 'dart:developer';
+import 'dart:io';
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:infoctess_koneqt/app_db.dart';
 import 'package:infoctess_koneqt/models/notes_db.dart';
 import 'package:infoctess_koneqt/screens/tools/notes/read_note.dart';
@@ -39,6 +45,11 @@ class _MyNotesState extends State<MyNotes> with RouteAware {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
     getNotes();
@@ -70,23 +81,36 @@ class _MyNotesState extends State<MyNotes> with RouteAware {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: RefreshIndicator(
-          // color: constants.color,
-          strokeWidth: 2,
-          child: isLoading
-              ? Center(
-                  child: CircularProgressIndicator(
-                  color: AppTheme.themeData(false, context).backgroundColor,
-                ))
-              : buildNotes(),
-          onRefresh: () async {
-            setState(() {
-              buildNotes();
-            });
-          },
-        ),
+      body: RefreshIndicator(
+        color: AppTheme.themeData(false, context).backgroundColor,
+        strokeWidth: 3,
+        displacement: 10,
+        child: isLoading
+            ? Center(
+                child: CircularProgressIndicator(
+                color: AppTheme.themeData(false, context).backgroundColor,
+              ))
+            : Container(
+                decoration: const BoxDecoration(
+                  // color: Colors.blue,
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [Colors.blue, Colors.pink],
+                    stops: [0.2, 1],
+                  ),
+                ),
+                padding: const EdgeInsets.all(10),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 2, sigmaY: 0),
+                  child: buildNotes(),
+                ),
+              ),
+        onRefresh: () async {
+          setState(() {
+            buildNotes();
+          });
+        },
       ),
     );
   }
@@ -95,71 +119,170 @@ class _MyNotesState extends State<MyNotes> with RouteAware {
     return FutureBuilder(
       future: AppDatabase.instance.getNotes(),
       builder: (context, AsyncSnapshot snapshot) {
+        if (snapshot.data == null ||
+            snapshot.data.length == 0 ||
+            snapshot.data == [] ||
+            snapshot.data!.isEmpty) {
+          return const Center(
+            child: Text(
+              "No Notes added",
+              style: TextStyle(fontSize: 20, color: Colors.white),
+            ),
+          );
+        }
+
         if (snapshot.hasData) {
           return ListView.builder(
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
-              return ListTile(
-                contentPadding: const EdgeInsets.all(5),
-                // onLongPress: ,
-                leading: IconButton(
-                  onPressed: () async {
-                    //delete note here
-                    showDialog(
-                      context: context,
-                      builder: ((context) => AlertDialog(
-                            content: const Text("Delete this note?"),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Text("Cancel"),
-                              ),
-                              TextButton(
-                                onPressed: () async {
-                                  await AppDatabase.instance
-                                      .deleteNote(snapshot.data[index].id)
-                                      .then((value) {
-                                    setState(() {
-                                      snapshot.data!.removeAt(index);
-                                    });
-                                  }).then((value) => Navigator.pop(context));
-                                },
-                                child: const Text("Delete"),
-                              ),
-                            ],
-                          )),
-                    );
-                    // await AppDatabase.instance
-                    //     .deleteNote(snapshot.data[index].id)
-                    //     .then((value) {
-                    //   setState(() {
-                    //     snapshot.data!.removeAt(index);
-                    //   });
-                    // });
-                  },
-                  icon: const Icon(Icons.delete),
-                  color: Colors.red,
-                ),
-                tileColor: Colors.white,
-                title: Text(snapshot.data[index].title),
-                subtitle: Text(snapshot.data[index].createdAt),
-                onTap: () async {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ReadNoteScreen(
-                          noteID: snapshot.data[index].id!,
-                          title: snapshot.data[index].title.toString(),
-                          content: snapshot.data[index].content.toString()),
+              return Slidable(
+                direction: Axis.horizontal,
+                endActionPane: ActionPane(
+                  motion: const ScrollMotion(),
+                  children: [
+                    SlidableAction(
+                      // An action can be bigger than the others.
+                      flex: 1,
+                      borderRadius: BorderRadius.circular(10),
+                      onPressed: (context) async {
+                        Platform.isIOS
+                            ? showCupertinoDialog(
+                                context: context,
+                                builder: ((context) => CupertinoAlertDialog(
+                                      content: const Text("Delete this note?"),
+                                      actions: [
+                                        CupertinoDialogAction(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text("Cancel"),
+                                        ),
+                                        CupertinoDialogAction(
+                                          isDestructiveAction: true,
+                                          onPressed: () async {
+                                            await AppDatabase.instance
+                                                .deleteNote(
+                                                    snapshot.data[index].id)
+                                                .then((value) {
+                                                  setState(() {
+                                                    snapshot.data!
+                                                        .removeAt(index);
+                                                  });
+                                                })
+                                                .then((value) =>
+                                                    Navigator.pop(context))
+                                                .then((value) =>
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                            "${snapshot.data![index].title} deleted!"),
+                                                      ),
+                                                    ));
+                                          },
+                                          child: const Text("Delete"),
+                                        ),
+                                      ],
+                                    )),
+                              )
+                            : showDialog(
+                                context: context,
+                                builder: ((context) => AlertDialog(
+                                      content: const Text("Delete this note?"),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text("Cancel"),
+                                        ),
+                                        TextButton(
+                                          onPressed: () async {
+                                            await AppDatabase.instance
+                                                .deleteNote(
+                                                    snapshot.data[index].id)
+                                                .then((value) {
+                                                  setState(() {
+                                                    snapshot.data!
+                                                        .removeAt(index);
+                                                  });
+                                                })
+                                                .then((value) =>
+                                                    Navigator.pop(context))
+                                                .then((value) =>
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      const SnackBar(
+                                                        content: Text(
+                                                            "Note deleted!"),
+                                                      ),
+                                                    ));
+                                          },
+                                          child: const Text("Delete"),
+                                        ),
+                                      ],
+                                    )),
+                              );
+                      },
+                      backgroundColor: Colors.red.shade300,
+                      foregroundColor: Colors.white,
+                      icon: Icons.delete,
+                      label: 'Delete',
                     ),
-                  ).then((value) {});
-                },
+                    SlidableAction(
+                      borderRadius: BorderRadius.circular(10),
+                      onPressed: (context) {},
+                      backgroundColor: Colors.blue.shade300,
+                      foregroundColor: Colors.white,
+                      icon: Icons.edit,
+                      label: 'Edit',
+                    ),
+                  ],
+                ),
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  surfaceTintColor: Colors.white.withOpacity(0.5),
+                  color: AppTheme.themeData(false, context)
+                      .cardColor
+                      .withOpacity(0.5),
+                  child: ListTile(
+                    textColor:
+                        AppTheme.themeData(false, context).primaryColorLight,
+                    contentPadding: const EdgeInsets.all(5),
+                    leading: const Icon(
+                      CupertinoIcons.pencil_outline,
+                    ),
+                    // tileColor: Colors.white.withOpacity(0.5),
+                    title: Text(
+                      snapshot.data[index].title,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w600, fontSize: 18),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                    subtitle: Text(snapshot.data[index].createdAt),
+                    onTap: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ReadNoteScreen(
+                              noteID: snapshot.data[index].id!,
+                              title: snapshot.data[index].title.toString(),
+                              content: snapshot.data[index].content.toString()),
+                        ),
+                      ).then((value) {});
+                    },
+                  ),
+                ),
               );
             },
           );
         }
+
         return const Center(child: CircularProgressIndicator());
         // return const Center(child: Text("No Notes added"));
       },

@@ -36,7 +36,7 @@ class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
         IconButton(
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => NotificationsSceen()));
+                MaterialPageRoute(builder: (context) => const NotificationsSceen()));
           },
           icon: const Icon(CupertinoIcons.bell),
         )

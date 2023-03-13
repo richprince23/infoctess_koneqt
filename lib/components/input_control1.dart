@@ -18,15 +18,18 @@ class InputControl extends StatefulWidget {
 
   final bool? readOnly;
 
-  const InputControl({
-    Key? inputkey,
-    this.type,
-    this.hintText,
-    this.isPassword,
-    this.readOnly,
-    this.controller,
-    this.validator,
-  }) : super(key: inputkey);
+  final void Function()? onTap;
+
+  const InputControl(
+      {Key? inputkey,
+      this.type,
+      this.hintText,
+      this.isPassword,
+      this.readOnly,
+      this.controller,
+      this.validator,
+      this.onTap})
+      : super(key: inputkey);
 
   @override
   State<InputControl> createState() => _InputControlState();
@@ -46,7 +49,7 @@ class _InputControlState extends State<InputControl> {
           height: 5,
         ),
         Text(
-          widget.hintText!.toString().capitalized() ,
+          widget.hintText!.toString().capitalized(),
           style: GoogleFonts.sarabun(
               fontWeight: FontWeight.normal,
               color: Colors.black87,
@@ -66,8 +69,8 @@ class _InputControlState extends State<InputControl> {
             setState(() {
               textLength = value.length;
             }),
-            
           },
+          onTap: widget.onTap,
           validator: widget.validator,
           keyboardType: widget.type ?? TextInputType.text,
           obscureText: showPass,
@@ -91,7 +94,7 @@ class _InputControlState extends State<InputControl> {
                     )
                   : const Icon(null),
             ),
-            hintText: "your ${widget.hintText!.toLowerCase()}",
+            hintText: widget.hintText!.capitalized(),
             hintStyle: const TextStyle(
                 color: Colors.black54, fontWeight: FontWeight.w400),
             contentPadding:

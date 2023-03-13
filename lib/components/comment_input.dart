@@ -20,9 +20,11 @@ class _CommentInputState extends State<CommentInput> {
   bool isEmtpyText = true;
 
   // final scroll = ScrollController();
+  @override
   void dispose() {
     commentText.dispose();
     focusNode.dispose();
+    textKey.currentState?.dispose();
     super.dispose();
   }
 

@@ -1,13 +1,13 @@
-final String coursesTable = 'courses';
+const String coursesTable = 'courses';
 
 class Course {
-  var courseCode;
-  var courseTitle;
-  var creditHours;
-  var id;
-  var semester;
-  var createdAt;
-  var level;
+  String? courseCode;
+  String? courseTitle;
+  int? creditHours;
+  int? id;
+  String? semester;
+  // var createdAt;
+  int? level;
 
   Course(
       {this.id,
@@ -30,12 +30,12 @@ class Course {
 
   static Course fromJson(Map<dynamic, Object?> json) {
     return Course(
-        id: json[CourseFields.id] as int?,
-        courseCode: json[CourseFields.courseCode],
+        id: json[CourseFields.id] as int,
+        courseCode: json[CourseFields.courseCode]! as String?,
         courseTitle: json[CourseFields.courseTitle] as String?,
         semester: json[CourseFields.semester] as String?,
-        level: json[CourseFields.level],
-        creditHours: json[CourseFields.creditHours]);
+        level: json[CourseFields.level] as int?,
+        creditHours: json[CourseFields.creditHours] as int?);
   }
 
   Course copy(
@@ -71,4 +71,3 @@ class CourseFields {
 
   static var level = "level";
 }
-

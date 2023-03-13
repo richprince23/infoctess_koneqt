@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:infoctess_koneqt/app_db.dart';
 import 'package:infoctess_koneqt/models/courses_db.dart';
+import 'package:infoctess_koneqt/theme/mytheme.dart';
 
 class ManageCourses extends StatefulWidget {
   const ManageCourses({Key? key}) : super(key: key);
@@ -52,18 +55,88 @@ class _ManageCoursesState extends State<ManageCourses> {
             children: [
               SlidableAction(
                 // An action can be bigger than the others.
-                flex: 2,
+                flex: 1,
                 onPressed: (context) async {
-                  await AppDatabase.instance.deleteCourse(course.id).then(
-                        (value) => readCourses().then(
-                          (value) => ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("Course deleted"),
-                            ),
-                          ),
-                        ),
-                      );
+                  Platform.isIOS
+                      ? showCupertinoDialog(
+                          context: context,
+                          builder: ((context) => CupertinoAlertDialog(
+                                content: const Text("Delete this course?"),
+                                actions: [
+                                  CupertinoDialogAction(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text("Cancel"),
+                                  ),
+                                  CupertinoDialogAction(
+                                    isDestructiveAction: true,
+                                    onPressed: () async {
+                                      Navigator.pop(context);
+                                      await AppDatabase.instance
+                                          .deleteCourse(course.id!)
+                                          .then(
+                                            (value) => readCourses().then(
+                                              (value) =>
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                      "${course.courseTitle} deleted"),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                    },
+                                    child: const Text("Delete"),
+                                  ),
+                                ],
+                              )),
+                        )
+                      : showDialog(
+                          context: context,
+                          builder: ((context) => AlertDialog(
+                                content: const Text("Delete this course?"),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text("Cancel"),
+                                  ),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        elevation: 0,
+                                        foregroundColor: Colors.white,
+                                        backgroundColor: Colors.red.shade600),
+                                    onPressed: () async {
+                                      Navigator.pop(context);
+                                      await AppDatabase.instance
+                                          .deleteCourse(course.id!)
+                                          .then(
+                                            (value) => readCourses().then(
+                                              (value) =>
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                const SnackBar(
+                                                  content:
+                                                      Text("Course deleted"),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                    },
+                                    child: const Text("Delete"),
+                                  ),
+                                ],
+                              )),
+                        );
                 },
+                borderRadius: BorderRadius.circular(10),
                 backgroundColor: Colors.red.shade300,
                 foregroundColor: Colors.white,
                 icon: Icons.delete,
@@ -71,6 +144,7 @@ class _ManageCoursesState extends State<ManageCourses> {
               ),
               SlidableAction(
                 onPressed: (context) {},
+                borderRadius: BorderRadius.circular(10),
                 backgroundColor: Colors.blue.shade300,
                 foregroundColor: Colors.white,
                 icon: Icons.edit,
@@ -78,20 +152,28 @@ class _ManageCoursesState extends State<ManageCourses> {
               ),
             ],
           ),
-          child: ListTile(
-            tileColor: ThemeData.light().secondaryHeaderColor,
-            contentPadding: const EdgeInsets.all(5),
-            leading: const Icon(CupertinoIcons.book),
-            subtitle: Text(
-                "Level:  ${course.level.toString()} ${course.semester} Credit Hours: ${course.creditHours} "),
-            // subtitle: Text(course.courseCode.toString()),
-            // title: course.courseTitle, // replace with course code and semester
-            title: Text(
-              course.courseTitle.toString(),
-              style: const TextStyle(fontSize: 18),
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
             ),
+            surfaceTintColor: Colors.white.withOpacity(0.5),
+            color:
+                AppTheme.themeData(false, context).cardColor.withOpacity(0.5),
+            child: ListTile(
+              // tileColor: ThemeData.light().secondaryHeaderColor,
+              contentPadding: const EdgeInsets.all(5),
+              leading: const Icon(CupertinoIcons.book),
+              subtitle: Text(
+                  "Level:  ${course.level.toString()} ${course.semester} Credit Hours: ${course.creditHours} "),
+              // subtitle: Text(course.courseCode.toString()),
+              // title: course.courseTitle, // replace with course code and semester
+              title: Text(
+                course.courseTitle.toString(),
+                style: const TextStyle(fontSize: 18),
+              ),
 
-            onTap: () {},
+              onTap: () {},
+            ),
           ),
         );
       });
