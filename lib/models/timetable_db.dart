@@ -34,7 +34,7 @@ class Timetable {
 
   static Timetable fromJson(Map<dynamic, Object?> json) {
     return Timetable(
-      id: json[TimetableFields.id] as int,
+      id: json[TimetableFields.id] as int?,
       courseCode: json[TimetableFields.courseCode] as String?,
       courseTitle: json[TimetableFields.courseTitle] as String?,
       lecturer: json[TimetableFields.lecturer] as String?,

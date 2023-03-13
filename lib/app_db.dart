@@ -130,7 +130,7 @@ class AppDatabase {
   Future<List<Timetable>> getTodaySchedule(String day) async {
     final db = await instance.database;
     final res = await db.query("timetable",
-        columns: [TimetableFields.day.toString()],
+        // columns: [TimetableFields.day.toString()],
         where: 'day = ?',
         whereArgs: [day]);
     return res.map((json) => Timetable.fromJson(json)).toList();
