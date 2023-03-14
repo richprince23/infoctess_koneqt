@@ -17,21 +17,20 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-
     return Stack(
       children: [
         Positioned(
           top: 0,
           width: size.width,
-          height: size.height * 0.20,
+          height: size.height * 0.45,
           child: Container(
             height: 40,
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             width: size.width,
             color: AppTheme.themeData(false, context).backgroundColor,
-            child: Row(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
                   onPressed: () {
@@ -44,27 +43,25 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                   ),
                   iconSize: 24,
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 5),
+                Center(
+                  // padding: const EdgeInsets.only(top: 5),
                   child: Text(
-                    "1. Basic Info",
+                    "Basic Info",
                     style: GoogleFonts.sarabun(
-                        fontSize: 24,
+                        fontSize: 30,
                         color: Colors.white,
                         fontWeight: FontWeight.normal,
                         decoration: TextDecoration.none),
                   ),
                 ),
+                const SizedBox(),
               ],
             ),
           ),
         ),
         Positioned(
-          top: size.height * 0.10,
-          height: size.height * 0.85,
+          top: size.height * 0.30,
+          height: size.height * 0.65,
           width: size.width,
           child: Material(
             elevation: 6,

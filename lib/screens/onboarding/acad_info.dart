@@ -4,8 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/components/select_control1.dart';
 import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
-import 'package:infoctess_koneqt/env.dart';
-import 'package:infoctess_koneqt/screens/onboarding.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:provider/provider.dart';
 
@@ -53,54 +51,48 @@ class _AcademicInfoScreenState extends State<AcademicInfoScreen> {
         Positioned(
           top: 0,
           width: size.width,
-          height: size.height * 0.20,
+          height: size.height * 0.45,
           child: Container(
             height: 40,
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             width: size.width,
             color: AppTheme.themeData(false, context).backgroundColor,
-            child: Row(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        // goBack();
-                        Provider.of<OnboardingController>(context,
-                                listen: false)
-                            .goBack();
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      size: 24,
-                      color: Colors.white,
-                    ),
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      // goBack();
+                      Provider.of<OnboardingController>(context, listen: false)
+                          .goBack();
+                    });
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    size: 24,
+                    color: Colors.white,
                   ),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(5),
+                Center(
                   child: Text(
-                    "2. Academic Info",
+                    "Academic Info",
                     style: GoogleFonts.sarabun(
-                        fontSize: 24,
+                        fontSize: 30,
                         color: Colors.white,
                         fontWeight: FontWeight.normal,
                         decoration: TextDecoration.none),
                   ),
                 ),
+                const SizedBox(),
               ],
             ),
           ),
         ),
         Positioned(
-          top: size.height * 0.10,
-          height: size.height * 0.85,
+          top: size.height * 0.30,
+          height: size.height * 0.65,
           width: size.width,
           child: Material(
             elevation: 5,

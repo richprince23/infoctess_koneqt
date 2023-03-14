@@ -31,11 +31,14 @@ class NavItem extends StatelessWidget {
             color: AppTheme.themeData(false, context).focusColor,
             size: 16,
           ),
-          Text(label,
-              style: TextStyle(
-                fontSize: 10,
-                color: AppTheme.themeData(false, context).primaryColor,
-              )),
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 10,
+              // color: AppTheme.themeData(false, context).primaryColor,
+              color: Colors.black,
+            ),
+          ),
         ],
       ),
     );

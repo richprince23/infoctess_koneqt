@@ -24,7 +24,8 @@ class _BottomNavState extends State<BottomNav> {
           //     topLeft: Radius.circular(20), topRight: Radius.circular(20)),
           ),
       child: NavigationBar(
-        backgroundColor: AppTheme.themeData(false, context).backgroundColor,
+        // backgroundColor: AppTheme.themeData(false, context).backgroundColor,
+
         elevation: 2,
         selectedIndex: context.watch<PageControl>().pageIndex,
         height: 50,
@@ -46,7 +47,10 @@ class _BottomNavState extends State<BottomNav> {
                       label: "Home",
                       icon: CupertinoIcons.house_fill,
                     )
-                  : const Icon(CupertinoIcons.house, color: Colors.white),
+                  : const Icon(
+                      CupertinoIcons.house,
+                      color: Colors.black,
+                    ),
             ),
           ),
           SizedBox(
@@ -61,8 +65,14 @@ class _BottomNavState extends State<BottomNav> {
                 });
               },
               child: pageIndex == 1
-                  ? NavItem(label: "Community", icon: CupertinoIcons.news_solid)
-                  : const Icon(CupertinoIcons.news, color: Colors.white),
+                  ? NavItem(
+                      label: "Community",
+                      icon: CupertinoIcons.person_3_fill,
+                    )
+                  : const Icon(
+                      CupertinoIcons.person_3,
+                      color: Colors.black,
+                    ),
             ),
           ),
           SizedBox(
@@ -79,7 +89,10 @@ class _BottomNavState extends State<BottomNav> {
               child: pageIndex == 2
                   ? NavItem(
                       label: "Utilities", icon: CupertinoIcons.briefcase_fill)
-                  : const Icon(CupertinoIcons.briefcase, color: Colors.white),
+                  : const Icon(
+                      CupertinoIcons.briefcase,
+                      color: Colors.black,
+                    ),
             ),
           ),
           SizedBox(
@@ -98,7 +111,10 @@ class _BottomNavState extends State<BottomNav> {
                   ? NavItem(
                       label: "Messages",
                       icon: CupertinoIcons.envelope_open_fill)
-                  : const Icon(CupertinoIcons.envelope, color: Colors.white),
+                  : const Icon(
+                      CupertinoIcons.envelope,
+                      color: Colors.black,
+                    ),
             ),
           ),
         ],
