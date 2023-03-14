@@ -310,9 +310,30 @@ class AllSchedulesState extends State<AllSchedules> {
     // List<Timetable> schedules = todaySchedules
     //     .where((element) => element.day == weekdays[DateTime.now().weekday])
     //     .toList();
+    List<Widget> isEMptyWidget = [
+      Container(
+        height: MediaQuery.of(context).size.height * 0.8,
+        alignment: Alignment.center,
+        child: Container(
+          padding: const EdgeInsets.all(30),
+          decoration: ShapeDecoration(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            color: Colors.white,
+          ),
+          child: const Text(
+            "Hurray! Your day is free! 🎉🥳",
+            style: TextStyle(fontSize: 20, color: Colors.black),
+          ),
+        ),
+      ),
+    ];
+    if (todaySchedules.isEmpty) {
+      return isEMptyWidget;
+    }
 
     for (int index = 0; index < todaySchedules.length; index++) {
-      print(todaySchedules[index].courseTitle);
       today.add(Slidable(
         direction: Axis.horizontal,
         endActionPane: ActionPane(

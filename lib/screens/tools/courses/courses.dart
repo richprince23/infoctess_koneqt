@@ -207,9 +207,23 @@ class _ManageCoursesState extends State<ManageCourses> {
         child: isLoading
             ? const Center(child: CircularProgressIndicator())
             : courses.isEmpty
-                ? const Align(
+                ? Container(
+                    height: MediaQuery.of(context).size.height * 0.8,
                     alignment: Alignment.center,
-                    child: Text("No courses added"))
+                    child: Container(
+                      padding: const EdgeInsets.all(30),
+                      decoration: ShapeDecoration(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        color: Colors.white,
+                      ),
+                      child: const Text(
+                        "You have note added any course yet 🤔\nClick the + button to add a new course",
+                        style: TextStyle(fontSize: 20, color: Colors.black),
+                      ),
+                    ),
+                  )
                 : buildCourses(),
       ),
     );

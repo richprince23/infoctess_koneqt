@@ -123,10 +123,21 @@ class _MyNotesState extends State<MyNotes> with RouteAware {
             snapshot.data.length == 0 ||
             snapshot.data == [] ||
             snapshot.data!.isEmpty) {
-          return const Center(
-            child: Text(
-              "No Notes added",
-              style: TextStyle(fontSize: 20, color: Colors.white),
+          return Container(
+            height: MediaQuery.of(context).size.height * 0.8,
+            alignment: Alignment.center,
+            child: Container(
+              padding: const EdgeInsets.all(30),
+              decoration: ShapeDecoration(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                color: Colors.white,
+              ),
+              child: const Text(
+                "You don't seem to have any notes yet🤔\n Click the + button to add a ne note",
+                style: TextStyle(fontSize: 18, color: Colors.black),
+              ),
             ),
           );
         }
