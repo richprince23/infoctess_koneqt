@@ -176,7 +176,6 @@ class AIChatScreenState extends State<AIChatScreen> {
     if (response.statusCode == 200) {
       var responseData = jsonDecode(response.body);
       var completions = responseData['choices'][0]['text'];
-      print(responseData);
       return completions;
     }
     if (response.statusCode == 400) {
@@ -201,9 +200,10 @@ class AIChatScreenState extends State<AIChatScreen> {
         // backgroundColor: Colors.black.withOpacity(0.2),
         // title: const Text('Processing....'),
         content: SizedBox(
-          height: 200,
+          height: 60,
+          width: 100,
           child: Center(
-            child: Image.asset("assets/images/preload.gif"),
+            child: Image.asset("assets/images/preload.gif", height: 40),
           ),
         ),
       ),
