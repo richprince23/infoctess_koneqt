@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:infoctess_koneqt/controllers/notification_service.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -228,7 +229,9 @@ class UtilitiesScreen extends StatelessWidget {
                     .cardColor
                     .withOpacity(0.5),
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () => NotificationService().showNotification(
+                      title: "Schedules Reminder",
+                      body: "You have an upcoming class at 8:00pm"),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/app_db.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/components/select_control1.dart';
+import 'package:infoctess_koneqt/controllers/notification_service.dart';
 import 'package:infoctess_koneqt/models/courses_db.dart';
 import 'package:infoctess_koneqt/models/timetable_db.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
@@ -241,6 +242,9 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                       // inspect(schedule);
                       await AppDatabase.instance
                           .addSchedule(schedule)
+                          .then((value) => NotificationService()
+                              .scheduleNotification(
+                                  selectedDay, _startTime.text))
                           .then((value) => Navigator.pop(context))
                           .then(
                             (value) =>

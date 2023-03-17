@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:infoctess_koneqt/.env.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/widgets/chat_bubble.dart';
 
@@ -152,8 +153,7 @@ class AIChatScreenState extends State<AIChatScreen> {
     var url = Uri.parse('https://api.openai.com/v1/completions');
     var headers = {
       'Content-Type': 'application/json',
-      'Authorization':
-          'Bearer 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',
+      'Authorization': 'Bearer $OPEN_AI_KEY',
     };
     var body = jsonEncode({
       'prompt': prompt,
