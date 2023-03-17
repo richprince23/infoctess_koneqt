@@ -34,7 +34,7 @@ class _SelectControlState extends State<SelectControl> {
           height: 5,
         ),
         Text(
-          widget.hintText!.toString().capitalized(),
+          widget.hintText!.toString(),
           style: GoogleFonts.sarabun(
               fontWeight: FontWeight.normal,
               color: Colors.black87,

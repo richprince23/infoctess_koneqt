@@ -7,10 +7,10 @@ import 'package:infoctess_koneqt/screens/onboarding/basic_info.dart';
 import 'package:infoctess_koneqt/screens/onboarding/profileinfo.dart';
 import 'package:infoctess_koneqt/screens/tools/utilies_screen.dart';
 
-extension Capitalized on String {
-  String capitalized() =>
-      this.substring(0, 1).toUpperCase() + this.substring(1).toLowerCase();
-}
+// extension Capitalized on String {
+//   String capitalized() =>
+//       this.substring(0, 1).toUpperCase() + this.substring(1).toLowerCase();
+// }
 
 // onboarding screen
 final PageController pageController = PageController(initialPage: 0);

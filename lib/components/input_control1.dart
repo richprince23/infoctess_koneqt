@@ -12,6 +12,8 @@ class InputControl extends StatefulWidget {
 
   final bool? isPassword;
   final TextInputType? type;
+  final bool? showLabel;
+  final FocusNode? focusNode;
   // final IconData? suffixIcon;
 
   final FormFieldValidator<String>? validator;
@@ -20,7 +22,7 @@ class InputControl extends StatefulWidget {
 
   final void Function()? onTap;
 
-  const InputControl(
+  InputControl(
       {Key? inputkey,
       this.type,
       this.hintText,
@@ -28,7 +30,9 @@ class InputControl extends StatefulWidget {
       this.readOnly,
       this.controller,
       this.validator,
-      this.onTap})
+      this.onTap,
+      this.showLabel = true,
+      this.focusNode})
       : super(key: inputkey);
 
   @override
@@ -44,21 +48,26 @@ class _InputControlState extends State<InputControl> {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
-        const SizedBox(
-          height: 5,
-        ),
-        Text(
-          widget.hintText!.toString().capitalized(),
-          style: GoogleFonts.sarabun(
-              fontWeight: FontWeight.normal,
-              color: Colors.black87,
-              fontSize: 18,
-              decoration: TextDecoration.none),
-        ),
-        const SizedBox(
-          height: 5,
-        ),
+        if (widget.showLabel == true)
+          const SizedBox(
+            height: 5,
+          ),
+        if (widget.showLabel == true)
+          Text(
+            widget.hintText!.toString(),
+            style: GoogleFonts.sarabun(
+                fontWeight: FontWeight.normal,
+                color: Colors.black87,
+                fontSize: 18,
+                decoration: TextDecoration.none),
+          ),
+        if (widget.showLabel == true)
+          const SizedBox(
+            height: 5,
+          ),
         TextFormField(
           readOnly: widget.readOnly ?? false,
           inputFormatters: [
@@ -75,6 +84,7 @@ class _InputControlState extends State<InputControl> {
           keyboardType: widget.type ?? TextInputType.text,
           obscureText: showPass,
           controller: widget.controller,
+          focusNode: widget.focusNode ?? null,
           decoration: InputDecoration(
             suffixIcon: GestureDetector(
               onTap: () => {
@@ -94,7 +104,7 @@ class _InputControlState extends State<InputControl> {
                     )
                   : const Icon(null),
             ),
-            hintText: widget.hintText!.capitalized(),
+            hintText: widget.hintText!.toString(),
             hintStyle: const TextStyle(
                 color: Colors.black54, fontWeight: FontWeight.w400),
             contentPadding:

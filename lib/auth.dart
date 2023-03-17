@@ -44,3 +44,23 @@ class Auth {
 }
 
 User? curUser = FirebaseAuth.instance.currentUser;
+
+Future<void> buildChat() async {
+  // final user = Provider.of<User>(context);
+  // final userDoc = await FirebaseFirestore.instance
+  //     .collection('users')
+  //     .doc(user.uid)
+  //     .get();
+  // final userAvatar = userDoc.data()!['avatar'];
+  // final chat = Provider.of<Chat>(context);
+  // final chatDoc = await FirebaseFirestore.instance
+  //     .collection('chats')
+  //     .doc(chat.id)
+  //     .get();
+  // final chatMessages = chatDoc.data()!['messages'];
+  // final chatMessagesList = chatMessages as List;
+  // final chatMessagesListReversed = chatMessagesList.reversed.toList();
+  // final chatMessagesListReversedLength = chatMessagesListReversed.length;
+  // final chatMessagesListReversedLengthMinusOne =
+  //     chatMessagesListReversedLength - 1;
+}

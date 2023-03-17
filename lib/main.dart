@@ -14,6 +14,7 @@ import 'package:infoctess_koneqt/screens/tools/notes/add_note.dart';
 import 'package:infoctess_koneqt/screens/tools/notes/my_notes.dart';
 import 'package:infoctess_koneqt/screens/tools/schedules/add_schedule.dart';
 import 'package:infoctess_koneqt/screens/tools/schedules/timetable.dart';
+import 'package:infoctess_koneqt/screens/tools/studymate/aichat_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
@@ -63,6 +64,7 @@ class MyApp extends StatelessWidget {
         "/add-note": (context) => const AddNoteScreen(),
         "/my-schedules": (context) => const AllSchedules(),
         "/add-schedule": (context) => const AddScheduleScreen(),
+        "/ai-studymate": (context) => const AIChatScreen(),
       },
     );
   }

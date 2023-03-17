@@ -178,7 +178,7 @@ class UtilitiesScreen extends StatelessWidget {
                     .cardColor
                     .withOpacity(0.5),
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () => Navigator.pushNamed(context, '/ai-studymate'),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [

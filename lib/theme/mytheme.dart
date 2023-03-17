@@ -29,10 +29,11 @@ class AppTheme {
           : const Color.fromRGBO(246, 7, 151, 1),
       disabledColor: Colors.grey,
       textTheme: TextTheme(
-          button: GoogleFonts.sarabun(
-        fontSize: 16,
-        color: Colors.white,
-      )),
+        button: GoogleFonts.sarabun(
+          fontSize: 16,
+          color: Colors.white,
+        ),
+      ),
       // textSelectionColor: isconst DarkTheme ? Colorsconst .white : Colors.black,
       cardColor: isDarkTheme ? const Color(0x001c1e26) : Colors.white,
       canvasColor: isDarkTheme ? Colors.black54 : Colors.grey[50],
