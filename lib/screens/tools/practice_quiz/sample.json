@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "question": "What is normalization in a database?",
+      "options": [
+        "A process of organizing data to reduce redundancy and improve data integrity.",
+        "A process of creating indexes on tables to improve performance.",
+        "A process of encrypting data to protect it from unauthorized access.",
+        "A process of backing up data to prevent data loss."
+      ],
+      "answer": "A process of organizing data to reduce redundancy and improve data integrity."
+    },
+    {
+      "question": "What is a stored procedure in SQL?",
+      "options": [
+        "A named set of SQL statements that are stored in the database.",
+        "A temporary table that stores query results.",
+        "A virtual table that displays data from one or more tables.",
+        "A table that is used to store metadata."
+      ],
+      "answer": "A named set of SQL statements that are stored in the database."
+    },
+    {
+      "question": "What is a primary key in a database table?",
+      "options": [
+        "A column or set of columns that uniquely identifies each row in a table.",
+        "A column that specifies the data type of each column in a table.",
+        "A constraint that enforces referential integrity between two tables.",
+        "A constraint that ensures that a column cannot have null values."
+      ],
+      "answer": "A column or set of columns that uniquely identifies each row in a table."
+    },
+    {
+      "question": "What is the difference between a left join and a right join in SQL?",
+      "options": [
+        "A left join returns all the rows from the left table and matching rows from the right table, while a right join returns all the rows from the right table and matching rows from the left table.",
+        "A left join returns only the matching rows from both tables, while a right join returns all the rows from both tables.",
+        "A left join returns all the rows from both tables, while a right join returns only the matching rows from both tables.",
+        "There is no difference between a left join and a right join."
+      ],
+      "answer": "A left join returns all the rows from the left table and matching rows from the right table, while a right join returns all the rows from the right table and matching rows from the left table."
+    },
+    {
+      "question": "What is a foreign key in a database table?",
+      "options": [
+        "A column or set of columns that refers to a primary key in another table.",
+        "A column that specifies the data type of each column in a table.",
+        "A constraint that enforces referential integrity between two tables.",
+        "A constraint that ensures that a column cannot have null values."
+      ],
+      "answer": "A column or set of columns that refers to a primary key in another table."
+    },
+    {
+      "question": "What is a view in a database?",
+      "options": [
+        "A virtual table that displays data from one or more tables based on a query.",
+        "A temporary table that stores query results.",
+        "A constraint that enforces referential integrity between two tables.",
+        "A constraint that ensures that a column cannot have null values."
+      ],
+      "answer": "A virtual table that displays data from one or more tables based on a query."
+    }
+  ]
+}

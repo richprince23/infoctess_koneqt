@@ -72,8 +72,12 @@ class AIChatScreenState extends State<AIChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Colors.grey[600],
+      // backgroundColor: Colors.white,
       appBar: AppBar(
+        // backgroundColor: Colors.grey[600],
         title: const Text('AI StudyMate'),
+        // foregroundColor: Colors.white,
         centerTitle: true,
         actions: [
           // optionButton(),
@@ -154,24 +158,31 @@ class AIChatScreenState extends State<AIChatScreen> {
     var body = jsonEncode({
       'prompt': prompt,
       "model": "text-davinci-003",
-      "temperature": 0.7,
+      // "model": "gpt-3.5-turbo",
+      "temperature": 0.2,
       "max_tokens": 256,
-      "top_p": 1,
+      // "max_tokens": 1000,
+      // "top_p": 0.2,
       "frequency_penalty": 0,
-      "presence_penalty": 0
+      "presence_penalty": 0,
+      "stop": null
     });
 
+    if (prompt.length < 5) {
+      return "Please enter an accurate prompt.";
+    }
     var response = await http.post(url, headers: headers, body: body);
 
     if (response.statusCode == 200) {
       var responseData = jsonDecode(response.body);
       var completions = responseData['choices'][0]['text'];
-      // print(completions);
+      print(responseData);
       return completions;
-    } else {
-      // print('Request failed with status: ${response.statusCode}.');
-      return "Error. Please try again.";
     }
+    if (response.statusCode == 400) {
+      return "Please enter an accurate prompt.";
+    }
+    return "Error. Please try again.";
   }
 
   void sendMessage() async {

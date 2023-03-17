@@ -14,9 +14,11 @@ class ChatItem extends StatelessWidget {
   Widget build(BuildContext context) {
     Color getBubbleColor() {
       if (isUser) {
-        return Colors.black87;
+        // return Colors.black87;
+        return AppTheme.themeData(false, context).backgroundColor;
       } else {
-        return Colors.black54;
+        // return Colors.black54;
+        return AppTheme.themeData(false, context).indicatorColor;
       }
     }
 
