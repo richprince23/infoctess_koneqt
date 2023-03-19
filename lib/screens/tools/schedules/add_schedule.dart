@@ -242,7 +242,7 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                       // inspect(schedule);
                       await AppDatabase.instance
                           .addSchedule(schedule)
-                          .then((value) => NotificationService()
+                          .then((value) =>  NotificationService()
                               .scheduleNotification(
                                   selectedDay, _startTime.text))
                           .then((value) => Navigator.pop(context))

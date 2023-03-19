@@ -37,7 +37,7 @@ class Timetable {
       id: json[TimetableFields.id] as int?,
       courseCode: json[TimetableFields.courseCode] as String?,
       courseTitle: json[TimetableFields.courseTitle] as String?,
-      lecturer: json[TimetableFields.lecturer] as String?,
+      lecturer: "${json[TimetableFields.lecturer]}",
       day: json[TimetableFields.day] as String?,
       venue: json[TimetableFields.venue] as String?,
       startTime: json[TimetableFields.startTime] as String?,

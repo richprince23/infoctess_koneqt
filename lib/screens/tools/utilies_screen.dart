@@ -204,7 +204,8 @@ class UtilitiesScreen extends StatelessWidget {
                     .cardColor
                     .withOpacity(0.5),
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () => NotificationService()
+                      .scheduleNotification("Sunday", "12:17PM"),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
