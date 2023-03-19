@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/controllers/notification_service.dart';
 import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
 import 'package:infoctess_koneqt/controllers/page_controller.dart';
+import 'package:infoctess_koneqt/controllers/user_provider.dart';
 import 'package:infoctess_koneqt/screens/main_screen.dart';
 import 'package:infoctess_koneqt/screens/onboarding.dart';
 import 'package:infoctess_koneqt/screens/post_page.dart';
@@ -31,6 +32,7 @@ void main() async {
     MultiProvider(providers: [
       ChangeNotifierProvider(create: (_) => OnboardingController()),
       ChangeNotifierProvider(create: (_) => PageControl()),
+      ChangeNotifierProvider(create: (_) => UserProvider()),
     ], child: const MyApp()),
   );
 }

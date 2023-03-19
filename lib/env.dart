@@ -6,6 +6,7 @@ import 'package:infoctess_koneqt/screens/onboarding/acad_info.dart';
 import 'package:infoctess_koneqt/screens/onboarding/basic_info.dart';
 import 'package:infoctess_koneqt/screens/onboarding/profileinfo.dart';
 import 'package:infoctess_koneqt/screens/tools/utilies_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // extension Capitalized on String {
 //   String capitalized() =>
@@ -15,19 +16,21 @@ import 'package:infoctess_koneqt/screens/tools/utilies_screen.dart';
 // onboarding screen
 final PageController pageController = PageController(initialPage: 0);
 var kPages = [
-  BasicInfoScreen(
+  const BasicInfoScreen(
     key: Key("basic_info"),
   ),
   AcademicInfoScreen(
-    key: Key("acad_info"),
+    key: const Key("acad_info"),
   ),
-  ProfileInfoScreen(
+  const ProfileInfoScreen(
     key: Key("profile_info"),
   ),
 ];
 
 var kMainPages = <Widget>[
-  HomePage(),
-  ForumsScreen(),
-  UtilitiesScreen(),
+  const HomePage(),
+  const ForumsScreen(),
+  const UtilitiesScreen(),
 ];
+
+final Future<SharedPreferences> mainPrefs = SharedPreferences.getInstance();
