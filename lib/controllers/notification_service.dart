@@ -61,7 +61,8 @@ class NotificationService {
       DateTime.now().day,
       _getTimeOfDay(time).hour,
       _getTimeOfDay(time).minute,
-    );
+      // notify user 30 minutes before class
+    ).subtract(const Duration(minutes: 30));
     // while (scheduledNotificationDateTime.weekday != dayOfWeek) {
     //   scheduledNotificationDateTime =
     //       scheduledNotificationDateTime.add(const Duration(days: 1));
@@ -79,8 +80,6 @@ class NotificationService {
       android: androidPlatformChannelSpecifics,
       iOS: iOSPlatformChannelSpecifics,
     );
-
-    print(scheduledNotificationDateTime);
 
     await flnp.zonedSchedule(
       1,

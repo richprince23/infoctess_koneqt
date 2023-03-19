@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/controllers/notification_service.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class UtilitiesScreen extends StatelessWidget {
@@ -204,8 +203,7 @@ class UtilitiesScreen extends StatelessWidget {
                     .cardColor
                     .withOpacity(0.5),
                 child: InkWell(
-                  onTap: () => NotificationService()
-                      .scheduleNotification("Sunday", "12:17PM"),
+                  onTap: () {},
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
