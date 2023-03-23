@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:http/http.dart' as http;
 
 class Auth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -16,6 +17,22 @@ class Auth {
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user.');
       }
+    }
+    return null;
+  }
+
+  Future getAccess(int indexNum) async {
+    // final url = 'https://api.infoctess-uew.org/members/$indexNum';
+    final url = 'http://10.0.2.2:3000/members/$indexNum';
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      if (response.body == 'null') {
+        return null;
+      }
+      print(response.body);
+      return response.body;
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
     }
   }
 
@@ -36,6 +53,7 @@ class Auth {
     } catch (e) {
       print(e);
     }
+    return null;
   }
 
   Future<void> signOut() async {

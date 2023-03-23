@@ -55,9 +55,9 @@ class UserProvider extends ChangeNotifier {
   }
 
   /// gets logged in status of user
-  get isLoggedIn async {
+  Future<bool> get isLoggedIn async {
     final userPrefs = await mainPrefs;
-    _isLoggedIn = userPrefs.getBool("isLoggedIn")!;
+    _isLoggedIn = userPrefs.getBool("isLoggedIn") ?? false;
     return _isLoggedIn;
   }
 
