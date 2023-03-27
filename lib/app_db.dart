@@ -31,7 +31,7 @@ class AppDatabase {
   Future createDB(Database db, int version) async {
     const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     const textType = "STRING NOT NULL";
-    const intType = "INTEGER NOT NULL";
+    // const intType = "INTEGER NOT NULL";
 
     await db.execute('''
   CREATE TABLE $coursesTable(

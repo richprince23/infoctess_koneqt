@@ -1,8 +1,6 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:infoctess_koneqt/.env.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
+import 'package:infoctess_koneqt/controllers/ai_controller.dart';
 import 'package:infoctess_koneqt/widgets/chat_bubble.dart';
 
 class AIChatScreen extends StatefulWidget {
@@ -17,6 +15,7 @@ class AIChatScreenState extends State<AIChatScreen> {
   FocusNode focusNode = FocusNode();
   final TextEditingController inputController = TextEditingController();
   ScrollController scrollController = ScrollController();
+  String prompt = '';
 
   @override
   void initState() {
@@ -148,43 +147,8 @@ class AIChatScreenState extends State<AIChatScreen> {
     );
   }
 
-  Future<String> getCompletions() async {
-    var prompt = inputController.text;
-    var url = Uri.parse('https://api.openai.com/v1/completions');
-    var headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $OPEN_AI_KEY',
-    };
-    var body = jsonEncode({
-      'prompt': prompt,
-      "model": "text-davinci-003",
-      // "model": "gpt-3.5-turbo",
-      "temperature": 0.2,
-      "max_tokens": 256,
-      // "max_tokens": 1000,
-      // "top_p": 0.2,
-      "frequency_penalty": 0,
-      "presence_penalty": 0,
-      "stop": null
-    });
-
-    if (prompt.length < 5) {
-      return "Please enter an accurate prompt.";
-    }
-    var response = await http.post(url, headers: headers, body: body);
-
-    if (response.statusCode == 200) {
-      var responseData = jsonDecode(response.body);
-      var completions = responseData['choices'][0]['text'];
-      return completions;
-    }
-    if (response.statusCode == 400) {
-      return "Please enter an accurate prompt.";
-    }
-    return "Error. Please try again.";
-  }
-
   void sendMessage() async {
+    prompt = inputController.text.trim();
     setState(() {
       messages.add(ChatItem(
         isUser: true,
@@ -209,7 +173,7 @@ class AIChatScreenState extends State<AIChatScreen> {
       ),
     );
 
-    await getCompletions().then((value) {
+    await getCompletions(prompt).then((value) {
       inputController.clear();
       setState(() {
         messages.add(ChatItem(

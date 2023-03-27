@@ -36,105 +36,40 @@ class UtilitiesScreen extends StatelessWidget {
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
             children: [
-              Card(
-                surfaceTintColor: Colors.white.withOpacity(0.5),
-                color: AppTheme.themeData(false, context)
-                    .cardColor
-                    .withOpacity(0.5),
-                child: InkWell(
-                  onTap: () => Navigator.pushNamed(context, '/gpa-calculator'),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Icon(CupertinoIcons.divide,
-                          size: 50,
-                          color: AppTheme.themeData(false, context)
-                              .primaryColorLight),
-                      Text(
-                        "GPA Calculator",
-                        style: GoogleFonts.sarabun(
-                            color: AppTheme.themeData(false, context)
-                                .primaryColorLight,
-                            fontSize: 20),
-                      ),
-                    ],
-                  ),
-                ),
+              UtilItem(
+                icon: CupertinoIcons.divide,
+                title: 'GPA Calculator',
+                route: 'gpa-calculator',
               ),
-              Card(
-                surfaceTintColor: Colors.white.withOpacity(0.5),
-                color: AppTheme.themeData(false, context)
-                    .cardColor
-                    .withOpacity(0.5),
-                child: InkWell(
-                  onTap: () => Navigator.pushNamed(context, '/my-courses'),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Icon(CupertinoIcons.book,
-                          size: 50,
-                          color: AppTheme.themeData(false, context)
-                              .primaryColorLight),
-                      Text(
-                        "My Courses",
-                        style: GoogleFonts.sarabun(
-                            color: AppTheme.themeData(false, context)
-                                .primaryColorLight,
-                            fontSize: 20),
-                      ),
-                    ],
-                  ),
-                ),
+              UtilItem(
+                icon: CupertinoIcons.book,
+                title: 'My Courses',
+                route: 'my-courses',
               ),
-              Card(
-                surfaceTintColor: Colors.white.withOpacity(0.5),
-                color: AppTheme.themeData(false, context)
-                    .cardColor
-                    .withOpacity(0.5),
-                child: InkWell(
-                  onTap: () => Navigator.pushNamed(context, '/my-schedules'),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Icon(CupertinoIcons.calendar,
-                          size: 50,
-                          color: AppTheme.themeData(false, context)
-                              .primaryColorLight),
-                      Text(
-                        "My Schedules",
-                        style: GoogleFonts.sarabun(
-                            color: AppTheme.themeData(false, context)
-                                .primaryColorLight,
-                            fontSize: 20),
-                      ),
-                    ],
-                  ),
-                ),
+              UtilItem(
+                icon: CupertinoIcons.calendar,
+                title: 'My Schedules',
+                route: 'my-schedules',
               ),
-              Card(
-                surfaceTintColor: Colors.white.withOpacity(0.5),
-                color: AppTheme.themeData(false, context)
-                    .cardColor
-                    .withOpacity(0.5),
-                child: InkWell(
-                  onTap: () => Navigator.pushNamed(context, '/my-notes'),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Icon(CupertinoIcons.pencil_outline,
-                          size: 50,
-                          color: AppTheme.themeData(false, context)
-                              .primaryColorLight),
-                      Text(
-                        "My Notes",
-                        style: GoogleFonts.sarabun(
-                            color: AppTheme.themeData(false, context)
-                                .primaryColorLight,
-                            fontSize: 20),
-                      ),
-                    ],
-                  ),
-                ),
+              UtilItem(
+                icon: CupertinoIcons.pencil_circle,
+                title: 'My Notes',
+                route: 'my-notes',
+              ),
+              UtilItem(
+                icon: CupertinoIcons.person_2,
+                title: 'AI StudyMate',
+                route: 'ai-studymate',
+              ),
+              UtilItem(
+                icon: CupertinoIcons.photo,
+                title: 'AI Imager',
+                route: 'ai-imager',
+              ),
+              UtilItem(
+                icon: CupertinoIcons.list_number,
+                title: 'Practice Quiz',
+                // route: '',
               ),
               Card(
                 surfaceTintColor: Colors.white.withOpacity(0.5),
@@ -172,85 +107,50 @@ class UtilitiesScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Card(
-                surfaceTintColor: Colors.white.withOpacity(0.5),
-                color: AppTheme.themeData(false, context)
-                    .cardColor
-                    .withOpacity(0.5),
-                child: InkWell(
-                  onTap: () => Navigator.pushNamed(context, '/ai-studymate'),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Icon(CupertinoIcons.person_2,
-                          size: 50,
-                          color: AppTheme.themeData(false, context)
-                              .primaryColorLight),
-                      Text(
-                        "AI StudyMate",
-                        style: GoogleFonts.sarabun(
-                            color: AppTheme.themeData(false, context)
-                                .primaryColorLight,
-                            fontSize: 20),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Card(
-                surfaceTintColor: Colors.white.withOpacity(0.5),
-                color: AppTheme.themeData(false, context)
-                    .cardColor
-                    .withOpacity(0.5),
-                child: InkWell(
-                  onTap: () {},
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Icon(CupertinoIcons.list_number,
-                          size: 50,
-                          color: AppTheme.themeData(false, context)
-                              .primaryColorLight),
-                      Text(
-                        "Practice Quiz",
-                        style: GoogleFonts.sarabun(
-                            color: AppTheme.themeData(false, context)
-                                .primaryColorLight,
-                            fontSize: 20),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Card(
-                surfaceTintColor: Colors.white.withOpacity(0.5),
-                color: AppTheme.themeData(false, context)
-                    .cardColor
-                    .withOpacity(0.5),
-                child: InkWell(
-                  onTap: () => NotificationService().showNotification(
-                      title: "Schedules Reminder",
-                      body: "You have an upcoming class at 8:00pm"),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Icon(CupertinoIcons.hammer,
-                          size: 50,
-                          color: AppTheme.themeData(false, context)
-                              .primaryColorLight),
-                      Text(
-                        "Other Resources",
-                        style: GoogleFonts.sarabun(
-                            color: AppTheme.themeData(false, context)
-                                .primaryColorLight,
-                            fontSize: 20),
-                      ),
-                    ],
-                  ),
-                ),
+              UtilItem(
+                icon: CupertinoIcons.hammer,
+                title: 'Other Resources',
+                // route: '',
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class UtilItem extends StatelessWidget {
+  IconData icon;
+  String title;
+  String? route;
+  UtilItem({
+    Key? key,
+    required this.icon,
+    required this.title,
+    this.route,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      surfaceTintColor: Colors.white.withOpacity(0.5),
+      color: AppTheme.themeData(false, context).cardColor.withOpacity(0.5),
+      child: InkWell(
+        onTap: () => Navigator.pushNamed(context, '/$route'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Icon(icon,
+                size: 50,
+                color: AppTheme.themeData(false, context).primaryColorLight),
+            Text(
+              title,
+              style: GoogleFonts.sarabun(
+                  color: AppTheme.themeData(false, context).primaryColorLight,
+                  fontSize: 20),
+            ),
+          ],
         ),
       ),
     );
