@@ -57,50 +57,72 @@ class MyApp extends StatelessWidget {
           decoration: TextDecoration.none,
         ),
       ),
-      home: FutureBuilder<bool>(
-        future: context.watch<UserProvider>().isLoggedIn,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            // show loading indicator while waiting for future to complete
-            return CircularProgressIndicator(
-              color: AppTheme.themeData(false, context).backgroundColor,
-            );
-          } else {
-            // return the appropriate route based on the value of isLoggedIn
-            final initialRoute = snapshot.data == true ? "/" : "/login";
-            return MaterialApp(
-              title: 'Infoctess Koneqt',
-              debugShowCheckedModeBanner: false,
-              theme: ThemeData(
-                useMaterial3: true,
-                primaryTextTheme: GoogleFonts.sarabunTextTheme().apply(
-                  decoration: TextDecoration.none,
-                ),
-                textTheme: GoogleFonts.sarabunTextTheme().apply(
-                  decoration: TextDecoration.none,
-                ),
-              ),
-              initialRoute: initialRoute,
-              routes: {
-                '/login': (context) => const LoginScreen(),
-                "/": (context) => MainScreen(),
-                "/onboarding": (context) => const OnboardingScreen(),
-                "/post-details": (context) => PostDetails(),
-                "/gpa-calculator": (context) => const GPAScreen(),
-                "/cgpa-screen": (context) => const CGPAScreen(),
-                "/my-courses": (context) => const ManageCourses(),
-                "/add-course": (context) => const AddCoursePage(),
-                "/my-notes": (context) => const MyNotes(),
-                "/add-note": (context) => const AddNoteScreen(),
-                "/my-schedules": (context) => const AllSchedules(),
-                "/add-schedule": (context) => const AddScheduleScreen(),
-                "/ai-studymate": (context) => const AIChatScreen(),
-                "/ai-imager": (context) => const Imager(),
-              },
-            );
-          }
-        },
-      ),
+      // initialRoute: initialRoute,
+      initialRoute: "/",
+      routes: {
+        '/login': (context) => const LoginScreen(),
+        "/": (context) => MainScreen(),
+        "/onboarding": (context) => const OnboardingScreen(),
+        "/post-details": (context) => PostDetails(),
+        "/gpa-calculator": (context) => const GPAScreen(),
+        "/cgpa-screen": (context) => const CGPAScreen(),
+        "/my-courses": (context) => const ManageCourses(),
+        "/add-course": (context) => const AddCoursePage(),
+        "/my-notes": (context) => const MyNotes(),
+        "/add-note": (context) => const AddNoteScreen(),
+        "/my-schedules": (context) => const AllSchedules(),
+        "/add-schedule": (context) => const AddScheduleScreen(),
+        "/ai-studymate": (context) => const AIChatScreen(),
+        "/ai-imager": (context) => const Imager(),
+      },
     );
   }
 }
+
+
+
+// FutureBuilder<bool>(
+//         future: context.watch<UserProvider>().isLoggedIn,
+//         builder: (context, snapshot) {
+//           if (snapshot.connectionState == ConnectionState.waiting) {
+//             // show loading indicator while waiting for future to complete
+//             return CircularProgressIndicator(
+//               color: AppTheme.themeData(false, context).backgroundColor,
+//             );
+//           } else {
+//             // return the appropriate route based on the value of isLoggedIn
+//             // final initialRoute = snapshot.data == true ? "/" : "/login";
+//             return MaterialApp(
+//               title: 'Infoctess Koneqt',
+//               debugShowCheckedModeBanner: false,
+//               theme: ThemeData(
+//                 useMaterial3: true,
+//                 primaryTextTheme: GoogleFonts.sarabunTextTheme().apply(
+//                   decoration: TextDecoration.none,
+//                 ),
+//                 textTheme: GoogleFonts.sarabunTextTheme().apply(
+//                   decoration: TextDecoration.none,
+//                 ),
+//               ),
+//               // initialRoute: initialRoute,
+//               initialRoute: "/",
+//               routes: {
+//                 '/login': (context) => const LoginScreen(),
+//                 "/": (context) => MainScreen(),
+//                 "/onboarding": (context) => const OnboardingScreen(),
+//                 "/post-details": (context) => PostDetails(),
+//                 "/gpa-calculator": (context) => const GPAScreen(),
+//                 "/cgpa-screen": (context) => const CGPAScreen(),
+//                 "/my-courses": (context) => const ManageCourses(),
+//                 "/add-course": (context) => const AddCoursePage(),
+//                 "/my-notes": (context) => const MyNotes(),
+//                 "/add-note": (context) => const AddNoteScreen(),
+//                 "/my-schedules": (context) => const AllSchedules(),
+//                 "/add-schedule": (context) => const AddScheduleScreen(),
+//                 "/ai-studymate": (context) => const AIChatScreen(),
+//                 "/ai-imager": (context) => const Imager(),
+//               },
+//             );
+//           }
+//         },
+//       ),

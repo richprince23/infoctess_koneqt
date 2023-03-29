@@ -45,9 +45,15 @@ class ImagerState extends State<Imager> {
       body: Column(
         children: <Widget>[
           Expanded(
-              child: isDone == false
-                  ? const SizedBox.shrink()
-                  : buildImages(images)),
+            child: isDone == false
+                ? const SizedBox.shrink()
+                : SingleChildScrollView(
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.6,
+                      child: buildImages(images),
+                    ),
+                  ),
+          ),
           const SizedBox(height: 10),
           Align(
             alignment: Alignment.bottomRight,
@@ -86,7 +92,7 @@ class ImagerState extends State<Imager> {
                     if (textController.text.isEmpty || isLoading == true) {
                       return;
                     }
-                    await sendPrompt();
+                    await sendPrompt().then((value) => textFocusNode.unfocus());
                     // Navigator.of(context, rootNavigator: true).pop();
                   },
             child: const Text('Generate Images'),
@@ -165,6 +171,8 @@ class ImagerState extends State<Imager> {
         isLoading = false;
         isDone = true;
       });
+      textFocusNode.unfocus();
+      FocusScope.of(context).unfocus();
     }
   }
 
@@ -173,6 +181,7 @@ class ImagerState extends State<Imager> {
     return GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
+        crossAxisSpacing: 5,
       ),
       itemCount: images.length,
       itemBuilder: (context, index) {
@@ -187,25 +196,28 @@ class ImagerState extends State<Imager> {
               ),
             );
           },
-          child: Container(
-            decoration: ShapeDecoration(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
+          child: Card(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
             ),
-            child: Image.network(
-              loadingBuilder: (context, child, loadingProgress) =>
-                  loadingProgress == null
-                      ? child
-                      : Center(
-                          child: Image.asset("assets/images/preload.gif",
-                              height: 50),
-                        ),
-              errorBuilder: (context, error, stackTrace) =>
-                  const Center(child: Icon(CupertinoIcons.photo, size: 100)),
-              images[index],
-              height: size.width * 0.35,
-              width: size.width * 0.35,
+            child: ClipRRect(
+              clipBehavior: Clip.antiAlias,
+              borderRadius: BorderRadius.circular(10),
+              child: Image.network(
+                loadingBuilder: (context, child, loadingProgress) =>
+                    loadingProgress == null
+                        ? child
+                        : Center(
+                            child: Image.asset("assets/images/preload.gif",
+                                height: 50),
+                          ),
+                errorBuilder: (context, error, stackTrace) =>
+                    const Center(child: Icon(CupertinoIcons.photo, size: 100)),
+                images[index],
+                height: size.width * 0.30,
+                width: size.width * 0.30,
+              ),
             ),
           ),
         );

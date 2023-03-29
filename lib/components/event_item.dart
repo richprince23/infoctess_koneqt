@@ -2,6 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:infoctess_koneqt/screens/tools/image_viewer.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 
 class EventItem extends StatefulWidget {
@@ -108,18 +109,28 @@ class OpenEventItem extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                margin: const EdgeInsets.only(bottom: 20),
-                clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: Colors.red,
+              InkWell(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ImageViewer(
+                      image: "assets/images/img1.jpg",
+                    ),
+                  ),
                 ),
-                child: Image.asset(
-                  "assets/images/img1.jpg",
-                  height: 200,
-                  width: MediaQuery.of(context).size.width,
-                  fit: BoxFit.fill,
+                child: Container(
+                  margin: const EdgeInsets.only(bottom: 20),
+                  clipBehavior: Clip.antiAlias,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: Colors.red,
+                  ),
+                  child: Image.asset(
+                    "assets/images/img1.jpg",
+                    height: 200,
+                    width: MediaQuery.of(context).size.width,
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
               Text(
