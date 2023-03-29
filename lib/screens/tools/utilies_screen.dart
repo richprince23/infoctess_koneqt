@@ -3,14 +3,11 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:infoctess_koneqt/controllers/notification_service.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class UtilitiesScreen extends StatelessWidget {
   const UtilitiesScreen({super.key});
-
-  //TODO: Change icons to custom images
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +49,7 @@ class UtilitiesScreen extends StatelessWidget {
                 route: 'my-schedules',
               ),
               UtilItem(
-                icon: CupertinoIcons.pencil_circle,
+                icon: CupertinoIcons.pencil_outline,
                 title: 'My Notes',
                 route: 'my-notes',
               ),

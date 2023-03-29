@@ -20,7 +20,7 @@ class Imager extends StatefulWidget {
 class ImagerState extends State<Imager> {
   final TextEditingController textController = TextEditingController();
   final FocusNode textFocusNode = FocusNode();
-  final scrollController = ScrollController();
+  // final scrollController = ScrollController();
   bool isTextEmpty = true;
   bool isLoading = false;
   bool isDone = false;

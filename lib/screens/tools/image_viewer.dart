@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:http/http.dart' as http;
+import 'package:status_alert/status_alert.dart';
 
 class ImageViewer extends StatelessWidget {
   final String image;
@@ -56,21 +56,21 @@ class ImageViewer extends StatelessWidget {
                   icon: const Icon(Icons.download_rounded, color: Colors.black),
                   onPressed: () async {
                     showDialog(
+                      barrierDismissible: false,
                       context: context,
-                      builder: (context) => const Center(
-                        child: CircularProgressIndicator(),
+                      builder: (context) => Center(
+                        child: Image.asset("assets/images/preload.gif",
+                            height: 50),
                       ),
                     );
                     await saveImage().then((value) {
                       Navigator.of(context).pop();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          elevation: 10,
-                          backgroundColor: AppTheme.themeData(false, context)
-                              .backgroundColor,
-                          content: const Text("Image saved to gallery",
-                              style: TextStyle(color: Colors.white)),
-                        ),
+                      StatusAlert.show(
+                        context,
+                        duration: const Duration(seconds: 2),
+                        title: "Image saved",
+                        configuration:
+                            const IconConfiguration(icon: Icons.done),
                       );
                     });
                   },
