@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:infoctess_koneqt/.env.dart';
+import 'package:infoctess_koneqt/env.dart';
 
 Future<String> getCompletions(String prompt) async {
   // var prompt = inputController.text;

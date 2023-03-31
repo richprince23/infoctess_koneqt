@@ -19,7 +19,7 @@ import 'package:infoctess_koneqt/screens/tools/schedules/timetable.dart';
 import 'package:infoctess_koneqt/screens/tools/studymate/ai_imager.dart';
 import 'package:infoctess_koneqt/screens/tools/studymate/aichat_screen.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'firebase_options.dart';
 import 'screens/login_screen.dart';
 
@@ -29,6 +29,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await dotenv.load();
+
   runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider(create: (_) => OnboardingController()),

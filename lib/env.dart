@@ -7,6 +7,7 @@ import 'package:infoctess_koneqt/screens/onboarding/basic_info.dart';
 import 'package:infoctess_koneqt/screens/onboarding/profileinfo.dart';
 import 'package:infoctess_koneqt/screens/tools/utilies_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import "package:flutter_dotenv/flutter_dotenv.dart";
 
 // extension Capitalized on String {
 //   String capitalized() =>
@@ -46,5 +47,6 @@ final profileFormKey = GlobalKey<FormState>();
 
 //onboarding controllers
 
-
 String? avatarPath;
+
+String? OPEN_AI_KEY = dotenv.env['OPEN_AI_KEY'];
