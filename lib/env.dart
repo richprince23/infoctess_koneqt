@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:infoctess_koneqt/models/user_info.dart';
 import 'package:infoctess_koneqt/screens/forums.dart';
 import 'package:infoctess_koneqt/screens/home/homepage.dart';
-import 'package:infoctess_koneqt/screens/onboarding.dart';
 import 'package:infoctess_koneqt/screens/onboarding/acad_info.dart';
 import 'package:infoctess_koneqt/screens/onboarding/basic_info.dart';
 import 'package:infoctess_koneqt/screens/onboarding/profileinfo.dart';
@@ -34,3 +34,16 @@ var kMainPages = <Widget>[
 ];
 
 final Future<SharedPreferences> mainPrefs = SharedPreferences.getInstance();
+
+User? onboardUser;
+
+//form keys
+
+final basicFormKey = GlobalKey<FormState>();
+final acadFormKey = GlobalKey<FormState>();
+final profileFormKey = GlobalKey<FormState>();
+
+//onboarding controllers
+
+
+String? avatarPath;

@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 
 import 'package:infoctess_koneqt/screens/onboarding.dart';
+import 'package:infoctess_koneqt/screens/onboarding/check_index.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/auth.dart';
 
@@ -143,18 +144,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           GestureDetector(
-                            // onTap: (() => Navigator.pushReplacement(
-                            //       context,
-                            //       MaterialPageRoute(
-                            //         builder: (context) => const LoginScreen(),
-                            //       ),
-                            //     )),
                             //TODO: Change this to reset password, this is just for testing
-                            onTap: () async => await Auth()
-                                .getAccess(2000154605)
-                                .then((value) => jsonDecode(value))
-                                .then(
-                                    (value) => _email.text = value[0]['email']),
+                            onTap: (() => Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const LoginScreen(),
+                                  ),
+                                )),
+
                             child: Text(
                               "Reset Password",
                               style: GoogleFonts.sarabun(
@@ -172,9 +169,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             onTap: (() => Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        const OnboardingScreen(),
-                                  ),
+                                      builder: (context) =>
+                                          // const OnboardingScreen(),
+                                          const CheckAccessPage()),
                                 )),
                             child: Text(
                               "Create Account",

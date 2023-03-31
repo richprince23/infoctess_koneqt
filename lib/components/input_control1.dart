@@ -6,7 +6,7 @@ import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 
 class InputControl extends StatefulWidget {
-  final TextEditingController? controller;
+   TextEditingController? controller;
 
   final String? hintText;
 

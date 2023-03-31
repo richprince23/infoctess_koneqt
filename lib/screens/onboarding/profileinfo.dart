@@ -2,12 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
+import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:provider/provider.dart';
 
@@ -20,8 +21,10 @@ class ProfileInfoScreen extends StatefulWidget {
 
 class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
   final ScrollController _scrollController = ScrollController();
-  GlobalKey formKey = GlobalKey<FormState>();
+  // GlobalKey formKey = GlobalKey<FormState>();
   ImagePicker imagePicker = ImagePicker();
+  final userNameCon = TextEditingController();
+  final phoneNumCon = TextEditingController();
 
   XFile? selectedMedia;
   CroppedFile? croppedMedia;
@@ -85,12 +88,12 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
             color: AppTheme.themeData(false, context).backgroundColor,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
                   onPressed: () {
                     setState(() {
-                      // goBack();
+                      //           // goBack();
                       Provider.of<OnboardingController>(context, listen: false)
                           .goBack();
                     });
@@ -102,18 +105,31 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                   ),
                   iconSize: 24,
                 ),
-                Center(
-                  // padding: const EdgeInsets.only(top: 5),
-                  child: Text(
-                    "Profile Info",
-                    style: GoogleFonts.sarabun(
-                        fontSize: 30,
+                const SizedBox(height: 20),
+                Align(
+                  alignment: Alignment.center,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.person_pin,
+                        size: 100,
                         color: Colors.white,
-                        fontWeight: FontWeight.normal,
-                        decoration: TextDecoration.none),
+                      ),
+                      Text(
+                        "Profile Info",
+                        style: GoogleFonts.sarabun(
+                            fontSize: 30,
+                            color: Colors.white,
+                            fontWeight: FontWeight.normal,
+                            decoration: TextDecoration.none),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(),
+                // const SizedBox(),
               ],
             ),
           ),
@@ -122,90 +138,196 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
           top: size.height * 0.30,
           height: size.height * 0.65,
           width: size.width,
-          child: SingleChildScrollView(
-            controller: _scrollController,
-            child: Material(
-              elevation: 5,
-              color: Colors.white,
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Choose Profile Image",
-                        style: GoogleFonts.sarabun(fontSize: 18),
-                      ),
-                      const SizedBox(height: 10),
-                      selectedMedia != null
-                          ? ClipOval(
-                              child: Image.file(
-                                File(selectedMedia!.path),
-                                width: size.width * 0.35,
-                                height: size.width * 0.35,
-                                fit: BoxFit.cover,
+          child: Material(
+            elevation: 5,
+            color: Colors.white,
+            borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+              child: Form(
+                key: profileFormKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 8,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Text(
+                              "Choose Profile Image",
+                              style: GoogleFonts.sarabun(fontSize: 18),
+                            ),
+                            const SizedBox(height: 10),
+                            selectedMedia != null
+                                ? ClipOval(
+                                    child: Image.file(
+                                      File(selectedMedia!.path),
+                                      width: size.width * 0.35,
+                                      height: size.width * 0.35,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )
+                                : CircleAvatar(
+                                    backgroundColor:
+                                        AppTheme.themeData(false, context)
+                                            .backgroundColor,
+                                    radius: (size.width * 0.35) / 2,
+                                    child: const Text(
+                                      "User",
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                            const SizedBox(height: 10),
+                            TextButton(
+                              style: ButtonStyle(
+                                  padding: MaterialStateProperty.all(
+                                      const EdgeInsets.symmetric(
+                                          horizontal: 20, vertical: 5)),
+                                  backgroundColor: MaterialStateProperty.all(
+                                      AppTheme.themeData(false, context)
+                                          .indicatorColor)),
+                              onPressed: () async {
+                                await uploadImage()
+                                    .then((value) => cropImage());
+                              },
+                              child: RichText(
+                                text: const TextSpan(
+                                  children: [
+                                    WidgetSpan(
+                                        alignment: PlaceholderAlignment.middle,
+                                        child: Icon(
+                                          Icons.camera_alt,
+                                          color: Colors.white,
+                                        )),
+                                    WidgetSpan(
+                                      child: SizedBox(
+                                        width: 10,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: "browse",
+                                      style: TextStyle(
+                                          fontSize: 16, color: Colors.white),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            )
-                          : CircleAvatar(
+                            ),
+                            InputControl(
+                              hintText: "Username",
+                              type: TextInputType.name,
+                            ),
+                            InputControl(
+                              hintText: "Phone Number",
+                              type: TextInputType.phone,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 25),
+                        width: size.width,
+                        child: Builder(builder: (context) {
+                          return TextButton(
+                            style: TextButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 15),
                               backgroundColor:
                                   AppTheme.themeData(false, context)
                                       .backgroundColor,
-                              radius: (size.width * 0.35) / 2,
-                              child: const Text(
-                                "User",
-                                textAlign: TextAlign.center,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
                               ),
                             ),
-                      const SizedBox(height: 10),
-                      TextButton(
-                        style: ButtonStyle(
-                            padding: MaterialStateProperty.all(
-                                const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 5)),
-                            backgroundColor: MaterialStateProperty.all(
-                                AppTheme.themeData(false, context)
-                                    .indicatorColor)),
-                        onPressed: () async {
-                          await uploadImage().then((value) => cropImage());
-                        },
-                        child: RichText(
-                          text: const TextSpan(
-                            children: [
-                              WidgetSpan(
-                                  alignment: PlaceholderAlignment.middle,
-                                  child: Icon(
-                                    Icons.camera_alt,
-                                    color: Colors.white,
-                                  )),
-                              WidgetSpan(
-                                child: SizedBox(
-                                  width: 10,
-                                ),
+                            onPressed: () async {
+                              // print(context.read<OnboardingController>().selectedLevel);
+                              // print(context.read<OnboardingController>().selectedGroup);
+                              // print(context.read<OnboardingController>().selectedGender);
+
+                              try {
+                                if (!acadFormKey.currentState!.validate()) {
+                                  return;
+                                }
+                                setState(() {
+                                  onboardUser!.userName =
+                                      userNameCon.text.trim().toLowerCase();
+                                  onboardUser!.phoneNum =
+                                      phoneNumCon.text.trim();
+                                });
+                                if (selectedMedia != null) {
+                                  await Auth()
+                                      .saveUserInfo(
+                                        indexNum:
+                                            onboardUser!.indexNum.toString(),
+                                        userName: onboardUser!.userName,
+                                        phoneNum: onboardUser!.phoneNum,
+                                        gender: onboardUser!.gender,
+                                        level: onboardUser!.userLevel,
+                                        classGroup: onboardUser!.classGroup,
+                                      )
+                                      .then((value) async => await Auth()
+                                          .saveUserImage(selectedMedia!.path))
+                                      .then((value) => print(value));
+                                }
+                              } catch (e) {
+                                print(e);
+                                Platform.isAndroid
+                                    ? showDialog(
+                                        useRootNavigator: true,
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                          title: const Text('Error'),
+                                          content: Text(e.toString()),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              child: const Text('OK'),
+                                              onPressed: () {
+                                                Navigator.of(context,
+                                                        rootNavigator: true)
+                                                    .pop();
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    : CupertinoAlertDialog(
+                                        title: const Text('Error'),
+                                        content: Text(e.toString()),
+                                        actions: <Widget>[
+                                          CupertinoDialogAction(
+                                            child: const Text('OK'),
+                                            onPressed: () {
+                                              Navigator.of(context,
+                                                      rootNavigator: true)
+                                                  .pop();
+                                            },
+                                          ),
+                                        ],
+                                      );
+                              }
+                              Provider.of<OnboardingController>(context,
+                                      listen: false)
+                                  .nextPage();
+                            },
+                            child: Text(
+                              "finish",
+                              style: GoogleFonts.sarabun(
+                                textStyle: const TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    decoration: TextDecoration.none,
+                                    fontSize: 20,
+                                    color: Colors.white),
                               ),
-                              TextSpan(
-                                text: "browse",
-                                style: TextStyle(
-                                    fontSize: 16, color: Colors.white),
-                              ),
-                            ],
-                          ),
-                        ),
+                            ),
+                          );
+                        }),
                       ),
-                      InputControl(
-                        hintText: "Username",
-                        type: TextInputType.name,
-                      ),
-                      InputControl(
-                        hintText: "Phone Number",
-                        type: TextInputType.phone,
-                      ),
-                    ],
-                  ),
+                    )
+                  ],
                 ),
               ),
             ),

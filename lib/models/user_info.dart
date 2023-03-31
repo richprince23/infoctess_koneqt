@@ -71,7 +71,7 @@ class User {
   String? userName;
 
   ///[unique] user's phone number
-  int? phoneNum;
+  String? phoneNum;
 
   User({
     this.avatar,
@@ -84,4 +84,46 @@ class User {
     this.userLevel,
     this.userName,
   });
+
+  //from json method
+  Map<String, Object?> toJson() {
+    return {
+      UserFields.fullName: fullName,
+      UserFields.emailAddress: emailAddress,
+      UserFields.avatar: avatar,
+      UserFields.indexNum: indexNum,
+      UserFields.userLevel: userLevel,
+      UserFields.classGroup: classGroup,
+      UserFields.phoneNum: phoneNum,
+      UserFields.gender: gender,
+      UserFields.userName: userName,
+    };
+  }
+
+  //to json method
+  static User fromJson(Map<String, Object?> json) {
+    return User(
+      fullName: json[UserFields.fullName] as String?,
+      emailAddress: json[UserFields.emailAddress] as String?,
+      avatar: json[UserFields.avatar] as String?,
+      indexNum: json[UserFields.indexNum] as int?,
+      userLevel: json[UserFields.userLevel] as String?,
+      classGroup: json[UserFields.classGroup] as String?,
+      phoneNum: json[UserFields.phoneNum] as String?,
+      gender: json[UserFields.gender] as String?,
+      userName: json[UserFields.userName] as String?,
+    );
+  }
+}
+
+class UserFields {
+  static var fullName = 'fullName';
+  static var emailAddress = 'emailAddress';
+  static var avatar = 'avatar';
+  static var indexNum = 'indexNum';
+  static var userLevel = 'userLevel';
+  static var classGroup = 'classGroup';
+  static var phoneNum = 'phoneNum';
+  static var userName = 'userName';
+  static var gender = 'gender';
 }
