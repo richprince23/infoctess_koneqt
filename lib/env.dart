@@ -37,6 +37,7 @@ final Future<SharedPreferences> mainPrefs = SharedPreferences.getInstance();
 
 User? onboardUser;
 
+User? curUser;
 //form keys
 
 final basicFormKey = GlobalKey<FormState>();

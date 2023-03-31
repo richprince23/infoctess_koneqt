@@ -4,6 +4,7 @@ import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
 import 'package:infoctess_koneqt/screens/onboarding.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:status_alert/status_alert.dart';
+import 'package:infoctess_koneqt/auth.dart';
 
 class CheckAccessPage extends StatefulWidget {
   const CheckAccessPage({super.key});
@@ -127,22 +128,36 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
                           ),
                         );
                         await checkUserAccess((_controller.text)).then(
-                          (value) {
+                          (value) async {
                             if (value != null) {
                               // Navigator.pop(context);
+                              await Auth()
+                                  .checkUserExists(
+                                int.parse(_controller.text),
+                              )
+                                  .then(
+                                (value) {
+                                  if (value == false) {
+                                    StatusAlert.show(
+                                      context,
+                                      title: "Verified",
+                                      configuration: const IconConfiguration(
+                                          icon: Icons.done),
+                                    );
+                                    Navigator.popAndPushNamed(
+                                      context,
+                                      "/onboarding",
+                                    );
+                                  } else {
+                                    setState(() {
+                                      response = "User already exists";
+                                    });
+                                  }
+                                },
+                              );
                               setState(() {
                                 response = "";
                               });
-                              StatusAlert.show(
-                                context,
-                                title: "Verified",
-                                configuration:
-                                    const IconConfiguration(icon: Icons.done),
-                              );
-                              Navigator.popAndPushNamed(
-                                context,
-                                "/onboarding",
-                              );
                             } else {
                               setState(() {
                                 response =

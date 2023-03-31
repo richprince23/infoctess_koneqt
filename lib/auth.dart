@@ -1,9 +1,7 @@
 import 'dart:io';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:http/http.dart' as http;
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 FirebaseStorage storage = FirebaseStorage.instance;
@@ -27,6 +25,26 @@ class Auth {
         // print('Wrong password provided for that user.');
         throw Exception(e);
       }
+    }
+    return null;
+  }
+
+  Future<bool?> checkUserExists(int indexNum) async {
+    try {
+      await db
+          .collection("user_infos")
+          .where("indexNum", isEqualTo: indexNum)
+          .get()
+          .then((value) {
+        if (value.docs.isEmpty) {
+          return false;
+        } else {
+          return true;
+        }
+      });
+    } on FirebaseAuthException catch (e) {
+      // print('No user found for that index Number.');
+      throw Exception(e);
     }
     return null;
   }
