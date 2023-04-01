@@ -99,19 +99,23 @@ class Auth {
     await imageRef
         .child("avatars/${DateTime.now().millisecondsSinceEpoch}.jpg")
         .putFile(File(path).absolute)
-        .then((e) async {
-      // return image path
-      await e.ref.getDownloadURL().then(
+        .then(
+      (e) async {
+        // return image path
+        await e.ref.getDownloadURL().then(
           // store image in db
           (url) async {
-        print(url);
-        await _auth.currentUser!.updatePhotoURL(url);
-        await db
-            .collection("user_infos")
-            .doc(_auth.currentUser!.uid)
-            .update({"avatar": url});
-      });
-    });
+            print(url);
+            await _auth.currentUser!.updatePhotoURL(url).then(
+                  (value) => db
+                      .collection("user_infos")
+                      .doc(_auth.currentUser!.uid)
+                      .update({"avatar": url}),
+                );
+          },
+        );
+      },
+    );
   }
 
 // Future getAccess(int indexNum) async {

@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Text(
                     "Infoctess Koneqt",
                     style: GoogleFonts.sarabun(
-                        fontSize: 24,
+                        fontSize: 34,
                         color: Colors.white,
                         fontWeight: FontWeight.normal,
                         decoration: TextDecoration.none),
@@ -143,6 +143,39 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          OutlinedButton(
+                            onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    // const OnboardingScreen(),
+                                    const CheckAccessPage(),
+                              ),
+                            ),
+                            style: OutlinedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              minimumSize: Size(size.width, 50),
+                              side: BorderSide(
+                                color: AppTheme.themeData(false, context)
+                                    .backgroundColor,
+                                width: 1,
+                              ),
+                            ),
+                            child: Text(
+                              "create cccount",
+                              style: GoogleFonts.sarabun(
+                                textStyle: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppTheme.themeData(false, context)
+                                      .backgroundColor,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
                           GestureDetector(
                             //TODO: Change this to reset password, this is just for testing
                             onTap: (() => Navigator.pushReplacement(
@@ -155,32 +188,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Text(
                               "Reset Password",
                               style: GoogleFonts.sarabun(
-                                  textStyle: TextStyle(
-                                      decoration: TextDecoration.underline,
-                                      fontSize: 16,
-                                      color: AppTheme.themeData(false, context)
-                                          .focusColor)),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          GestureDetector(
-                            onTap: (() => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          // const OnboardingScreen(),
-                                          const CheckAccessPage()),
-                                )),
-                            child: Text(
-                              "Create Account",
-                              style: GoogleFonts.sarabun(
                                 textStyle: TextStyle(
                                     decoration: TextDecoration.underline,
-                                    fontSize: 16,
+                                    fontSize: 18,
                                     color: AppTheme.themeData(false, context)
-                                        .backgroundColor),
+                                        .focusColor),
                               ),
                             ),
                           ),

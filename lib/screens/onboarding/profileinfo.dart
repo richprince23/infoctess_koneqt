@@ -10,7 +10,9 @@ import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
+import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:status_alert/status_alert.dart';
 
 class ProfileInfoScreen extends StatefulWidget {
   const ProfileInfoScreen({super.key});
@@ -218,10 +220,12 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                             InputControl(
                               hintText: "Username",
                               type: TextInputType.name,
+                              controller: userNameCon,
                             ),
                             InputControl(
                               hintText: "Phone Number",
                               type: TextInputType.phone,
+                              controller: phoneNumCon,
                             ),
                           ],
                         ),
@@ -243,10 +247,6 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                               ),
                             ),
                             onPressed: () async {
-                              // print(context.read<OnboardingController>().selectedLevel);
-                              // print(context.read<OnboardingController>().selectedGroup);
-                              // print(context.read<OnboardingController>().selectedGender);
-
                               try {
                                 if (!acadFormKey.currentState!.validate()) {
                                   return;
@@ -270,57 +270,50 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                                       )
                                       .then((value) async => await Auth()
                                           .saveUserImage(selectedMedia!.path))
-                                      .then((value) => print(value));
+                                      .then(
+                                        (value) => StatusAlert.show(
+                                          context,
+                                          title: "Success",
+                                          subtitle:
+                                              "Your profile has been updated",
+                                          configuration:
+                                              const IconConfiguration(
+                                                  icon: Icons
+                                                      .check_circle_outline),
+                                          duration: const Duration(seconds: 3),
+                                        ),
+                                      );
                                 }
                               } catch (e) {
-                                print(e);
                                 Platform.isAndroid
                                     ? showDialog(
-                                        useRootNavigator: true,
-                                        barrierDismissible: false,
                                         context: context,
-                                        builder: (context) => AlertDialog(
-                                          title: const Text('Error'),
-                                          content: Text(e.toString()),
-                                          actions: <Widget>[
-                                            TextButton(
-                                              child: const Text('OK'),
-                                              onPressed: () {
-                                                Navigator.of(context,
-                                                        rootNavigator: true)
-                                                    .pop();
-                                              },
-                                            ),
-                                          ],
-                                        ),
+                                        builder: (context) => const CustomDialog(
+                                            message:
+                                                "An error occurred while performing you request"),
                                       )
-                                    : CupertinoAlertDialog(
-                                        title: const Text('Error'),
-                                        content: Text(e.toString()),
-                                        actions: <Widget>[
-                                          CupertinoDialogAction(
-                                            child: const Text('OK'),
-                                            onPressed: () {
-                                              Navigator.of(context,
-                                                      rootNavigator: true)
-                                                  .pop();
-                                            },
-                                          ),
-                                        ],
+                                    : showCupertinoDialog(
+                                        context: context,
+                                        builder: (context) => const CustomDialog(
+                                            message:
+                                                "An error occurred while performing you request"),
                                       );
                               }
-                              Provider.of<OnboardingController>(context,
-                                      listen: false)
-                                  .nextPage();
+                              setState(() {
+                                Provider.of<OnboardingController>(context,
+                                        listen: false)
+                                    .nextPage();
+                              });
                             },
                             child: Text(
                               "finish",
                               style: GoogleFonts.sarabun(
                                 textStyle: const TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    decoration: TextDecoration.none,
-                                    fontSize: 20,
-                                    color: Colors.white),
+                                  fontWeight: FontWeight.w400,
+                                  decoration: TextDecoration.none,
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           );

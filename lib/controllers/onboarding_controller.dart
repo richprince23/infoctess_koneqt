@@ -120,6 +120,6 @@ Future<User?> checkUserAccess(String indexNum) async {
 
     return onboardUser;
   } else {
-    return null;
+    throw Exception();
   }
 }

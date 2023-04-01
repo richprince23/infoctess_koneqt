@@ -14,6 +14,7 @@ import "package:flutter_dotenv/flutter_dotenv.dart";
 //       this.substring(0, 1).toUpperCase() + this.substring(1).toLowerCase();
 // }
 
+String? OPEN_AI_KEY = dotenv.env['OPEN_AI_KEY'];
 // onboarding screen
 final PageController pageController = PageController(initialPage: 0);
 var kPages = [
@@ -48,5 +49,3 @@ final profileFormKey = GlobalKey<FormState>();
 //onboarding controllers
 
 String? avatarPath;
-
-String? OPEN_AI_KEY = dotenv.env['OPEN_AI_KEY'];

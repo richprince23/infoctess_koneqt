@@ -1,8 +1,12 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
 import 'package:infoctess_koneqt/screens/onboarding.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
+import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:status_alert/status_alert.dart';
 import 'package:infoctess_koneqt/auth.dart';
 
@@ -127,46 +131,69 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
                             ),
                           ),
                         );
-                        await checkUserAccess((_controller.text)).then(
-                          (value) async {
-                            if (value != null) {
-                              // Navigator.pop(context);
-                              await Auth()
-                                  .checkUserExists(
-                                int.parse(_controller.text),
-                              )
-                                  .then(
-                                (value) {
-                                  if (value == false) {
-                                    StatusAlert.show(
-                                      context,
-                                      title: "Verified",
-                                      configuration: const IconConfiguration(
-                                          icon: Icons.done),
-                                    );
-                                    Navigator.popAndPushNamed(
-                                      context,
-                                      "/onboarding",
-                                    );
-                                  } else {
-                                    setState(() {
-                                      response = "User already exists";
-                                    });
-                                  }
-                                },
-                              );
-                              setState(() {
-                                response = "";
-                              });
-                            } else {
-                              setState(() {
-                                response =
-                                    "Member not found. Please ensure you have registered with Infoctess.If you have, contact the admin to reslove this.";
-                              });
-                              Navigator.pop(context);
-                            }
-                          },
-                        );
+                        try {
+                          await checkUserAccess((_controller.text)).then(
+                            (value) async {
+                              if (value != null) {
+                                // Navigator.pop(context);
+                                await Auth()
+                                    .checkUserExists(
+                                  int.parse(_controller.text),
+                                )
+                                    .then(
+                                  (value) {
+                                    if (value == false) {
+                                      StatusAlert.show(
+                                        context,
+                                        title: "Verified",
+                                        configuration: const IconConfiguration(
+                                            icon: Icons.done),
+                                      );
+                                      Navigator.pop(context);
+                                      Navigator.popAndPushNamed(
+                                        context,
+                                        "/onboarding",
+                                      );
+                                    } else {
+                                      setState(() {
+                                        response = "User already exists";
+                                      });
+                                    }
+                                  },
+                                );
+                                setState(() {
+                                  response = "";
+                                });
+                              } else {
+                                setState(() {
+                                  response =
+                                      "Member not found. Please ensure you have registered with Infoctess.If you have, contact the admin to reslove this.";
+                                });
+                                Navigator.pop(context);
+                              }
+                            },
+                          );
+                        } catch (e) {
+                          Platform.isAndroid
+                              ? showDialog(
+                                  context: context,
+                                  builder: (context) => const CustomDialog(
+                                    message:
+                                        "An error occurred while performing your request",
+                                  ),
+                                )
+                              : showCupertinoDialog(
+                                  context: context,
+                                  builder: (context) => const CustomDialog(
+                                    message:
+                                        "An error occured while performing your request",
+                                  ),
+                                );
+                          setState(() {
+                            response = "An error occured. Please try again";
+                          });
+                          Navigator.pop(context);
+                        }
                       },
                       child: const Text("Verify"),
                     ),

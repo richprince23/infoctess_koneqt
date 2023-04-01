@@ -8,6 +8,7 @@ import 'package:infoctess_koneqt/components/select_control1.dart';
 import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
+import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:provider/provider.dart';
 
 class AcademicInfoScreen extends StatefulWidget {
@@ -252,37 +253,18 @@ class _AcademicInfoScreenState extends State<AcademicInfoScreen> {
                               } catch (e) {
                                 Platform.isAndroid
                                     ? showDialog(
-                                        useRootNavigator: true,
-                                        barrierDismissible: false,
                                         context: context,
-                                        builder: (context) => AlertDialog(
-                                          title: const Text('Error'),
-                                          content: Text(e.toString()),
-                                          actions: <Widget>[
-                                            TextButton(
-                                              child: const Text('OK'),
-                                              onPressed: () {
-                                                Navigator.of(context,
-                                                        rootNavigator: true)
-                                                    .pop();
-                                              },
-                                            ),
-                                          ],
-                                        ),
+                                        builder: (context) =>
+                                            const CustomDialog(
+                                                message:
+                                                    "Please fill all fields"),
                                       )
-                                    : CupertinoAlertDialog(
-                                        title: const Text('Error'),
-                                        content: Text(e.toString()),
-                                        actions: <Widget>[
-                                          CupertinoDialogAction(
-                                            child: const Text('OK'),
-                                            onPressed: () {
-                                              Navigator.of(context,
-                                                      rootNavigator: true)
-                                                  .pop();
-                                            },
-                                          ),
-                                        ],
+                                    : showCupertinoDialog(
+                                        context: context,
+                                        builder: (context) =>
+                                            const CustomDialog(
+                                                message:
+                                                    "Please fill all fields"),
                                       );
                               }
                               Provider.of<OnboardingController>(context,
@@ -293,10 +275,11 @@ class _AcademicInfoScreenState extends State<AcademicInfoScreen> {
                               "next",
                               style: GoogleFonts.sarabun(
                                 textStyle: const TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    decoration: TextDecoration.none,
-                                    fontSize: 20,
-                                    color: Colors.white),
+                                  fontWeight: FontWeight.w400,
+                                  decoration: TextDecoration.none,
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           );

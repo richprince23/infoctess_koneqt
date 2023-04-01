@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,6 +11,7 @@ import 'package:infoctess_koneqt/controllers/user_provider.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/screens/main_screen.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
+import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:status_alert/status_alert.dart';
 
@@ -215,41 +217,17 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                                           listen: false)
                                       .nextPage();
                                 });
-                              } catch (e) {
+                              } on FirebaseAuthException catch (e) {
                                 Platform.isAndroid
                                     ? showDialog(
-                                        useRootNavigator: true,
-                                        barrierDismissible: false,
                                         context: context,
-                                        builder: (context) => AlertDialog(
-                                          elevation: 10,
-                                          title: const Text('Error'),
-                                          content: Text(e.toString()),
-                                          actions: <Widget>[
-                                            TextButton(
-                                              child: const Text('OK'),
-                                              onPressed: () {
-                                                Navigator.of(context,
-                                                        rootNavigator: true)
-                                                    .pop();
-                                              },
-                                            ),
-                                          ],
-                                        ),
+                                        builder: (context) =>
+                                            CustomDialog(message: e.message!),
                                       )
-                                    : CupertinoAlertDialog(
-                                        title: const Text('Error'),
-                                        content: Text(e.toString()),
-                                        actions: <Widget>[
-                                          CupertinoDialogAction(
-                                            child: const Text('OK'),
-                                            onPressed: () {
-                                              Navigator.of(context,
-                                                      rootNavigator: true)
-                                                  .pop();
-                                            },
-                                          ),
-                                        ],
+                                    : showCupertinoDialog(
+                                        context: context,
+                                        builder: (context) =>
+                                            CustomDialog(message: e.message!),
                                       );
                               }
                             },

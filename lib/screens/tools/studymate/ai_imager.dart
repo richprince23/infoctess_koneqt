@@ -1,14 +1,13 @@
-import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:infoctess_koneqt/.env.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/controllers/ai_controller.dart';
 import 'package:infoctess_koneqt/screens/tools/image_viewer.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
-import 'package:http/http.dart' as http;
 import 'package:infoctess_koneqt/widgets/chat_bubble.dart';
+import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 
 class Imager extends StatefulWidget {
   const Imager({super.key});
@@ -140,39 +139,20 @@ class ImagerState extends State<Imager> {
               useRootNavigator: true,
               barrierDismissible: false,
               context: context,
-              builder: (context) => AlertDialog(
-                title: const Text('Error'),
-                content: Text(e.toString()),
-                actions: <Widget>[
-                  TextButton(
-                    child: const Text('OK'),
-                    onPressed: () {
-                      Navigator.of(context, rootNavigator: true).pop();
-                    },
-                  ),
-                ],
-              ),
-            )
-          : CupertinoAlertDialog(
-              title: const Text('Error'),
-              content: Text(e.toString()),
-              actions: <Widget>[
-                CupertinoDialogAction(
-                  child: const Text('OK'),
-                  onPressed: () {
-                    Navigator.of(context, rootNavigator: true).pop();
-                  },
-                ),
-              ],
-            );
+              builder: (context) => const CustomDialog(
+                  message: "An error occurred when performing your request"))
+          : showCupertinoDialog(
+              context: context,
+              builder: (context) => const CustomDialog(
+                  message: "An error occurred when performing your request"));
     } finally {
       Navigator.of(context, rootNavigator: true).pop();
       setState(() {
         isLoading = false;
         isDone = true;
       });
-      textFocusNode.unfocus();
       FocusScope.of(context).unfocus();
+      textFocusNode.unfocus();
     }
   }
 
