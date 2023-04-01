@@ -132,9 +132,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: const Text(
                         "login",
                         style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 20,
-                            color: Colors.white),
+                          fontWeight: FontWeight.w400,
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                     Container(
@@ -186,7 +187,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 )),
 
                             child: Text(
-                              "Reset Password",
+                              "reset password",
                               style: GoogleFonts.sarabun(
                                 textStyle: TextStyle(
                                     decoration: TextDecoration.underline,

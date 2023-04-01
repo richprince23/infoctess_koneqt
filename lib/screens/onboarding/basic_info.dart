@@ -218,17 +218,43 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                                       .nextPage();
                                 });
                               } on FirebaseAuthException catch (e) {
-                                Platform.isAndroid
-                                    ? showDialog(
-                                        context: context,
-                                        builder: (context) =>
-                                            CustomDialog(message: e.message!),
-                                      )
-                                    : showCupertinoDialog(
-                                        context: context,
-                                        builder: (context) =>
-                                            CustomDialog(message: e.message!),
-                                      );
+                                if (e.code == 'weak-password') {
+                                  Platform.isAndroid
+                                      ? showDialog(
+                                          context: context,
+                                          builder: (context) =>
+                                              const CustomDialog(
+                                            message:
+                                                "The password provided is too weak",
+                                          ),
+                                        )
+                                      : showCupertinoDialog(
+                                          context: context,
+                                          builder: (context) =>
+                                              const CustomDialog(
+                                            message:
+                                                "The account already exists for that email",
+                                          ),
+                                        );
+                                } else if (e.code == 'email-already-in-use') {
+                                  Platform.isAndroid
+                                      ? showDialog(
+                                          context: context,
+                                          builder: (context) =>
+                                              const CustomDialog(
+                                            message:
+                                                "The account already exists for that email",
+                                          ),
+                                        )
+                                      : showCupertinoDialog(
+                                          context: context,
+                                          builder: (context) =>
+                                              const CustomDialog(
+                                            message:
+                                                "The account already exists for that email",
+                                          ),
+                                        );
+                                }
                               }
                             },
                             child: Text(

@@ -105,7 +105,6 @@ class Auth {
         await e.ref.getDownloadURL().then(
           // store image in db
           (url) async {
-            print(url);
             await _auth.currentUser!.updatePhotoURL(url).then(
                   (value) => db
                       .collection("user_infos")
