@@ -1,14 +1,22 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:infoctess_koneqt/components/input_control1.dart';
+import 'package:infoctess_koneqt/controllers/user_provider.dart';
+import 'package:infoctess_koneqt/screens/home/homepage.dart';
+import 'package:infoctess_koneqt/screens/main_screen.dart';
 
 import 'package:infoctess_koneqt/screens/onboarding.dart';
 import 'package:infoctess_koneqt/screens/onboarding/check_index.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/auth.dart';
+import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -116,11 +124,91 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 20,
                     ),
                     TextButton(
-                      onPressed: () {
-                        Navigator.pushReplacementNamed(
-                          context,
-                          "/",
-                        );
+                      onPressed: () async {
+                        if (!_formKey.currentState!.validate()) {
+                          return;
+                        }
+                        try {
+                          await Auth()
+                              .signIn(_email.text.trim(), _pass.text)
+                              .then((user) async => {
+                                    if (user != null)
+                                      {
+                                        // save user to shared prefs
+                                        Provider.of<UserProvider>(context)
+                                            .setUserID(user.uid),
+                                        Provider.of<UserProvider>(context)
+                                            .setLoggedIn(true),
+                                        await Navigator.pushReplacementNamed(
+                                            context, "/")
+                                      }
+                                  });
+                        } on FirebaseAuthException catch (e) {
+                          if (e.code == 'network-request-failed') {
+                            Platform.isAndroid
+                                ? showDialog(
+                                    context: context,
+                                    builder: (context) => const CustomDialog(
+                                        message: "No Internet Connection"))
+                                : showCupertinoDialog(
+                                    context: context,
+                                    builder: (context) => const CustomDialog(
+                                      message: "No Internet Connection",
+                                    ),
+                                  );
+                            //devtools.log('No Internet Connection');
+                          } else if (e.code == "wrong-password") {
+                            Platform.isAndroid
+                                ? showDialog(
+                                    context: context,
+                                    builder: (context) => const CustomDialog(
+                                        message:
+                                            'Please Enter correct password'))
+                                : showCupertinoDialog(
+                                    context: context,
+                                    builder: (context) => const CustomDialog(
+                                        message:
+                                            'Please Enter correct password'));
+
+                            //devtools.log('Please Enter correct password');
+                            //print('Please Enter correct password');
+                          } else if (e.code == 'user-not-found') {
+                            Platform.isAndroid
+                                ? showDialog(
+                                    context: context,
+                                    builder: (context) => const CustomDialog(
+                                        message: 'Email not found'))
+                                : showCupertinoDialog(
+                                    context: context,
+                                    builder: (context) => const CustomDialog(
+                                        message: 'Email not found'));
+
+                            // print('Email not found');
+                          } else if (e.code == 'too-many-requests') {
+                            Platform.isAndroid
+                                ? showDialog(
+                                    context: context,
+                                    builder: (context) => const CustomDialog(
+                                        message: "Too many attemps; try later"))
+                                : showCupertinoDialog(
+                                    context: context,
+                                    builder: (context) => const CustomDialog(
+                                        message:
+                                            'Too many attemps; try later'));
+
+                            //print('Too many attempts please try later');
+                          } else {
+                            Platform.isAndroid
+                                ? showDialog(
+                                    context: context,
+                                    builder: (context) =>
+                                        CustomDialog(message: e.message!))
+                                : showCupertinoDialog(
+                                    context: context,
+                                    builder: (context) =>
+                                        CustomDialog(message: e.message!));
+                          }
+                        }
                       },
                       style: TextButton.styleFrom(
                         backgroundColor: const Color.fromRGBO(74, 19, 193, 1),

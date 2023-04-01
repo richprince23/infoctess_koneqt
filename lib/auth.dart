@@ -16,6 +16,7 @@ class Auth {
         email: email,
         password: password,
       );
+      
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
