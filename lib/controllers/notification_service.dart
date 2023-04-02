@@ -11,6 +11,16 @@ class NotificationService {
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()!
         .requestPermission();
+
+    flnp
+        .resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin>()
+        ?.requestPermissions(
+          alert: true,
+          badge: true,
+          sound: true,
+        );
+
     tz.initializeTimeZones();
     AndroidInitializationSettings android =
         const AndroidInitializationSettings('ic_launcher');

@@ -14,11 +14,10 @@ import flutter_local_notifications
     }
 
     GeneratedPluginRegistrant.register(with: self)
-    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     
-    // FlutterLocalNotificationsPlugin.setPluginRegistrantCallback { registry in
-    //   GeneratedPluginRegistrant.register(with: registry)
-    // }
+    FlutterLocalNotificationsPlugin.setPluginRegistrantCallback { (registry) in
+      GeneratedPluginRegistrant.register(with: registry)
+    }
 
     override func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         // Pass device token to Flutter to handle
@@ -30,5 +29,7 @@ import flutter_local_notifications
     override func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print("Failed to register for remote notifications: \(error.localizedDescription)")
     }
+    
+    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }

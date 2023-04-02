@@ -5,9 +5,30 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:infoctess_koneqt/env.dart';
 
-class UtilitiesScreen extends StatelessWidget {
+class UtilitiesScreen extends StatefulWidget {
   const UtilitiesScreen({super.key});
+
+  @override
+  State<UtilitiesScreen> createState() => _UtilitiesScreenState();
+}
+
+class _UtilitiesScreenState extends State<UtilitiesScreen> {
+@override
+void initState() {
+  _initializeRemoteConfig();
+  super.initState();
+}
+
+Future<void> _initializeRemoteConfig() async {
+    await remoteConfig.setConfigSettings(RemoteConfigSettings(
+      fetchTimeout: const Duration(seconds: 10),
+      minimumFetchInterval: const Duration(minutes: 10),
+    ));
+    await remoteConfig.fetchAndActivate();
+  }
 
   @override
   Widget build(BuildContext context) {

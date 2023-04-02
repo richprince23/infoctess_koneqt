@@ -7,14 +7,15 @@ import 'package:infoctess_koneqt/screens/onboarding/basic_info.dart';
 import 'package:infoctess_koneqt/screens/onboarding/profileinfo.dart';
 import 'package:infoctess_koneqt/screens/tools/utilies_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import "package:flutter_dotenv/flutter_dotenv.dart";
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 
 // extension Capitalized on String {
 //   String capitalized() =>
 //       this.substring(0, 1).toUpperCase() + this.substring(1).toLowerCase();
 // }
+FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
 
-String? OPEN_AI_KEY = dotenv.env['OPEN_AI_KEY'];
+String? OPEN_AI_KEY = remoteConfig.getString("apiKeys");
 // onboarding screen
 final PageController pageController = PageController(initialPage: 0);
 var kPages = [
