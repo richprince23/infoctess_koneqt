@@ -25,9 +25,11 @@ class _PostItemState extends State<PostItem> {
         print("Post Details");
       },
       child: Container(
-        margin: const EdgeInsets.all(10),
+        margin: const EdgeInsets.symmetric(
+          vertical: 2,
+        ),
         child: Material(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(5),
           elevation: 0.5,
           shadowColor: Colors.grey,
           color:

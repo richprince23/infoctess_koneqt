@@ -28,24 +28,24 @@ class PostDetails extends StatelessWidget {
         slivers: [
           SliverToBoxAdapter(
             child: Container(
-              margin: const EdgeInsets.only(
-                  top: 10, left: 10, right: 10, bottom: 20),
+              margin:
+                  const EdgeInsets.only(top: 10, left: 5, right: 5, bottom: 10),
               child: Material(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(5),
                 elevation: 0.5,
                 shadowColor: Colors.grey,
                 color: AppTheme.themeData(false, context).primaryColor,
                 child: Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6),
+                      const EdgeInsets.symmetric(horizontal: 5.0, vertical: 2),
                   child: Column(
                     children: [
                       Container(
-                        padding: const EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(5),
                         // height: 50,
                         decoration: BoxDecoration(
                           color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(5),
                         ),
                         child: Row(
                           children: [

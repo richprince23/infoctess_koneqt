@@ -10,7 +10,7 @@ import 'package:infoctess_koneqt/env.dart';
 import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
-  MainScreen({Key? key}) : super(key: key);
+  const MainScreen({Key? key}) : super(key: key);
 
   @override
   State<MainScreen> createState() => _MainScreenState();

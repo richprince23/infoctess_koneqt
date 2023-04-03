@@ -20,7 +20,7 @@ class _ForumsScreenState extends State<ForumsScreen> {
           SliverToBoxAdapter(
             child: AnimatedContainer(
               // color: Colors.red,
-              padding: const EdgeInsets.all(5),
+              // padding: const EdgeInsets.all(5),
               duration: const Duration(milliseconds: 300),
               decoration: const BoxDecoration(
                 // color: Colors.blue,
@@ -47,7 +47,7 @@ class _ForumsScreenState extends State<ForumsScreen> {
               ),
               height: double.infinity,
               // margin: const EdgeInsets.only(top: 40),
-              padding: const EdgeInsets.only(top: 5, left: 10, right: 10),
+              // padding: const EdgeInsets.only(top: 5, left: 10, right: 10),
               width: MediaQuery.of(context).size.width,
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 2, sigmaY: 0),

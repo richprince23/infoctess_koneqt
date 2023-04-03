@@ -64,7 +64,6 @@ class UserProvider extends ChangeNotifier {
     final res = userPrefs.getString("curUser");
     curUser = cUser.User.fromJson(res! as Map<String, dynamic>);
     // return userPrefs.getString("curUser");
-    print("user: $curUser");
   }
 
   /// gets logged in status of user
