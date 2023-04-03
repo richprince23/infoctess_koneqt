@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/components/notiffications_screen.dart';
+import 'package:infoctess_koneqt/controllers/user_provider.dart';
+import 'package:infoctess_koneqt/env.dart';
 
 class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
   @override
@@ -17,17 +19,17 @@ class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(
-        'Hi, Richard',
+        "Hi, ${curUser!.fullName!.split(' ')[0]} ",
         style: GoogleFonts.sarabun(fontSize: 18),
       ),
       leadingWidth: 40,
       leading: InkWell(
-        child: const CircleAvatar(
-            radius: 5,
-            backgroundImage: CachedNetworkImageProvider(
-              "https://images.unsplash.com/photo-1586523969132-b57cf9a85a70?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-            )),
+        child: CircleAvatar(
+          radius: 5,
+          backgroundImage: CachedNetworkImageProvider(curUser!.avatar!),
+        ),
         onTap: () {
+          setUserDetails();
           Scaffold.of(context).openDrawer();
         },
       ),
@@ -35,8 +37,10 @@ class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
       actions: [
         IconButton(
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const NotificationsSceen()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const NotificationsSceen()));
           },
           icon: const Icon(CupertinoIcons.bell),
         )

@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:infoctess_koneqt/models/user_info.dart' as cUser;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/env.dart';
-import 'package:infoctess_koneqt/models/user_info.dart';
 
 class UserProvider extends ChangeNotifier {
   int? _indexNum;
@@ -67,4 +69,25 @@ class UserProvider extends ChangeNotifier {
     userPrefs.setBool("isLoggedIn", status);
     notifyListeners();
   }
+}
+
+Future setUserDetails() async {
+  final user = FirebaseAuth.instance.currentUser;
+  final userDb = await FirebaseFirestore.instance
+      .collection('user_infos')
+      .where("userID", isEqualTo: user!.uid)
+      .get()
+      .then((value) => value.docs[0].data());
+
+  curUser = cUser.User(
+    avatar: user.photoURL,
+    fullName: user.displayName,
+    emailAddress: user.email,
+    indexNum: userDb['indexNum'],
+    gender: userDb["gender"],
+    userLevel: userDb["userLevel"],
+    userName: userDb["userName"],
+    classGroup: userDb["classGroup"],
+    phoneNum: userDb["phoneNum"],
+  );
 }

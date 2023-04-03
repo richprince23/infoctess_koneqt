@@ -19,12 +19,6 @@ class Auth {
 
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
-      // print(e.code);
-      // if (e.code == 'user-not-found') {
-      //   print('No user found for that email.');
-      // } else if (e.code == 'wrong-password') {
-      //   print('Wrong password provided for that user.');
-      // }
       throw FirebaseAuthException(
         code: e.code,
         message: e.message,

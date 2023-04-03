@@ -152,6 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               .then((user) async => {
                                     if (user != null)
                                       {
+                                        await setUserDetails(),
                                         // save user to shared prefs
                                         Provider.of<UserProvider>(context)
                                             .setUserID(user.uid),

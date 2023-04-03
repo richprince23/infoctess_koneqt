@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
+import 'package:infoctess_koneqt/controllers/user_provider.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
@@ -290,7 +291,7 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                                   )
                                   .then((value) async => await Auth()
                                       .saveUserImage(selectedMedia!.path))
-                                  .then((value) => {
+                                  .then((value) async => {
                                         StatusAlert.show(
                                           context,
                                           title: "Success",
@@ -302,6 +303,7 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                                                       .check_circle_outline),
                                           duration: const Duration(seconds: 3),
                                         ),
+                                        await setUserDetails(),
                                         Navigator.pushReplacementNamed(
                                             context, "/"),
                                       });

@@ -1,3 +1,4 @@
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/models/user_info.dart';
 import 'package:infoctess_koneqt/screens/forums.dart';
@@ -14,6 +15,7 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 //       this.substring(0, 1).toUpperCase() + this.substring(1).toLowerCase();
 // }
 FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
+User? curUser;
 
 String? OPEN_AI_KEY = remoteConfig.getString("apiKeys");
 // onboarding screen
@@ -40,7 +42,6 @@ final Future<SharedPreferences> mainPrefs = SharedPreferences.getInstance();
 
 User? onboardUser;
 
-User? curUser;
 //form keys
 
 final basicFormKey = GlobalKey<FormState>();
