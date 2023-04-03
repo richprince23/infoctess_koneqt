@@ -72,11 +72,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 20,
                   ),
                   Text(
-                    "Login",
+                    "Welcome Back",
                     style: GoogleFonts.sarabun(
-                        fontSize: 22,
-                        fontWeight: FontWeight.normal,
+                        fontSize: 24,
                         color: Colors.white,
+                        fontWeight: FontWeight.normal,
                         decoration: TextDecoration.none),
                   ),
                 ],
@@ -141,6 +141,17 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (!_formKey.currentState!.validate()) {
                           return;
                         }
+                        showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (context) => Center(
+                            child: Image.asset(
+                              "assets/images/preload.gif",
+                              height: 50,
+                              width: 50,
+                            ),
+                          ),
+                        );
                         try {
                           await Auth()
                               .signIn(_email.text.trim(), _pass.text)
@@ -157,6 +168,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       }
                                   });
                         } on FirebaseAuthException catch (e) {
+                          Navigator.pop(context);
                           if (e.code == 'network-request-failed') {
                             Platform.isAndroid
                                 ? showDialog(
@@ -176,12 +188,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                     context: context,
                                     builder: (context) => const CustomDialog(
                                         message:
-                                            'Please Enter correct password'))
+                                            'Please enter correct password'))
                                 : showCupertinoDialog(
                                     context: context,
                                     builder: (context) => const CustomDialog(
                                         message:
-                                            'Please Enter correct password'));
+                                            'Please enter correct password'));
 
                             //devtools.log('Please Enter correct password');
                             //print('Please Enter correct password');
@@ -190,11 +202,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ? showDialog(
                                     context: context,
                                     builder: (context) => const CustomDialog(
-                                        message: 'Email not found'))
+                                        message:
+                                            'No user found for this email'))
                                 : showCupertinoDialog(
                                     context: context,
                                     builder: (context) => const CustomDialog(
-                                        message: 'Email not found'));
+                                        message:
+                                            'No user found for this email'));
 
                             // print('Email not found');
                           } else if (e.code == 'too-many-requests') {
@@ -215,13 +229,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ? showDialog(
                                     context: context,
                                     builder: (context) =>
-                                        CustomDialog(message: e.message!))
+                                        CustomDialog(message: e.code),
+                                  )
                                 : showCupertinoDialog(
                                     context: context,
                                     builder: (context) =>
-                                        CustomDialog(message: e.message!));
+                                        CustomDialog(message: e.code),
+                                  );
                           }
                         }
+                        // finally {
+                        //   Navigator.pop(context);
+                        // }
                       },
                       style: TextButton.styleFrom(
                         backgroundColor: const Color.fromRGBO(74, 19, 193, 1),
