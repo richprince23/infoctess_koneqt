@@ -221,11 +221,23 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                               hintText: "Username",
                               type: TextInputType.name,
                               controller: userNameCon,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Username cannot be empty";
+                                }
+                                return null;
+                              },
                             ),
                             InputControl(
                               hintText: "Phone Number",
                               type: TextInputType.phone,
                               controller: phoneNumCon,
+                              validator: (value) {
+                                if (value!.length < 10) {
+                                  return "Phone Number must be 10 digits";
+                                }
+                                return null;
+                              },
                             ),
                           ],
                         ),
@@ -246,7 +258,7 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                         ),
                         onPressed: () async {
                           try {
-                            if (!acadFormKey.currentState!.validate()) {
+                            if (!profileFormKey.currentState!.validate()) {
                               return;
                             }
                             setState(() {
@@ -255,6 +267,18 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                               onboardUser!.phoneNum = phoneNumCon.text.trim();
                             });
                             if (selectedMedia != null) {
+                              showDialog(
+                                barrierDismissible: false,
+                                context: context,
+                                builder: (context) => Center(
+                                  // title: const Text("Verification"),
+                                  child: Image.asset(
+                                    "assets/images/preload.gif",
+                                    height: 50,
+                                    width: 50,
+                                  ),
+                                ),
+                              );
                               await Auth()
                                   .saveUserInfo(
                                     indexNum: onboardUser!.indexNum.toString(),
@@ -266,16 +290,21 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                                   )
                                   .then((value) async => await Auth()
                                       .saveUserImage(selectedMedia!.path))
-                                  .then(
-                                    (value) => StatusAlert.show(
-                                      context,
-                                      title: "Success",
-                                      subtitle: "Your profile has been updated",
-                                      configuration: const IconConfiguration(
-                                          icon: Icons.check_circle_outline),
-                                      duration: const Duration(seconds: 3),
-                                    ),
-                                  );
+                                  .then((value) => {
+                                        StatusAlert.show(
+                                          context,
+                                          title: "Success",
+                                          subtitle:
+                                              "Your profile has been updated",
+                                          configuration:
+                                              const IconConfiguration(
+                                                  icon: Icons
+                                                      .check_circle_outline),
+                                          duration: const Duration(seconds: 3),
+                                        ),
+                                        Navigator.pushReplacementNamed(
+                                            context, "/"),
+                                      });
                             }
                           } catch (e) {
                             Platform.isAndroid

@@ -90,32 +90,47 @@ class Auth {
         "userID": _auth.currentUser!.uid,
       }).then((value) => docID = value.id);
       return docID;
-    } catch (e) {
-      // throw Exception(e);
-      print(e);
+    } on FirebaseException catch (e) {
+      throw FirebaseException(
+        code: e.code,
+        message: e.message,
+        plugin: e.plugin,
+      );
+      // print(e);
     }
   }
 
   Future saveUserImage(String path) async {
-    await imageRef
-        .child("avatars/${DateTime.now().millisecondsSinceEpoch}.jpg")
-        .putFile(File(path).absolute)
-        .then(
-      (e) async {
-        // return image path
-        await e.ref.getDownloadURL().then(
-          // store image in db
-          (url) async {
-            await _auth.currentUser!.updatePhotoURL(url).then(
-                  (value) => db
-                      .collection("user_infos")
-                      .doc(_auth.currentUser!.uid)
-                      .update({"avatar": url}),
-                );
-          },
-        );
-      },
-    );
+    try {
+      await imageRef
+          .child("avatars/${DateTime.now().millisecondsSinceEpoch}.jpg")
+          .putFile(File(path).absolute)
+          .then(
+        (e) async {
+          // return image path
+          await e.ref.getDownloadURL().then(
+            // store image in db
+            (url) async {
+              await _auth.currentUser!.updatePhotoURL(url).then((value) => db
+                  .collection("user_infos")
+                  .where("userID", isEqualTo: _auth.currentUser!.uid)
+                  .get()
+                  .then((value) =>
+                      value.docs[0].reference.update({"avatar": url})));
+              //       .update({"avatar": url}),
+              // );
+            },
+          );
+        },
+      );
+    } on FirebaseException catch (e) {
+      throw FirebaseException(
+        code: e.code,
+        message: e.message,
+        plugin: e.plugin,
+      );
+    }
+    return imageRef.name;
   }
 
 // Future getAccess(int indexNum) async {
