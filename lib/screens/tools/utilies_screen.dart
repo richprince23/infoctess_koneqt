@@ -22,6 +22,11 @@ void initState() {
   super.initState();
 }
 
+@override
+void dispose() {
+  super.dispose();
+}
+
 Future<void> _initializeRemoteConfig() async {
     await remoteConfig.setConfigSettings(RemoteConfigSettings(
       fetchTimeout: const Duration(seconds: 10),

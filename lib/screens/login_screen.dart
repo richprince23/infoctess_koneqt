@@ -85,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         Positioned(
-          height: MediaQuery.of(context).size.height * 0.45,
+          height: MediaQuery.of(context).size.height * 0.55,
           // height: 200,
           // top: 100,
           bottom: 0,
@@ -109,16 +109,29 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     InputControl(
-                      hintText: "Email Address",
-                      type: TextInputType.emailAddress,
-                      controller: _email,
-                      isPassword: false,
-                    ),
+                        hintText: "Email Address",
+                        type: TextInputType.emailAddress,
+                        controller: _email,
+                        isPassword: false,
+                        validator: (value) {
+                          if (value!.isEmpty &&
+                              !RegExp(r'\S+@\S+\.\S+', caseSensitive: false)
+                                  .hasMatch(value)) {
+                            return "Please enter a valid email address";
+                          }
+                          return null;
+                        }),
                     InputControl(
                       hintText: "Password",
                       type: TextInputType.text,
                       controller: _pass,
                       isPassword: true,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Please enter a valid password";
+                        }
+                        return null;
+                      },
                     ),
                     const SizedBox(
                       height: 20,
