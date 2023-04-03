@@ -1,20 +1,14 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/controllers/user_provider.dart';
-import 'package:infoctess_koneqt/screens/home/homepage.dart';
-import 'package:infoctess_koneqt/screens/main_screen.dart';
-
-import 'package:infoctess_koneqt/screens/onboarding.dart';
 import 'package:infoctess_koneqt/screens/onboarding/check_index.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
-import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:provider/provider.dart';
 

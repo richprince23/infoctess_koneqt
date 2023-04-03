@@ -137,8 +137,8 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
           ),
         ),
         Positioned(
-          top: size.height * 0.30,
-          height: size.height * 0.65,
+          top: size.height * 0.275,
+          height: size.height * 0.7,
           width: size.width,
           child: Material(
             elevation: 5,
@@ -232,94 +232,85 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                       ),
                     ),
                     Expanded(
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 25),
-                        width: size.width,
-                        child: Builder(builder: (context) {
-                          return TextButton(
-                            style: TextButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(vertical: 15),
-                              backgroundColor:
-                                  AppTheme.themeData(false, context)
-                                      .backgroundColor,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
+                        child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          minimumSize: Size(size.width, 50),
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          backgroundColor: AppTheme.themeData(false, context)
+                              .backgroundColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                        onPressed: () async {
+                          try {
+                            if (!acadFormKey.currentState!.validate()) {
+                              return;
+                            }
+                            setState(() {
+                              onboardUser!.userName =
+                                  userNameCon.text.trim().toLowerCase();
+                              onboardUser!.phoneNum = phoneNumCon.text.trim();
+                            });
+                            if (selectedMedia != null) {
+                              await Auth()
+                                  .saveUserInfo(
+                                    indexNum: onboardUser!.indexNum.toString(),
+                                    userName: onboardUser!.userName,
+                                    phoneNum: onboardUser!.phoneNum,
+                                    gender: onboardUser!.gender,
+                                    level: onboardUser!.userLevel,
+                                    classGroup: onboardUser!.classGroup,
+                                  )
+                                  .then((value) async => await Auth()
+                                      .saveUserImage(selectedMedia!.path))
+                                  .then(
+                                    (value) => StatusAlert.show(
+                                      context,
+                                      title: "Success",
+                                      subtitle: "Your profile has been updated",
+                                      configuration: const IconConfiguration(
+                                          icon: Icons.check_circle_outline),
+                                      duration: const Duration(seconds: 3),
+                                    ),
+                                  );
+                            }
+                          } catch (e) {
+                            Platform.isAndroid
+                                ? showDialog(
+                                    context: context,
+                                    builder: (context) => const CustomDialog(
+                                        message:
+                                            "An error occurred while performing you request"),
+                                  )
+                                : showCupertinoDialog(
+                                    context: context,
+                                    builder: (context) => const CustomDialog(
+                                        message:
+                                            "An error occurred while performing you request"),
+                                  );
+                          }
+                          setState(() {
+                            Provider.of<OnboardingController>(context,
+                                    listen: false)
+                                .nextPage();
+                          });
+                        },
+                        child: Text(
+                          "finish",
+                          style: GoogleFonts.sarabun(
+                            textStyle: const TextStyle(
+                              fontWeight: FontWeight.w400,
+                              decoration: TextDecoration.none,
+                              fontSize: 20,
+                              color: Colors.white,
                             ),
-                            onPressed: () async {
-                              try {
-                                if (!acadFormKey.currentState!.validate()) {
-                                  return;
-                                }
-                                setState(() {
-                                  onboardUser!.userName =
-                                      userNameCon.text.trim().toLowerCase();
-                                  onboardUser!.phoneNum =
-                                      phoneNumCon.text.trim();
-                                });
-                                if (selectedMedia != null) {
-                                  await Auth()
-                                      .saveUserInfo(
-                                        indexNum:
-                                            onboardUser!.indexNum.toString(),
-                                        userName: onboardUser!.userName,
-                                        phoneNum: onboardUser!.phoneNum,
-                                        gender: onboardUser!.gender,
-                                        level: onboardUser!.userLevel,
-                                        classGroup: onboardUser!.classGroup,
-                                      )
-                                      .then((value) async => await Auth()
-                                          .saveUserImage(selectedMedia!.path))
-                                      .then(
-                                        (value) => StatusAlert.show(
-                                          context,
-                                          title: "Success",
-                                          subtitle:
-                                              "Your profile has been updated",
-                                          configuration:
-                                              const IconConfiguration(
-                                                  icon: Icons
-                                                      .check_circle_outline),
-                                          duration: const Duration(seconds: 3),
-                                        ),
-                                      );
-                                }
-                              } catch (e) {
-                                Platform.isAndroid
-                                    ? showDialog(
-                                        context: context,
-                                        builder: (context) => const CustomDialog(
-                                            message:
-                                                "An error occurred while performing you request"),
-                                      )
-                                    : showCupertinoDialog(
-                                        context: context,
-                                        builder: (context) => const CustomDialog(
-                                            message:
-                                                "An error occurred while performing you request"),
-                                      );
-                              }
-                              setState(() {
-                                Provider.of<OnboardingController>(context,
-                                        listen: false)
-                                    .nextPage();
-                              });
-                            },
-                            child: Text(
-                              "finish",
-                              style: GoogleFonts.sarabun(
-                                textStyle: const TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  decoration: TextDecoration.none,
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          );
-                        }),
+                          ),
+                        ),
                       ),
-                    )
+                    ))
                   ],
                 ),
               ),

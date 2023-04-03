@@ -113,8 +113,8 @@ class _AcademicInfoScreenState extends State<AcademicInfoScreen> {
           ),
         ),
         Positioned(
-          top: size.height * 0.30,
-          height: size.height * 0.65,
+          top: size.height * 0.275,
+          height: size.height * 0.7,
           width: size.width,
           child: Material(
             elevation: 5,
@@ -216,12 +216,12 @@ class _AcademicInfoScreenState extends State<AcademicInfoScreen> {
                       ),
                     ),
                     Expanded(
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 25),
-                        width: size.width,
-                        child: Builder(builder: (context) {
-                          return TextButton(
+                        flex: 1,
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: TextButton(
                             style: TextButton.styleFrom(
+                              minimumSize: Size(size.width, 50),
                               padding: const EdgeInsets.symmetric(vertical: 15),
                               backgroundColor:
                                   AppTheme.themeData(false, context)
@@ -282,10 +282,8 @@ class _AcademicInfoScreenState extends State<AcademicInfoScreen> {
                                 ),
                               ),
                             ),
-                          );
-                        }),
-                      ),
-                    )
+                          ),
+                        ))
                   ],
                 ),
               ),

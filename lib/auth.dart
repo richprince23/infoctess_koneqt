@@ -36,22 +36,18 @@ class Auth {
 
   Future<bool?> checkUserExists(int indexNum) async {
     try {
-      await db
+      bool res = await db
           .collection("user_infos")
           .where("indexNum", isEqualTo: indexNum)
           .get()
           .then((value) {
-        if (value.docs.isEmpty) {
-          return false;
-        } else {
-          return true;
-        }
+        return (value.docs.isEmpty) ? false : true;
       });
-    } on FirebaseAuthException catch (e) {
+      return res;
+    } on Exception catch (e) {
       // print('No user found for that index Number.');
       throw Exception(e);
     }
-    return null;
   }
 
   Future<String?> updateName(String name) async {
@@ -146,17 +142,11 @@ class Auth {
       );
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-        throw Exception(e.message);
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-        throw Exception(e.message);
-      }
-    } catch (e) {
-      print(e);
+      throw FirebaseAuthException(
+        code: e.code,
+        message: e.message,
+      );
     }
-    return null;
   }
 
   Future<void> signOut() async {

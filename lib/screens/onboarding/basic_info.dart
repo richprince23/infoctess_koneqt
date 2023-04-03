@@ -9,11 +9,9 @@ import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
 import 'package:infoctess_koneqt/controllers/user_provider.dart';
 import 'package:infoctess_koneqt/env.dart';
-import 'package:infoctess_koneqt/screens/main_screen.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:provider/provider.dart';
-import 'package:status_alert/status_alert.dart';
 
 class BasicInfoScreen extends StatefulWidget {
   const BasicInfoScreen({super.key});
@@ -109,8 +107,8 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
           ),
         ),
         Positioned(
-          top: size.height * 0.30,
-          height: size.height * 0.65,
+          top: size.height * 0.275,
+          height: size.height * 0.7,
           width: size.width,
           child: Material(
             elevation: 6,
@@ -183,12 +181,12 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                       ),
                     ),
                     Expanded(
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 25),
-                        width: size.width,
-                        child: Builder(builder: (context) {
-                          return TextButton(
+                        flex: 1,
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: TextButton(
                             style: TextButton.styleFrom(
+                              minimumSize: Size(size.width, 50),
                               padding: const EdgeInsets.symmetric(vertical: 15),
                               backgroundColor:
                                   AppTheme.themeData(false, context)
@@ -205,6 +203,18 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                                 if (!basicFormKey.currentState!.validate()) {
                                   return;
                                 }
+                                showDialog(
+                                  barrierDismissible: false,
+                                  context: context,
+                                  builder: (context) => Center(
+                                    // title: const Text("Verification"),
+                                    child: Image.asset(
+                                      "assets/images/preload.gif",
+                                      height: 50,
+                                      width: 50,
+                                    ),
+                                  ),
+                                );
                                 await Auth()
                                     .signUp(emailCon.text.trim(), passCon.text)
                                     .then((value) {
@@ -233,7 +243,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                                           builder: (context) =>
                                               const CustomDialog(
                                             message:
-                                                "The account already exists for that email",
+                                                "The password provided is too weak",
                                           ),
                                         );
                                 } else if (e.code == 'email-already-in-use') {
@@ -255,6 +265,8 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                                           ),
                                         );
                                 }
+                              } finally {
+                                Navigator.pop(context);
                               }
                             },
                             child: Text(
@@ -268,10 +280,8 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                                 ),
                               ),
                             ),
-                          );
-                        }),
-                      ),
-                    )
+                          ),
+                        ))
                   ],
                 ),
               ),

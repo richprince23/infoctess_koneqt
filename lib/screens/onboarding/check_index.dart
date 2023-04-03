@@ -71,7 +71,7 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
                 children: const [
                   Icon(Icons.lock, size: 100, color: Colors.red),
                   Text(
-                    "This app is limited to memebers of INFOCTESS only. \nTo ensure this, you are required to verify your membership with your Index Number.",
+                    "This app is limited to members of INFOCTESS only. \nTo enforce this, you are required to verify your membership with your Index Number.",
                     softWrap: true,
                     style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
                     textAlign: TextAlign.center,
@@ -123,11 +123,12 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
                         showDialog(
                           barrierDismissible: false,
                           context: context,
-                          builder: (context) => AlertDialog(
+                          builder: (context) => Center(
                             // title: const Text("Verification"),
-                            content: Image.asset(
+                            child: Image.asset(
                               "assets/images/preload.gif",
                               height: 50,
+                              width: 50,
                             ),
                           ),
                         );
@@ -136,31 +137,61 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
                             (value) async {
                               if (value != null) {
                                 // Navigator.pop(context);
-                                await Auth()
-                                    .checkUserExists(
-                                  int.parse(_controller.text),
-                                )
-                                    .then(
-                                  (value) {
-                                    if (value == false) {
-                                      StatusAlert.show(
-                                        context,
-                                        title: "Verified",
-                                        configuration: const IconConfiguration(
-                                            icon: Icons.done),
-                                      );
+                                print("value of first check: $value");
+                                try {
+                                  await Auth()
+                                      .checkUserExists(
+                                    int.parse(_controller.text),
+                                  )
+                                      .then(
+                                    (value) {
+                                      print("checking user exists: $value");
                                       Navigator.pop(context);
-                                      Navigator.popAndPushNamed(
-                                        context,
-                                        "/onboarding",
-                                      );
-                                    } else {
-                                      setState(() {
-                                        response = "User already exists";
-                                      });
-                                    }
-                                  },
-                                );
+                                      if (value == false) {
+                                        StatusAlert.show(
+                                          context,
+                                          title: "Verified",
+                                          configuration:
+                                              const IconConfiguration(
+                                            icon: Icons.done,
+                                          ),
+                                        );
+                                        Navigator.pop(context);
+                                        Navigator.popAndPushNamed(
+                                          context,
+                                          "/onboarding",
+                                        );
+                                      } else {
+                                        setState(() {
+                                          response = "User already exists";
+                                        });
+                                      }
+                                    },
+                                  );
+                                } catch (e) {
+                                  Platform.isAndroid
+                                      ? showDialog(
+                                          context: context,
+                                          builder: (context) =>
+                                              const CustomDialog(
+                                            message:
+                                                "An error occurred while performing your request",
+                                          ),
+                                        )
+                                      : showCupertinoDialog(
+                                          context: context,
+                                          builder: (context) =>
+                                              const CustomDialog(
+                                            message:
+                                                "An error occured while performing your request",
+                                          ),
+                                        );
+                                  setState(() {
+                                    response =
+                                        "An error occured. Please try again";
+                                  });
+                                  Navigator.pop(context);
+                                }
                                 setState(() {
                                   response = "";
                                 });
