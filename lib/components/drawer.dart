@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 
 class DrawerScreen extends StatelessWidget {
@@ -30,32 +31,32 @@ class DrawerScreen extends StatelessWidget {
                       child: ClipOval(
                         clipBehavior: Clip.antiAlias,
                         child: CachedNetworkImage(
-                          fit: BoxFit.fill,
-                          width: 100,
-                          imageUrl:
-                              "https://images.unsplash.com/photo-1586523969132-b57cf9a85a70?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-                        ),
+                            fit: BoxFit.fill,
+                            width: 100,
+                            imageUrl: curUser!.avatar!),
                       ),
                     ),
                     Text(
-                      "Angelina Abena Darling Afriyie",
+                      "${curUser!.fullName} ", // fullname
                       style: GoogleFonts.sarabun().copyWith(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                       textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      "@CardiB", // @username
+                      "@${curUser!.userName!} ", // @username
                       style: GoogleFonts.sarabun().copyWith(
                         fontSize: 16,
                         color: Colors.black54,
                         fontWeight: FontWeight.w400,
                       ),
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      "Level 300 Group 5",
+                      "${curUser!.classGroup} ", // class group
                       style: GoogleFonts.sarabun().copyWith(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,

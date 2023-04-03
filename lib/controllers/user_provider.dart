@@ -51,9 +51,20 @@ class UserProvider extends ChangeNotifier {
   }
 
   /// sets a userinfo from a UserInfo model
-  setUser(UserInfo user) async {
-    _userInfo = user;
+  setUser(cUser.User user) async {
+    final userPrefs = await mainPrefs;
+    userPrefs.setString('curUser', curUser!.toJson().toString());
+
     notifyListeners();
+  }
+
+  Future getUser() async {
+    final userPrefs = await mainPrefs;
+    notifyListeners();
+    final res = userPrefs.getString("curUser");
+    curUser = cUser.User.fromJson(res! as Map<String, dynamic>);
+    // return userPrefs.getString("curUser");
+    print("user: $curUser");
   }
 
   /// gets logged in status of user
@@ -83,7 +94,7 @@ Future setUserDetails() async {
     avatar: user.photoURL,
     fullName: user.displayName,
     emailAddress: user.email,
-    indexNum: userDb['indexNum'],
+    indexNum: int.parse(userDb['indexNum']),
     gender: userDb["gender"],
     userLevel: userDb["userLevel"],
     userName: userDb["userName"],

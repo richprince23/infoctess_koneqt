@@ -154,9 +154,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                       {
                                         await setUserDetails(),
                                         // save user to shared prefs
-                                        Provider.of<UserProvider>(context)
+                                        Provider.of<UserProvider>(context,
+                                                listen: false)
                                             .setUserID(user.uid),
-                                        Provider.of<UserProvider>(context)
+                                        Provider.of<UserProvider>(context,
+                                                listen: false)
                                             .setLoggedIn(true),
                                         await Navigator.pushReplacementNamed(
                                             context, "/")

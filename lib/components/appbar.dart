@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/components/notiffications_screen.dart';
 import 'package:infoctess_koneqt/controllers/user_provider.dart';
 import 'package:infoctess_koneqt/env.dart';
+import 'package:provider/provider.dart';
 
 class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
   @override
@@ -29,7 +30,7 @@ class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
           backgroundImage: CachedNetworkImageProvider(curUser!.avatar!),
         ),
         onTap: () {
-          setUserDetails();
+          context.read<UserProvider>().getUser;
           Scaffold.of(context).openDrawer();
         },
       ),

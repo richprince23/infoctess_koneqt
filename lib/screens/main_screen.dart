@@ -19,8 +19,12 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
-    
     super.initState();
+    getOfflineUser();
+  }
+
+  void getOfflineUser() async {
+    Provider.of<UserProvider>(context, listen: false).getUser;
   }
 
   @override
