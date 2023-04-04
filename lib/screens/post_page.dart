@@ -29,7 +29,7 @@ class PostDetails extends StatelessWidget {
           SliverToBoxAdapter(
             child: Container(
               margin:
-                  const EdgeInsets.only(top: 10, left: 5, right: 5, bottom: 10),
+                  const EdgeInsets.only(top: 5, left: 5, right: 5, bottom: 10),
               child: Material(
                 borderRadius: BorderRadius.circular(5),
                 elevation: 0.5,
@@ -230,7 +230,7 @@ class PostDetails extends StatelessWidget {
             fillOverscroll: false,
             hasScrollBody: true,
             child: Container(
-              margin: const EdgeInsets.only(top: 20),
+              margin: const EdgeInsets.only(top: 10),
               child: ListView.builder(
                 // controller: listScroll,
                 itemCount: 10,

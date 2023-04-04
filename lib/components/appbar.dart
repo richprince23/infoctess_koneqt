@@ -30,7 +30,6 @@ class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
           backgroundImage: CachedNetworkImageProvider(curUser!.avatar!),
         ),
         onTap: () {
-          context.read<UserProvider>().getUser;
           Scaffold.of(context).openDrawer();
         },
       ),
