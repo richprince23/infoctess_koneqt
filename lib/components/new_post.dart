@@ -82,16 +82,15 @@ class CreatePostState extends State<CreatePost> {
 
   /// Get video from gallery
 
-Future<String> getUserID() async {
-  final userPrefs = await mainPrefs;
-  return userPrefs.getString("userID")!;
-}
+  Future<String> getUserID() async {
+    final userPrefs = await mainPrefs;
+    return userPrefs.getString("userID")!;
+  }
 
-@override
-void initState() {
-  super.initState();
-  
-}
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -129,7 +128,7 @@ void initState() {
             maxLengthEnforcement: MaxLengthEnforcement.enforced,
             keyboardType: TextInputType.multiline,
             inputFormatters: [
-              LengthLimitingTextInputFormatter(500),
+              LengthLimitingTextInputFormatter(256),
             ],
             controller: postController,
             minLines: 1,
@@ -205,13 +204,20 @@ void initState() {
                   ),
                 ),
                 TextButton(
-                  onPressed: (() {
+                  onPressed: (() async {
                     if (!isEmtpyText) {
+                      showDialog(
+                          context: context,
+                          builder: (context) => Center(
+                                child: Image.asset("assets/images/preload.gif"),
+                              ));
                       if (croppedMedia != null) {
-                        sendPost(postController.text,
-                            imagePath: croppedMedia!.path);
+                        await sendPost(postController.text,
+                                imagePath: croppedMedia!.path)
+                            .then((value) => Navigator.pop(context));
                       } else {
-                        sendPost(postController.text.trim());
+                        await sendPost(postController.text.trim())
+                            .then((value) => Navigator.pop(context));
                       }
                     }
                   }),
