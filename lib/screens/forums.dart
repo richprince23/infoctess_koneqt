@@ -1,8 +1,10 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/components/new_post.dart';
 import 'package:infoctess_koneqt/components/post_item.dart';
+import 'package:infoctess_koneqt/models/posts_model.dart';
 
 class ForumsScreen extends StatefulWidget {
   const ForumsScreen({super.key});
@@ -12,6 +14,12 @@ class ForumsScreen extends StatefulWidget {
 }
 
 class _ForumsScreenState extends State<ForumsScreen> {
+  Stream<QuerySnapshot<Map<String, dynamic>>> postsStream = FirebaseFirestore
+      .instance
+      .collection('posts')
+      .orderBy('timestamp')
+      .snapshots();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,6 +44,7 @@ class _ForumsScreenState extends State<ForumsScreen> {
           ),
           SliverFillRemaining(
             child: Container(
+              padding: const EdgeInsets.only(top: 10),
               decoration: const BoxDecoration(
                 // color: Colors.blue,
                 gradient: LinearGradient(
@@ -53,28 +62,46 @@ class _ForumsScreenState extends State<ForumsScreen> {
                 filter: ImageFilter.blur(sigmaX: 2, sigmaY: 0),
                 child: RefreshIndicator(
                   onRefresh: () async {
-                    print("reloaded");
+                    setState(() {
+                      postsStream = FirebaseFirestore.instance
+                          .collection('posts')
+                          .orderBy('timestamp')
+                          .snapshots();
+                    });
                   },
-                  child: ListView(
-                    children: const [
-                      PostItem(),
-                      PostItem(),
-                      PostItem(),
-                      PostItem(),
-                      PostItem(),
-                    ],
-                  ),
+                  child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                      stream: postsStream,
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: Image.asset(
+                              "assets/images/preload.gif",
+                              width: 50,
+                              height: 50,
+                            ),
+                          );
+                        }
+                        return ListView.builder(
+                            itemCount: snapshot.data!.docs.length,
+                            itemBuilder: (context, index) {
+                              final post = snapshot.data!.docs[index];
+                              return PostItem(
+                                post: Post(
+                                  id: post.id,
+                                  body: post.data()['body'],
+                                  imgUrl: post.data()['image'],
+                                  posterID: post.data()['posterID'],
+                                  timestamp: post.data()['timestamp'].toDate(),
+                                ),
+                              );
+                            });
+                      }),
                 ),
               ),
             ),
-          ),
+          )
         ],
       ),
-      // floatingActionButton: ElevatedButton(
-      //   child: Text("New Post"),
-      //   onPressed: () {},
-      // ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
     );
   }
 }

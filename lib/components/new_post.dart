@@ -8,6 +8,8 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:infoctess_koneqt/controllers/post_controller.dart';
+import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 
 class CreatePost extends StatefulWidget {
@@ -80,6 +82,17 @@ class CreatePostState extends State<CreatePost> {
 
   /// Get video from gallery
 
+Future<String> getUserID() async {
+  final userPrefs = await mainPrefs;
+  return userPrefs.getString("userID")!;
+}
+
+@override
+void initState() {
+  super.initState();
+  
+}
+
   @override
   void dispose() {
     focusNode.dispose();
@@ -93,7 +106,7 @@ class CreatePostState extends State<CreatePost> {
   Widget build(BuildContext context) {
     return Container(
       // height: 80,
-      margin: const EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
       // padding: const EdgeInsets.all(10),
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
@@ -143,7 +156,7 @@ class CreatePostState extends State<CreatePost> {
           ),
           AnimatedContainer(
             duration: const Duration(seconds: 1),
-            child: (croppedMedia != null || croppedMedia != null)
+            child: (croppedMedia != null || selectedMedia != null)
                 ? _imageCard()
                 : const SizedBox.shrink(),
           ),
@@ -193,7 +206,14 @@ class CreatePostState extends State<CreatePost> {
                 ),
                 TextButton(
                   onPressed: (() {
-                    isEmtpyText ? null : print("sent");
+                    if (!isEmtpyText) {
+                      if (croppedMedia != null) {
+                        sendPost(postController.text,
+                            imagePath: croppedMedia!.path);
+                      } else {
+                        sendPost(postController.text.trim());
+                      }
+                    }
                   }),
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(0),

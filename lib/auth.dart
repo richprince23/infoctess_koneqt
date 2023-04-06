@@ -47,6 +47,17 @@ class Auth {
   Future<String?> updateName(String name) async {
     try {
       await _auth.currentUser!.updateDisplayName(name).then((value) => "done");
+      
+      try {
+        await db
+            .collection('user_infos')
+            .where("userID", isEqualTo: _auth.currentUser!.uid)
+            .get()
+            .then(
+                (value) => value.docs[0].reference.update({"fullName": name}));
+      } catch (e) {
+        // print(e);
+      }
       return "Update Successful!";
     } on FirebaseAuthException catch (e) {
       // print('No user found for that email.');
@@ -71,6 +82,7 @@ class Auth {
     String? phoneNum,
     String? classGroup,
     String? userName,
+    String? fullName,
   }) async {
     try {
       String? docID;
@@ -82,6 +94,7 @@ class Auth {
         "userLevel": level,
         "userName": userName,
         "userID": _auth.currentUser!.uid,
+        "fullName": fullName,
       }).then((value) => docID = value.id);
       return docID;
     } on FirebaseException catch (e) {

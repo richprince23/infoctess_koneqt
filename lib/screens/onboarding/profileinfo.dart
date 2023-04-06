@@ -267,7 +267,7 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                                   userNameCon.text.trim().toLowerCase();
                               onboardUser!.phoneNum = phoneNumCon.text.trim();
                             });
-                            if (selectedMedia != null) {
+                            if (croppedMedia != null) {
                               showDialog(
                                 barrierDismissible: false,
                                 context: context,
@@ -288,9 +288,10 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                                     gender: onboardUser!.gender,
                                     level: onboardUser!.userLevel,
                                     classGroup: onboardUser!.classGroup,
+                                    fullName: onboardUser!.fullName,
                                   )
                                   .then((value) async => await Auth()
-                                      .saveUserImage(selectedMedia!.path))
+                                      .saveUserImage(croppedMedia!.path))
                                   .then((value) async => {
                                         StatusAlert.show(
                                           context,
