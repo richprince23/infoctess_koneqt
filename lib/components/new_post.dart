@@ -207,6 +207,7 @@ class CreatePostState extends State<CreatePost> {
                   onPressed: (() async {
                     if (!isEmtpyText) {
                       showDialog(
+                          barrierDismissible: false,
                           context: context,
                           builder: (context) => Center(
                                 child: Image.asset("assets/images/preload.gif"),
