@@ -131,16 +131,15 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                   ),
                 ),
               ),
+              UtilItem(
+                icon: CupertinoIcons.hammer,
+                title: 'Other Resources',
+                // route: '',
+              ),
               InkWell(
-                onTap: () => NotificationService().showNotification(
-                  title: 'Notification',
-                  body: 'This is a test notification',
-                ),
-                child: UtilItem(
-                  icon: CupertinoIcons.hammer,
-                  title: 'Other Resources',
-                  // route: '',
-                ),
+                onTap: () => NotificationService()
+                    .scheduleNotification(day: "Friday", time: "15:17 PM"),
+                child: const Icon(Icons.alarm),
               ),
             ],
           ),

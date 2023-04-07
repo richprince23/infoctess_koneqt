@@ -4,6 +4,8 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 import 'dart:io' show Platform;
 
+import 'package:timezone/timezone.dart';
+
 class NotificationService {
   FlutterLocalNotificationsPlugin flnp = FlutterLocalNotificationsPlugin();
   bool _notificationsEnabled = false;
@@ -26,6 +28,7 @@ class NotificationService {
     _isAndroidPermissionGranted();
 
     tz.initializeTimeZones();
+
     AndroidInitializationSettings android =
         const AndroidInitializationSettings('ic_launcher');
     DarwinInitializationSettings ios = DarwinInitializationSettings(
@@ -66,21 +69,26 @@ class NotificationService {
     return flnp.show(id, title, body, await notificationDetails());
   }
 
-  Future<void> scheduleNotification(String day, String time) async {
-    var dayOfWeek = _getDayOfWeek(day);
+  Future<void> scheduleNotification({String? day, String? time}) async {
+    var dayOfWeek = _getDayOfWeek(day!);
     var scheduledNotificationDateTime = tz.TZDateTime(
       tz.local,
+
       DateTime.now().year,
       DateTime.now().month,
       DateTime.now().day,
-      _getTimeOfDay(time).hour,
+      _getTimeOfDay(time!).hour,
       _getTimeOfDay(time).minute,
       // notify user 30 minutes before class
-    ).subtract(const Duration(minutes: 30));
+    ).add(const Duration(minutes: 1));
+    // .subtract(const Duration(minutes: 30));
     // while (scheduledNotificationDateTime.weekday != dayOfWeek) {
     //   scheduledNotificationDateTime =
     //       scheduledNotificationDateTime.add(const Duration(days: 1));
     // }
+
+    // print("Scheduled Notification Time: $scheduledNotificationDateTime");
+    // print("Scheduled Notification Time: ${tz.TZDateTime.now(tz.local)}");
     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
       'channelId2',
       'shedulesReminderChannels',
@@ -130,14 +138,31 @@ class NotificationService {
     }
   }
 
-  TimeOfDay _getTimeOfDay(String time) {
+  Time _getTimeOfDay(String time) {
     var components = time.split(':');
     var hour = int.tryParse(components[0]) ?? 0;
     var minutePart = components[1].substring(0, 2);
     // print("minutePart is $minutePart");
     var minute = int.tryParse(minutePart) ?? 0;
     // print("minute is $minute");
-    return TimeOfDay(hour: hour, minute: minute);
+    return Time(hour, minute, 0);
+  }
+
+  tz.TZDateTime scheduleWeekly(String time, Day day) {
+    Time _time = _getTimeOfDay(time);
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+    tz.TZDateTime scheduledDate = tz.TZDateTime(
+      tz.local,
+      now.year,
+      now.month,
+      now.day,
+      _time.hour,
+      _time.minute,
+    );
+    while (scheduledDate.weekday != day.value) {
+      scheduledDate = scheduledDate.add(const Duration(days: 1));
+    }
+    return scheduledDate;
   }
 
   Future<void> _isAndroidPermissionGranted() async {

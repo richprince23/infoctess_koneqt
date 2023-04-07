@@ -8,6 +8,7 @@ import 'package:infoctess_koneqt/controllers/notification_service.dart';
 import 'package:infoctess_koneqt/models/courses_db.dart';
 import 'package:infoctess_koneqt/models/timetable_db.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
+import 'package:status_alert/status_alert.dart';
 
 class AddScheduleScreen extends StatefulWidget {
   const AddScheduleScreen({super.key});
@@ -242,21 +243,21 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                       // inspect(schedule);
                       await AppDatabase.instance
                           .addSchedule(schedule)
-                          .then((value) =>  NotificationService()
+                          .then((value) => NotificationService()
                               .scheduleNotification(
-                                  selectedDay, _startTime.text))
+                                  day: selectedDay, time: _startTime.text))
                           .then((value) => Navigator.pop(context))
                           .then(
-                            (value) =>
-                                ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Schedule Added'),
-                                duration: Duration(seconds: 2),
-                              ),
+                            (value) => StatusAlert.show(
+                              context,
+                              title: "Schedule Added",
+                              configuration: const IconConfiguration(
+                                  icon: Icons.check_circle_outline),
                             ),
                           )
-                          .then((value) =>
-                              AppDatabase.instance.getAllSchedules());
+                          .then(
+                            (value) => AppDatabase.instance.getAllSchedules(),
+                          );
                     }
                   },
                   child: const Text(

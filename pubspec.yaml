@@ -41,6 +41,7 @@ dependencies:
   timezone: 
   image_gallery_saver: ^1.7.1
   status_alert: ^1.0.1
+  flutter_native_timezone:
   # flutter_dotenv: ^5.0.2
 
 
