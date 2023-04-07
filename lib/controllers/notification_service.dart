@@ -80,8 +80,7 @@ class NotificationService {
       _getTimeOfDay(time!).hour,
       _getTimeOfDay(time).minute,
       // notify user 30 minutes before class
-    ).add(const Duration(minutes: 1));
-    // .subtract(const Duration(minutes: 30));
+    ).subtract(const Duration(minutes: 30));
     // while (scheduledNotificationDateTime.weekday != dayOfWeek) {
     //   scheduledNotificationDateTime =
     //       scheduledNotificationDateTime.add(const Duration(days: 1));
