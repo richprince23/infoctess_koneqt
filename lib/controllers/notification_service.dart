@@ -2,24 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
+import 'dart:io' show Platform;
 
 class NotificationService {
   FlutterLocalNotificationsPlugin flnp = FlutterLocalNotificationsPlugin();
-
+  bool _notificationsEnabled = false;
   Future<void> init() async {
-    flnp
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()!
-        .requestPermission();
+    // flnp
+    //     .resolvePlatformSpecificImplementation<
+    //         AndroidFlutterLocalNotificationsPlugin>()!
+    //     .requestPermission();
 
-    flnp
-        .resolvePlatformSpecificImplementation<
-            IOSFlutterLocalNotificationsPlugin>()
-        ?.requestPermissions(
-          alert: true,
-          badge: true,
-          sound: true,
-        );
+    // flnp
+    //     .resolvePlatformSpecificImplementation<
+    //         IOSFlutterLocalNotificationsPlugin>()
+    //     ?.requestPermissions(
+    //       alert: false,
+    //       badge: false,
+    //       sound: false,
+    //     );
+
+    await _requestPermissions();
+    _isAndroidPermissionGranted();
 
     tz.initializeTimeZones();
     AndroidInitializationSettings android =
@@ -134,5 +138,38 @@ class NotificationService {
     var minute = int.tryParse(minutePart) ?? 0;
     // print("minute is $minute");
     return TimeOfDay(hour: hour, minute: minute);
+  }
+
+  Future<void> _isAndroidPermissionGranted() async {
+    if (Platform.isAndroid) {
+      final bool granted = await flnp
+              .resolvePlatformSpecificImplementation<
+                  AndroidFlutterLocalNotificationsPlugin>()
+              ?.areNotificationsEnabled() ??
+          false;
+
+      _notificationsEnabled = granted;
+    }
+  }
+
+  Future<void> _requestPermissions() async {
+    if (Platform.isIOS) {
+      await flnp
+          .resolvePlatformSpecificImplementation<
+              IOSFlutterLocalNotificationsPlugin>()
+          ?.requestPermissions(
+            alert: true,
+            badge: true,
+            sound: true,
+          );
+    } else if (Platform.isAndroid) {
+      final AndroidFlutterLocalNotificationsPlugin? androidImplementation =
+          flnp.resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>();
+
+      final bool? granted = await androidImplementation?.requestPermission();
+
+      _notificationsEnabled = granted ?? false;
+    }
   }
 }

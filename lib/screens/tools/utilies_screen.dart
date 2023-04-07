@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:infoctess_koneqt/controllers/notification_service.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
@@ -16,21 +17,21 @@ class UtilitiesScreen extends StatefulWidget {
 }
 
 class _UtilitiesScreenState extends State<UtilitiesScreen> {
-@override
-void initState() {
-  _initializeRemoteConfig();
-  super.initState();
-}
+  @override
+  void initState() {
+    _initializeRemoteConfig();
+    super.initState();
+  }
 
-@override
-void dispose() {
-  super.dispose();
-}
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
-Future<void> _initializeRemoteConfig() async {
+  Future<void> _initializeRemoteConfig() async {
     await remoteConfig.setConfigSettings(RemoteConfigSettings(
       fetchTimeout: const Duration(seconds: 10),
-      minimumFetchInterval: const Duration(minutes: 10),
+      minimumFetchInterval: const Duration(hours: 1),
     ));
     await remoteConfig.fetchAndActivate();
   }
@@ -130,10 +131,16 @@ Future<void> _initializeRemoteConfig() async {
                   ),
                 ),
               ),
-              UtilItem(
-                icon: CupertinoIcons.hammer,
-                title: 'Other Resources',
-                // route: '',
+              InkWell(
+                onTap: () => NotificationService().showNotification(
+                  title: 'Notification',
+                  body: 'This is a test notification',
+                ),
+                child: UtilItem(
+                  icon: CupertinoIcons.hammer,
+                  title: 'Other Resources',
+                  // route: '',
+                ),
               ),
             ],
           ),
