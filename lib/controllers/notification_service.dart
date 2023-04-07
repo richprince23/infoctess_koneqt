@@ -142,9 +142,14 @@ class NotificationService {
     var components = time.split(':');
     var hour = int.tryParse(components[0]) ?? 0;
     var minutePart = components[1].substring(0, 2);
-    // print("minutePart is $minutePart");
     var minute = int.tryParse(minutePart) ?? 0;
-    // print("minute is $minute");
+
+    if (time.endsWith('PM') && hour != 12) {
+      hour += 12;
+    } else if (time.endsWith('AM') && hour == 12) {
+      hour = 0;
+    }
+
     return Time(hour, minute, 0);
   }
 

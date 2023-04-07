@@ -9,6 +9,7 @@ import 'package:infoctess_koneqt/models/courses_db.dart';
 import 'package:infoctess_koneqt/models/timetable_db.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:status_alert/status_alert.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 class AddScheduleScreen extends StatefulWidget {
   const AddScheduleScreen({super.key});
@@ -246,7 +247,6 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                           .then((value) => NotificationService()
                               .scheduleNotification(
                                   day: selectedDay, time: _startTime.text))
-                          .then((value) => Navigator.pop(context))
                           .then(
                             (value) => StatusAlert.show(
                               context,
@@ -255,9 +255,7 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                                   icon: Icons.check_circle_outline),
                             ),
                           )
-                          .then(
-                            (value) => AppDatabase.instance.getAllSchedules(),
-                          );
+                          .then((value) => Navigator.pop(context));
                     }
                   },
                   child: const Text(
