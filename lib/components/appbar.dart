@@ -6,6 +6,7 @@ import 'package:infoctess_koneqt/components/notiffications_screen.dart';
 import 'package:infoctess_koneqt/controllers/user_provider.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:provider/provider.dart';
+import 'package:resize/resize.dart';
 
 class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
   @override
@@ -20,14 +21,14 @@ class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(
-        "Hi, ${curUser!.fullName!.split(' ')[0]} ",
-        style: GoogleFonts.sarabun(fontSize: 18),
+        "Hi, ${curUser?.fullName!.split(' ')[0]} ",
+        style: GoogleFonts.sarabun(fontSize: 18.sp),
       ),
-      leadingWidth: 40,
+      leadingWidth: 40.w,
       leading: InkWell(
         child: CircleAvatar(
-          radius: 5,
-          backgroundImage: CachedNetworkImageProvider(curUser!.avatar!),
+          radius: 5.w,
+          backgroundImage: CachedNetworkImageProvider(curUser?.avatar ?? ""),
         ),
         onTap: () {
           Scaffold.of(context).openDrawer();
@@ -42,6 +43,7 @@ class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
                 MaterialPageRoute(
                     builder: (context) => const NotificationsSceen()));
           },
+          iconSize: 20.w,
           icon: const Icon(CupertinoIcons.bell),
         )
       ],

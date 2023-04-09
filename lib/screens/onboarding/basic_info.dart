@@ -12,6 +12,7 @@ import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:resize/resize.dart';
 
 class BasicInfoScreen extends StatefulWidget {
   const BasicInfoScreen({super.key});
@@ -56,10 +57,10 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
         Positioned(
           top: 0,
           width: size.width,
-          height: size.height * 0.45,
+          height: 45.vh,
           child: Container(
-            height: 40,
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            height: 40.h,
+            padding: EdgeInsets.symmetric(horizontal: 10.h, vertical: 20.h),
             width: size.width,
             color: AppTheme.themeData(false, context).backgroundColor,
             child: Column(
@@ -75,25 +76,25 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                     // size: 24,
                     color: Colors.white,
                   ),
-                  iconSize: 24,
+                  iconSize: 24.h,
                 ),
-                const SizedBox(height: 20),
+                // SizedBox(height: 10.h),
                 Align(
                   alignment: Alignment.center,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.account_circle,
-                        size: 100,
+                        size: 80.h,
                         color: Colors.white,
                       ),
                       Text(
                         "Basic Info",
                         style: GoogleFonts.sarabun(
-                            fontSize: 30,
+                            fontSize: 24.h,
                             color: Colors.white,
                             fontWeight: FontWeight.normal,
                             decoration: TextDecoration.none),
@@ -107,8 +108,8 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
           ),
         ),
         Positioned(
-          top: size.height * 0.275,
-          height: size.height * 0.7,
+          top: 30.5.vh,
+          height: 100.vh,
           width: size.width,
           child: Material(
             elevation: 6,

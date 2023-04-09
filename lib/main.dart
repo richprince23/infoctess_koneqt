@@ -21,6 +21,7 @@ import 'package:infoctess_koneqt/screens/tools/studymate/aichat_screen.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'screens/login_screen.dart';
+import 'package:resize/resize.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,36 +45,39 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Infoctess Koneqt',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        primaryTextTheme: GoogleFonts.sarabunTextTheme().apply(
-          decoration: TextDecoration.none,
+    return Resize(
+      allowtextScaling: true,
+      builder: () => MaterialApp(
+        title: 'Infoctess Koneqt',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          useMaterial3: true,
+          primaryTextTheme: GoogleFonts.sarabunTextTheme().apply(
+            decoration: TextDecoration.none,
+          ),
+          textTheme: GoogleFonts.sarabunTextTheme().apply(
+            decoration: TextDecoration.none,
+          ),
         ),
-        textTheme: GoogleFonts.sarabunTextTheme().apply(
-          decoration: TextDecoration.none,
-        ),
+        // initialRoute: initialRoute,
+        initialRoute: "/login",
+        routes: {
+          '/login': (context) => const LoginScreen(),
+          "/": (context) => MainScreen(),
+          "/onboarding": (context) => const OnboardingScreen(),
+          "/post-details": (context) => PostDetails(),
+          "/gpa-calculator": (context) => const GPAScreen(),
+          "/cgpa-screen": (context) => const CGPAScreen(),
+          "/my-courses": (context) => const ManageCourses(),
+          "/add-course": (context) => const AddCoursePage(),
+          "/my-notes": (context) => const MyNotes(),
+          "/add-note": (context) => const AddNoteScreen(),
+          "/my-schedules": (context) => const AllSchedules(),
+          "/add-schedule": (context) => const AddScheduleScreen(),
+          "/ai-studymate": (context) => const AIChatScreen(),
+          "/ai-imager": (context) => const Imager(),
+        },
       ),
-      // initialRoute: initialRoute,
-      initialRoute: "/login",
-      routes: {
-        '/login': (context) => const LoginScreen(),
-        "/": (context) => MainScreen(),
-        "/onboarding": (context) => const OnboardingScreen(),
-        "/post-details": (context) => PostDetails(),
-        "/gpa-calculator": (context) => const GPAScreen(),
-        "/cgpa-screen": (context) => const CGPAScreen(),
-        "/my-courses": (context) => const ManageCourses(),
-        "/add-course": (context) => const AddCoursePage(),
-        "/my-notes": (context) => const MyNotes(),
-        "/add-note": (context) => const AddNoteScreen(),
-        "/my-schedules": (context) => const AllSchedules(),
-        "/add-schedule": (context) => const AddScheduleScreen(),
-        "/ai-studymate": (context) => const AIChatScreen(),
-        "/ai-imager": (context) => const Imager(),
-      },
     );
   }
 }

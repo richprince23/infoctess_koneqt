@@ -42,7 +42,8 @@ dependencies:
   image_gallery_saver: ^1.7.1
   status_alert: ^1.0.1
   flutter_native_timezone:
-  # flutter_dotenv: ^5.0.2
+  resize: ^1.0.0
+  flutter_keyboard_visibility: ^5.4.0
 
 
 dev_dependencies:

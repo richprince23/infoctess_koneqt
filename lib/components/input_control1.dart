@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
+import 'package:resize/resize.dart';
 
 class InputControl extends StatefulWidget {
-   TextEditingController? controller;
+  TextEditingController? controller;
 
   final String? hintText;
 
@@ -45,15 +47,15 @@ class _InputControlState extends State<InputControl> {
   @override
   Widget build(BuildContext context) {
     bool showPass = widget.isPassword ?? false;
-
+    var size = MediaQuery.of(context).size;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         if (widget.showLabel == true)
-          const SizedBox(
-            height: 5,
+          SizedBox(
+            height: sh1(context),
           ),
         if (widget.showLabel == true)
           Text(
@@ -61,12 +63,12 @@ class _InputControlState extends State<InputControl> {
             style: GoogleFonts.sarabun(
                 fontWeight: FontWeight.normal,
                 color: Colors.black87,
-                fontSize: 18,
+                fontSize: 16.sp,
                 decoration: TextDecoration.none),
           ),
         if (widget.showLabel == true)
-          const SizedBox(
-            height: 5,
+          SizedBox(
+            height: 10.h,
           ),
         TextFormField(
           readOnly: widget.readOnly ?? false,
@@ -84,7 +86,13 @@ class _InputControlState extends State<InputControl> {
           keyboardType: widget.type ?? TextInputType.text,
           obscureText: showPass,
           controller: widget.controller,
-          focusNode: widget.focusNode ?? null,
+          focusNode: widget.focusNode,
+          textCapitalization: TextCapitalization.sentences,
+          style: TextStyle(
+            color: Colors.black87,
+            fontWeight: FontWeight.w400,
+            fontSize: 16.sp,
+          ),
           decoration: InputDecoration(
             suffixIcon: GestureDetector(
               onTap: () => {
@@ -104,11 +112,17 @@ class _InputControlState extends State<InputControl> {
                     )
                   : const Icon(null),
             ),
+            // isDense: true,
             hintText: widget.hintText!.toString(),
-            hintStyle: const TextStyle(
-                color: Colors.black54, fontWeight: FontWeight.w400),
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+            hintStyle: TextStyle(
+              color: Colors.black54,
+              fontWeight: FontWeight.w400,
+              fontSize: f18(context),
+            ),
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 30.h,
+              vertical: 10.h,
+            ),
             filled: true,
             fillColor: const Color.fromRGBO(217, 217, 217, 0.6),
             focusedBorder: OutlineInputBorder(
@@ -133,8 +147,8 @@ class _InputControlState extends State<InputControl> {
             ),
           ),
         ),
-        const SizedBox(
-          height: 10,
+        SizedBox(
+          height: 5.h,
         ),
       ],
     );

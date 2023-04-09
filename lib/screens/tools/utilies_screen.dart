@@ -138,7 +138,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
               ),
               InkWell(
                 onTap: () => NotificationService()
-                    .scheduleNotification(day: "Friday", time: "15:17 PM"),
+                    .scheduleNotification(day: "Friday", time: TimeOfDay.now().toString()),
                 child: const Icon(Icons.alarm),
               ),
             ],
