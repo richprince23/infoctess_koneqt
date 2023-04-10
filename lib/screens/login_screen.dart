@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               Positioned(
                 top: 0,
-                height: size.height * 0.4,
+                height: 40.vh,
                 child: Container(
                   width: size.width,
                   color: AppTheme.themeData(false, context).backgroundColor,
@@ -141,7 +141,31 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                           ),
                           SizedBox(
-                            height: sh1(context),
+                            height: 10.h,
+                          ),
+                          GestureDetector(
+                            //TODO: Change this to reset password, this is just for testing
+                            onTap: () => Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LoginScreen(),
+                              ),
+                            ),
+
+                            child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: Text(
+                                "forgot password",
+                                style: GoogleFonts.sarabun(
+                                  textStyle: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    fontSize: 14.sp,
+                                    color: AppTheme.themeData(false, context)
+                                        .focusColor,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                           TextButton(
                             onPressed: () async {
@@ -269,7 +293,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               "login",
                               style: TextStyle(
                                 fontWeight: FontWeight.w400,
-                                fontSize: 1.0.rem,
+                                fontSize: 16.sp,
                                 color: Colors.white,
                               ),
                             ),
@@ -277,56 +301,17 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(
                             height: 10.h,
                           ),
-                          OutlinedButton(
-                            onPressed: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    // const OnboardingScreen(),
-                                    const CheckAccessPage(),
-                              ),
-                            ),
-                            style: OutlinedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              minimumSize: btnLarge(context),
-                              side: BorderSide(
-                                color: AppTheme.themeData(false, context)
-                                    .backgroundColor,
-                                width: 1,
-                              ),
-                            ),
-                            child: Text(
-                              "create account",
-                              style: GoogleFonts.sarabun(
-                                textStyle: TextStyle(
-                                  fontSize: 1.0.rem,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppTheme.themeData(false, context)
-                                      .backgroundColor,
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: sh1(context),
-                          ),
                           GestureDetector(
-                            //TODO: Change this to reset password, this is just for testing
-                            onTap: () => Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const LoginScreen(),
-                              ),
-                            ),
-
+                            onTap: () => Navigator.pushReplacementNamed(
+                                context, "/checker"),
                             child: Align(
                               alignment: Alignment.center,
                               child: Text(
-                                "forgot password",
+                                "Don't have an account? Sign up",
                                 style: GoogleFonts.sarabun(
                                   textStyle: TextStyle(
                                     decoration: TextDecoration.underline,
-                                    fontSize: 18.sp,
+                                    fontSize: 16.sp,
                                     color: AppTheme.themeData(false, context)
                                         .focusColor,
                                   ),

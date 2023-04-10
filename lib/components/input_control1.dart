@@ -55,7 +55,7 @@ class _InputControlState extends State<InputControl> {
       children: [
         if (widget.showLabel == true)
           SizedBox(
-            height: sh1(context),
+            height: 5.h,
           ),
         if (widget.showLabel == true)
           Text(
@@ -117,7 +117,7 @@ class _InputControlState extends State<InputControl> {
             hintStyle: TextStyle(
               color: Colors.black54,
               fontWeight: FontWeight.w400,
-              fontSize: f18(context),
+              fontSize: 16.sp,
             ),
             contentPadding: EdgeInsets.symmetric(
               horizontal: 30.h,
@@ -127,7 +127,7 @@ class _InputControlState extends State<InputControl> {
             fillColor: const Color.fromRGBO(217, 217, 217, 0.6),
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(
-                  color: AppTheme.themeData(false, context).focusColor,
+                  color: cSec,
                   width: 1,
                   style: BorderStyle.solid),
               borderRadius: BorderRadius.circular(50),

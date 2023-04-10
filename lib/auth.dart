@@ -28,9 +28,9 @@ class Auth {
     // return null;
   }
 
-  Future<bool?> checkUserExists(int indexNum) async {
+  Future<bool?> checkUserExists(String indexNum) async {
     try {
-      bool res = await db
+      var res = await db
           .collection("user_infos")
           .where("indexNum", isEqualTo: indexNum)
           .get()
@@ -47,7 +47,7 @@ class Auth {
   Future<String?> updateName(String name) async {
     try {
       await _auth.currentUser!.updateDisplayName(name).then((value) => "done");
-      
+
       try {
         await db
             .collection('user_infos')

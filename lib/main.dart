@@ -7,6 +7,7 @@ import 'package:infoctess_koneqt/controllers/page_controller.dart';
 import 'package:infoctess_koneqt/controllers/user_provider.dart';
 import 'package:infoctess_koneqt/screens/main_screen.dart';
 import 'package:infoctess_koneqt/screens/onboarding.dart';
+import 'package:infoctess_koneqt/screens/onboarding/check_index.dart';
 import 'package:infoctess_koneqt/screens/post_page.dart';
 import 'package:infoctess_koneqt/screens/tools/courses/add_course.dart';
 import 'package:infoctess_koneqt/screens/tools/courses/courses.dart';
@@ -76,6 +77,7 @@ class MyApp extends StatelessWidget {
           "/add-schedule": (context) => const AddScheduleScreen(),
           "/ai-studymate": (context) => const AIChatScreen(),
           "/ai-imager": (context) => const Imager(),
+          "/checker" :(context) => const CheckAccessPage(),
         },
       ),
     );

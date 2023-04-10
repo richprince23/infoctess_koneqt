@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
+import 'package:resize/resize.dart';
 
 class SelectControl extends StatefulWidget {
   final String? hintText;
   final FormFieldValidator<String>? validator;
   final List<DropdownMenuItem<String>> items;
   final void Function(String? value)? onChanged;
+  final bool showLabel;
 
   const SelectControl(
       {Key? inputkey,
       this.hintText,
       this.validator,
       required this.items,
+      this.showLabel = true,
       this.onChanged})
       : super(key: inputkey);
 
@@ -30,37 +34,40 @@ class _SelectControlState extends State<SelectControl> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(
-          height: 5,
-        ),
-        Text(
-          widget.hintText!.toString(),
-          style: GoogleFonts.sarabun(
-              fontWeight: FontWeight.normal,
-              color: Colors.black87,
-              fontSize: 18,
-              decoration: TextDecoration.none),
-        ),
-        const SizedBox(
-          height: 5,
-        ),
+        if (widget.showLabel == true)
+          SizedBox(
+            height: 5.h,
+          ),
+        if (widget.showLabel == true)
+          Text(
+            widget.hintText!.toString(),
+            style: GoogleFonts.sarabun(
+                fontWeight: FontWeight.normal,
+                color: Colors.black87,
+                fontSize: 16.sp,
+                decoration: TextDecoration.none),
+          ),
+        if (widget.showLabel == true)
+          SizedBox(
+            height: 10.sp,
+          ),
         DropdownButtonFormField(
           items: widget.items,
           onChanged: widget.onChanged,
           validator: widget.validator,
           decoration: InputDecoration(
             hintText: widget.hintText!.toLowerCase(),
-            hintStyle: const TextStyle(
-                color: Colors.black54, fontWeight: FontWeight.w400),
+            hintStyle: TextStyle(
+                color: Colors.black54,
+                fontWeight: FontWeight.w400,
+                fontSize: 16.sp),
             contentPadding:
-                const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                EdgeInsets.symmetric(horizontal: 30.h, vertical: 10.h),
             filled: true,
             fillColor: const Color.fromRGBO(217, 217, 217, 0.6),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: AppTheme.themeData(false, context).focusColor,
-                  width: 1,
-                  style: BorderStyle.solid),
+              borderSide:
+                  BorderSide(color: cSec, width: 1, style: BorderStyle.solid),
               borderRadius: BorderRadius.circular(50),
             ),
             border: OutlineInputBorder(
@@ -78,8 +85,8 @@ class _SelectControlState extends State<SelectControl> {
             ),
           ),
         ),
-        const SizedBox(
-          height: 10,
+        SizedBox(
+          height: 5.h,
         ),
       ],
     );
