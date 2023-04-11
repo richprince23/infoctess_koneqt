@@ -62,6 +62,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
             SliverAppBar(
               backgroundColor: cPri,
               elevation: 0,
+              pinned: true,
               toolbarHeight: 48.h,
               leading: IconButton(
                 onPressed: () {
