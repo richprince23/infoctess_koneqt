@@ -3,9 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/components/notiffications_screen.dart';
-import 'package:infoctess_koneqt/controllers/user_provider.dart';
 import 'package:infoctess_koneqt/env.dart';
-import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 
 class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
@@ -14,7 +12,7 @@ class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
   final String? title;
 
   AppBarScreen({Key? key, this.title})
-      : preferredSize = const Size.fromHeight(56.0),
+      : preferredSize = Size.fromHeight(56.0.h),
         super(key: key);
 
   @override
@@ -22,7 +20,7 @@ class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
     return AppBar(
       title: Text(
         "Hi, ${curUser?.fullName!.split(' ')[0]} ",
-        style: GoogleFonts.sarabun(fontSize: 18.sp),
+        style: GoogleFonts.sarabun(fontSize: 14.sp),
       ),
       leadingWidth: 40.w,
       leading: InkWell(

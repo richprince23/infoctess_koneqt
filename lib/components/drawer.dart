@@ -5,8 +5,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
+import 'package:resize/resize.dart';
 
 class DrawerScreen extends StatelessWidget {
   const DrawerScreen({Key? key}) : super(key: key);
@@ -15,31 +17,28 @@ class DrawerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: EdgeInsets.all(12.0.h),
         child: ListView(
           children: [
             Card(
-              margin: const EdgeInsets.all(12),
+              margin: EdgeInsets.all(12.h),
               elevation: 1,
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 10.h),
                 child: Column(
                   children: [
                     CircleAvatar(
-                      radius: 50,
-                      child: ClipOval(
-                        clipBehavior: Clip.antiAlias,
-                        child: CachedNetworkImage(
-                            fit: BoxFit.fill,
-                            width: 100,
-                            imageUrl: curUser!.avatar!),
+                      radius: 50.h,
+                      foregroundImage: CachedNetworkImageProvider(
+                        // fit: BoxFit.fill,
+                        maxWidth: 100.h.ceil(),
+                        curUser!.avatar!,
                       ),
                     ),
                     Text(
                       "${curUser!.fullName} ", // fullname
                       style: GoogleFonts.sarabun().copyWith(
-                        fontSize: 18,
+                        fontSize: 18.sp,
                         fontWeight: FontWeight.bold,
                       ),
                       textAlign: TextAlign.center,
@@ -48,7 +47,7 @@ class DrawerScreen extends StatelessWidget {
                     Text(
                       "@${curUser!.userName!} ", // @username
                       style: GoogleFonts.sarabun().copyWith(
-                        fontSize: 16,
+                        fontSize: 14.sp,
                         color: Colors.black54,
                         fontWeight: FontWeight.w400,
                       ),
@@ -58,11 +57,11 @@ class DrawerScreen extends StatelessWidget {
                     Text(
                       "${curUser!.classGroup} ", // class group
                       style: GoogleFonts.sarabun().copyWith(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: 20.h),
                     ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(
                           shadowColor:
@@ -70,6 +69,8 @@ class DrawerScreen extends StatelessWidget {
                           backgroundColor:
                               AppTheme.themeData(true, context).focusColor,
                           foregroundColor: Colors.white,
+                          maximumSize: Size(
+                              100.w < 140 ? 140 : 100.w, 40.h < 40 ? 40 : 40.h),
                         ),
                         onPressed: () {},
                         icon: const Icon(CupertinoIcons.pencil),
@@ -89,7 +90,7 @@ class DrawerScreen extends StatelessWidget {
               title: Text(
                 "UEW Website",
                 style: GoogleFonts.sarabun().copyWith(
-                  fontSize: 16,
+                  fontSize: 16.sp,
                   color: AppTheme.themeData(true, context).focusColor,
                   fontWeight: FontWeight.w400,
                 ),
@@ -104,7 +105,7 @@ class DrawerScreen extends StatelessWidget {
               title: Text(
                 "UEW VClass",
                 style: GoogleFonts.sarabun().copyWith(
-                  fontSize: 16,
+                  fontSize: 16.sp,
                   color: AppTheme.themeData(true, context).focusColor,
                   fontWeight: FontWeight.w400,
                 ),
@@ -117,10 +118,10 @@ class DrawerScreen extends StatelessWidget {
                 color: AppTheme.themeData(true, context).focusColor,
               ),
               title: Text(
-                "ITS Student Portal",
+                "OSIS Portal",
                 style: GoogleFonts.sarabun().copyWith(
                   color: AppTheme.themeData(true, context).focusColor,
-                  fontSize: 16,
+                  fontSize: 16.sp,
                   fontWeight: FontWeight.w400,
                 ),
               ),
@@ -139,7 +140,7 @@ class DrawerScreen extends StatelessWidget {
               title: Text(
                 "Settings",
                 style: GoogleFonts.sarabun().copyWith(
-                  fontSize: 16,
+                  fontSize: 16.sp,
                   color: AppTheme.themeData(true, context).focusColor,
                 ),
               ),
@@ -153,7 +154,7 @@ class DrawerScreen extends StatelessWidget {
               title: Text(
                 "About",
                 style: GoogleFonts.sarabun().copyWith(
-                  fontSize: 16,
+                  fontSize: 16.sp,
                   color: AppTheme.themeData(true, context).focusColor,
                 ),
               ),
@@ -167,7 +168,7 @@ class DrawerScreen extends StatelessWidget {
               title: Text(
                 "Exit",
                 style: GoogleFonts.sarabun().copyWith(
-                  fontSize: 16,
+                  fontSize: 16.sp,
                   color: AppTheme.themeData(true, context).focusColor,
                 ),
               ),
