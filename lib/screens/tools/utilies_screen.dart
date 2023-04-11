@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/controllers/notification_service.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
+import 'package:resize/resize.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:infoctess_koneqt/env.dart';
@@ -50,15 +51,15 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
             stops: [0.2, 1],
           ),
         ),
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.all(20.h),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 2, sigmaY: 0),
           child: GridView.count(
             cacheExtent: 40,
             crossAxisCount: 2,
             scrollDirection: Axis.vertical,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
+            crossAxisSpacing: 10.h,
+            mainAxisSpacing: 10.h,
             children: [
               UtilItem(
                 icon: CupertinoIcons.divide,
@@ -117,7 +118,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Icon(CupertinoIcons.link,
-                          size: 50,
+                          size: 50.h,
                           color: AppTheme.themeData(false, context)
                               .primaryColorLight),
                       Text(
@@ -125,7 +126,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                         style: GoogleFonts.sarabun(
                             color: AppTheme.themeData(false, context)
                                 .primaryColorLight,
-                            fontSize: 20),
+                            fontSize: 20.h),
                       ),
                     ],
                   ),
@@ -137,8 +138,8 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                 // route: '',
               ),
               InkWell(
-                onTap: () => NotificationService()
-                    .scheduleNotification(day: "Friday", time: TimeOfDay.now().toString()),
+                onTap: () => NotificationService().showNotification(
+                    title: "Test", body: "Testing instant notifications"),
                 child: const Icon(Icons.alarm),
               ),
             ],
@@ -171,13 +172,13 @@ class UtilItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Icon(icon,
-                size: 50,
+                size: 50.h,
                 color: AppTheme.themeData(false, context).primaryColorLight),
             Text(
               title,
               style: GoogleFonts.sarabun(
                   color: AppTheme.themeData(false, context).primaryColorLight,
-                  fontSize: 20),
+                  fontSize: 20.h),
             ),
           ],
         ),
