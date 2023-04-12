@@ -12,31 +12,28 @@ class NewsScreen extends StatelessWidget {
     return Container(
       height: double.infinity,
       width: size.width,
-      decoration: const BoxDecoration(
-        // color: Colors.blue,
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Colors.blue, Colors.pink],
-          stops: [0.2, 1],
-        ),
-      ),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 2, sigmaY: 0),
-        child: RefreshIndicator(
-          onRefresh: () async => print("refreshed"),
-          child: ListView(
-            children: const [
-              NewsItem(),
-              NewsItem(),
-              NewsItem(),
-              NewsItem(),
-              NewsItem(),
-              NewsItem(),
-              NewsItem(),
-              NewsItem(),
-            ],
-          ),
+      // decoration: const BoxDecoration(
+      //   // color: Colors.blue,
+      //   gradient: LinearGradient(
+      //     begin: Alignment.topLeft,
+      //     end: Alignment.bottomRight,
+      //     colors: [Colors.blue, Colors.pink],
+      //     stops: [0.2, 1],
+      //   ),
+      // ),
+      child: RefreshIndicator(
+        onRefresh: () async => print("refreshed"),
+        child: ListView(
+          children: const [
+            NewsItem(),
+            NewsItem(),
+            NewsItem(),
+            NewsItem(),
+            NewsItem(),
+            NewsItem(),
+            NewsItem(),
+            NewsItem(),
+          ],
         ),
       ),
     );

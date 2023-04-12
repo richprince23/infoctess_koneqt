@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
+import 'package:resize/resize.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NewsItem extends StatelessWidget {
@@ -13,15 +14,13 @@ class NewsItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        
-      },
+      onTap: () {},
       child: OpenContainer(
-        transitionDuration: const Duration(seconds: 1),
+        transitionDuration: const Duration(milliseconds: 200),
         closedColor: Colors.transparent,
         // AppTheme.themeData(false, context).primaryColor.withOpacity(0.5),
         useRootNavigator: true,
-        openElevation: 5,
+        openElevation: 0,
         transitionType: ContainerTransitionType.fadeThrough,
         closedBuilder: (BuildContext context, void Function() openAction) {
           return const ClosedWidget();
@@ -42,15 +41,17 @@ class ClosedWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: EdgeInsets.symmetric(horizontal: 2.0.w),
       child: Card(
         color: AppTheme.themeData(false, context).primaryColor.withOpacity(0.7),
         surfaceTintColor: Colors.white,
-        elevation: 2,
-        // borderRadius: BorderRadius.circular(15),
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5.r),
+        ),
         child: Container(
-          margin: const EdgeInsets.all(12),
-          padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
+          margin: EdgeInsets.all(8.w),
+          padding: EdgeInsets.only(top: 5.h, left: 5.w, right: 5.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -58,7 +59,7 @@ class ClosedWidget extends StatelessWidget {
                 "Infoctess General Meeting",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     color:
                         AppTheme.themeData(false, context).primaryColorLight),
                 textAlign: TextAlign.left,
@@ -72,25 +73,25 @@ class ClosedWidget extends StatelessWidget {
                 maxLines: 2,
                 style: TextStyle(
                     fontWeight: FontWeight.w400,
-                    fontSize: 16,
+                    fontSize: 16.sp,
                     overflow: TextOverflow.ellipsis,
                     color:
                         AppTheme.themeData(false, context).primaryColorLight),
                 textAlign: TextAlign.left,
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 10.h),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                    children: const [
                       Text("Uptown"),
                       Text("December 11, 2022, 11:34pm"),
                     ],
                   ),
                   Container(
-                    margin: const EdgeInsets.only(top: 10),
+                    margin: EdgeInsets.only(top: 10.h),
                     alignment: Alignment.center,
                     child: const Text("Read More"),
                   ),
@@ -111,11 +112,15 @@ class OpenWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("News Details"),
+        title: Text(
+          "News Details",
+          style: TextStyle(fontSize: 16.sp),
+        ),
         centerTitle: true,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
           icon: const Icon(Icons.arrow_back),
+          iconSize: 24.h,
         ),
       ),
       body: SingleChildScrollView(
@@ -125,21 +130,21 @@ class OpenWidget extends StatelessWidget {
           children: [
             Padding(
               padding:
-                  const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 8.0),
+                  EdgeInsets.only(left: 16.0.w, right: 16.0.w, bottom: 8.0.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(bottom: 10),
+                    margin: EdgeInsets.only(bottom: 10.h),
                     clipBehavior: Clip.antiAlias,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(15.r),
                       color: Colors.red,
                     ),
                     child: Image.asset(
                       "assets/images/img1.jpg",
-                      height: 200,
-                      width: MediaQuery.of(context).size.width,
+                      height: 200.h,
+                      width: 100.vw,
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -147,12 +152,12 @@ class OpenWidget extends StatelessWidget {
                     "Infoctess General Meeting",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                        fontSize: 16.sp,
                         color: AppTheme.themeData(false, context)
                             .primaryColorLight),
                     textAlign: TextAlign.left,
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10.h),
                   Divider(
                     color: AppTheme.themeData(false, context).focusColor,
                     thickness: 1,
@@ -166,7 +171,7 @@ class OpenWidget extends StatelessWidget {
                         text:
                             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed eu",
                         basicStyle: GoogleFonts.sarabun(
-                            color: Colors.black, fontSize: 16),
+                            color: Colors.black, fontSize: 16.sp),
                         moreStyle: const TextStyle(
                           color: Colors.blue,
                           fontWeight: FontWeight.bold,
@@ -197,7 +202,7 @@ class OpenWidget extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(10),
+                    padding: EdgeInsets.all(10.h),
                     child: Divider(
                       color: AppTheme.themeData(false, context).focusColor,
                       thickness: 1,
@@ -205,12 +210,12 @@ class OpenWidget extends StatelessWidget {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                    children: const [
                       Text("Uptown"),
                       Text("December 11, 2022, 11:34pm"),
                     ],
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10.h),
                 ],
               ),
             ),

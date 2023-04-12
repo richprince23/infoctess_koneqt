@@ -1,7 +1,9 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/screens/home/announcements_screen.dart';
 import 'package:infoctess_koneqt/screens/home/events_screen.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
+import 'package:resize/resize.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,11 +17,11 @@ class _HomePageState extends State<HomePage>
   late TabController _tabController;
   final ScrollController _scrollController = ScrollController();
   var tabs = [
-    const Tab(
-      child: Text("News"),
+    Tab(
+      child: Text("News", style: TextStyle(fontSize: 12.sp)),
     ),
-    const Tab(
-      child: Text("Events"),
+    Tab(
+      child: Text("Events", style: TextStyle(fontSize: 12.sp)),
     )
   ];
 
@@ -32,44 +34,25 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: CustomScrollView(
-      controller: _scrollController,
-      slivers: [
-        SliverAppBar(
-          pinned: true,
-          collapsedHeight: 0,
-          toolbarHeight: 0,
-          floating: true,
-          backgroundColor: Colors.white,
-          surfaceTintColor: Colors.white,
-          automaticallyImplyLeading: false,
-          bottom: TabBar(
-            indicatorColor: AppTheme.themeData(false, context).focusColor,
+        body: Column(
+      children: [
+        TabBar(
+          isScrollable: false,
+          physics: const BouncingScrollPhysics(),
+          dragStartBehavior: DragStartBehavior.down,
+          indicatorColor: AppTheme.themeData(false, context).focusColor,
+          controller: _tabController,
+          tabs: tabs,
+        ),
+        Expanded(
+          child: TabBarView(
             controller: _tabController,
-            tabs: tabs,
+            children: const [
+              NewsScreen(),
+              EventsScreen(),
+            ],
           ),
         ),
-        SliverFillRemaining(
-          child: Container(
-            decoration: const BoxDecoration(
-              // color: Colors.blue,
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [Colors.blue, Colors.pink],
-                stops: [0.2, 1],
-              ),
-            ),
-            padding: const EdgeInsets.only(top: 50.0),
-            child: TabBarView(
-              controller: _tabController,
-              children: const [
-                NewsScreen(),
-                EventsScreen(),
-              ],
-            ),
-          ),
-        )
       ],
     ));
   }
