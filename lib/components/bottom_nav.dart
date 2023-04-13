@@ -4,6 +4,7 @@ import 'package:infoctess_koneqt/controllers/page_controller.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/nav_item.dart';
 import 'package:provider/provider.dart';
+import 'package:resize/resize.dart';
 
 class BottomNav extends StatefulWidget {
   const BottomNav({super.key});
@@ -28,11 +29,11 @@ class _BottomNavState extends State<BottomNav> {
 
         elevation: 2,
         selectedIndex: context.watch<PageControl>().pageIndex,
-        height: 50,
+        height: 50.h,
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
         destinations: [
           SizedBox(
-            height: 50,
+            height: 50.h,
             child: InkWell(
               // iconSize: 16,
               onTap: () {
@@ -47,14 +48,15 @@ class _BottomNavState extends State<BottomNav> {
                       label: "Home",
                       icon: CupertinoIcons.house_fill,
                     )
-                  : const Icon(
+                  : Icon(
                       CupertinoIcons.house,
                       color: Colors.black,
+                      size: 24.w,
                     ),
             ),
           ),
           SizedBox(
-            height: 50,
+            height: 50.h,
             child: InkWell(
               // iconSize: 16,
               onTap: () {
@@ -66,17 +68,18 @@ class _BottomNavState extends State<BottomNav> {
               },
               child: pageIndex == 1
                   ? NavItem(
-                      label: "Community",
+                      label: "Social",
                       icon: CupertinoIcons.person_3_fill,
                     )
-                  : const Icon(
+                  : Icon(
                       CupertinoIcons.person_3,
                       color: Colors.black,
+                      size: 24.w,
                     ),
             ),
           ),
           SizedBox(
-            height: 50,
+            height: 50.h,
             child: InkWell(
               // iconSize: 16,
               onTap: () {
@@ -89,14 +92,15 @@ class _BottomNavState extends State<BottomNav> {
               child: pageIndex == 2
                   ? NavItem(
                       label: "Utilities", icon: CupertinoIcons.briefcase_fill)
-                  : const Icon(
+                  : Icon(
                       CupertinoIcons.briefcase,
                       color: Colors.black,
+                      size: 24.w,
                     ),
             ),
           ),
           SizedBox(
-            height: 50,
+            height: 50.h,
             // width: size.height * 0.06,
             child: InkWell(
               // iconSize: 16,
@@ -110,10 +114,11 @@ class _BottomNavState extends State<BottomNav> {
               child: pageIndex == 3
                   ? NavItem(
                       label: "Messages",
-                      icon: CupertinoIcons.envelope_open_fill)
-                  : const Icon(
-                      CupertinoIcons.envelope,
+                      icon: CupertinoIcons.chat_bubble_2_fill)
+                  : Icon(
+                      CupertinoIcons.chat_bubble_2,
                       color: Colors.black,
+                      size: 24.w,
                     ),
             ),
           ),

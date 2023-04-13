@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
+import 'package:resize/resize.dart';
 
 class NavItem extends StatelessWidget {
   String label;
@@ -13,14 +15,13 @@ class NavItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(right: 10),
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      margin: EdgeInsets.only(right: 10.w),
+      padding: EdgeInsets.symmetric(horizontal: 10.w),
       decoration: BoxDecoration(
         // color: kmainCol,
         // borderRadius: BorderRadius.circular(20),
         border: Border(
-          bottom: BorderSide(
-              color: AppTheme.themeData(false, context).focusColor, width: 3),
+          bottom: BorderSide(color: cSec),
         ),
       ),
       child: Column(
@@ -28,13 +29,13 @@ class NavItem extends StatelessWidget {
         children: [
           Icon(
             icon,
-            color: AppTheme.themeData(false, context).focusColor,
-            size: 16,
+            color: cSec,
+            size: 16.w,
           ),
           Text(
             label,
-            style: const TextStyle(
-              fontSize: 10,
+            style: TextStyle(
+              fontSize: 10.sp,
               // color: AppTheme.themeData(false, context).primaryColor,
               color: Colors.black,
             ),
