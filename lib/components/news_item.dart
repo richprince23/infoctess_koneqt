@@ -85,9 +85,15 @@ class ClosedWidget extends StatelessWidget {
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text("Uptown"),
-                      Text("December 11, 2022, 11:34pm"),
+                    children: [
+                      Text(
+                        "Uptown",
+                        style: TextStyle(fontSize: 12.sp),
+                      ),
+                      Text(
+                        "December 11, 2022, 11:34pm",
+                        style: TextStyle(fontSize: 12.sp),
+                      ),
                     ],
                   ),
                   Container(
@@ -114,7 +120,7 @@ class OpenWidget extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           "News Details",
-          style: TextStyle(fontSize: 16.sp),
+          style: TextStyle(fontSize: 14.sp),
         ),
         centerTitle: true,
         leading: IconButton(
@@ -202,7 +208,7 @@ class OpenWidget extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(10.h),
+                    padding: EdgeInsets.all(10.w),
                     child: Divider(
                       color: AppTheme.themeData(false, context).focusColor,
                       thickness: 1,
@@ -210,9 +216,15 @@ class OpenWidget extends StatelessWidget {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [
-                      Text("Uptown"),
-                      Text("December 11, 2022, 11:34pm"),
+                    children: [
+                      Text(
+                        "Uptown",
+                        style: TextStyle(fontSize: 12.sp),
+                      ),
+                      Text(
+                        "December 11, 2022, 11:34pm",
+                        style: TextStyle(fontSize: 12.sp),
+                      ),
                     ],
                   ),
                   SizedBox(height: 10.h),

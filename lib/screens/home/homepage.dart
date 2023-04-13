@@ -15,13 +15,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  final ScrollController _scrollController = ScrollController();
   var tabs = [
     Tab(
-      child: Text("News", style: TextStyle(fontSize: 12.sp)),
+      child: Text("News", style: TextStyle(fontSize: 14.sp)),
     ),
     Tab(
-      child: Text("Events", style: TextStyle(fontSize: 12.sp)),
+      child: Text("Events", style: TextStyle(fontSize: 14.sp)),
     )
   ];
 
@@ -34,26 +33,27 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-      children: [
-        TabBar(
-          isScrollable: false,
-          physics: const BouncingScrollPhysics(),
-          dragStartBehavior: DragStartBehavior.down,
-          indicatorColor: AppTheme.themeData(false, context).focusColor,
-          controller: _tabController,
-          tabs: tabs,
-        ),
-        Expanded(
-          child: TabBarView(
+      body: Column(
+        children: [
+          TabBar(
+            isScrollable: false,
+            physics: const BouncingScrollPhysics(),
+            dragStartBehavior: DragStartBehavior.down,
+            indicatorColor: AppTheme.themeData(false, context).focusColor,
             controller: _tabController,
-            children: const [
-              NewsScreen(),
-              EventsScreen(),
-            ],
+            tabs: tabs,
           ),
-        ),
-      ],
-    ));
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: const [
+                NewsScreen(),
+                EventsScreen(),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

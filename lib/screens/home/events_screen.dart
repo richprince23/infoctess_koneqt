@@ -7,31 +7,20 @@ class EventsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        // color: Colors.blue,
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Colors.blue, Colors.pink],
-          stops: [0.2, 1],
-        ),
-      ),
+    return SizedBox(
+      
       height: double.infinity,
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 2, sigmaY: 0),
-        child: RefreshIndicator(
-          onRefresh: () async => print("refreshed"),
-          child: ListView(
-            children: const [
-              EventItem(),
-              EventItem(),
-              EventItem(),
-              EventItem(),
-              EventItem(),
-              EventItem(),
-            ],
-          ),
+      child: RefreshIndicator(
+        onRefresh: () async => print("refreshed"),
+        child: ListView(
+          children: const [
+            EventItem(),
+            EventItem(),
+            EventItem(),
+            EventItem(),
+            EventItem(),
+            EventItem(),
+          ],
         ),
       ),
     );
