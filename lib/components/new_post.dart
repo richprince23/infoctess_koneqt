@@ -116,6 +116,19 @@ class CreatePostState extends State<CreatePost> {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
+          Align(
+            alignment: Alignment.topRight,
+            child: SizedBox(
+              height: 20,
+              child: IconButton(
+                  style: IconButton.styleFrom(
+                      fixedSize: const Size(20, 20),
+                      padding: const EdgeInsets.all(5)),
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(CupertinoIcons.clear),
+                  iconSize: 16),
+            ),
+          ),
           DetectableTextField(
             detectionRegExp:
                 detectionRegExp(hashtag: true, atSign: true, url: true)!,
@@ -140,7 +153,8 @@ class CreatePostState extends State<CreatePost> {
                 contentPadding:
                     const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
                 alignLabelWithHint: false,
-                hintText: "What's up, Richard?",
+                hintText:
+                    "What's up, ${curUser?.fullName?.split(' ')[0].toString() ?? 'Somebody'}?",
                 hintStyle: const TextStyle(
                   fontStyle: FontStyle.italic,
                   fontSize: 14,
@@ -198,7 +212,7 @@ class CreatePostState extends State<CreatePost> {
                 ),
                 Expanded(
                   child: Text(
-                    " ${postController.text.length}/ 500",
+                    " ${postController.text.length}/ 250",
                     style: const TextStyle(
                         fontSize: 10, fontStyle: FontStyle.italic),
                   ),

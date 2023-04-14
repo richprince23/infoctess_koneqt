@@ -106,7 +106,7 @@ class _CommentInputState extends State<CommentInput> {
                           iconSize: 18,
                         ),
                         Expanded(
-                            child: Text("${commentText.text.length}/ 500")),
+                            child: Text("${commentText.text.length}/ 250")),
                         TextButton(
                           onPressed: (() {
                             isEmtpyText ? null : print("sent");
