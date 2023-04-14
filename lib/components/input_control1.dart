@@ -106,9 +106,10 @@ class _InputControlState extends State<InputControl> {
                 )
               },
               child: textLength > 0
-                  ? const Icon(
+                  ? Icon(
                       CupertinoIcons.clear_circled,
-                      color: Colors.red,
+                      color: cSec,
+                      size: 18.sp,
                     )
                   : const Icon(null),
             ),
@@ -126,10 +127,8 @@ class _InputControlState extends State<InputControl> {
             filled: true,
             fillColor: const Color.fromRGBO(217, 217, 217, 0.6),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                  color: cSec,
-                  width: 1,
-                  style: BorderStyle.solid),
+              borderSide:
+                  BorderSide(color: cSec, width: 1, style: BorderStyle.solid),
               borderRadius: BorderRadius.circular(50),
             ),
             border: OutlineInputBorder(

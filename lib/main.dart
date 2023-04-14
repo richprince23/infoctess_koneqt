@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
         initialRoute: "/login",
         routes: {
           '/login': (context) => const LoginScreen(),
-          "/": (context) => MainScreen(),
+          "/": (context) => const MainScreen(),
           "/onboarding": (context) => const OnboardingScreen(),
           "/post-details": (context) => PostDetails(),
           "/gpa-calculator": (context) => const GPAScreen(),
@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
           "/add-schedule": (context) => const AddScheduleScreen(),
           "/ai-studymate": (context) => const AIChatScreen(),
           "/ai-imager": (context) => const Imager(),
-          "/checker" :(context) => const CheckAccessPage(),
+          "/checker": (context) => const CheckAccessPage(),
         },
       ),
     );

@@ -263,32 +263,36 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                                             title: "Success",
                                             subtitle:
                                                 "Your profile has been updated",
-                                            configuration:
-                                                const IconConfiguration(
-                                                    icon: Icons
-                                                        .check_circle_outline),
-                                            duration:
-                                                const Duration(seconds: 3),
+                                            maxWidth: 50.vw,
+                                            titleOptions:  StatusAlertTextConfiguration(
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                                            configuration: IconConfiguration(
+                                              icon: Icons.check,
+                                              color: Colors.green,
+                                              size: 50.w,
+                                            ),
                                           ),
-                                          await setUserDetails(),
-                                          Navigator.pushReplacementNamed(
-                                              context, "/"),
+                                          await Provider.of<UserProvider>(
+                                                  context,
+                                                  listen: false)
+                                              .setUserDetails()
+                                              .then(
+                                                (value) => Navigator
+                                                    .pushReplacementNamed(
+                                                        context, "/"),
+                                              ),
                                         });
                               }
                             } catch (e) {
-                              Platform.isAndroid
-                                  ? showDialog(
-                                      context: context,
-                                      builder: (context) => const CustomDialog(
-                                          message:
-                                              "An error occurred while performing you request"),
-                                    )
-                                  : showCupertinoDialog(
-                                      context: context,
-                                      builder: (context) => const CustomDialog(
-                                          message:
-                                              "An error occurred while performing you request"),
-                                    );
+                              
+                                    CustomDialog.show(context,
+                                        message:
+                                            "An error occurred while performing you request");
                             }
                             setState(() {
                               Provider.of<OnboardingController>(context,

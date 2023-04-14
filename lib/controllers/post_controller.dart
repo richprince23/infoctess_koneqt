@@ -39,6 +39,14 @@ Future sendPost(String postText, {String? imagePath}) async {
   }
 }
 
+Future deletePost(String postID) async {
+  try {
+    await db.collection("posts").doc(postID).delete();
+  } on FirebaseException catch (e) {
+    throw Exception(e);
+  }
+}
+
 Future sendComment(String commentText, String postID) async {
   final uid = _auth.currentUser!.uid;
   try {

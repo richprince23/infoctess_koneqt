@@ -5,12 +5,16 @@ import 'package:detectable_text_field/widgets/detectable_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/post_controller.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
+import 'package:resize/resize.dart';
+import 'package:status_alert/status_alert.dart';
 
 class CreatePost extends StatefulWidget {
   const CreatePost({super.key});
@@ -105,13 +109,10 @@ class CreatePostState extends State<CreatePost> {
   Widget build(BuildContext context) {
     return Container(
       // height: 80,
-      margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-      // padding: const EdgeInsets.all(10),
-      clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white.withOpacity(0.8),
-      ),
+      margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      color: Colors.white.withOpacity(0.8),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.end,
@@ -119,14 +120,14 @@ class CreatePostState extends State<CreatePost> {
           Align(
             alignment: Alignment.topRight,
             child: SizedBox(
-              height: 20,
+              height: 20.h,
               child: IconButton(
-                  style: IconButton.styleFrom(
-                      fixedSize: const Size(20, 20),
-                      padding: const EdgeInsets.all(5)),
-                  onPressed: () => Navigator.pop(context),
-                  icon: const Icon(CupertinoIcons.clear),
-                  iconSize: 16),
+                style: IconButton.styleFrom(
+                    fixedSize: Size(20.h, 20.h), padding: EdgeInsets.all(5.w)),
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(CupertinoIcons.clear),
+                iconSize: 16.w,
+              ),
             ),
           ),
           DetectableTextField(
@@ -150,21 +151,20 @@ class CreatePostState extends State<CreatePost> {
             // maxLength: 500,
             // autofocus: true,
             decoration: InputDecoration(
-                contentPadding:
-                    const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
-                alignLabelWithHint: false,
-                hintText:
-                    "What's up, ${curUser?.fullName?.split(' ')[0].toString() ?? 'Somebody'}?",
-                hintStyle: const TextStyle(
-                  fontStyle: FontStyle.italic,
-                  fontSize: 14,
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                      style: BorderStyle.solid,
-                      color: AppTheme.themeData(false, context).focusColor),
-                ),
-                focusColor: AppTheme.themeData(false, context).focusColor),
+              contentPadding:
+                  EdgeInsets.symmetric(vertical: 0, horizontal: 5.w),
+              alignLabelWithHint: false,
+              hintText:
+                  "What's up, ${curUser?.fullName?.split(' ')[0].toString() ?? 'Somebody'}?",
+              hintStyle: TextStyle(
+                fontStyle: FontStyle.italic,
+                fontSize: 14.sp,
+              ),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(style: BorderStyle.solid, color: cSec),
+              ),
+              focusColor: cSec,
+            ),
             basicStyle: GoogleFonts.sarabun(),
           ),
           AnimatedContainer(
@@ -174,7 +174,7 @@ class CreatePostState extends State<CreatePost> {
                 : const SizedBox.shrink(),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 2),
+            padding: EdgeInsets.symmetric(vertical: 1.0.h, horizontal: 2.w),
             child: Row(
               // mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -187,7 +187,7 @@ class CreatePostState extends State<CreatePost> {
                       ? FocusScope.of(context).unfocus()
                       : FocusScope.of(context).requestFocus(),
                   icon: const Icon(CupertinoIcons.keyboard),
-                  iconSize: 18,
+                  iconSize: 18.w,
                 ),
                 TextButton.icon(
                   style: TextButton.styleFrom(
@@ -201,38 +201,96 @@ class CreatePostState extends State<CreatePost> {
                   onPressed: () async {
                     await uploadImage().then((value) => cropImage());
                   },
-                  icon: const Icon(
+                  icon: Icon(
                     CupertinoIcons.camera,
-                    size: 12,
+                    size: 12.w,
                   ),
-                  label: const Text(
+                  label: Text(
                     "image",
-                    style: TextStyle(fontSize: 12),
+                    style: TextStyle(fontSize: 12.sp),
                   ),
                 ),
                 Expanded(
                   child: Text(
-                    " ${postController.text.length}/ 250",
-                    style: const TextStyle(
-                        fontSize: 10, fontStyle: FontStyle.italic),
+                    " ${postController.text.length}/ 256",
+                    style:
+                        TextStyle(fontSize: 10.sp, fontStyle: FontStyle.italic),
                   ),
                 ),
                 TextButton(
                   onPressed: (() async {
                     if (!isEmtpyText) {
                       showDialog(
-                          barrierDismissible: false,
-                          context: context,
-                          builder: (context) => Center(
-                                child: Image.asset("assets/images/preload.gif"),
-                              ));
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (context) => Center(
+                          child: Image.asset(
+                            "assets/images/preload.gif",
+                            width: 50.w,
+                            height: 50.w,
+                          ),
+                        ),
+                      );
                       if (croppedMedia != null) {
                         await sendPost(postController.text,
                                 imagePath: croppedMedia!.path)
-                            .then((value) => Navigator.pop(context));
+                            .then(
+                          (value) => {
+                            Navigator.of(context, rootNavigator: true).pop(),
+                            StatusAlert.show(
+                              context,
+                              duration: const Duration(seconds: 2),
+                              title: "Sent",
+                              titleOptions: StatusAlertTextConfiguration(
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              maxWidth: 50.vw,
+                              configuration: IconConfiguration(
+                                icon: Icons.check,
+                                color: Colors.green,
+                                size: 50.w,
+                              ),
+                            ),
+                            setState(() {
+                              postController.clear();
+                              croppedMedia = null;
+                              selectedMedia = null;
+                            }),
+                            Navigator.of(context, rootNavigator: true).pop(),
+                          },
+                        );
                       } else {
-                        await sendPost(postController.text.trim())
-                            .then((value) => Navigator.pop(context));
+                        await sendPost(postController.text.trim()).then(
+                          (value) => {
+                            Navigator.of(context, rootNavigator: true).pop(),
+                            StatusAlert.show(
+                              context,
+                              duration: const Duration(seconds: 2),
+                              title: "Sent",
+                              titleOptions: StatusAlertTextConfiguration(
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              maxWidth: 50.vw,
+                              configuration: IconConfiguration(
+                                icon: Icons.check,
+                                color: Colors.green,
+                                size: 50.w,
+                              ),
+                            ),
+                            setState(() {
+                              postController.clear();
+                            }),
+                            Navigator.of(context, rootNavigator: true).pop(),
+                          },
+                        );
                       }
                     }
                   }),
@@ -269,15 +327,15 @@ class CreatePostState extends State<CreatePost> {
         ),
         child: Image.file(File(path)),
       );
-    } else if (selectedMedia != null) {
-      final path = selectedMedia!.path;
-      return ConstrainedBox(
-        constraints: BoxConstraints(
-          maxWidth: 0.8 * screenWidth,
-          maxHeight: 0.2 * screenHeight,
-        ),
-        child: Image.file(File(path)),
-      );
+      // } else if (selectedMedia != null) {
+      //   final path = selectedMedia!.path;
+      //   return ConstrainedBox(
+      //     constraints: BoxConstraints(
+      //       maxWidth: 0.8 * screenWidth,
+      //       maxHeight: 0.2 * screenHeight,
+      //     ),
+      //     child: Image.file(File(path)),
+      //   );
     } else {
       return const SizedBox.shrink();
     }
@@ -292,19 +350,19 @@ class CreatePostState extends State<CreatePost> {
             child: _image(),
           ),
           Positioned(
-            top: 4,
-            right: 4,
-            width: 20,
-            height: 20,
+            top: 4.h,
+            right: 4.w,
+            width: 20.w,
+            height: 20.h,
             child: IconButton(
               style: IconButton.styleFrom(
-                padding: const EdgeInsets.all(5),
+                padding: EdgeInsets.all(5.r),
                 backgroundColor: Colors.white,
                 // side: BorderSide(color: Colors.white, width: 1),
               ),
               onPressed: clear,
               icon: const Icon(CupertinoIcons.clear),
-              iconSize: 12,
+              iconSize: 12.w,
             ),
           ),
           // const SizedBox(height: 24.0),

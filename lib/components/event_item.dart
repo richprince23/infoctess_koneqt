@@ -79,9 +79,18 @@ class ClosedEventItem extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 10.h),
-              Divider(
-                color: AppTheme.themeData(false, context).focusColor,
-                thickness: 1,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "President",
+                    style: TextStyle(fontSize: 12.sp),
+                  ),
+                  Text(
+                    "December 11, 2022, 11:34pm",
+                    style: TextStyle(fontSize: 12.sp),
+                  ),
+                ],
               ),
             ],
           ),

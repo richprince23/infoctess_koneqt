@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/page_controller.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/nav_item.dart';
@@ -26,8 +27,8 @@ class _BottomNavState extends State<BottomNav> {
           ),
       child: NavigationBar(
         // backgroundColor: AppTheme.themeData(false, context).backgroundColor,
-
-        elevation: 2,
+        surfaceTintColor: cSec.withOpacity(0.3),
+        elevation: 3,
         selectedIndex: context.watch<PageControl>().pageIndex,
         height: 50.h,
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,

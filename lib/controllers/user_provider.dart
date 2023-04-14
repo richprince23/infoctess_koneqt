@@ -79,26 +79,25 @@ class UserProvider extends ChangeNotifier {
     userPrefs.setBool("isLoggedIn", status);
     notifyListeners();
   }
+
+  Future setUserDetails() async {
+    final user = FirebaseAuth.instance.currentUser;
+    final userDb = await FirebaseFirestore.instance
+        .collection('user_infos')
+        .where("userID", isEqualTo: user!.uid)
+        .get()
+        .then((value) => value.docs[0].data());
+
+    curUser = cUser.User(
+      avatar: user.photoURL,
+      fullName: user.displayName,
+      emailAddress: user.email,
+      indexNum: int.parse(userDb['indexNum']),
+      gender: userDb["gender"],
+      userLevel: userDb["userLevel"],
+      userName: userDb["userName"],
+      classGroup: userDb["classGroup"],
+      phoneNum: userDb["phoneNum"],
+    );
+  }
 }
-
-Future setUserDetails() async {
-  final user = FirebaseAuth.instance.currentUser;
-  final userDb = await FirebaseFirestore.instance
-      .collection('user_infos')
-      .where("userID", isEqualTo: user!.uid)
-      .get()
-      .then((value) => value.docs[0].data());
-
-  curUser = cUser.User(
-    avatar: user.photoURL,
-    fullName: user.displayName,
-    emailAddress: user.email,
-    indexNum: int.parse(userDb['indexNum']),
-    gender: userDb["gender"],
-    userLevel: userDb["userLevel"],
-    userName: userDb["userName"],
-    classGroup: userDb["classGroup"],
-    phoneNum: userDb["phoneNum"],
-  );
-}
-

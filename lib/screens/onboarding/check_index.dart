@@ -139,8 +139,18 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
                                       StatusAlert.show(
                                         context,
                                         title: "Verified",
-                                        configuration: const IconConfiguration(
-                                          icon: Icons.done,
+                                        titleOptions:  StatusAlertTextConfiguration(
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                                        maxWidth: 50.vw,
+                                        configuration: IconConfiguration(
+                                          icon: Icons.check,
+                                          color: Colors.green,
+                                          size: 50.w,
                                         ),
                                       );
                                       // Navigator.pop(context);
@@ -158,23 +168,10 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
                               } catch (e) {
                                 Navigator.of(context, rootNavigator: true)
                                     .pop();
-                                Platform.isAndroid
-                                    ? showDialog(
-                                        context: context,
-                                        builder: (context) =>
-                                            const CustomDialog(
-                                          message:
-                                              "An error occurred while performing your request",
-                                        ),
-                                      )
-                                    : showCupertinoDialog(
-                                        context: context,
-                                        builder: (context) =>
-                                            const CustomDialog(
-                                          message:
-                                              "An error occured while performing your request",
-                                        ),
-                                      );
+                                
+                                      CustomDialog.show(context,
+                                        message:
+                                            "An error occured while performing your request");
                                 setState(() {
                                   response =
                                       "An error occured. Please try again";
@@ -193,21 +190,10 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
                         );
                       } catch (e) {
                         Navigator.of(context, rootNavigator: true).pop();
-                        Platform.isAndroid
-                            ? showDialog(
-                                context: context,
-                                builder: (context) => const CustomDialog(
-                                  message:
-                                      "An error occurred while performing your request",
-                                ),
-                              )
-                            : showCupertinoDialog(
-                                context: context,
-                                builder: (context) => const CustomDialog(
-                                  message:
-                                      "An error occured while performing your request",
-                                ),
-                              );
+                        
+                              CustomDialog.show(context,
+                                        message:
+                                            "An error occured while performing your request");
                         setState(() {
                           response = "An error occured. Please try again";
                         });

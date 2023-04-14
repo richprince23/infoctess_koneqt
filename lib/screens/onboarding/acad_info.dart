@@ -221,21 +221,8 @@ class _AcademicInfoScreenState extends State<AcademicInfoScreen> {
                                       .read<OnboardingController>()
                                       .selectedGender;
                                 } catch (e) {
-                                  Platform.isAndroid
-                                      ? showDialog(
-                                          context: context,
-                                          builder: (context) =>
-                                              const CustomDialog(
-                                                  message:
-                                                      "Please fill all fields"),
-                                        )
-                                      : showCupertinoDialog(
-                                          context: context,
-                                          builder: (context) =>
-                                              const CustomDialog(
-                                                  message:
-                                                      "Please fill all fields"),
-                                        );
+                                  CustomDialog.show(context,
+                                      message: "Please fill all fields");
                                 }
                                 Provider.of<OnboardingController>(context,
                                         listen: false)

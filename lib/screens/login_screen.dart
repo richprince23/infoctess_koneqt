@@ -190,11 +190,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                     .then((user) async => {
                                           if (user != null)
                                             {
-                                              await setUserDetails(),
-                                              // save user to shared prefs
-                                              Provider.of<UserProvider>(context,
+                                              await Provider.of<UserProvider>(
+                                                      context,
                                                       listen: false)
-                                                  .setUserID(user.uid),
+                                                  .setUserDetails()
+                                                  .then(
+                                                    (value) => Provider.of<
+                                                                UserProvider>(
+                                                            context,
+                                                            listen: false)
+                                                        .setUserID(user.uid),
+                                                  ),
+                                              // save user to shared prefs
                                               Provider.of<UserProvider>(context,
                                                       listen: false)
                                                   .setLoggedIn(true),
@@ -206,76 +213,31 @@ class _LoginScreenState extends State<LoginScreen> {
                               } on FirebaseAuthException catch (e) {
                                 Navigator.pop(context);
                                 if (e.code == 'network-request-failed') {
-                                  Platform.isAndroid
-                                      ? showDialog(
-                                          context: context,
-                                          builder: (context) =>
-                                              const CustomDialog(
-                                                  message:
-                                                      "No Internet Connection"))
-                                      : showCupertinoDialog(
-                                          context: context,
-                                          builder: (context) =>
-                                              const CustomDialog(
-                                            message: "No Internet Connection",
-                                          ),
-                                        );
-                                  //devtools.log('No Internet Connection');
+                                  CustomDialog.show(context,
+                                      message:
+                                          "No Internet Connection"); //devtools.log('No Internet Connection');
                                 } else if (e.code == "wrong-password") {
-                                  Platform.isAndroid
-                                      ? showDialog(
-                                          context: context,
-                                          builder: (context) => const CustomDialog(
-                                              message:
-                                                  'Please enter correct password'))
-                                      : showCupertinoDialog(
-                                          context: context,
-                                          builder: (context) => const CustomDialog(
-                                              message:
-                                                  'Please enter correct password'));
+                                  CustomDialog.show(context,
+                                      message: "Please enter correct password");
 
                                   //devtools.log('Please Enter correct password');
                                   //print('Please Enter correct password');
                                 } else if (e.code == 'user-not-found') {
-                                  Platform.isAndroid
-                                      ? showDialog(
-                                          context: context,
-                                          builder: (context) => const CustomDialog(
-                                              message:
-                                                  'No user found for this email'))
-                                      : showCupertinoDialog(
-                                          context: context,
-                                          builder: (context) => const CustomDialog(
-                                              message:
-                                                  'No user found for this email'));
+                                  CustomDialog.show(context,
+                                      message: "No user found for this email");
 
                                   // print('Email not found');
                                 } else if (e.code == 'too-many-requests') {
-                                  Platform.isAndroid
-                                      ? showDialog(
-                                          context: context,
-                                          builder: (context) => const CustomDialog(
-                                              message:
-                                                  "Too many attemps; try later"))
-                                      : showCupertinoDialog(
-                                          context: context,
-                                          builder: (context) => const CustomDialog(
-                                              message:
-                                                  'Too many attemps; try later'));
+                                  CustomDialog.show(context,
+                                      message: "Too many attemps; try later");
 
                                   //print('Too many attempts please try later');
                                 } else {
-                                  Platform.isAndroid
-                                      ? showDialog(
-                                          context: context,
-                                          builder: (context) =>
-                                              CustomDialog(message: e.code),
-                                        )
-                                      : showCupertinoDialog(
-                                          context: context,
-                                          builder: (context) =>
-                                              CustomDialog(message: e.code),
-                                        );
+                                  CustomDialog.show(context,
+                                      message:
+                                          "Something went wrong. Try again");
+
+                                  //print('Something went wrong');
                                 }
                               }
                               // finally {

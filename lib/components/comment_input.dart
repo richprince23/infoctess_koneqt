@@ -31,8 +31,16 @@ class _CommentInputState extends State<CommentInput> {
   @override
   Widget build(BuildContext context) {
     return Material(
+      type: MaterialType.transparency,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(10),
+          topRight: Radius.circular(10),
+        ),
+      ),
+      clipBehavior: Clip.antiAlias,
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 5),
+        // margin: const EdgeInsets.symmetric(horizontal: 5),
         padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         decoration: BoxDecoration(

@@ -1,16 +1,24 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:detectable_text_field/detectable_text_field.dart';
 import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/components/comment_input.dart';
+import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/post_controller.dart';
+import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/models/poster_model.dart';
 import 'package:infoctess_koneqt/models/posts_model.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
+import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:intl/intl.dart';
+import 'package:resize/resize.dart';
+import 'package:status_alert/status_alert.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PostItem extends StatefulWidget {
@@ -22,6 +30,8 @@ class PostItem extends StatefulWidget {
 }
 
 class _PostItemState extends State<PostItem> {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
   int postLikes = 0;
   int postComments = 0;
   late Poster poster;
@@ -88,6 +98,105 @@ class _PostItemState extends State<PostItem> {
     print("initState");
   }
 
+  Widget optionButton() {
+    return PopupMenuButton<String>(
+      tooltip: "Options",
+      color: Colors.white,
+      padding: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.r),
+      ),
+      onSelected: (String choice) {
+        // Handle menu item selection
+        switch (choice) {
+          case 'edit':
+            // Do something
+            print("Edit");
+            break;
+          case 'delete':
+            // Do something
+            print("Delete");
+            CustomDialog.showWithAction(
+              context,
+              title: "Delete Post",
+              message: "Are you sure you want to delete this post?",
+              actionText: "Delete",
+              action: () async {
+                deletePost(widget.post.id).then(
+                  (value) => StatusAlert.show(
+                    context,
+                    title: "Deleted",
+                    titleOptions: StatusAlertTextConfiguration(
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    maxWidth: 50.vw,
+                    configuration: IconConfiguration(
+                      icon: Icons.check,
+                      color: Colors.green,
+                      size: 50.w,
+                    ),
+                  ),
+                );
+              },
+            );
+
+            break;
+        }
+      },
+      itemBuilder: (BuildContext context) {
+        // Define menu items
+        return [
+          PopupMenuItem<String>(
+            value: 'edit',
+            height: 30.h,
+            padding: EdgeInsets.all(12.w),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Edit Post',
+                  style: TextStyle(fontSize: 14.sp),
+                ),
+                Icon(
+                  CupertinoIcons.pencil,
+                  size: 18.w,
+                  color: cPri,
+                ),
+              ],
+            ),
+          ),
+          PopupMenuItem<String>(
+            value: 'delete',
+            height: 30.h,
+            padding: EdgeInsets.all(12.w),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Delete Post',
+                  style: TextStyle(fontSize: 14.sp),
+                ),
+                Icon(
+                  CupertinoIcons.delete,
+                  size: 18.w,
+                  color: Colors.red,
+                ),
+              ],
+            ),
+          ),
+        ];
+      },
+      child: Icon(
+        Icons.more_vert,
+        size: 18.w,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -103,66 +212,100 @@ class _PostItemState extends State<PostItem> {
               vertical: 1,
             ),
             child: Material(
-              borderRadius: BorderRadius.circular(5),
-              elevation: 0.5,
-              shadowColor: Colors.grey,
-              color: AppTheme.themeData(false, context)
-                  .primaryColor
-                  .withOpacity(0.7),
+              borderRadius: BorderRadius.circular(5.r),
+              elevation: 0,
+              // shadowColor: Colors.grey,
+              color: Colors.white.withOpacity(0.7),
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6),
+                    EdgeInsets.symmetric(horizontal: 12.0.w, vertical: 6.h),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(10),
+                      padding: EdgeInsets.all(10.w),
                       // height: 50,
-                      margin: const EdgeInsets.only(bottom: 5),
+                      margin: EdgeInsets.only(bottom: 5.h),
                       decoration: BoxDecoration(
-                        color: Colors.grey[400],
-                        borderRadius: BorderRadius.circular(10),
+                        color: cPri.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(10.r),
                       ),
-
                       child: Row(
                         children: [
                           Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 4.0),
+                            padding: EdgeInsets.symmetric(horizontal: 4.0.h),
                             child: CircleAvatar(
                               // radius: 25,
-                              child: ClipOval(
-                                clipBehavior: Clip.antiAlias,
-                                child: CachedNetworkImage(
-                                  fit: BoxFit.fill,
-                                  width: 120,
-                                  imageUrl: poster.posterAvatarUrl ??
-                                      "https://picsum.photos/200",
-                                ),
+                              foregroundImage: CachedNetworkImageProvider(
+                                // fit: BoxFit.fill,
+                                poster.posterAvatarUrl ??
+                                    "https://picsum.photos/200",
+                                maxWidth: 120.w.toInt(),
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            width: 10,
+                          SizedBox(
+                            width: 10.w,
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                poster.posterName ?? "Anonymous",
-                                style: GoogleFonts.sarabun(
-                                    fontWeight: FontWeight.w500),
-                              ),
-                              Text(
-                                convertDateString(
-                                    widget.post.timestamp.toString()),
-                                style: GoogleFonts.sarabun(
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 12,
-                                    color: Colors.black54),
-                              ),
-                            ],
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        poster.posterName ?? "Anonymous",
+                                        style: GoogleFonts.sarabun(
+                                          fontSize: 16.sp,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                      ),
+                                    ),
+                                    poster.isPosterAdmin?.toString() != "true"
+                                        ? Container(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 5.w, vertical: 2.h),
+                                            decoration: BoxDecoration(
+                                              color: cPri.withOpacity(0.1),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.r),
+                                            ),
+                                            child: Text(
+                                              "Admin",
+                                              style: GoogleFonts.sarabun(
+                                                  fontSize: 10.sp,
+                                                  fontWeight: FontWeight.w400,
+                                                  color: cPri),
+                                            ),
+                                          )
+                                        : const SizedBox.shrink(),
+                                  ],
+                                ),
+                                Text(
+                                  convertDateString(
+                                      widget.post.timestamp.toString()),
+                                  style: GoogleFonts.sarabun(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12.sp,
+                                      color: Colors.black54),
+                                ),
+                              ],
+                            ),
                           ),
+                          SizedBox(
+                            width: 10.w,
+                          ),
+
+                          // check if the current user is the post owner
+                          poster.posterID == auth.currentUser?.uid
+                              ? optionButton()
+                              : const SizedBox.shrink(),
                         ],
                       ),
                     ),
@@ -170,14 +313,22 @@ class _PostItemState extends State<PostItem> {
                     SizedBox(
                       child: widget.post.imgUrl != null
                           ? CachedNetworkImage(
+                              progressIndicatorBuilder:
+                                  (context, url, progress) => Center(
+                                child: Image.asset(
+                                  "assets/images/preload.gif",
+                                  width: 30.h,
+                                  height: 30.h,
+                                ),
+                              ),
                               fit: BoxFit.cover,
-                              height: 300,
+                              width: 100.vw,
                               imageUrl: widget.post.imgUrl!,
                             )
                           : const SizedBox.shrink(),
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      padding: EdgeInsets.symmetric(vertical: 10.h),
                       child: Align(
                         alignment: Alignment.topLeft,
                         child: RichText(
@@ -194,7 +345,7 @@ class _PostItemState extends State<PostItem> {
                               textAlign: TextAlign.left,
                               basicStyle: GoogleFonts.sarabun(
                                   fontWeight: FontWeight.w400,
-                                  fontSize: 16,
+                                  fontSize: 16.sp,
                                   color: AppTheme.themeData(false, context)
                                       .primaryColorLight),
                               callback: (bool readMore) {
@@ -228,8 +379,8 @@ class _PostItemState extends State<PostItem> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: 20.h,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -237,28 +388,28 @@ class _PostItemState extends State<PostItem> {
                         Text(
                           "${widget.post.likes} likes",
                           style: TextStyle(
-                              fontSize: 12,
-                              color: AppTheme.themeData(false, context)
-                                  .primaryColorLight),
+                            fontSize: 12.sp,
+                            color: Colors.black87,
+                          ),
                         ),
                         Text(
                           "$postComments comments",
                           style: TextStyle(
-                              fontSize: 12,
-                              color: AppTheme.themeData(false, context)
-                                  .primaryColorLight),
+                            fontSize: 12.sp,
+                            color: Colors.black87,
+                          ),
                         ),
                         Text(
                           "23 shares",
                           style: TextStyle(
-                              fontSize: 12,
-                              color: AppTheme.themeData(false, context)
-                                  .primaryColorLight),
+                            fontSize: 12.sp,
+                            color: Colors.black87,
+                          ),
                         ),
                       ],
                     ),
                     Divider(
-                      color: AppTheme.themeData(false, context).focusColor,
+                      color: cSec,
                       thickness: 1,
                     ),
                     Row(
@@ -268,55 +419,57 @@ class _PostItemState extends State<PostItem> {
                           onPressed: () {},
                           icon: Icon(
                             CupertinoIcons.heart,
-                            color: AppTheme.themeData(false, context)
-                                .primaryColorLight,
-                            size: 18,
+                            color: Colors.black87,
+                            size: 18.w,
                           ),
                           label: Text(
                             "like",
                             style: TextStyle(
-                                fontSize: 12,
-                                color: AppTheme.themeData(false, context)
-                                    .primaryColorLight),
+                              fontSize: 14.sp,
+                              color: Colors.black87,
+                            ),
                           ),
                         ),
                         TextButton.icon(
                           onPressed: () {
-                            showBottomSheet(
-                                // barrierColor: Colors.transparent,
+                            showModalBottomSheet(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(10.r),
+                                      topRight: Radius.circular(10.r)),
+                                ),
+                                isScrollControlled: true,
                                 clipBehavior: Clip.antiAlias,
                                 context: context,
                                 builder: (context) => const CommentInput());
                           },
                           icon: Icon(
                             CupertinoIcons.chat_bubble,
-                            color: AppTheme.themeData(false, context)
-                                .primaryColorLight,
-                            size: 18,
+                            color: Colors.black87,
+                            size: 18.w,
                           ),
                           label: Text(
                             "comment",
                             style: TextStyle(
-                              fontSize: 12,
-                              color: AppTheme.themeData(false, context)
-                                  .primaryColorLight,
+                              fontSize: 14.sp,
+                              color: Colors.black87,
                             ),
                           ),
                         ),
                         TextButton.icon(
                           onPressed: () {},
                           icon: Icon(
-                            CupertinoIcons.share,
-                            color: AppTheme.themeData(false, context)
-                                .primaryColorLight,
-                            size: 18,
+                            Platform.isAndroid
+                                ? CupertinoIcons.arrowshape_turn_up_right
+                                : CupertinoIcons.share,
+                            color: Colors.black87,
+                            size: 18.w,
                           ),
                           label: Text(
                             "share",
                             style: TextStyle(
-                              fontSize: 12,
-                              color: AppTheme.themeData(false, context)
-                                  .primaryColorLight,
+                              fontSize: 14.sp,
+                              color: Colors.black87,
                             ),
                           ),
                         ),

@@ -134,17 +134,9 @@ class ImagerState extends State<Imager> {
       textController.clear();
     } catch (e) {
       // Display error message in case of an exception
-      Platform.isAndroid
-          ? showDialog(
-              useRootNavigator: true,
-              barrierDismissible: false,
-              context: context,
-              builder: (context) => const CustomDialog(
-                  message: "An error occurred when performing your request"))
-          : showCupertinoDialog(
-              context: context,
-              builder: (context) => const CustomDialog(
-                  message: "An error occurred when performing your request"));
+
+      CustomDialog.show(context,
+          message: "An error occurred when performing your request");
     } finally {
       Navigator.of(context, rootNavigator: true).pop();
       setState(() {

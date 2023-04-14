@@ -32,11 +32,13 @@ class DrawerScreen extends StatelessWidget {
                       foregroundImage: CachedNetworkImageProvider(
                         // fit: BoxFit.fill,
                         maxWidth: 100.h.ceil(),
-                        curUser!.avatar!,
+                        curUser?.avatar?.isNotEmpty == true
+                            ? curUser!.avatar!
+                            : "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle.png",
                       ),
                     ),
                     Text(
-                      "${curUser!.fullName} ", // fullname
+                      "${curUser?.fullName ?? 'Someone'} ", // fullname
                       style: GoogleFonts.sarabun().copyWith(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.bold,
@@ -45,7 +47,7 @@ class DrawerScreen extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      "@${curUser!.userName!} ", // @username
+                      "@${curUser?.userName ?? 'someone'} ", // @username
                       style: GoogleFonts.sarabun().copyWith(
                         fontSize: 14.sp,
                         color: Colors.black54,
@@ -55,7 +57,7 @@ class DrawerScreen extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      "${curUser!.classGroup} ", // class group
+                      "${curUser?.classGroup ?? 'Group 0'} ", // class group
                       style: GoogleFonts.sarabun().copyWith(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w400,

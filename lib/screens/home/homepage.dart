@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/screens/home/announcements_screen.dart';
 import 'package:infoctess_koneqt/screens/home/events_screen.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
@@ -33,6 +34,7 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: cSec.withOpacity(0.1),
       body: Column(
         children: [
           TabBar(
