@@ -4,6 +4,7 @@ import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:resize/resize.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -65,7 +66,7 @@ class ClosedWidget extends StatelessWidget {
                 textAlign: TextAlign.left,
               ),
               Divider(
-                color: AppTheme.themeData(false, context).focusColor,
+                color: cSec,
                 thickness: 1,
               ),
               Text(

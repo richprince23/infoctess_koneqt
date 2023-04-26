@@ -25,7 +25,7 @@ class _EventItemState extends State<EventItem> {
     return InkWell(
       onTap: () {},
       child: OpenContainer(
-        closedColor: Colors.transparent,
+        closedColor: Colors.white70,
         transitionDuration: const Duration(milliseconds: 200),
         closedBuilder: (context, action) => const ClosedEventItem(),
         openBuilder: (context, action) => const OpenEventItem(),
@@ -44,7 +44,7 @@ class ClosedEventItem extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 2.0.w),
       child: Card(
-        color: AppTheme.themeData(false, context).primaryColor.withOpacity(0.7),
+        // color: AppTheme.themeData(false, context).primaryColor.withOpacity(0.7),
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5.r),
@@ -57,13 +57,17 @@ class ClosedEventItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Infoctess General Meeting",
+                "Infoctess Akwaaba",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16.sp,
                     color:
                         AppTheme.themeData(false, context).primaryColorLight),
                 textAlign: TextAlign.left,
+              ),
+              Divider(
+                color: cSec,
+                thickness: 1,
               ),
               RichText(
                 overflow: TextOverflow.ellipsis,
@@ -158,110 +162,117 @@ class OpenEventItem extends StatelessWidget {
                 ),
               ),
               Text(
-                "Infoctess General Meeting",
+                "Infoctess Akwaaba",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16.sp,
                     color:
                         AppTheme.themeData(false, context).primaryColorLight),
                 textAlign: TextAlign.left,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
               ),
               SizedBox(height: 10.h),
+              Card(
+                // padding: EdgeInsets.all(10.w),
+                // decoration: ShapeDecoration(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.r),
+                  side: const BorderSide(color: Colors.black12),
+                ),
+                color: Colors.white,
+                elevation: 0,
+                // ),
+                child: Padding(
+                  padding: EdgeInsets.all(10.w),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(4.0.w),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Text(
+                                "Fee: ",
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 4,
+                              child: Text(
+                                "GH₵ 10.00",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(4.0.w),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Text(
+                                "Date: ",
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 4,
+                              child: Text(
+                                "December 11, 2022, 11:34pm",
+                                style: TextStyle(
+                                  overflow: TextOverflow.ellipsis,
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Text(
+                                "Venue: ",
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 4,
+                              child: Text(
+                                "1234 Main Street, New York, NY 10001 sdfhjksdhfj kshdjfhsjkdhf jsdhfjksdhfjk",
+                                style: TextStyle(
+                                  overflow: TextOverflow.ellipsis,
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               Divider(
                 color: AppTheme.themeData(false, context).focusColor,
                 thickness: 1,
-              ),
-              Container(
-                padding: EdgeInsets.all(10.w),
-                decoration: ShapeDecoration(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.r),
-                  ),
-                  color: Colors.white38.withOpacity(0.7),
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(4.0.w),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Text(
-                              "Fee: ",
-                              style: TextStyle(
-                                fontSize: 12.sp,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 4,
-                            child: Text(
-                              "GH₵ 10.00",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12.sp,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(4.0.w),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Text(
-                              "Date: ",
-                              style: TextStyle(
-                                fontSize: 12.sp,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 4,
-                            child: Text(
-                              "December 11, 2022, 11:34pm",
-                              style: TextStyle(
-                                overflow: TextOverflow.ellipsis,
-                                fontSize: 12.sp,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Text(
-                              "Venue: ",
-                              style: TextStyle(
-                                fontSize: 12.sp,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 4,
-                            child: Text(
-                              "1234 Main Street, New York, NY 10001 sdfhjksdhfj kshdjfhsjkdhf jsdhfjksdhfjk",
-                              style: TextStyle(
-                                overflow: TextOverflow.ellipsis,
-                                fontSize: 12.sp,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
               ),
               RichText(
                 textAlign: TextAlign.left,
@@ -380,9 +391,10 @@ class OpenEventItem extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return SizedBox(
-          height: 170.0.h,
+          height: 180.0.h,
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Center(
                 child: Text(
@@ -397,7 +409,7 @@ class OpenEventItem extends StatelessWidget {
                   padding: EdgeInsets.all(8.0.h),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
+                    // mainAxisSize: MainAxisSize.min,
                     children: [
                       OutlinedButton.icon(
                         icon: Icon(Icons.alarm, size: 20.w),
@@ -415,6 +427,9 @@ class OpenEventItem extends StatelessWidget {
                           ),
                           fixedSize: Size(100.vw, 50.h),
                         ),
+                      ),
+                      SizedBox(
+                        height: 5.h,
                       ),
                       OutlinedButton.icon(
                         icon: Icon(Icons.checklist, size: 20.w),
