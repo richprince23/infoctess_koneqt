@@ -76,14 +76,14 @@ class GPAScreenState extends State<GPAScreen> {
       appBar: AppBar(
         title: const Text('GPA Calculator'),
         centerTitle: true,
-        actions: [
-          TextButton(
-              child: const Text(
-                'CGPA',
-                style: TextStyle(),
-              ),
-              onPressed: () => Navigator.pushNamed(context, "/cgpa-screen")),
-        ],
+        // actions: [
+        //   TextButton(
+        //       child: const Text(
+        //         'CGPA',
+        //         style: TextStyle(),
+        //       ),
+        //       onPressed: () => Navigator.pushNamed(context, "/cgpa-screen")),
+        // ],
       ),
       body: Center(
         child: SingleChildScrollView(

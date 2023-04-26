@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/notification_service.dart';
 import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
 import 'package:infoctess_koneqt/controllers/page_controller.dart';
@@ -9,6 +10,7 @@ import 'package:infoctess_koneqt/screens/main_screen.dart';
 import 'package:infoctess_koneqt/screens/onboarding.dart';
 import 'package:infoctess_koneqt/screens/onboarding/check_index.dart';
 import 'package:infoctess_koneqt/screens/post_page.dart';
+import 'package:infoctess_koneqt/screens/start.dart';
 import 'package:infoctess_koneqt/screens/tools/courses/add_course.dart';
 import 'package:infoctess_koneqt/screens/tools/courses/courses.dart';
 import 'package:infoctess_koneqt/screens/tools/gpa_calc/cgpa.dart';
@@ -61,10 +63,13 @@ class MyApp extends StatelessWidget {
           ),
         ),
         // initialRoute: initialRoute,
-        initialRoute: "/login",
+        // home: const StartScreen(),
+        home: const MainScreen(),
+        // initialRoute: "/start",
         routes: {
+          '/start': (context) => const StartScreen(),
           '/login': (context) => const LoginScreen(),
-          "/": (context) => const MainScreen(),
+          "/main": (context) => const MainScreen(),
           "/onboarding": (context) => const OnboardingScreen(),
           "/post-details": (context) => PostDetails(),
           "/gpa-calculator": (context) => const GPAScreen(),
@@ -79,6 +84,52 @@ class MyApp extends StatelessWidget {
           "/ai-imager": (context) => const Imager(),
           "/checker": (context) => const CheckAccessPage(),
         },
+        // home: FutureBuilder<bool>(
+        //   future: context.watch<UserProvider>().isLoggedIn,
+        //   builder: (context, snapshot) {
+        //     if (snapshot.connectionState == ConnectionState.waiting) {
+        //       // show loading indicator while waiting for future to complete
+        //       return CircularProgressIndicator(
+        //         color: cPri,
+        //       );
+        //     } else {
+        //       // return the appropriate route based on the value of isLoggedIn
+        //       final initialRoute = snapshot.data == true ? "/" : "/login";
+        //       return MaterialApp(
+        //         title: 'Infoctess Koneqt',
+        //         debugShowCheckedModeBanner: false,
+        //         theme: ThemeData(
+        //           useMaterial3: true,
+        //           primaryTextTheme: GoogleFonts.sarabunTextTheme().apply(
+        //             decoration: TextDecoration.none,
+        //           ),
+        //           textTheme: GoogleFonts.sarabunTextTheme().apply(
+        //             decoration: TextDecoration.none,
+        //           ),
+        //         ),
+        //         initialRoute: initialRoute,
+        //         // initialRoute: "/",
+        //         routes: {
+        //           '/login': (context) => const LoginScreen(),
+        //           "/": (context) => const MainScreen(),
+        //           "/onboarding": (context) => const OnboardingScreen(),
+        //           "/post-details": (context) => PostDetails(),
+        //           "/gpa-calculator": (context) => const GPAScreen(),
+        //           "/cgpa-screen": (context) => const CGPAScreen(),
+        //           "/my-courses": (context) => const ManageCourses(),
+        //           "/add-course": (context) => const AddCoursePage(),
+        //           "/my-notes": (context) => const MyNotes(),
+        //           "/add-note": (context) => const AddNoteScreen(),
+        //           "/my-schedules": (context) => const AllSchedules(),
+        //           "/add-schedule": (context) => const AddScheduleScreen(),
+        //           "/ai-studymate": (context) => const AIChatScreen(),
+        //           "/ai-imager": (context) => const Imager(),
+        //           "/checker": (context) => const CheckAccessPage(),
+        //         },
+        //       );
+        //     }
+        //   },
+        // ),
       ),
     );
   }
@@ -112,21 +163,22 @@ class MyApp extends StatelessWidget {
 //               // initialRoute: initialRoute,
 //               initialRoute: "/",
 //               routes: {
-//                 '/login': (context) => const LoginScreen(),
-//                 "/": (context) => MainScreen(),
-//                 "/onboarding": (context) => const OnboardingScreen(),
-//                 "/post-details": (context) => PostDetails(),
-//                 "/gpa-calculator": (context) => const GPAScreen(),
-//                 "/cgpa-screen": (context) => const CGPAScreen(),
-//                 "/my-courses": (context) => const ManageCourses(),
-//                 "/add-course": (context) => const AddCoursePage(),
-//                 "/my-notes": (context) => const MyNotes(),
-//                 "/add-note": (context) => const AddNoteScreen(),
-//                 "/my-schedules": (context) => const AllSchedules(),
-//                 "/add-schedule": (context) => const AddScheduleScreen(),
-//                 "/ai-studymate": (context) => const AIChatScreen(),
-//                 "/ai-imager": (context) => const Imager(),
-//               },
+        //   '/login': (context) => const LoginScreen(),
+        //   "/": (context) => const MainScreen(),
+        //   "/onboarding": (context) => const OnboardingScreen(),
+        //   "/post-details": (context) => PostDetails(),
+        //   "/gpa-calculator": (context) => const GPAScreen(),
+        //   "/cgpa-screen": (context) => const CGPAScreen(),
+        //   "/my-courses": (context) => const ManageCourses(),
+        //   "/add-course": (context) => const AddCoursePage(),
+        //   "/my-notes": (context) => const MyNotes(),
+        //   "/add-note": (context) => const AddNoteScreen(),
+        //   "/my-schedules": (context) => const AllSchedules(),
+        //   "/add-schedule": (context) => const AddScheduleScreen(),
+        //   "/ai-studymate": (context) => const AIChatScreen(),
+        //   "/ai-imager": (context) => const Imager(),
+        //   "/checker": (context) => const CheckAccessPage(),
+        // },
 //             );
 //           }
 //         },

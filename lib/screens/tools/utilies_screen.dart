@@ -51,7 +51,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
             stops: [0.2, 1],
           ),
         ),
-        padding: EdgeInsets.all(20.w),
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 2, sigmaY: 0),
           child: GridView.count(
@@ -126,7 +126,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                         style: GoogleFonts.sarabun(
                             color: AppTheme.themeData(false, context)
                                 .primaryColorLight,
-                            fontSize: 20.h),
+                            fontSize: 18.sp),
                       ),
                     ],
                   ),
@@ -178,7 +178,7 @@ class UtilItem extends StatelessWidget {
               title,
               style: GoogleFonts.sarabun(
                   color: AppTheme.themeData(false, context).primaryColorLight,
-                  fontSize: 20.h),
+                  fontSize: 18.sp),
             ),
           ],
         ),

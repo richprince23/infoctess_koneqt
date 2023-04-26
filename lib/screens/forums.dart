@@ -6,6 +6,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:infoctess_koneqt/components/new_post.dart';
 import 'package:infoctess_koneqt/components/post_item.dart';
 import 'package:infoctess_koneqt/models/posts_model.dart';
+import 'package:infoctess_koneqt/widgets/empty_list.dart';
 import 'package:resize/resize.dart';
 import 'package:infoctess_koneqt/constants.dart';
 
@@ -56,6 +57,12 @@ class _ForumsScreenState extends State<ForumsScreen> {
                         width: 50.h,
                         height: 50.h,
                       ),
+                    );
+                  }
+                  if (snapshot.hasData == null || snapshot.hasError == true) {
+                    return EmptyList(
+                      text:
+                          "It seems there isn't any post to view🤔\n Click on 'Create Post' button to post an update",
                     );
                   }
                   return ListView.builder(

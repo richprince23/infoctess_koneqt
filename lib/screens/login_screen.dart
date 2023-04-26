@@ -8,7 +8,9 @@ import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/user_provider.dart';
+import 'package:infoctess_koneqt/screens/forgot_password.dart';
 import 'package:infoctess_koneqt/screens/onboarding/check_index.dart';
+import 'package:infoctess_koneqt/screens/start.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:provider/provider.dart';
@@ -51,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 40.vh,
                 child: Container(
                   width: size.width,
-                  color: AppTheme.themeData(false, context).backgroundColor,
+                  color: cPri,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -61,26 +63,29 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       Image(
-                        width: size.width * 0.3,
-                        height: size.width * 0.3,
+                        width: 30.vw,
+                        height: 30.vw,
                         image: const AssetImage(
                             "assets/images/infoctess_logo_bg.png"),
                       ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
                       Text(
-                        "Infoctess Koneqt",
+                        "INFOCTESS KONEQT",
                         style: GoogleFonts.sarabun(
-                            fontSize: f30(context),
+                            fontSize: 24.sp,
                             color: Colors.white,
-                            fontWeight: FontWeight.normal,
+                            fontWeight: FontWeight.bold,
                             decoration: TextDecoration.none),
                       ),
                       SizedBox(
-                        height: sh1(context),
+                        height: 5.h,
                       ),
                       Text(
                         "Welcome Back",
                         style: GoogleFonts.sarabun(
-                            fontSize: f24(context),
+                            fontSize: 20.sp,
                             color: Colors.white,
                             fontWeight: FontWeight.normal,
                             decoration: TextDecoration.none),
@@ -102,8 +107,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       topRight: Radius.circular(30)),
                   child: Container(
                     alignment: Alignment.topCenter,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 30, vertical: 10),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
                     width: MediaQuery.of(context).size.width,
                     decoration: const BoxDecoration(
                       color: Colors.white,
@@ -145,10 +150,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           GestureDetector(
                             //TODO: Change this to reset password, this is just for testing
-                            onTap: () => Navigator.pushReplacement(
+                            onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const LoginScreen(),
+                                builder: (context) =>
+                                    const ForgotPasswordScreen(),
                               ),
                             ),
 
@@ -166,6 +172,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                             ),
+                          ),
+                          SizedBox(
+                            height: 10.h,
                           ),
                           TextButton(
                             onPressed: () async {

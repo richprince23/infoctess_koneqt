@@ -121,7 +121,7 @@ class _InputControlState extends State<InputControl> {
               fontSize: 16.sp,
             ),
             contentPadding: EdgeInsets.symmetric(
-              horizontal: 30.h,
+              horizontal: 20.h,
               vertical: 10.h,
             ),
             filled: true,

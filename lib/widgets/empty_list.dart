@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:resize/resize.dart';
 
 class EmptyList extends StatelessWidget {
   String text;
@@ -11,13 +12,13 @@ class EmptyList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.8,
+      height: 15.vh,
       alignment: Alignment.center,
       child: Container(
-        padding: const EdgeInsets.all(30),
+        padding: EdgeInsets.all(30.r),
         decoration: ShapeDecoration(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(20.r),
           ),
           color: Colors.white,
         ),

@@ -20,7 +20,7 @@ dependencies:
   firebase_storage: ^11.0.6
   cloud_firestore: ^4.1.0
   firebase_remote_config: 
-  flutter_quill: ^6.1.6
+  flutter_quill: ^7.1.11
   cached_network_image: ^3.2.3
   google_fonts: ^3.0.1
   image_picker: ^0.8.6
