@@ -41,6 +41,7 @@ class _HomePageState extends State<HomePage>
             isScrollable: false,
             physics: const BouncingScrollPhysics(),
             dragStartBehavior: DragStartBehavior.down,
+            indicatorSize: TabBarIndicatorSize.tab,
             indicatorColor: AppTheme.themeData(false, context).focusColor,
             controller: _tabController,
             tabs: tabs,

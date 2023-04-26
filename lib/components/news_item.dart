@@ -1,8 +1,8 @@
 import 'package:animations/animations.dart';
 import 'package:detectable_text_field/detectable_text_field.dart';
 import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:resize/resize.dart';
@@ -17,7 +17,7 @@ class NewsItem extends StatelessWidget {
       onTap: () {},
       child: OpenContainer(
         transitionDuration: const Duration(milliseconds: 200),
-        closedColor: Colors.transparent,
+        closedColor: Colors.white70,
         // AppTheme.themeData(false, context).primaryColor.withOpacity(0.5),
         useRootNavigator: true,
         openElevation: 0,
@@ -43,7 +43,7 @@ class ClosedWidget extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 2.0.w),
       child: Card(
-        color: AppTheme.themeData(false, context).primaryColor.withOpacity(0.7),
+        // color: Colors.white.withOpacity(0.7),
         surfaceTintColor: Colors.white,
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -88,18 +88,18 @@ class ClosedWidget extends StatelessWidget {
                     children: [
                       Text(
                         "Uptown",
-                        style: TextStyle(fontSize: 12.sp),
+                        style: TextStyle(fontSize: 14.sp),
                       ),
                       Text(
                         "December 11, 2022, 11:34pm",
-                        style: TextStyle(fontSize: 12.sp),
+                        style: TextStyle(fontSize: 14.sp),
                       ),
                     ],
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 10.h),
                     alignment: Alignment.center,
-                    child: const Text("Read More"),
+                    child: const Icon(Icons.open_in_new),
                   ),
                 ],
               ),
@@ -169,6 +169,7 @@ class OpenWidget extends StatelessWidget {
                     thickness: 1,
                   ),
                   RichText(
+                    selectionColor: Colors.blueAccent,
                     textAlign: TextAlign.left,
                     overflow: TextOverflow.visible,
                     text: WidgetSpan(
@@ -219,11 +220,11 @@ class OpenWidget extends StatelessWidget {
                     children: [
                       Text(
                         "Uptown",
-                        style: TextStyle(fontSize: 12.sp),
+                        style: TextStyle(fontSize: 14.sp),
                       ),
                       Text(
                         "December 11, 2022, 11:34pm",
-                        style: TextStyle(fontSize: 12.sp),
+                        style: TextStyle(fontSize: 14.sp),
                       ),
                     ],
                   ),
