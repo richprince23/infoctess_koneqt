@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 class Utils {
   XFile? selectedMedia;
@@ -49,3 +50,9 @@ class Utils {
   }
 }
 
+ String convertDateString(String dateString) {
+    DateTime dateTime = DateTime.parse(dateString);
+    String formattedDate =
+        DateFormat('MMMM d, yyyy \'at\' h:mm a').format(dateTime);
+    return formattedDate;
+  }

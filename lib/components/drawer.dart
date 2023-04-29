@@ -6,8 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/constants.dart';
+import 'package:infoctess_koneqt/controllers/user_provider.dart';
 import 'package:infoctess_koneqt/env.dart';
+import 'package:infoctess_koneqt/models/user_info.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
+import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 
 class DrawerScreen extends StatelessWidget {
@@ -72,17 +75,39 @@ class DrawerScreen extends StatelessWidget {
                               AppTheme.themeData(true, context).focusColor,
                           foregroundColor: Colors.white,
                           maximumSize: Size(
-                              100.w < 140 ? 140 : 100.w, 40.h < 40 ? 40 : 40.h),
+                              100.w < 140 ? 140 : 100.w, 40.h < 40 ? 40 : 40.h,),
                         ),
                         onPressed: () {},
                         icon: const Icon(CupertinoIcons.pencil),
-                        label: const Text("edit profile")),
+                        label: const Text("edit profile"),),
+                        OutlinedButton.icon(
+                          onPressed: () async{
+                            try {
+                              
+                              await auth.signOut().then((value) =>{ 
+                                
+                                Provider.of<UserProvider>(context, listen: false).clearUserDetails().then((value) => Provider.of<UserProvider>(context, listen: false).setLoggedIn(false).then((value) => debugPrint("logged out"))),
+                                Navigator.pushNamedAndRemoveUntil(context, "/login", (route) => false),
+                              },);
+                            } catch (e) {
+                              debugPrint(e.toString());
+                            }
+                          },icon: const Icon(CupertinoIcons.power),
+                          label: Text(
+                            "Logout",
+                            style: GoogleFonts.sarabun().copyWith(
+                              fontSize: 12.sp,
+                              color: AppTheme.themeData(true, context).focusColor,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
                   ],
                 ),
               ),
             ),
             Divider(
-              color: AppTheme.themeData(true, context).backgroundColor,
+              color: cPri,
             ),
             ListTile(
               leading: Icon(

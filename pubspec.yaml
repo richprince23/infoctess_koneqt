@@ -44,6 +44,7 @@ dependencies:
   flutter_native_timezone:
   resize: ^1.0.0
   flutter_keyboard_visibility: ^5.4.0
+  flutter_expandable_fab: ^1.7.1
 
 
 dev_dependencies:

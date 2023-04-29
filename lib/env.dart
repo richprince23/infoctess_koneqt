@@ -1,6 +1,7 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/models/user_info.dart';
 import 'package:infoctess_koneqt/screens/forums.dart';
@@ -18,6 +19,7 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 // }
 FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
 User? curUser;
+FirebaseAuth auth = FirebaseAuth.instance;
 
 String? OPEN_AI_KEY = remoteConfig.getString("apiKeys");
 // onboarding screen

@@ -77,6 +77,7 @@ class UserProvider extends ChangeNotifier {
   setLoggedIn(bool status) async {
     final userPrefs = await mainPrefs;
     userPrefs.setBool("isLoggedIn", status);
+    setUserID("");
     notifyListeners();
   }
 
@@ -99,5 +100,12 @@ class UserProvider extends ChangeNotifier {
       classGroup: userDb["classGroup"],
       phoneNum: userDb["phoneNum"],
     );
+  }
+
+  Future clearUserDetails() async {
+    final userPrefs = await mainPrefs;
+    userPrefs.clear();
+    curUser = null;
+    notifyListeners();
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
+import 'package:infoctess_koneqt/constants.dart';
 // import 'package:infoctess_koneqt/db_helper.dart';
 import 'package:infoctess_koneqt/models/notes_db.dart';
 import 'package:infoctess_koneqt/app_db.dart';
@@ -35,7 +36,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: const Text("Note Saved Successfully!",
               textAlign: TextAlign.center),
-          backgroundColor: AppTheme.themeData(false, context).backgroundColor,
+          backgroundColor: cPri,
         ));
         setState(() {
           AppDatabase.instance.getNotes();
@@ -125,6 +126,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                 child: OrientationBuilder(
                   builder: (context, orientation) {
                     return QuillToolbar.basic(
+                      multiRowsDisplay: false,
                       iconTheme: const QuillIconTheme(
                           iconUnselectedColor: Colors.black87
                           // AppTheme.themeData(false, context).backgroundColor,

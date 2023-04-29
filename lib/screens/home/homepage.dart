@@ -1,6 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+import 'package:infoctess_koneqt/components/new_post.dart';
 import 'package:infoctess_koneqt/constants.dart';
+import 'package:infoctess_koneqt/env.dart';
+import 'package:infoctess_koneqt/screens/admin/create_news.dart';
 import 'package:infoctess_koneqt/screens/home/announcements_screen.dart';
 import 'package:infoctess_koneqt/screens/home/events_screen.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
@@ -15,6 +19,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
+  final _fabKey = GlobalKey<ExpandableFabState>();
+
   late TabController _tabController;
   var tabs = [
     Tab(
@@ -57,6 +63,54 @@ class _HomePageState extends State<HomePage>
           ),
         ],
       ),
+      floatingActionButtonLocation: ExpandableFab.location,
+      floatingActionButton: (curUser != null || curUser!.isAdmin == true)
+          ? ExpandableFab(
+              type: ExpandableFabType.up,
+              distance: 50.h,
+              children: [
+                FloatingActionButton(
+                  backgroundColor: cSec,
+                  onPressed: () {
+                    showModalBottomSheet(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10.r),
+                            topRight: Radius.circular(10.r),
+                          ),
+                        ),
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) {
+                          return const CreatePost();
+                        });
+                  },
+                  child: Icon(
+                    Icons.event,
+                    size: 18.w,
+                    color: Colors.white,
+                  ),
+                ),
+                FloatingActionButton(
+                  backgroundColor: cSec,
+                  onPressed: () {
+                    showModalBottomSheet(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10.r),
+                              topRight: Radius.circular(10.r)),
+                        ),
+                        isScrollControlled: true,
+                        context: context,
+                        builder: (context) {
+                          return const CreateNews();
+                        });
+                  },
+                  child: Icon(Icons.newspaper, size: 18.w, color: Colors.white),
+                ),
+              ],
+            )
+          : null,
     );
   }
 }

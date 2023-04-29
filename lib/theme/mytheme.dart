@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -29,8 +27,16 @@ class AppTheme {
           : const Color.fromRGBO(246, 7, 151, 1),
       disabledColor: Colors.grey,
       textTheme: TextTheme(
-        button: GoogleFonts.sarabun(
+        labelMedium: GoogleFonts.sarabun(
           fontSize: 16,
+          color: Colors.white,
+        ),
+        labelSmall: GoogleFonts.sarabun(
+          fontSize: 14,
+          color: Colors.white,
+        ),
+        labelLarge: GoogleFonts.sarabun(
+          fontSize: 20,
           color: Colors.white,
         ),
       ),

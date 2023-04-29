@@ -29,18 +29,20 @@ class UserInfo {
   ///[unique] user's phone number
   int? phoneNum;
 
-  UserInfo({
-    required this.userID,
-    this.fullName,
-    this.emailAddress,
-    this.userName,
-    this.avatar,
-    this.gender,
-    this.phoneNum,
-    this.indexNum,
-    this.userLevel,
-    this.classGroup,
-  });
+  bool isAdmin = false;
+
+  UserInfo(
+      {required this.userID,
+      this.fullName,
+      this.emailAddress,
+      this.userName,
+      this.avatar,
+      this.gender,
+      this.phoneNum,
+      this.indexNum,
+      this.userLevel,
+      this.classGroup,
+      this.isAdmin = false});
 
   UserInfo.user({required this.userID, User? user});
 }
@@ -73,17 +75,20 @@ class User {
   ///[unique] user's phone number
   String? phoneNum;
 
-  User({
-    this.avatar,
-    this.emailAddress,
-    this.classGroup,
-    this.fullName,
-    this.gender,
-    this.indexNum,
-    this.phoneNum,
-    this.userLevel,
-    this.userName,
-  });
+  ///If user is an Admin or a normal user
+  bool isAdmin = false;
+
+  User(
+      {this.avatar,
+      this.emailAddress,
+      this.classGroup,
+      this.fullName,
+      this.gender,
+      this.indexNum,
+      this.phoneNum,
+      this.userLevel,
+      this.userName,
+      this.isAdmin = false});
 
   //from json method
   Map<String, Object?> toJson() {
@@ -103,16 +108,16 @@ class User {
   //to json method
   static User fromJson(Map<String, Object?> json) {
     return User(
-      fullName: json[UserFields.fullName] as String?,
-      emailAddress: json[UserFields.emailAddress] as String?,
-      avatar: json[UserFields.avatar] as String?,
-      indexNum: json[UserFields.indexNum] as int?,
-      userLevel: json[UserFields.userLevel] as String?,
-      classGroup: json[UserFields.classGroup] as String?,
-      phoneNum: json[UserFields.phoneNum] as String?,
-      gender: json[UserFields.gender] as String?,
-      userName: json[UserFields.userName] as String?,
-    );
+        fullName: json[UserFields.fullName] as String?,
+        emailAddress: json[UserFields.emailAddress] as String?,
+        avatar: json[UserFields.avatar] as String?,
+        indexNum: json[UserFields.indexNum] as int?,
+        userLevel: json[UserFields.userLevel] as String?,
+        classGroup: json[UserFields.classGroup] as String?,
+        phoneNum: json[UserFields.phoneNum] as String?,
+        gender: json[UserFields.gender] as String?,
+        userName: json[UserFields.userName] as String?,
+        isAdmin: json[UserFields.isAdmin] as bool);
   }
 }
 
@@ -126,4 +131,5 @@ class UserFields {
   static var phoneNum = 'phoneNum';
   static var userName = 'userName';
   static var gender = 'gender';
+  static var isAdmin = 'isAdmin';
 }

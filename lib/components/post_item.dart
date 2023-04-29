@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:detectable_text_field/detectable_text_field.dart';
@@ -11,12 +10,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/components/comment_input.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/post_controller.dart';
-import 'package:infoctess_koneqt/env.dart';
+import 'package:infoctess_koneqt/controllers/utils.dart';
 import 'package:infoctess_koneqt/models/poster_model.dart';
 import 'package:infoctess_koneqt/models/posts_model.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
-import 'package:intl/intl.dart';
 import 'package:resize/resize.dart';
 import 'package:status_alert/status_alert.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -36,12 +34,7 @@ class _PostItemState extends State<PostItem> {
   int postComments = 0;
   late Poster poster;
 
-  String convertDateString(String dateString) {
-    DateTime dateTime = DateTime.parse(dateString);
-    String formattedDate =
-        DateFormat('MMMM d, yyyy \'at\' h:mm a').format(dateTime);
-    return formattedDate;
-  }
+ 
 
   Future getPosterDetails() async {
     final userInfo = await db
@@ -73,7 +66,9 @@ class _PostItemState extends State<PostItem> {
           .collection('comments')
           .get();
       totalDocuments = querySnapshot.size;
-    } catch (e) {}
+    } catch (e) {
+      debugPrint(e.toString());
+    }
     return totalDocuments;
   }
 
@@ -86,7 +81,9 @@ class _PostItemState extends State<PostItem> {
           .collection('likes')
           .get();
       totalLikes = querySnapshot.size;
-    } catch (e) {}
+    } catch (e) {
+      debugPrint(e.toString());
+    }
     return totalLikes;
   }
 
@@ -95,7 +92,6 @@ class _PostItemState extends State<PostItem> {
     super.initState();
     poster = Poster();
     // getPosterDetails();
-    print("initState");
   }
 
   Widget optionButton() {
@@ -111,11 +107,11 @@ class _PostItemState extends State<PostItem> {
         switch (choice) {
           case 'edit':
             // Do something
-            print("Edit");
+            debugPrint("Edit");
             break;
           case 'delete':
             // Do something
-            print("Delete");
+            debugPrint("Delete");
             CustomDialog.showWithAction(
               context,
               title: "Delete Post",
@@ -205,7 +201,7 @@ class _PostItemState extends State<PostItem> {
         return InkWell(
           onTap: () async {
             await Navigator.pushNamed(context, '/post-details');
-            print("Post Details");
+            debugPrint("Post Details");
           },
           child: Container(
             margin: const EdgeInsets.symmetric(
@@ -353,12 +349,12 @@ class _PostItemState extends State<PostItem> {
                               },
                               onTap: (tappedText) async {
                                 if (tappedText.startsWith('#')) {
-                                  print('DetectableText >>>>>>> #');
+                                  debugPrint('DetectableText >>>>>>> #');
                                   //TODO: go to hashtag page
                                   //LATER : add hashtag page/feature
                                 } else if (tappedText.startsWith('@')) {
                                   // TODO: go to user profile
-                                  print('DetectableText >>>>>>> @');
+                                  debugPrint('DetectableText >>>>>>> @');
                                 } else if (tappedText.startsWith('http')) {
                                   // open url
                                   Uri url = Uri.parse(tappedText);
@@ -370,7 +366,7 @@ class _PostItemState extends State<PostItem> {
                                 } else {
                                   await Navigator.pushNamed(
                                       context, '/post-details');
-                                  print("Post Details");
+                                  debugPrint("Post Details");
                                 }
                               },
                               alwaysDetectTap: true,

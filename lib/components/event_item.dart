@@ -240,6 +240,34 @@ class OpenEventItem extends StatelessWidget {
                           ],
                         ),
                       ),
+                      
+                      Padding(
+                        padding: EdgeInsets.all(4.0.w),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: Text(
+                                "Time: ",
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              flex: 4,
+                              child: Text(
+                                "11:00 am",
+                                style: TextStyle(
+                                  overflow: TextOverflow.ellipsis,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: Row(
