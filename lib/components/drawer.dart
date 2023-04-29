@@ -1,14 +1,14 @@
 import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
 //  show Platform;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/user_provider.dart';
 import 'package:infoctess_koneqt/env.dart';
-import 'package:infoctess_koneqt/models/user_info.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
@@ -24,10 +24,10 @@ class DrawerScreen extends StatelessWidget {
         child: ListView(
           children: [
             Card(
-              margin: EdgeInsets.all(12.h),
+              margin: EdgeInsets.all(8.h),
               elevation: 1,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 10.h),
+                padding: EdgeInsets.symmetric(horizontal: 10.h, vertical: 5.h),
                 child: Column(
                   children: [
                     CircleAvatar(
@@ -43,11 +43,12 @@ class DrawerScreen extends StatelessWidget {
                     Text(
                       "${curUser?.fullName ?? 'Someone'} ", // fullname
                       style: GoogleFonts.sarabun().copyWith(
-                        fontSize: 18.sp,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.bold,
                       ),
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
                     ),
                     Text(
                       "@${curUser?.userName ?? 'someone'} ", // @username
@@ -68,40 +69,53 @@ class DrawerScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 20.h),
                     ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(
-                          shadowColor:
-                              AppTheme.themeData(true, context).focusColor,
-                          backgroundColor:
-                              AppTheme.themeData(true, context).focusColor,
-                          foregroundColor: Colors.white,
-                          maximumSize: Size(
-                              100.w < 140 ? 140 : 100.w, 40.h < 40 ? 40 : 40.h,),
+                      style: ElevatedButton.styleFrom(
+                        shadowColor:
+                            AppTheme.themeData(true, context).focusColor,
+                        backgroundColor:
+                            AppTheme.themeData(true, context).focusColor,
+                        foregroundColor: Colors.white,
+                        maximumSize: Size(
+                          100.w < 140 ? 140 : 100.w,
+                          40.h < 40 ? 40 : 40.h,
                         ),
-                        onPressed: () {},
-                        icon: const Icon(CupertinoIcons.pencil),
-                        label: const Text("edit profile"),),
-                        OutlinedButton.icon(
-                          onPressed: () async{
-                            try {
-                              
-                              await auth.signOut().then((value) =>{ 
-                                
-                                Provider.of<UserProvider>(context, listen: false).clearUserDetails().then((value) => Provider.of<UserProvider>(context, listen: false).setLoggedIn(false).then((value) => debugPrint("logged out"))),
-                                Navigator.pushNamedAndRemoveUntil(context, "/login", (route) => false),
-                              },);
-                            } catch (e) {
-                              debugPrint(e.toString());
-                            }
-                          },icon: const Icon(CupertinoIcons.power),
-                          label: Text(
-                            "Logout",
-                            style: GoogleFonts.sarabun().copyWith(
-                              fontSize: 12.sp,
-                              color: AppTheme.themeData(true, context).focusColor,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
+                      ),
+                      onPressed: () {},
+                      icon: const Icon(CupertinoIcons.pencil),
+                      label: const Text("edit profile"),
+                    ),
+                    OutlinedButton.icon(
+                      onPressed: () async {
+                        try {
+                          await auth.signOut().then(
+                                (value) => {
+                                  Provider.of<UserProvider>(context,
+                                          listen: false)
+                                      .clearUserDetails()
+                                      .then((value) =>
+                                          Provider.of<UserProvider>(context,
+                                                  listen: false)
+                                              .setLoggedIn(false)
+                                              .then((value) =>
+                                                  debugPrint("logged out"))),
+                                  Navigator.pushNamedAndRemoveUntil(
+                                      context, "/login", (route) => false),
+                                },
+                              );
+                        } catch (e) {
+                          debugPrint(e.toString());
+                        }
+                      },
+                      icon: const Icon(CupertinoIcons.power),
+                      label: Text(
+                        "Logout",
+                        style: GoogleFonts.sarabun().copyWith(
+                          fontSize: 12.sp,
+                          color: AppTheme.themeData(true, context).focusColor,
+                          fontWeight: FontWeight.w400,
                         ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -155,7 +169,7 @@ class DrawerScreen extends StatelessWidget {
               onTap: () {},
             ),
             Divider(
-              color: AppTheme.themeData(true, context).backgroundColor,
+              color: cPri,
             ),
             ListTile(
               leading: Icon(

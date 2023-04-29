@@ -63,8 +63,8 @@ class MyApp extends StatelessWidget {
           ),
         ),
         // initialRoute: initialRoute,
-        // home: const StartScreen(),
-        home: const MainScreen(),
+        home: const StartScreen(),
+        // home: const MainScreen(),
         // initialRoute: "/start",
         routes: {
           '/start': (context) => const StartScreen(),

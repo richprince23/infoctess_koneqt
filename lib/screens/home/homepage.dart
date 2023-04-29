@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage>
         ],
       ),
       floatingActionButtonLocation: ExpandableFab.location,
-      floatingActionButton: (curUser != null || curUser!.isAdmin == true)
+      floatingActionButton: (curUser != null || curUser?.isAdmin == true)
           ? ExpandableFab(
               type: ExpandableFabType.up,
               distance: 50.h,
