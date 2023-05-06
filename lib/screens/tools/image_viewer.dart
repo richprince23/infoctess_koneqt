@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:resize/resize.dart';
 import 'package:status_alert/status_alert.dart';
 
@@ -61,7 +61,7 @@ class ImageViewer extends StatelessWidget {
                       context: context,
                       builder: (context) => Center(
                         child: Image.asset("assets/images/preload.gif",
-                            height: 50),
+                            height: 50.h),
                       ),
                     );
                     await saveImage().then((value) {
@@ -70,7 +70,7 @@ class ImageViewer extends StatelessWidget {
                         context,
                         duration: const Duration(seconds: 2),
                         title: "Image saved",
-                        titleOptions:  StatusAlertTextConfiguration(
+                        titleOptions: StatusAlertTextConfiguration(
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 18.sp,

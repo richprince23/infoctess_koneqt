@@ -9,6 +9,8 @@ import 'package:infoctess_koneqt/controllers/user_provider.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:provider/provider.dart';
 
+import '../models/user_info.dart';
+
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
 
@@ -17,14 +19,35 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  User? _user;
   @override
   void initState() {
     super.initState();
-    getOfflineUser();
+    WidgetsFlutterBinding.ensureInitialized();
+    // getOfflineUser();
+    setAll();
+    print("Printing from mainscreen init  ${_user?.emailAddress}");
   }
 
-  void getOfflineUser() async {
-    Provider.of<UserProvider>(context, listen: false).getUser;
+  // void getOfflineUser() async {
+  //   Future.delayed(const Duration(seconds: 2), () {
+  //     Provider.of<UserProvider>(context, listen: false).setUserDetails();
+  //   });
+  // }
+  void setAll() {
+    //set CurUser
+    Provider.of<UserProvider>(context, listen: false)
+        .getUserInfo()
+        .then((value) => setState(() {
+              _user = value;
+            }));
+
+    print("Printing from mainscreen set ALl 1  $curUser");
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override

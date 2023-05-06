@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/notification_service.dart';
 import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
 import 'package:infoctess_koneqt/controllers/page_controller.dart';
@@ -22,9 +21,10 @@ import 'package:infoctess_koneqt/screens/tools/schedules/timetable.dart';
 import 'package:infoctess_koneqt/screens/tools/studymate/ai_imager.dart';
 import 'package:infoctess_koneqt/screens/tools/studymate/aichat_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:resize/resize.dart';
+
 import 'firebase_options.dart';
 import 'screens/login_screen.dart';
-import 'package:resize/resize.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

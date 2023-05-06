@@ -5,14 +5,12 @@ import 'package:detectable_text_field/widgets/detectable_text_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/post_controller.dart';
 import 'package:infoctess_koneqt/env.dart';
-import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:resize/resize.dart';
 import 'package:status_alert/status_alert.dart';
 
@@ -301,7 +299,7 @@ class CreatePostState extends State<CreatePost> {
                     backgroundColor: !isEmtpyText ||
                             selectedMedia != null ||
                             croppedMedia != null
-                        ? AppTheme.themeData(false, context).backgroundColor
+                        ? cPri
                         : Colors.transparent,
                     foregroundColor: Colors.white,
                   ),

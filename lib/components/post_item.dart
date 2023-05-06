@@ -34,8 +34,6 @@ class _PostItemState extends State<PostItem> {
   int postComments = 0;
   late Poster poster;
 
- 
-
   Future getPosterDetails() async {
     final userInfo = await db
         .collection("user_infos")
@@ -263,7 +261,7 @@ class _PostItemState extends State<PostItem> {
                                         maxLines: 1,
                                       ),
                                     ),
-                                    poster.isPosterAdmin?.toString() != "true"
+                                    poster.isPosterAdmin?.toString() == "true"
                                         ? Container(
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 5.w, vertical: 2.h),

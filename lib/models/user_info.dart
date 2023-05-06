@@ -93,7 +93,7 @@ class User {
   //from json method
   Map<String, Object?> toJson() {
     return {
-      UserFields.fullName: fullName,
+      UserFields.fullName: fullName as String,
       UserFields.emailAddress: emailAddress,
       UserFields.avatar: avatar,
       UserFields.indexNum: indexNum,

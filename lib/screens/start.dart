@@ -1,13 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/user_provider.dart';
-import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/screens/login_screen.dart';
 import 'package:infoctess_koneqt/screens/main_screen.dart';
 import 'package:provider/provider.dart';
 
-class StartScreen extends StatelessWidget {
+import '../env.dart';
+
+class StartScreen extends StatefulWidget {
   const StartScreen({super.key});
+
+  @override
+  State<StartScreen> createState() => _StartScreenState();
+}
+
+class _StartScreenState extends State<StartScreen> {
+  Future getOfflineUser(BuildContext context) async {
+    await Provider.of<UserProvider>(context, listen: false).setUserDetails();
+
+    print("user details set");
+    print(curUser!.toJson());
+  }
+
+  bool isLoggedIn = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    WidgetsFlutterBinding.ensureInitialized();
+    context
+        .read<UserProvider>()
+        .isLoggedIn
+        .then((value) => isLoggedIn = value)
+        .then((value) => print("check login:" "$isLoggedIn"))
+        .then((value) => isLoggedIn ? getOfflineUser(context) : null);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,19 +44,20 @@ class StartScreen extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // show loading indicator while waiting for future to complete
-          return CircularProgressIndicator(
-            color: cPri,
+          return Center(
+            child: CircularProgressIndicator(
+              color: cPri,
+            ),
           );
+        }
+        final initialRoute = snapshot.data;
+        // print(initialRoute);
+        if (initialRoute == true) {
+          getOfflineUser(context);
+
+          return const MainScreen();
         } else {
-          final initialRoute = snapshot.data;
-          if (initialRoute == true) {
-            // void getOfflineUser() async {
-            Provider.of<UserProvider>(context, listen: false).getUser;
-            // }
-            return const MainScreen();
-          } else {
-            return const LoginScreen();
-          }
+          return const LoginScreen();
         }
       },
     );

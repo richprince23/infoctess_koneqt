@@ -1,126 +1,157 @@
+import 'dart:convert';
+
 import 'package:animations/animations.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:detectable_text_field/detectable_text_field.dart';
 import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/constants.dart';
+import 'package:infoctess_koneqt/models/news_model.dart';
+import 'package:infoctess_koneqt/models/poster_model.dart';
+import 'package:infoctess_koneqt/screens/tools/image_viewer.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:resize/resize.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class NewsItem extends StatelessWidget {
-  const NewsItem({super.key});
+class NewsItem extends StatefulWidget {
+  late Poster poster;
+  final News news;
+  NewsItem({
+    Key? key,
+    required this.news,
+  }) : super(key: key);
 
   @override
+  State<NewsItem> createState() => _NewsItemState();
+}
+
+class _NewsItemState extends State<NewsItem> {
+  @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {},
-      child: OpenContainer(
-        transitionDuration: const Duration(milliseconds: 200),
-        closedColor: Colors.white70,
-        // AppTheme.themeData(false, context).primaryColor.withOpacity(0.5),
-        useRootNavigator: true,
-        openElevation: 0,
-        transitionType: ContainerTransitionType.fadeThrough,
-        closedBuilder: (BuildContext context, void Function() openAction) {
-          return const ClosedWidget();
-        },
-        openBuilder: (BuildContext context, void Function() action) {
-          return const OpenWidget();
-        },
+    return OpenContainer(
+      closedShape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.r),
       ),
+
+      tappable: true,
+      transitionDuration: const Duration(milliseconds: 200),
+      closedColor: Colors.white,
+      // AppTheme.themeData(false, context).primaryColor.withOpacity(0.5),
+      useRootNavigator: true,
+      openElevation: 0,
+      transitionType: ContainerTransitionType.fadeThrough,
+      closedBuilder: (BuildContext context, void Function() openAction) {
+        return ClosedWidget(news: widget.news);
+      },
+      openBuilder: (BuildContext context, void Function() action) {
+        return OpenWidget(
+          news: widget.news,
+        );
+      },
     );
   }
 }
 
 class ClosedWidget extends StatelessWidget {
+  final News news;
   const ClosedWidget({
     Key? key,
+    required this.news,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 2.0.w),
-      child: Card(
-        // color: Colors.white.withOpacity(0.7),
-        surfaceTintColor: Colors.white,
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5.r),
-        ),
-        child: Container(
-          margin: EdgeInsets.all(8.w),
-          padding: EdgeInsets.only(top: 5.h, left: 5.w, right: 5.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Infoctess General Meeting",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.sp,
-                    color:
-                        AppTheme.themeData(false, context).primaryColorLight),
-                textAlign: TextAlign.left,
-              ),
-              Divider(
-                color: cSec,
-                thickness: 1,
-              ),
-              Text(
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                maxLines: 2,
-                style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 16.sp,
-                    overflow: TextOverflow.ellipsis,
-                    color:
-                        AppTheme.themeData(false, context).primaryColorLight),
-                textAlign: TextAlign.left,
-              ),
-              SizedBox(height: 10.h),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Uptown",
-                        style: TextStyle(fontSize: 14.sp),
-                      ),
-                      Text(
-                        "December 11, 2022, 11:34pm",
-                        style: TextStyle(fontSize: 14.sp),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 10.h),
-                    alignment: Alignment.center,
-                    child: const Icon(Icons.open_in_new),
-                  ),
-                ],
-              ),
-            ],
+    return Container(
+      margin: EdgeInsets.all(8.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            news.title,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16.sp,
+                color: AppTheme.themeData(false, context).primaryColorLight),
+            textAlign: TextAlign.left,
           ),
-        ),
+          Divider(
+            color: cSec,
+            thickness: 1,
+          ),
+          Text(
+            jsonDecode(news.body)[0]['insert'],
+            maxLines: 2,
+            style: TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 16.sp,
+              overflow: TextOverflow.ellipsis,
+              color: AppTheme.themeData(false, context).primaryColorLight,
+            ),
+            textAlign: TextAlign.left,
+          ),
+          SizedBox(height: 10.h),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Text(
+              "December 11, 2022, 11:34pm",
+              style: TextStyle(fontSize: 13.sp, fontStyle: FontStyle.italic),
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
-class OpenWidget extends StatelessWidget {
-  const OpenWidget({super.key});
+class OpenWidget extends StatefulWidget {
+  final News news;
+  OpenWidget({super.key, required this.news});
+
+  @override
+  State<OpenWidget> createState() => _OpenWidgetState();
+}
+
+class _OpenWidgetState extends State<OpenWidget> {
+  Poster? poster;
+
+  Future getPosterDetails(News news) async {
+    poster = Poster();
+    final userInfo = await db
+        .collection("user_infos")
+        .where("userID", isEqualTo: news.posterID.toString().trim())
+        .get()
+        .then((value) {
+      var details = value.docs[0].data();
+
+      setState(() {
+        poster?.posterName = details['fullName'];
+        poster?.posterID = details['userID'];
+        poster?.userName = details['userName'];
+        poster?.posterAvatarUrl = details['avatar'];
+        poster?.isPosterAdmin = details['isAdmin'];
+        // postComments = int.parse(getCommentsCount(widget.post.id).toString());
+        // postLikes = int.parse(getLikesCount(widget.post.id).toString());
+      });
+    });
+    return userInfo;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getPosterDetails(widget.news);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "News Details",
+          widget.news.title,
           style: TextStyle(fontSize: 14.sp),
         ),
         centerTitle: true,
@@ -141,22 +172,52 @@ class OpenWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(bottom: 10.h),
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15.r),
-                      color: Colors.red,
-                    ),
-                    child: Image.asset(
-                      "assets/images/img1.jpg",
-                      height: 200.h,
-                      width: 100.vw,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
+                  widget.news.imgUrl != null
+                      ? InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ImageViewer(image: widget.news.imgUrl!),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(bottom: 10.h),
+                            clipBehavior: Clip.antiAlias,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.r),
+                              color: Colors.transparent,
+                            ),
+                            child: CachedNetworkImage(
+                              imageUrl: widget.news.imgUrl!,
+                              imageBuilder: (context, imageProvider) =>
+                                  Container(
+                                height: 200.h,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.r),
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              progressIndicatorBuilder:
+                                  (context, url, progress) => Center(
+                                child: Image.asset(
+                                  "assets/images/preload.gif",
+                                  height: 20.h,
+                                  width: 20.h,
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
                   Text(
-                    "Infoctess General Meeting",
+                    widget.news.title,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16.sp,
@@ -165,67 +226,78 @@ class OpenWidget extends StatelessWidget {
                     textAlign: TextAlign.left,
                   ),
                   SizedBox(height: 10.h),
-                  Divider(
-                    color: AppTheme.themeData(false, context).focusColor,
-                    thickness: 1,
-                  ),
-                  RichText(
-                    selectionColor: Colors.blueAccent,
-                    textAlign: TextAlign.left,
-                    overflow: TextOverflow.visible,
-                    text: WidgetSpan(
-                      child: DetectableText(
-                        detectionRegExp: detectionRegExp()!,
-                        text:
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed eu",
-                        basicStyle: GoogleFonts.sarabun(
-                            color: Colors.black, fontSize: 16.sp),
-                        moreStyle: const TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        lessStyle: const TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        onTap: (tappedText) async {
-                          if (tappedText.startsWith('#')) {
-                            print('DetectableText >>>>>>> #');
-                          } else if (tappedText.startsWith('@')) {
-                            print('DetectableText >>>>>>> @');
-                          } else if (tappedText.startsWith('http')) {
-                            print('DetectableText >>>>>>> http');
-                            // final link = await LinkPreviewer.getPreview(tappedText);
-                            Uri url = Uri.parse(tappedText);
-                            if (await canLaunchUrl(url)) {
-                              await launchUrl(url);
+                  // Divider(
+                  //   color: cSec,
+                  //   thickness: 1,
+                  // ),
+                  Container(
+                    decoration: ShapeDecoration(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      color: Colors.white.withOpacity(0.7),
+                    ),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+                    width: double.infinity,
+                    child: RichText(
+                      selectionColor: Colors.blueAccent,
+                      textAlign: TextAlign.left,
+                      overflow: TextOverflow.visible,
+                      text: WidgetSpan(
+                        child: DetectableText(
+                          detectionRegExp: detectionRegExp()!,
+                          text: jsonDecode(widget.news.body)[0]['insert']
+                              .toString()
+                              .trim(),
+                          basicStyle: GoogleFonts.sarabun(
+                              color: Colors.black, fontSize: 16.sp),
+                          moreStyle: const TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          lessStyle: const TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          onTap: (tappedText) async {
+                            if (tappedText.startsWith('#')) {
+                              debugPrint('DetectableText >>>>>>> #');
+                            } else if (tappedText.startsWith('@')) {
+                              debugPrint('DetectableText >>>>>>> @');
+                            } else if (tappedText.startsWith('http')) {
+                              debugPrint('DetectableText >>>>>>> http');
+                              // final link = await LinkPreviewer.getPreview(tappedText);
+                              Uri url = Uri.parse(tappedText);
+                              if (await canLaunchUrl(url)) {
+                                await launchUrl(url);
+                              } else {
+                                throw 'Could not launch $tappedText';
+                              }
                             } else {
-                              throw 'Could not launch $tappedText';
+                              debugPrint("nothing");
                             }
-                          } else {
-                            print("nothing");
-                          }
-                        },
+                          },
+                        ),
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.all(10.w),
-                    child: Divider(
-                      color: AppTheme.themeData(false, context).focusColor,
-                      thickness: 1,
-                    ),
+                  Divider(
+                    color: cSec,
+                    thickness: 1,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Uptown",
-                        style: TextStyle(fontSize: 14.sp),
+                        "${poster?.posterName?.split(" ")[0]} ${poster?.posterName?.split(" ")[1][0]}.",
+                        style: TextStyle(
+                            fontSize: 13.sp, fontStyle: FontStyle.italic),
                       ),
                       Text(
                         "December 11, 2022, 11:34pm",
-                        style: TextStyle(fontSize: 14.sp),
+                        style: TextStyle(
+                            fontSize: 13.sp, fontStyle: FontStyle.italic),
                       ),
                     ],
                   ),

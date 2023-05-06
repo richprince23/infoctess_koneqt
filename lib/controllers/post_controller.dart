@@ -2,10 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:infoctess_koneqt/controllers/user_provider.dart';
-import 'package:provider/provider.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 FirebaseStorage storage = FirebaseStorage.instance;

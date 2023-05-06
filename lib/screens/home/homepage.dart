@@ -19,7 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-  final _fabKey = GlobalKey<ExpandableFabState>();
+  // final _fabKey = GlobalKey<ExpandableFabState>();
 
   late TabController _tabController;
   var tabs = [
@@ -34,13 +34,20 @@ class _HomePageState extends State<HomePage>
   @override
   void initState() {
     _tabController = TabController(length: tabs.length, vsync: this);
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: cSec.withOpacity(0.1),
+      backgroundColor: cSec.withOpacity(0.05),
       body: Column(
         children: [
           TabBar(
@@ -48,7 +55,7 @@ class _HomePageState extends State<HomePage>
             physics: const BouncingScrollPhysics(),
             dragStartBehavior: DragStartBehavior.down,
             indicatorSize: TabBarIndicatorSize.tab,
-            indicatorColor: AppTheme.themeData(false, context).focusColor,
+            indicatorColor: cSec,
             controller: _tabController,
             tabs: tabs,
           ),

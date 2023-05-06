@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/components/notiffications_screen.dart';
 import 'package:infoctess_koneqt/constants.dart';
+import 'package:infoctess_koneqt/controllers/user_provider.dart';
 import 'package:infoctess_koneqt/env.dart';
+import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 
 class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
@@ -16,12 +18,18 @@ class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
       : preferredSize = Size.fromHeight(56.0.h),
         super(key: key);
 
+  // final _user =              Provider.of<UserProvider>(context, listen: false).getUserInfo();
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(
-        "Hi, ${curUser?.fullName?.split(' ')[0] ?? 'Someone'} ",
-        style: GoogleFonts.sarabun(fontSize: 14.sp),
+      title: Builder(
+        builder: (context) =>
+            Consumer<UserProvider>(builder: (context, value, child) {
+          return Text(
+            "Hi, ${curUser?.fullName!.split(' ')[0] ?? 'User'}",
+            style: GoogleFonts.sarabun(fontSize: 14.sp),
+          );
+        }),
       ),
       leadingWidth: 40.w,
       surfaceTintColor: cSec.withOpacity(0.3),

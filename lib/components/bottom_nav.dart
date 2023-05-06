@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/page_controller.dart';
-import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/nav_item.dart';
 import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
@@ -26,8 +25,8 @@ class _BottomNavState extends State<BottomNav> {
           //     topLeft: Radius.circular(20), topRight: Radius.circular(20)),
           ),
       child: NavigationBar(
-        // backgroundColor: AppTheme.themeData(false, context).backgroundColor,
-        surfaceTintColor: cSec.withOpacity(0.3),
+        // backgroundColor: cPri.withOpacity(0.5),
+        surfaceTintColor: cSec.withOpacity(0.8),
         elevation: 3,
         selectedIndex: context.watch<PageControl>().pageIndex,
         height: 50.h,

@@ -202,21 +202,24 @@ class _LoginScreenState extends State<LoginScreen> {
                                               await Provider.of<UserProvider>(
                                                       context,
                                                       listen: false)
-                                                  .setUserDetails()
+                                                  .setUserID(user.uid)
                                                   .then(
-                                                    (value) => Provider.of<
-                                                                UserProvider>(
-                                                            context,
-                                                            listen: false)
-                                                        .setUserID(user.uid),
-                                                  ),
-                                              // save user to shared prefs
-                                              Provider.of<UserProvider>(context,
-                                                      listen: false)
-                                                  .setLoggedIn(true),
-                                              await Navigator
-                                                  .pushReplacementNamed(
-                                                      context, "/")
+                                                    (value) => {
+                                                      Provider.of<UserProvider>(
+                                                              context,
+                                                              listen: false)
+                                                          .setUserDetails(),
+
+                                                      // save user to shared prefs
+                                                      Provider.of<UserProvider>(
+                                                              context,
+                                                              listen: false)
+                                                          .setLoggedIn(true),
+                                                    },
+                                                  )
+                                                  .then((value) => Navigator
+                                                      .pushReplacementNamed(
+                                                          context, "/"))
                                             }
                                         });
                               } on FirebaseAuthException catch (e) {

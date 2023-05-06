@@ -55,4 +55,3 @@ final profileFormKey = GlobalKey<FormState>();
 //onboarding controllers
 
 String? avatarPath;
-

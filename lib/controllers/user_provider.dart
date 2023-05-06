@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:infoctess_koneqt/models/user_info.dart' as cUser;
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,7 +12,7 @@ class UserProvider extends ChangeNotifier {
   late bool _isLoggedIn;
   late String _userID;
 
-  UserInfo? _userInfo;
+  cUser.User? _userInfo;
 
   /// gets user's index number
   get indexNum async => _indexNum;
@@ -23,11 +25,15 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// gets user's id
-  Future<String> getUserID() async => _userID;
+  /// gets user's id from shared preferences
+  Future<String> getUserID() async {
+    final userPrefs = await mainPrefs;
+    _userID = userPrefs.getString("userID")!;
+    return _userID;
+  }
 
-  ///sets user's id
-  setUserID(String userID) async {
+  ///sets user's id in shared preferences
+  Future setUserID(String userID) async {
     _userID = userID;
     final userPrefs = await mainPrefs;
     userPrefs.setString("userID", userID);
@@ -46,30 +52,33 @@ class UserProvider extends ChangeNotifier {
   }
 
   /// gets user's info from UserInfo model
-  Future<UserInfo?> getUserInfo() async {
-    return _userInfo;
+  Future<cUser.User?> getUserInfo() async {
+    _userInfo = curUser;
+    return curUser;
   }
 
   /// sets a userinfo from a UserInfo model
   setUser(cUser.User user) async {
     final userPrefs = await mainPrefs;
-    userPrefs.setString('curUser', curUser!.toJson().toString());
-
-    notifyListeners();
+    userPrefs.setString('curUser', user.toJson().toString());
+    // notifyListeners();
   }
 
   Future getUser() async {
     final userPrefs = await mainPrefs;
-    notifyListeners();
     final res = userPrefs.getString("curUser");
-    curUser = cUser.User.fromJson(res! as Map<String, dynamic>);
-    // return userPrefs.getString("curUser");
+    if (res != null) {
+      curUser = cUser.User.fromJson(json.decode(res) as Map<String, dynamic>);
+      // curUser = cUser.User.fromJson((res));
+    }
+    notifyListeners();
   }
 
   /// gets logged in status of user
   Future<bool> get isLoggedIn async {
     final userPrefs = await mainPrefs;
     _isLoggedIn = userPrefs.getBool("isLoggedIn") ?? false;
+    // notifyListeners();
     return _isLoggedIn;
   }
 
@@ -77,15 +86,16 @@ class UserProvider extends ChangeNotifier {
   setLoggedIn(bool status) async {
     final userPrefs = await mainPrefs;
     userPrefs.setBool("isLoggedIn", status);
-    setUserID("");
+    if (status == false) setUserID("");
     notifyListeners();
   }
 
   Future setUserDetails() async {
-    final user = FirebaseAuth.instance.currentUser;
+    final uid = await getUserID();
+    final user = FirebaseAuth.instance.currentUser!;
     final userDb = await FirebaseFirestore.instance
         .collection('user_infos')
-        .where("userID", isEqualTo: user!.uid)
+        .where("userID", isEqualTo: uid)
         .get()
         .then((value) => value.docs[0].data());
 
@@ -100,6 +110,12 @@ class UserProvider extends ChangeNotifier {
       classGroup: userDb["classGroup"],
       phoneNum: userDb["phoneNum"],
     );
+    // print(curUser!.toJson());
+    _userInfo = curUser;
+
+    await setUser(curUser!);
+    // notifyListeners();
+    // return;
   }
 
   Future clearUserDetails() async {

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -8,8 +9,10 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/constants.dart';
+import 'package:infoctess_koneqt/controllers/news_controller.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:resize/resize.dart';
+import 'package:status_alert/status_alert.dart';
 
 class CreateNews extends StatefulWidget {
   const CreateNews({super.key});
@@ -90,9 +93,6 @@ class _CreateNewsState extends State<CreateNews> {
 
   @override
   void initState() {
-    _quillController.addListener(() {
-      print("sss");
-    });
     super.initState();
   }
 
@@ -198,7 +198,8 @@ class _CreateNewsState extends State<CreateNews> {
                   margin: EdgeInsets.only(top: 10.h),
                   child: TextButton(
                     onPressed: () {
-                      if (!isEmtpyText) {
+                      if (titleController.text.isNotEmpty &&
+                          _content.isNotEmpty) {
                         showDialog(
                           barrierDismissible: false,
                           context: context,
@@ -210,11 +211,48 @@ class _CreateNewsState extends State<CreateNews> {
                             ),
                           ),
                         );
-                        if (croppedMedia != null) {
-                          //TODO: send post with image
-                        } else {
-                          //TODO: send post without image
-                        }
+                        // send the news post
+                        var json = jsonEncode(_content.toJson());
+                        postNews(
+                          titleController.text,
+                          json,
+                          imagePath: croppedMedia?.path,
+                        ).then(
+                          (value) {
+                            Navigator.pop(context);
+                            StatusAlert.show(
+                              context,
+                              duration: const Duration(seconds: 2),
+                              title: "Sent",
+                              titleOptions: StatusAlertTextConfiguration(
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              maxWidth: 50.vw,
+                              configuration: IconConfiguration(
+                                icon: Icons.check,
+                                color: Colors.green,
+                                size: 50.w,
+                              ),
+                            );
+                            setState(() {
+                              titleController.clear();
+                              croppedMedia = null;
+                              selectedMedia = null;
+                            });
+                            Navigator.of(context, rootNavigator: true).pop();
+                          },
+                        );
+                      } else {
+                        SnackBar snackBar = SnackBar(
+                          content: const Text("Please fill in all fields"),
+                          duration: const Duration(seconds: 2),
+                          backgroundColor: cPri,
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       }
                     },
                     style: TextButton.styleFrom(
