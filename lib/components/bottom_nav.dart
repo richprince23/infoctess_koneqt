@@ -113,10 +113,10 @@ class _BottomNavState extends State<BottomNav> {
               },
               child: pageIndex == 3
                   ? NavItem(
-                      label: "Messages",
-                      icon: CupertinoIcons.chat_bubble_2_fill)
+                      label: "Account",
+                      icon: CupertinoIcons.person_alt_circle_fill)
                   : Icon(
-                      CupertinoIcons.chat_bubble_2,
+                      CupertinoIcons.person_alt_circle,
                       color: Colors.black,
                       size: 24.w,
                     ),

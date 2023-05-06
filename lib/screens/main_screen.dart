@@ -19,6 +19,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  // ignore: unused_field
   User? _user;
   @override
   void initState() {
@@ -26,7 +27,7 @@ class _MainScreenState extends State<MainScreen> {
     WidgetsFlutterBinding.ensureInitialized();
     // getOfflineUser();
     setAll();
-    print("Printing from mainscreen init  ${_user?.emailAddress}");
+    // print("Printing from mainscreen init  ${_user?.emailAddress}");
   }
 
   // void getOfflineUser() async {
@@ -42,7 +43,7 @@ class _MainScreenState extends State<MainScreen> {
               _user = value;
             }));
 
-    print("Printing from mainscreen set ALl 1  $curUser");
+    // print("Printing from mainscreen set ALl 1  $curUser");
   }
 
   @override

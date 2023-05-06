@@ -66,7 +66,7 @@ class ClosedWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(8.w),
+      margin: EdgeInsets.all(12.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -78,10 +78,10 @@ class ClosedWidget extends StatelessWidget {
                 color: AppTheme.themeData(false, context).primaryColorLight),
             textAlign: TextAlign.left,
           ),
-          Divider(
-            color: cSec,
-            thickness: 1,
-          ),
+          // Divider(
+          //   color: cSec,
+          //   thickness: 1,
+          // ),
           Text(
             jsonDecode(news.body)[0]['insert'],
             maxLines: 2,
@@ -98,7 +98,10 @@ class ClosedWidget extends StatelessWidget {
             alignment: Alignment.bottomRight,
             child: Text(
               "December 11, 2022, 11:34pm",
-              style: TextStyle(fontSize: 13.sp, fontStyle: FontStyle.italic),
+              style: TextStyle(
+                  fontSize: 13.sp,
+                  fontStyle: FontStyle.italic,
+                  color: Colors.grey[600]),
             ),
           ),
         ],
@@ -109,7 +112,7 @@ class ClosedWidget extends StatelessWidget {
 
 class OpenWidget extends StatefulWidget {
   final News news;
-  OpenWidget({super.key, required this.news});
+  OpenWidget({required this.news}) : super(key: UniqueKey());
 
   @override
   State<OpenWidget> createState() => _OpenWidgetState();
