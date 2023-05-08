@@ -18,15 +18,14 @@ class _StartScreenState extends State<StartScreen> {
   Future getOfflineUser(BuildContext context) async {
     await Provider.of<UserProvider>(context, listen: false).setUserDetails();
 
-    print("user details set");
-    print(curUser!.toJson());
+    // print("user details set");
+    // print(curUser!.toJson());
   }
 
   bool isLoggedIn = false;
 
   @override
   void initState() {
-    // TODO: implement initState
     WidgetsFlutterBinding.ensureInitialized();
     context
         .read<UserProvider>()

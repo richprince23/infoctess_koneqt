@@ -333,18 +333,32 @@ class _OpenWidgetState extends State<OpenWidget> {
         .then((value) {
       var details = value.docs[0].data();
 
-      setState(() {
-        poster?.posterName = details['fullName'];
-        poster?.posterID = details['userID'];
-        poster?.userName = details['userName'];
-        poster?.posterAvatarUrl = details['avatar'];
-        poster?.isPosterAdmin = details['isAdmin'];
-        // postComments = int.parse(getCommentsCount(widget.post.id).toString());
-        // postLikes = int.parse(getLikesCount(widget.post.id).toString());
-      });
+      if (mounted) {
+        setState(() {
+          poster?.posterName = details['fullName'];
+          poster?.posterID = details['userID'];
+          poster?.userName = details['userName'];
+          poster?.posterAvatarUrl = details['avatar'];
+          poster?.isPosterAdmin = details['isAdmin'];
+          // postComments = int.parse(getCommentsCount(widget.post.id).toString());
+          // postLikes = int.parse(getLikesCount(widget.post.id).toString());
+        });
+      }
     });
     return userInfo;
   }
+  //     setState(() {
+  //       poster?.posterName = details['fullName'];
+  //       poster?.posterID = details['userID'];
+  //       poster?.userName = details['userName'];
+  //       poster?.posterAvatarUrl = details['avatar'];
+  //       poster?.isPosterAdmin = details['isAdmin'];
+  //       // postComments = int.parse(getCommentsCount(widget.post.id).toString());
+  //       // postLikes = int.parse(getLikesCount(widget.post.id).toString());
+  //     });
+  //   });
+  //   return userInfo;
+  // }
 
   @override
   void initState() {
@@ -362,6 +376,7 @@ class _OpenWidgetState extends State<OpenWidget> {
   @override
   void dispose() {
     poster = null;
+    _controller.dispose();
     super.dispose();
   }
 
