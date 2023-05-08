@@ -51,7 +51,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
             stops: [0.2, 1],
           ),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 2, sigmaY: 0),
           child: GridView.count(
