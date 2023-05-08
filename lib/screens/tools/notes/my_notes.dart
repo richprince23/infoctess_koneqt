@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:infoctess_koneqt/app_db.dart';
+import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/models/notes_db.dart';
 import 'package:infoctess_koneqt/screens/tools/notes/read_note.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
@@ -92,20 +93,18 @@ class _MyNotesState extends State<MyNotes> with RouteAware {
                 color: AppTheme.themeData(false, context).backgroundColor,
               ))
             : Container(
-                decoration: const BoxDecoration(
-                  // color: Colors.blue,
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [Colors.blue, Colors.pink],
-                    stops: [0.2, 1],
-                  ),
-                ),
+                // decoration: const BoxDecoration(
+                //   // color: Colors.blue,
+                //   gradient: LinearGradient(
+                //     begin: Alignment.topLeft,
+                //     end: Alignment.bottomRight,
+                //     colors: [Colors.blue, Colors.pink],
+                //     stops: [0.2, 1],
+                //   ),
+                // ),
+                color: cSec.withOpacity(0.1),
                 padding: const EdgeInsets.all(10),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 2, sigmaY: 0),
-                  child: buildNotes(),
-                ),
+                child: buildNotes(),
               ),
         onRefresh: () async {
           setState(() {
