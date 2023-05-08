@@ -44,7 +44,7 @@ class ReadNoteScreenState extends State<ReadNoteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: AppTheme.themeData(false, context).backgroundColor,
+          // backgroundColor: AppTheme.themeData(false, context).backgroundColor,
           elevation: 0,
           centerTitle: true,
           title: Text(widget.title.toString()),

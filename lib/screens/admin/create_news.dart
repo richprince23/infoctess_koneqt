@@ -110,6 +110,7 @@ class _CreateNewsState extends State<CreateNews> {
     return KeyboardDismissOnTap(
       child: Scaffold(
         appBar: AppBar(
+          toolbarHeight: 100,
           title: const Text("Create a News Post"),
           centerTitle: true,
         ),
@@ -119,10 +120,30 @@ class _CreateNewsState extends State<CreateNews> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                InputControl(
-                  hintText: "Title",
-                  type: TextInputType.text,
+                // InputControl(
+                //   hintText: "Title",
+                //   type: TextInputType.text,
+                //   controller: titleController,
+                // ),
+                TextField(
                   controller: titleController,
+                  decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.all(10),
+                      labelText: 'News Title',
+                      fillColor: const Color.fromRGBO(217, 217, 217, 0.6),
+                      filled: true,
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: cSec,
+                          width: 2,
+                        ),
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: cSec.withOpacity(0.8),
+                          width: 0.5,
+                        ),
+                      )),
                 ),
                 SizedBox(
                   height: 5.h,
@@ -134,18 +155,19 @@ class _CreateNewsState extends State<CreateNews> {
                         iconUnselectedColor: Colors.black87
                         // AppTheme.themeData(false, context).backgroundColor,
                         ),
+
                     axis: Axis.horizontal,
                     controller: _quillController,
                     showAlignmentButtons: true,
-
                     showCodeBlock: false,
                     showColorButton: true,
                     showClearFormat: true,
                     showBackgroundColorButton: false,
                     showHeaderStyle: false,
-                    showLink: false,
+                    showLink: true,
                     showQuote: false,
                     showDividers: true,
+
                     // showImageButton: false,
                     // showVideoButton: false,
                     showInlineCode: false,
@@ -166,8 +188,21 @@ class _CreateNewsState extends State<CreateNews> {
                         controller: _quillController, readOnly: false),
                   ),
                 ),
+
+                // AnimatedContainer(
+                //   duration: const Duration(milliseconds: 200),
+                //   child: TextFormField(
+                //     maxLines: 12,
+                //     decoration: InputDecoration(
+                //       hintText: "Contents",
+                //       border: OutlineInputBorder(
+                //         borderRadius: BorderRadius.circular(10),
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 AnimatedContainer(
-                  duration: const Duration(seconds: 1),
+                  duration: const Duration(milliseconds: 200),
                   child: (croppedMedia != null || selectedMedia != null)
                       ? _imageCard()
                       : const SizedBox.shrink(),
