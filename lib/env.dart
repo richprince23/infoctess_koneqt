@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/models/user_info.dart';
 import 'package:infoctess_koneqt/screens/forums.dart';
 import 'package:infoctess_koneqt/screens/home/homepage.dart';
+import 'package:infoctess_koneqt/screens/misc/misc_screen.dart';
 import 'package:infoctess_koneqt/screens/onboarding/acad_info.dart';
 import 'package:infoctess_koneqt/screens/onboarding/basic_info.dart';
 import 'package:infoctess_koneqt/screens/onboarding/profileinfo.dart';
@@ -40,6 +41,7 @@ var kMainPages = <Widget>[
   const HomePage(),
   const ForumsScreen(),
   const UtilitiesScreen(),
+  const MiscScreen(),
 ];
 
 final Future<SharedPreferences> mainPrefs = SharedPreferences.getInstance();

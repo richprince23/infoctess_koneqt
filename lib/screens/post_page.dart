@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/components/comment_input.dart';
 import 'package:infoctess_koneqt/components/comment_item.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
+import 'package:resize/resize.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PostDetails extends StatelessWidget {
@@ -88,7 +89,7 @@ class PostDetails extends StatelessWidget {
                       ),
                       // Container(),
                       Container(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        padding: EdgeInsets.symmetric(vertical: 10.h),
                         child: RichText(
                           overflow: TextOverflow.ellipsis,
                           maxLines: 5,
@@ -97,11 +98,11 @@ class PostDetails extends StatelessWidget {
                               text:
                                   "Do the best you can, and leave the rest to God; https://bukyia.com  but also, be faithful to your loved ones sglgh dklgd fgdfghd dfhgkdjfhgdkj",
                               detectionRegExp: detectionRegExp()!,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 3,
+                              // overflow: TextOverflow.ellipsis,
+                              // maxLines: 3,
                               basicStyle: GoogleFonts.sarabun(
                                   fontWeight: FontWeight.w400,
-                                  fontSize: 16,
+                                  fontSize: 16.sp,
                                   color: AppTheme.themeData(false, context)
                                       .primaryColorLight),
                               callback: (bool readMore) {

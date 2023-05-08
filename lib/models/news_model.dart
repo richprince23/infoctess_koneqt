@@ -11,7 +11,7 @@ class NewsModel {
   static const COMMENTS = 'comments';
   static const LIKES = 'likes';
 
-  // String? _id;
+  String? _id;
   String? _body;
   String? _title;
   String? _imgUrl;
@@ -20,7 +20,7 @@ class NewsModel {
   List<Comment>? _comments;
   int? _likes;
 
-  // String? get id => _id;
+  String? get id => _id;
 
   String? get body => _body;
 
@@ -34,7 +34,7 @@ class NewsModel {
 }
 
 class News {
-  // String id;
+  String id;
   String body;
   String title;
   String? posterID;
@@ -43,7 +43,7 @@ class News {
   List<Comment>? comments;
   int likes = 0;
   News({
-    // required this.id,
+    required this.id,
     required this.title,
     required this.body,
     this.posterID,
@@ -55,7 +55,7 @@ class News {
 
   factory News.fromMap(Map data) {
     return News(
-      // id: data['id'] ?? '',
+      id: data['id'] ?? '',
       title: data['title'] ?? '',
       body: data['body'] ?? '',
       posterID: data['posterID'] ?? '',
@@ -71,7 +71,7 @@ class News {
 
   Map<String, dynamic> toMap() {
     return {
-      // 'id': id,
+      'id': id,
       title: title,
       'body': body,
       'posterID': posterID,
@@ -83,7 +83,7 @@ class News {
   }
 
   News copyWith({
-    // String? id,
+    String? id,
     String? title,
     String? body,
     String? posterID,
@@ -93,7 +93,7 @@ class News {
     List<Comment>? comments,
   }) {
     return News(
-      // id: id ?? this.id,
+      id: id ?? this.id,
       title: title ?? this.title,
       body: body ?? this.body,
       posterID: posterID ?? this.posterID,
@@ -106,7 +106,7 @@ class News {
 
   // to json
   Map<String, dynamic> toJson() => {
-        // 'id': id,
+        'id': id,
         title: title,
         'body': body,
         'posterID': posterID,
@@ -118,7 +118,7 @@ class News {
 
   // from json
   factory News.fromJson(Map<String, dynamic> json) => News(
-        // id: json['id'],
+        id: json['id'],
         title: json['title'],
         body: json['body'],
         posterID: json['posterID'],

@@ -126,7 +126,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                         style: GoogleFonts.sarabun(
                             color: AppTheme.themeData(false, context)
                                 .primaryColorLight,
-                            fontSize: 18.sp),
+                            fontSize: 16.sp),
                       ),
                     ],
                   ),
@@ -178,7 +178,7 @@ class UtilItem extends StatelessWidget {
               title,
               style: GoogleFonts.sarabun(
                   color: AppTheme.themeData(false, context).primaryColorLight,
-                  fontSize: 18.sp),
+                  fontSize: 16.sp),
             ),
           ],
         ),

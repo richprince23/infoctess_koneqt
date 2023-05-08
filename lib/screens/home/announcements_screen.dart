@@ -17,7 +17,10 @@ class NewsScreen extends StatelessWidget {
       height: double.infinity,
       width: size.width,
       child: RefreshIndicator(
-        onRefresh: () async => print("refreshed"),
+        onRefresh: () async => FirebaseFirestore.instance
+            .collection('news')
+            .orderBy('timestamp', descending: true)
+            .snapshots(),
         child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
             stream: FirebaseFirestore.instance
                 .collection('news')
@@ -46,15 +49,22 @@ class NewsScreen extends StatelessWidget {
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) {
                     final newsData = snapshot.data!.docs[index];
-                    print(newsData.data());
-                    final newsInfo =
-                        News.fromJson(newsData.data() as Map<String, dynamic>);
+                    // print("newssssss id ${newsData.id}");
+                    // final newsData.data() =
+                    //     News.fromJson(newsData.data() as Map<String, dynamic>);
+                    // print("newssssss id ${newsData.data()}");
                     return Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: 8.0.h, vertical: 2.0.h),
                       child: NewsItem(
-                        news: newsInfo,
-                      ),
+                          news: News(
+                        id: newsData.id,
+                        title: newsData.data()['title'],
+                        body: newsData.data()['body'],
+                        imgUrl: newsData.data()['imgUrl'],
+                        posterID: newsData.data()['posterID'],
+                        timestamp: newsData.data()['timestamp'].toDate(),
+                      )),
                     );
                   },
                 );

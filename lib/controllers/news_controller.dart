@@ -37,7 +37,7 @@ Future postNews(String title, String body, {String? imagePath}) async {
 }
 
 //delete news
-Future deletePost(String postID) async {
+Future deleteNews(String postID) async {
   try {
     await db.collection("news").doc(postID).delete();
   } on FirebaseException catch (e) {
