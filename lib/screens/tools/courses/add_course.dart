@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/app_db.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
+import 'package:infoctess_koneqt/components/select_control1.dart';
 import 'package:infoctess_koneqt/models/courses_db.dart';
 
 class AddCoursePage extends StatefulWidget {
@@ -27,11 +28,6 @@ class _AddCoursePageState extends State<AddCoursePage> {
     '200',
     '300',
     '400',
-    '500',
-    '600',
-    '700',
-    '800',
-    '900'
   ];
 
   late List<Course> courses;
@@ -94,6 +90,12 @@ class _AddCoursePageState extends State<AddCoursePage> {
                 InputControl(
                   hintText: "Course Code",
                   controller: _cCode,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Course Code is required";
+                    }
+                    return null;
+                  },
                 ),
                 // CustomField(
                 //   title: "Course Code",
@@ -102,101 +104,144 @@ class _AddCoursePageState extends State<AddCoursePage> {
                 InputControl(
                   hintText: "Course Title",
                   controller: _cTitle,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Course Title is required";
+                    }
+                    return null;
+                  },
                 ),
                 // CustomField(
                 //   title: "Course Title",
                 //   controller: _cTitle,
                 // ),
-                Text(
-                  "Level",
-                  style: GoogleFonts.sarabun(
-                    // fontWeight: FontWeight.normal,
-                    color: Colors.black87,
-                    fontSize: 18,
-                  ),
+                // Text(
+                //   "Level",
+                //   style: GoogleFonts.sarabun(
+                //     // fontWeight: FontWeight.normal,
+                //     color: Colors.black87,
+                //     fontSize: 18,
+                //   ),
+                // ),
+                // const SizedBox(
+                //   height: 5,
+                // ),
+                // DropdownButtonFormField<String>(
+                //     style: const TextStyle(
+                //         color: Colors.black,
+                //         fontSize: 14,
+                //         fontFamily: "Raleway"),
+                //     menuMaxHeight: 200,
+                //     decoration: InputDecoration(
+                //         fillColor: const Color.fromRGBO(209, 209, 209, 0.35),
+                //         filled: true,
+                //         contentPadding: const EdgeInsets.symmetric(
+                //             horizontal: 20, vertical: 20),
+                //         // labelText: "Semester",
+                //         hintText: "Level",
+                //         hintStyle: const TextStyle(
+                //             color: Colors.grey,
+                //             fontSize: 14,
+                //             fontFamily: "Raleway"),
+                //         focusedBorder: OutlineInputBorder(
+                //             borderRadius: BorderRadius.circular(25),
+                //             borderSide: const BorderSide(
+                //               color: Colors.pinkAccent,
+                //               width: 3,
+                //             )),
+                //         border: OutlineInputBorder(
+                //             borderSide: BorderSide.none,
+                //             borderRadius: BorderRadius.circular(25))),
+                //     items: levels.map((String value) {
+                //       return DropdownMenuItem<String>(
+                //           value: value, child: Text(value));
+                //     }).toList(),
+                //     onChanged: (newValue) {
+                //       setState(() {
+                //         levelValue = newValue;
+                //       });
+                //     },
+                //     validator: (e) {
+                //       if (e == null) {
+                //         return "Please fill this field";
+                //       } else {
+                //         return null;
+                //       }
+                //     }),
+
+                SelectControl(
+                  hintText: "Level",
+                  items: levels.map((String value) {
+                    return DropdownMenuItem<String>(
+                        value: value, child: Text(value));
+                  }).toList(),
+                  onChanged: (newValue) {
+                    setState(() {
+                      levelValue = newValue;
+                    });
+                  },
+                  validator: (e) {
+                    if (e == null) {
+                      return "Please fill this field";
+                    } else {
+                      return null;
+                    }
+                  },
                 ),
-                const SizedBox(
-                  height: 5,
-                ),
-                DropdownButtonFormField<String>(
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontFamily: "Raleway"),
-                    menuMaxHeight: 200,
-                    decoration: InputDecoration(
-                        fillColor: const Color.fromRGBO(209, 209, 209, 0.35),
-                        filled: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 20),
-                        // labelText: "Semester",
-                        hintText: "Level",
-                        hintStyle: const TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
-                            fontFamily: "Raleway"),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25),
-                            borderSide: const BorderSide(
-                              color: Colors.pinkAccent,
-                              width: 3,
-                            )),
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(25))),
-                    items: levels.map((String value) {
-                      return DropdownMenuItem<String>(
-                          value: value, child: Text(value));
-                    }).toList(),
-                    onChanged: (newValue) {
-                      setState(() {
-                        levelValue = newValue;
-                      });
-                    },
-                    validator: (e) {
-                      if (e == null) {
-                        return "Please fill this field";
-                      } else {
-                        return null;
-                      }
-                    }),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "Semester",
-                  style: GoogleFonts.sarabun(
-                    // fontWeight: FontWeight.normal,
-                    color: Colors.black87,
-                    fontSize: 18,
-                  ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                DropdownButtonFormField<String>(
-                  style: const TextStyle(
-                      color: Colors.black, fontSize: 14, fontFamily: "Raleway"),
-                  decoration: InputDecoration(
-                      fillColor: const Color.fromRGBO(209, 209, 209, 0.35),
-                      filled: true,
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 20),
-                      // labelText: "Semester",
-                      hintText: "Semester",
-                      hintStyle: const TextStyle(
-                          color: Colors.grey,
-                          fontSize: 14,
-                          fontFamily: "Raleway"),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                          borderSide: const BorderSide(
-                            color: Colors.pinkAccent,
-                            width: 3,
-                          )),
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(25))),
+                // Text(
+                //   "Semester",
+                //   style: GoogleFonts.sarabun(
+                //     // fontWeight: FontWeight.normal,
+                //     color: Colors.black87,
+                //     fontSize: 18,
+                //   ),
+                // ),
+                // const SizedBox(
+                //   height: 5,
+                // ),
+                // // DropdownButtonFormField<String>(
+                // //   style: const TextStyle(
+                // //       color: Colors.black, fontSize: 14, fontFamily: "Raleway"),
+                // //   decoration: InputDecoration(
+                // //       fillColor: const Color.fromRGBO(209, 209, 209, 0.35),
+                // //       filled: true,
+                // //       contentPadding: const EdgeInsets.symmetric(
+                // //           horizontal: 20, vertical: 20),
+                // //       // labelText: "Semester",
+                // //       hintText: "Semester",
+                // //       hintStyle: const TextStyle(
+                // //           color: Colors.grey,
+                // //           fontSize: 14,
+                // //           fontFamily: "Raleway"),
+                // //       focusedBorder: OutlineInputBorder(
+                // //           borderRadius: BorderRadius.circular(25),
+                // //           borderSide: const BorderSide(
+                // //             color: Colors.pinkAccent,
+                // //             width: 3,
+                // //           )),
+                // //       border: OutlineInputBorder(
+                // //           borderSide: BorderSide.none,
+                // //           borderRadius: BorderRadius.circular(25))),
+                // //   items: sems.map((String value) {
+                // //     return DropdownMenuItem<String>(
+                // //         value: value, child: Text(value));
+                // //   }).toList(),
+                // //   onChanged: (newValue) {
+                // //     setState(() {
+                // //       semValue = newValue;
+                // //     });
+                // //   },
+                // //   validator: (e) {
+                // //     if (e == null) {
+                // //       return "Please fill this field";
+                // //     } else {
+                // //       return null;
+                // //     }
+                // //   },
+                // // ),
+
+                SelectControl(
+                  hintText: "Semester",
                   items: sems.map((String value) {
                     return DropdownMenuItem<String>(
                         value: value, child: Text(value));
@@ -222,6 +267,13 @@ class _AddCoursePageState extends State<AddCoursePage> {
                   hintText: "Credit Hours",
                   controller: _cCHours,
                   type: TextInputType.number,
+                  validator: (e) {
+                    if (e == null) {
+                      return "Please fill this field";
+                    } else {
+                      return null;
+                    }
+                  },
                 ),
                 const SizedBox(
                   height: 20,

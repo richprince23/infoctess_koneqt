@@ -1,11 +1,10 @@
-import 'dart:developer';
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:infoctess_koneqt/app_db.dart';
+import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/models/timetable_db.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:intl/intl.dart';
@@ -89,33 +88,17 @@ class AllSchedulesState extends State<AllSchedules> {
         ],
       ),
       body: RefreshIndicator(
-        color: AppTheme.themeData(false, context).backgroundColor,
+        color: cPri,
         strokeWidth: 3,
         displacement: 10,
         child: isLoading
-            ? Center(
-                child: CircularProgressIndicator(
-                color: AppTheme.themeData(false, context).backgroundColor,
-              ))
+            ? Center(child: CircularProgressIndicator(color: cSec))
             : Container(
-                decoration: const BoxDecoration(
-                  // color: Colors.blue,
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [Colors.blue, Colors.pink],
-                    stops: [0.2, 1],
-                  ),
-                ),
                 padding: const EdgeInsets.all(10),
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 2, sigmaY: 0),
-                  // child: buildAllSchedules(),
-                  child: ListView(
-                    children: isToday == true
-                        ? buildToday()
-                        : generateExpansionTiles(),
-                  ),
+                color: cSec.withOpacity(0.1),
+                child: ListView(
+                  children:
+                      isToday == true ? buildToday() : generateExpansionTiles(),
                 ),
               ),
         onRefresh: () async {
@@ -132,11 +115,10 @@ class AllSchedulesState extends State<AllSchedules> {
     for (String weekday in weekdays) {
       expansionTiles.add(
         ExpansionTile(
-          textColor: Colors.white,
-          collapsedBackgroundColor: AppTheme.themeData(false, context)
-              .backgroundColor
-              .withOpacity(0.3),
-          collapsedTextColor: Colors.white,
+          textColor: Colors.black,
+          // collapsedBackgroundColor: Colors.grey.shade300,
+          // collapsedTextColor: Colors.white,
+
           // backgroundColor: Colors.black,
           subtitle: Text(allScehdules
                   .where((element) => element.day == weekday)

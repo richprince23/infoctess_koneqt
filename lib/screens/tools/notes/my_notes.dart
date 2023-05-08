@@ -11,6 +11,7 @@ import 'package:infoctess_koneqt/models/notes_db.dart';
 import 'package:infoctess_koneqt/screens/tools/notes/read_note.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
+import 'package:resize/resize.dart';
 
 class MyNotes extends StatefulWidget {
   const MyNotes({Key? key}) : super(key: key);
@@ -84,14 +85,17 @@ class _MyNotesState extends State<MyNotes> with RouteAware {
         ],
       ),
       body: RefreshIndicator(
-        color: AppTheme.themeData(false, context).backgroundColor,
+        color: cSec,
         strokeWidth: 3,
         displacement: 10,
         child: isLoading
             ? Center(
-                child: CircularProgressIndicator(
-                color: AppTheme.themeData(false, context).backgroundColor,
-              ))
+                child: Image.asset(
+                  'assets/images/preload.gif',
+                  height: 20.h,
+                  width: 20.h,
+                ),
+              )
             : Container(
                 // decoration: const BoxDecoration(
                 //   // color: Colors.blue,

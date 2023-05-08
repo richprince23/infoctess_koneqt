@@ -56,11 +56,12 @@ class _SelectControlState extends State<SelectControl> {
           onChanged: widget.onChanged,
           validator: widget.validator,
           decoration: InputDecoration(
-            hintText: widget.hintText!.toLowerCase(),
+            hintText: widget.hintText!,
             hintStyle: TextStyle(
-                color: Colors.black54,
-                fontWeight: FontWeight.w400,
-                fontSize: 16.sp),
+              color: Colors.black54,
+              fontWeight: FontWeight.w400,
+              fontSize: 16.sp,
+            ),
             contentPadding:
                 EdgeInsets.symmetric(horizontal: 30.h, vertical: 10.h),
             filled: true,

@@ -8,6 +8,7 @@ import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/models/courses_db.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
+import 'package:resize/resize.dart';
 
 class ManageCourses extends StatefulWidget {
   const ManageCourses({Key? key}) : super(key: key);
@@ -33,6 +34,12 @@ class _ManageCoursesState extends State<ManageCourses> {
     super.initState();
     readCourses();
     // PortalDatabase.instance.delDB();
+  }
+
+  @override
+  void dispose() {
+    courses.clear();
+    super.dispose();
   }
 
   Future readCourses() async {
@@ -205,12 +212,29 @@ class _ManageCoursesState extends State<ManageCourses> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(12.w),
         child: isLoading
-            ? const Center(child: CircularProgressIndicator())
+            ? Center(
+                child: Image.asset(
+                "assets/images/preload.gif",
+                height: 20.h,
+                width: 20.h,
+              ))
             : courses.isEmpty
-                ? EmptyList(
-                    text: "No courses added\nAdd courses to view them here",
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      EmptyList(
+                        text: "No courses added\nAdd courses to view them here",
+                      ),
+                      FilledButton.icon(
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/add-course');
+                        },
+                        icon: const Icon(Icons.add),
+                        label: const Text("Add Course"),
+                      ),
+                    ],
                   )
                 : buildCourses(),
       ),

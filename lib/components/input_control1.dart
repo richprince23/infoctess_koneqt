@@ -47,7 +47,7 @@ class _InputControlState extends State<InputControl> {
   @override
   Widget build(BuildContext context) {
     bool showPass = widget.isPassword ?? false;
-    var size = MediaQuery.of(context).size;
+    // var size = MediaQuery.of(context).size;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
