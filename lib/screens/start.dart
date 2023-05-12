@@ -5,8 +5,6 @@ import 'package:infoctess_koneqt/screens/login_screen.dart';
 import 'package:infoctess_koneqt/screens/main_screen.dart';
 import 'package:provider/provider.dart';
 
-import '../env.dart';
-
 class StartScreen extends StatefulWidget {
   const StartScreen({super.key});
 

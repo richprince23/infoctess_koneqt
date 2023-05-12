@@ -1,14 +1,10 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:animations/animations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:detectable_text_field/detectable_text_field.dart';
-import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
-import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/news_controller.dart' hide db;
@@ -21,12 +17,11 @@ import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:resize/resize.dart';
 import 'package:status_alert/status_alert.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class NewsItem extends StatefulWidget {
   // late Poster poster;
   final News news;
-  NewsItem({
+  const NewsItem({
     Key? key,
     required this.news,
   }) : super(key: key);
@@ -85,6 +80,12 @@ class _ClosedWidgetState extends State<ClosedWidget> {
     getPosterDetails();
   }
 
+  @override
+  void dispose() {
+    poster = null;
+    super.dispose();
+  }
+
   Future getPosterDetails() async {
     final userInfo = await db
         .collection("user_infos")
@@ -92,16 +93,17 @@ class _ClosedWidgetState extends State<ClosedWidget> {
         .get()
         .then((value) {
       var details = value.docs[0].data();
-
-      setState(() {
-        poster?.posterName = details['fullName'];
-        poster?.posterID = details['userID'];
-        poster?.userName = details['userName'];
-        poster?.posterAvatarUrl = details['avatar'];
-        poster?.isPosterAdmin = details['isAdmin'];
-        // postComments = int.parse(getCommentsCount(widget.post.id).toString());
-        // postLikes = int.parse(getLikesCount(widget.post.id).toString());
-      });
+      if (mounted) {
+        setState(() {
+          poster?.posterName = details['fullName'];
+          poster?.posterID = details['userID'];
+          poster?.userName = details['userName'];
+          poster?.posterAvatarUrl = details['avatar'];
+          poster?.isPosterAdmin = details['isAdmin'];
+          // postComments = int.parse(getCommentsCount(widget.post.id).toString());
+          // postLikes = int.parse(getLikesCount(widget.post.id).toString());
+        });
+      }
     });
     return userInfo;
   }
@@ -223,19 +225,23 @@ class _ClosedWidgetState extends State<ClosedWidget> {
                   ? CachedNetworkImage(
                       imageUrl: widget.news.imgUrl!,
                       fit: BoxFit.cover,
-                      placeholder: (context, url) => Container(
-                        color: Colors.grey[300],
-                      ),
                       errorWidget: (context, url, error) => Container(
                         color: Colors.grey[300],
+                      ),
+                      progressIndicatorBuilder: (context, url, progress) =>
+                          Container(
+                        color: Colors.grey[300],
+                        child: Center(
+                          child: Image.asset(
+                            "assets/images/preload.gif",
+                            width: 20.w,
+                            height: 20.w,
+                          ),
+                        ),
                       ),
                     )
                   : Container(
                       color: Colors.grey[300],
-                      // child: Image.asset(
-                      //   "assets/images/newspaper.png",
-                      //   fit: BoxFit.cover,
-                      // )
                       child: Icon(
                         Icons.newspaper,
                         color: Colors.grey[600],
@@ -347,18 +353,6 @@ class _OpenWidgetState extends State<OpenWidget> {
     });
     return userInfo;
   }
-  //     setState(() {
-  //       poster?.posterName = details['fullName'];
-  //       poster?.posterID = details['userID'];
-  //       poster?.userName = details['userName'];
-  //       poster?.posterAvatarUrl = details['avatar'];
-  //       poster?.isPosterAdmin = details['isAdmin'];
-  //       // postComments = int.parse(getCommentsCount(widget.post.id).toString());
-  //       // postLikes = int.parse(getLikesCount(widget.post.id).toString());
-  //     });
-  //   });
-  //   return userInfo;
-  // }
 
   @override
   void initState() {
@@ -367,10 +361,11 @@ class _OpenWidgetState extends State<OpenWidget> {
     getPosterDetails();
     myJSON = jsonDecode(widget.news.body.toString());
 
-    // _controller.document.insert(0, myJSON);
     _controller = QuillController(
-        document: Document.fromJson(myJSON),
-        selection: TextSelection.collapsed(offset: 0));
+      document: Document.fromJson(myJSON),
+      keepStyleOnNewLine: true,
+      selection: const TextSelection.collapsed(offset: 0),
+    );
   }
 
   @override
@@ -384,284 +379,276 @@ class _OpenWidgetState extends State<OpenWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-        // mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          widget.news.imgUrl != null
-              ? Stack(
-                  children: [
-                    Positioned(
-                      child: widget.news.imgUrl != null
-                          ? InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        ImageViewer(image: widget.news.imgUrl!),
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                margin: EdgeInsets.only(bottom: 10.h),
-                                clipBehavior: Clip.antiAlias,
+          SizedBox(
+            height: 30.vh,
+            child: Stack(
+              children: [
+                Positioned(
+                  child: widget.news.imgUrl != null
+                      ? InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ImageViewer(image: widget.news.imgUrl!),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(bottom: 10.h),
+                            clipBehavior: Clip.antiAlias,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.r),
+                              color: Colors.transparent,
+                            ),
+                            child: CachedNetworkImage(
+                              imageUrl: widget.news.imgUrl!,
+                              imageBuilder: (context, imageProvider) =>
+                                  Container(
+                                height: 30.vh,
+                                width: double.infinity,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15.r),
-                                  color: Colors.transparent,
-                                ),
-                                child: CachedNetworkImage(
-                                  imageUrl: widget.news.imgUrl!,
-                                  imageBuilder: (context, imageProvider) =>
-                                      Container(
-                                    height: 200.h,
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15.r),
-                                      image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                  progressIndicatorBuilder:
-                                      (context, url, progress) => Center(
-                                    child: Image.asset(
-                                      "assets/images/preload.gif",
-                                      height: 20.h,
-                                      width: 20.h,
-                                    ),
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
-                            )
-                          : const SizedBox.shrink(),
-                    ),
-                    Positioned(
-                      top: 48.h,
-                      child: IconButton(
-                        style: IconButton.styleFrom(
-                          padding: const EdgeInsets.all(0),
-                          shape: const CircleBorder(),
-                          backgroundColor: Colors.white,
+                              progressIndicatorBuilder:
+                                  (context, url, progress) => Center(
+                                child: Image.asset(
+                                  "assets/images/preload.gif",
+                                  height: 20.h,
+                                  width: 20.h,
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      : Container(
+                          height: 30.vh,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15.r),
+                            image: const DecorationImage(
+                              image: AssetImage(
+                                "assets/images/infoctess.png",
+                              ),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
-                        onPressed: () => Navigator.pop(context),
-                        icon: const Icon(Icons.arrow_back),
-                        // color: Colors.white,
-                        // iconSize: ,
+                ),
+                Positioned(
+                  top: 48.h,
+                  child: IconButton(
+                    style: IconButton.styleFrom(
+                      padding: const EdgeInsets.all(0),
+                      shape: const CircleBorder(),
+                      backgroundColor: Colors.white,
+                    ),
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(Icons.arrow_back),
+                    // color: Colors.white,
+                    // iconSize: ,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 18.w),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        widget.news.title,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.sp,
+                          color: AppTheme.themeData(false, context)
+                              .primaryColorLight,
+                        ),
+                        textAlign: TextAlign.left,
+                        overflow: TextOverflow.visible,
+                        maxLines: 8,
                       ),
                     ),
-                  ],
-                )
-              : SizedBox(
-                  child: AppBar(
-                    title: Text(
-                      "News Details",
-                      style: TextStyle(fontSize: 14.sp),
-                    ),
-                    centerTitle: true,
-                    leading: IconButton(
-                      onPressed: () => Navigator.pop(context),
-                      icon: const Icon(Icons.arrow_back),
-                      iconSize: 24.h,
-                    ),
                   ),
                 ),
-          Padding(
-            padding:
-                EdgeInsets.only(left: 16.0.w, right: 16.0.w, bottom: 8.0.h),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Align(
-                  alignment: Alignment.center,
-                  child: Text(
-                    widget.news.title,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.sp,
-                        color: AppTheme.themeData(false, context)
-                            .primaryColorLight),
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.visible,
-                    maxLines: 8,
-                  ),
-                ),
-                SizedBox(height: 10.h),
-                // Divider(
-                //   color: cSec,
-                //   thickness: 1,
-                // ),
-                Container(
-                  decoration: ShapeDecoration(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.r),
+                SizedBox(height: 5.h),
+                Expanded(
+                  flex: 6,
+                  child: Container(
+                    // height: 100.vh,
+                    decoration: ShapeDecoration(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      color: Colors.white,
                     ),
-                    color: Colors.white.withOpacity(0.7),
-                  ),
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
-                  width: double.infinity,
-                  // child: RichText(
-                  //   selectionColor: Colors.blueAccent,
-                  //   textAlign: TextAlign.left,
-                  //   overflow: TextOverflow.visible,
-                  //   text: WidgetSpan(
-                  //     child: DetectableText(
-                  //       detectionRegExp: detectionRegExp()!,
-                  //       text: jsonDecode(widget.news.body)[0]['insert']
-                  //           .toString()
-                  //           .trim(),
-                  //       basicStyle: GoogleFonts.sarabun(
-                  //           color: Colors.black, fontSize: 16.sp),
-                  //       moreStyle: const TextStyle(
-                  //         color: Colors.blue,
-                  //         fontWeight: FontWeight.bold,
-                  //       ),
-                  //       lessStyle: const TextStyle(
-                  //         color: Colors.blue,
-                  //         fontWeight: FontWeight.bold,
-                  //       ),
-                  //       onTap: (tappedText) async {
-                  //         if (tappedText.startsWith('#')) {
-                  //           debugPrint('DetectableText >>>>>>> #');
-                  //         } else if (tappedText.startsWith('@')) {
-                  //           debugPrint('DetectableText >>>>>>> @');
-                  //         } else if (tappedText.startsWith('http')) {
-                  //           debugPrint('DetectableText >>>>>>> http');
-                  //           // final link = await LinkPreviewer.getPreview(tappedText);
-                  //           Uri url = Uri.parse(tappedText);
-                  //           if (await canLaunchUrl(url)) {
-                  //             await launchUrl(url);
-                  //           } else {
-                  //             throw 'Could not launch $tappedText';
-                  //           }
-                  //         } else {
-                  //           debugPrint("nothing");
-                  //         }
-                  //       },
-                  //     ),
-                  //   ),
-                  // ),
-
-                  child: QuillEditor.basic(
-                    controller: _controller,
-                    readOnly: true,
-                  ),
-                ),
-                SizedBox(height: 10.h),
-                Card(
-                  color: Colors.white.withOpacity(0.7),
-                  elevation: 0,
-                  child: Padding(
                     padding:
-                        EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            OutlinedButton.icon(
-                              onPressed: () {},
-                              icon: Icon(
-                                CupertinoIcons.heart,
-                                color: Colors.black87,
-                                size: 18.w,
-                              ),
-                              label: Text(
-                                "like",
-                                style: TextStyle(
-                                  fontSize: 14.sp,
-                                  color: Colors.black87,
-                                ),
-                              ),
-                              style: OutlinedButton.styleFrom(
-                                side: BorderSide(color: cSec, width: 1),
-                              ),
-                            ),
-                            OutlinedButton.icon(
-                              onPressed: () {},
-                              icon: Icon(
-                                CupertinoIcons.chat_bubble,
-                                color: Colors.black87,
-                                size: 18.w,
-                              ),
-                              label: Text(
-                                "comment",
-                                style: TextStyle(
-                                  fontSize: 14.sp,
-                                  color: Colors.black87,
-                                ),
-                              ),
-                              style: OutlinedButton.styleFrom(
-                                side: BorderSide(color: cSec, width: 1),
-                              ),
-                            ),
-                            OutlinedButton.icon(
-                              onPressed: () {},
-                              icon: Icon(
-                                Platform.isAndroid
-                                    ? CupertinoIcons.arrowshape_turn_up_right
-                                    : CupertinoIcons.share,
-                                color: Colors.black87,
-                                size: 18.w,
-                              ),
-                              label: Text(
-                                "share",
-                                style: TextStyle(
-                                  fontSize: 14.sp,
-                                  color: Colors.black87,
-                                ),
-                              ),
-                              style: OutlinedButton.styleFrom(
-                                side: BorderSide(color: cSec, width: 1),
-                              ),
-                            ),
-                          ],
+                        EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+                    width: double.infinity,
+                    child: QuillEditor(
+                      // maxHeight: 80.vh,
+                      //  minHeight: 30.vh,
+                      textCapitalization: TextCapitalization.sentences,
+                      scrollable: true,
+                      expands: true,
+                      autoFocus: false,
+                      focusNode: FocusNode(),
+                      padding: EdgeInsets.all(10.w),
+                      scrollController: ScrollController(),
+                      readOnly: true,
+                      customStyles: DefaultStyles(
+                        paragraph: DefaultTextBlockStyle(
+                          TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.normal,
+                            fontSize: 16.sp,
+                          ),
+                          const VerticalSpacing(8, 0),
+                          const VerticalSpacing(0, 0),
+                          null,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "28 likes",
-                              style: TextStyle(
-                                fontSize: 12.sp,
-                                color: Colors.black87,
-                              ),
-                            ),
-                            Text(
-                              "23 comments",
-                              style: TextStyle(
-                                fontSize: 12.sp,
-                                color: Colors.black87,
-                              ),
-                            ),
-                            Text(
-                              "23 shares",
-                              style: TextStyle(
-                                fontSize: 12.sp,
-                                color: Colors.black87,
-                              ),
-                            ),
-                          ],
+                      ),
+                      controller: _controller,
+                      // readOnly: true,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10.h),
+                // Card(
+                //   color: Colors.white.withOpacity(0.7),
+                //   elevation: 0,
+                //   child: Padding(
+                //     padding:
+                //         EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
+                //     child: Column(
+                //       children: [
+                //         Row(
+                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //           children: [
+                //             OutlinedButton.icon(
+                //               onPressed: () {},
+                //               icon: Icon(
+                //                 CupertinoIcons.heart,
+                //                 color: Colors.black87,
+                //                 size: 18.w,
+                //               ),
+                //               label: Text(
+                //                 "like",
+                //                 style: TextStyle(
+                //                   fontSize: 14.sp,
+                //                   color: Colors.black87,
+                //                 ),
+                //               ),
+                //               style: OutlinedButton.styleFrom(
+                //                 side: BorderSide(color: cSec, width: 1),
+                //               ),
+                //             ),
+                //             OutlinedButton.icon(
+                //               onPressed: () {},
+                //               icon: Icon(
+                //                 CupertinoIcons.chat_bubble,
+                //                 color: Colors.black87,
+                //                 size: 18.w,
+                //               ),
+                //               label: Text(
+                //                 "comment",
+                //                 style: TextStyle(
+                //                   fontSize: 14.sp,
+                //                   color: Colors.black87,
+                //                 ),
+                //               ),
+                //               style: OutlinedButton.styleFrom(
+                //                 side: BorderSide(color: cSec, width: 1),
+                //               ),
+                //             ),
+                //             OutlinedButton.icon(
+                //               onPressed: () {},
+                //               icon: Icon(
+                //                 Platform.isAndroid
+                //                     ? CupertinoIcons.arrowshape_turn_up_right
+                //                     : CupertinoIcons.share,
+                //                 color: Colors.black87,
+                //                 size: 18.w,
+                //               ),
+                //               label: Text(
+                //                 "share",
+                //                 style: TextStyle(
+                //                   fontSize: 14.sp,
+                //                   color: Colors.black87,
+                //                 ),
+                //               ),
+                //               style: OutlinedButton.styleFrom(
+                //                 side: BorderSide(color: cSec, width: 1),
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //         Row(
+                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //           children: [
+                //             Text(
+                //               "28 likes",
+                //               style: TextStyle(
+                //                 fontSize: 12.sp,
+                //                 color: Colors.black87,
+                //               ),
+                //             ),
+                //             Text(
+                //               "23 comments",
+                //               style: TextStyle(
+                //                 fontSize: 12.sp,
+                //                 color: Colors.black87,
+                //               ),
+                //             ),
+                //             Text(
+                //               "23 shares",
+                //               style: TextStyle(
+                //                 fontSize: 12.sp,
+                //                 color: Colors.black87,
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "${poster?.posterName?.split(" ")[0]} ${poster?.posterName?.split(" ")[1][0]}.",
+                          style: TextStyle(
+                              fontSize: 13.sp, fontStyle: FontStyle.italic),
+                        ),
+                        Text(
+                          convertDateString(widget.news.timestamp!.toString()),
+                          style: TextStyle(
+                            fontSize: 13.sp,
+                            fontStyle: FontStyle.italic,
+                          ),
                         ),
                       ],
                     ),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "${poster?.posterName?.split(" ")[0]} ${poster?.posterName?.split(" ")[1][0]}.",
-                      style: TextStyle(
-                          fontSize: 13.sp, fontStyle: FontStyle.italic),
-                    ),
-                    Text(
-                      convertDateString(widget.news.timestamp!.toString()),
-                      style: TextStyle(
-                          fontSize: 13.sp, fontStyle: FontStyle.italic),
-                    ),
-                  ],
                 ),
                 SizedBox(height: 10.h),
               ],

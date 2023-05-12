@@ -76,7 +76,7 @@ class User {
   String? phoneNum;
 
   ///If user is an Admin or a normal user
-  bool isAdmin = false;
+  bool isAdmin;
 
   User(
       {this.avatar,

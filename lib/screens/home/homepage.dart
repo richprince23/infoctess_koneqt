@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:infoctess_koneqt/components/new_post.dart';
 import 'package:infoctess_koneqt/constants.dart';
+import 'package:infoctess_koneqt/controllers/user_provider.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/screens/admin/create_news.dart';
 import 'package:infoctess_koneqt/screens/home/announcements_screen.dart';
 import 'package:infoctess_koneqt/screens/home/events_screen.dart';
-import 'package:infoctess_koneqt/theme/mytheme.dart';
+import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 
 class HomePage extends StatefulWidget {
@@ -71,13 +72,19 @@ class _HomePageState extends State<HomePage>
         ],
       ),
       floatingActionButtonLocation: ExpandableFab.location,
-      floatingActionButton: (curUser != null || curUser?.isAdmin == true)
-          ? ExpandableFab(
+      floatingActionButton: Builder(
+        builder: (context) =>
+            Consumer<UserProvider>(builder: (context, value, child) {
+          // print(curUser?.toJson());
+          // if (curUser != null && curUser?.isAdmin == true) {
+          if (curUser?.isAdmin == true) {
+            return ExpandableFab(
               type: ExpandableFabType.up,
               distance: 50.h,
               children: [
                 FloatingActionButton(
                   backgroundColor: cSec,
+                  heroTag: "btn1",
                   onPressed: () {
                     showModalBottomSheet(
                         shape: RoundedRectangleBorder(
@@ -99,25 +106,25 @@ class _HomePageState extends State<HomePage>
                   ),
                 ),
                 FloatingActionButton(
+                  heroTag: "btn2",
                   backgroundColor: cSec,
                   onPressed: () {
-                    showModalBottomSheet(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10.r),
-                              topRight: Radius.circular(10.r)),
-                        ),
-                        isScrollControlled: true,
-                        context: context,
-                        builder: (context) {
-                          return const CreateNews();
-                        });
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const CreateNews(),
+                      ),
+                    );
                   },
                   child: Icon(Icons.newspaper, size: 18.w, color: Colors.white),
                 ),
               ],
-            )
-          : null,
+            );
+          } else {
+            return const SizedBox();
+          }
+        }),
+      ),
     );
   }
 }

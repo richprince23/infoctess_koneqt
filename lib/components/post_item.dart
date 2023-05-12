@@ -41,16 +41,17 @@ class _PostItemState extends State<PostItem> {
         .get()
         .then((value) {
       var details = value.docs[0].data();
-
-      setState(() {
-        poster.posterName = details['fullName'];
-        poster.posterID = details['userID'];
-        poster.userName = details['userName'];
-        poster.posterAvatarUrl = details['avatar'];
-        poster.isPosterAdmin = details['isAdmin'];
-        // postComments = int.parse(getCommentsCount(widget.post.id).toString());
-        // postLikes = int.parse(getLikesCount(widget.post.id).toString());
-      });
+      if (mounted) {
+        setState(() {
+          poster.posterName = details['fullName'];
+          poster.posterID = details['userID'];
+          poster.userName = details['userName'];
+          poster.posterAvatarUrl = details['avatar'];
+          poster.isPosterAdmin = details['isAdmin'];
+          // postComments = int.parse(getCommentsCount(widget.post.id).toString());
+          // postLikes = int.parse(getLikesCount(widget.post.id).toString());
+        });
+      }
     });
     return userInfo;
   }
@@ -206,10 +207,10 @@ class _PostItemState extends State<PostItem> {
               vertical: 1,
             ),
             child: Material(
-              borderRadius: BorderRadius.circular(5.r),
+              borderRadius: BorderRadius.circular(8.r),
               elevation: 0,
               // shadowColor: Colors.grey,
-              color: Colors.white.withOpacity(0.7),
+              color: Colors.white,
               child: Padding(
                 padding:
                     EdgeInsets.symmetric(horizontal: 12.0.w, vertical: 6.h),
@@ -249,13 +250,13 @@ class _PostItemState extends State<PostItem> {
                                 Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Expanded(
+                                    Flexible(
                                       child: Text(
                                         poster.posterName ?? "Anonymous",
                                         style: GoogleFonts.sarabun(
-                                          fontSize: 16.sp,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14.sp,
+                                          // color: Colors.black,
+                                          // fontWeight: FontWeight.w500,
                                         ),
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 1,
@@ -265,17 +266,15 @@ class _PostItemState extends State<PostItem> {
                                         ? Container(
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 5.w, vertical: 2.h),
-                                            decoration: BoxDecoration(
-                                              color: cPri.withOpacity(0.1),
-                                              borderRadius:
-                                                  BorderRadius.circular(10.r),
-                                            ),
-                                            child: Text(
-                                              "Admin",
-                                              style: GoogleFonts.sarabun(
-                                                  fontSize: 10.sp,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: cPri),
+                                            // decoration: BoxDecoration(
+                                            //   color: cPri.withOpacity(0.1),
+                                            //   borderRadius:
+                                            //       BorderRadius.circular(10.r),
+                                            // ),
+                                            child: Icon(
+                                              Icons.verified,
+                                              size: 14.sp,
+                                              color: cSec,
                                             ),
                                           )
                                         : const SizedBox.shrink(),

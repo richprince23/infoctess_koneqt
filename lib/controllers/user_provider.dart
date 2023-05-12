@@ -109,6 +109,7 @@ class UserProvider extends ChangeNotifier {
       userName: userDb["userName"],
       classGroup: userDb["classGroup"],
       phoneNum: userDb["phoneNum"],
+      isAdmin: userDb["isAdmin"],
     );
     // print(curUser!.toJson());
     _userInfo = curUser;
