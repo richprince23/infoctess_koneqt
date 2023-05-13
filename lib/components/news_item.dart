@@ -513,8 +513,7 @@ class _OpenWidgetState extends State<OpenWidget> {
                                       ),
                                       SizedBox(width: 5.w),
                                       Text(
-                                        "${poster!.posterName?.split(" ")[0]}  ${poster!.posterName?.split(" ")[1].substring(0, 1)}." ??
-                                            "Unknown",
+                                        "${poster!.posterName?.split(" ")[0] ?? 'Anonymous'}  ${poster!.posterName?.split(" ")[1].substring(0, 1) ?? '.'}.",
                                         style: TextStyle(
                                           fontSize: 12.sp,
                                           color: Colors.white,
@@ -569,7 +568,8 @@ class _OpenWidgetState extends State<OpenWidget> {
                                       ),
                                       SizedBox(width: 5.w),
                                       Text(
-                                        "28",
+                                        widget.news.views?.length.toString() ??
+                                            "0",
                                         style: TextStyle(
                                           fontSize: 12.sp,
                                           color: Colors.grey.shade900,

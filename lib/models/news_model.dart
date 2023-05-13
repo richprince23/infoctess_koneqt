@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:infoctess_koneqt/models/comments_model.dart';
 
 class NewsModel {
   static const ID = 'id';
@@ -8,7 +7,7 @@ class NewsModel {
   static const BODY = 'body';
   static const IMG_URL = 'imgUrl';
   static const TIMESTAMP = 'timestamp';
-  static const COMMENTS = 'comments';
+  static const VIEWS = 'views';
   static const LIKES = 'likes';
 
   String? _id;
@@ -17,7 +16,7 @@ class NewsModel {
   String? _imgUrl;
   String? _posterID;
   DateTime? _timestamp;
-  List<Comment>? _comments;
+  List<String>? _views;
   int? _likes;
 
   String? get id => _id;
@@ -29,7 +28,7 @@ class NewsModel {
 
   DateTime? get timestamp => _timestamp;
 
-  List<Comment>? get comments => _comments;
+  List<String>? get views => _views;
   int? get likes => _likes;
 }
 
@@ -40,7 +39,7 @@ class News {
   String? posterID;
   String? imgUrl;
   DateTime? timestamp;
-  List<Comment>? comments;
+  List<String>? views;
   int likes = 0;
   News({
     required this.id,
@@ -50,7 +49,7 @@ class News {
     this.imgUrl,
     this.timestamp,
     this.likes = 0,
-    this.comments,
+    this.views,
   });
 
   factory News.fromMap(Map data) {
@@ -62,9 +61,8 @@ class News {
       imgUrl: data['imgUrl'] ?? '',
       timestamp: (data['timestamp'] as Timestamp).toDate(),
       likes: data['likes'] ?? 0,
-      comments: data['comments'] != null
-          ? List<Comment>.from(
-              data['comments'].map((comment) => Comment.fromMap(comment)))
+      views: data['views'] != null
+          ? List<String>.from(data['views'].map((comment) => comment as String))
           : null,
     );
   }
@@ -78,7 +76,7 @@ class News {
       'imgUrl': imgUrl,
       'timestamp': timestamp,
       'likes': likes,
-      'comments': comments?.map((comment) => comment.toMap()).toList(),
+      'views': views?.map((comment) => comment).toList(),
     };
   }
 
@@ -90,7 +88,7 @@ class News {
     String? imgUrl,
     DateTime? timestamp,
     int? likes,
-    List<Comment>? comments,
+    List<String>? views,
   }) {
     return News(
       id: id ?? this.id,
@@ -100,7 +98,7 @@ class News {
       imgUrl: imgUrl ?? this.imgUrl,
       timestamp: timestamp ?? this.timestamp,
       likes: likes ?? this.likes,
-      comments: comments ?? this.comments,
+      views: views ?? this.views,
     );
   }
 
@@ -113,8 +111,11 @@ class News {
         'imgUrl': imgUrl,
         'timestamp': timestamp,
         'likes': likes,
-        'comments': comments?.map((comment) => comment.toMap()).toList(),
+        'views': views?.map((comment) => comment).toList(),
       };
+
+  //get views count
+  int get viewsCount => views?.length ?? 0;
 
   // from json
   factory News.fromJson(Map<String, dynamic> json) => News(
@@ -125,9 +126,9 @@ class News {
         imgUrl: json['imgUrl'],
         timestamp: (json['timestamp'] as Timestamp).toDate(),
         likes: json['likes'],
-        comments: json['comments'] != null
-            ? List<Comment>.from(
-                json['comments'].map((comment) => Comment.fromMap(comment)))
+        views: json['views'] != null
+            ? List<String>.from(
+                json['views'].map((comment) => comment as String))
             : null,
       );
 }

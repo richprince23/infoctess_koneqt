@@ -1,14 +1,12 @@
-import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:infoctess_koneqt/components/new_post.dart';
 import 'package:infoctess_koneqt/components/post_item.dart';
+import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/models/posts_model.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
 import 'package:resize/resize.dart';
-import 'package:infoctess_koneqt/constants.dart';
 
 class ForumsScreen extends StatefulWidget {
   const ForumsScreen({super.key});
@@ -94,8 +92,9 @@ class _ForumsScreenState extends State<ForumsScreen> {
           showModalBottomSheet(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10.r),
-                    topRight: Radius.circular(10.r)),
+                  topLeft: Radius.circular(10.r),
+                  topRight: Radius.circular(10.r),
+                ),
               ),
               isScrollControlled: true,
               context: context,
