@@ -771,7 +771,7 @@ class _OpenWidgetState extends State<OpenWidget> {
               imageUrl: widget.news.imgUrl ?? "",
               fit: BoxFit.cover,
               errorWidget: (context, url, error) => Image.asset(
-                "assets/images/placeholder.png",
+                "assets/images/infoctess.png",
                 height: 30.vh,
                 // width: 100.vw,
                 fit: BoxFit.cover,
@@ -879,13 +879,16 @@ class _OpenWidgetState extends State<OpenWidget> {
                                 ),
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: 10.0.w, vertical: 5.h),
+                                    horizontal: 10.0.w,
+                                    vertical: 5.h,
+                                  ),
                                   child: Row(
                                     children: [
                                       CircleAvatar(
                                         backgroundImage:
                                             CachedNetworkImageProvider(
-                                          poster!.posterAvatarUrl ?? "",
+                                          poster?.posterAvatarUrl ??
+                                              "https://picsum.photos/id/2/367/267",
                                           errorListener: () => const Icon(
                                             Icons.account_circle,
                                             color: Colors.white,
@@ -906,25 +909,61 @@ class _OpenWidgetState extends State<OpenWidget> {
                                   ),
                                 ),
                               ),
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.access_time,
-                                    size: 15.sp,
-                                    color: Colors.grey.shade400,
+                              DecoratedBox(
+                                decoration: ShapeDecoration(
+                                  shape: const StadiumBorder(),
+                                  color: Colors.grey[300],
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(8.w),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.access_time,
+                                        size: 15.sp,
+                                        color: Colors.grey.shade800,
+                                      ),
+                                      SizedBox(width: 5.w),
+                                      Text(
+                                        convertToElapsedString(
+                                            widget.news.timestamp!.toString()),
+                                        style: TextStyle(
+                                          fontSize: 12.sp,
+                                          color: Colors.grey.shade900,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  SizedBox(width: 5.w),
-                                  Text(
-                                    convertDateString(
-                                        widget.news.timestamp!.toString()),
-                                    style: TextStyle(
-                                      fontSize: 12.sp,
-                                      color: Colors.grey.shade400,
-                                      fontWeight: FontWeight.normal,
-                                    ),
+                                ),
+                              ),
+                              DecoratedBox(
+                                decoration: ShapeDecoration(
+                                  shape: const StadiumBorder(),
+                                  color: Colors.grey[300],
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(10.w),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.remove_red_eye_outlined,
+                                        size: 15.sp,
+                                        color: Colors.grey.shade800,
+                                      ),
+                                      SizedBox(width: 5.w),
+                                      Text(
+                                        "28",
+                                        style: TextStyle(
+                                          fontSize: 12.sp,
+                                          color: Colors.grey.shade900,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              )
+                                ),
+                              ),
                             ],
                           ),
                           Text(

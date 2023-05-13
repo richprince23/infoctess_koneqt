@@ -50,9 +50,34 @@ class Utils {
   }
 }
 
- String convertDateString(String dateString) {
-    DateTime dateTime = DateTime.parse(dateString);
-    String formattedDate =
-        DateFormat('MMMM d, yyyy \'at\' h:mm a').format(dateTime);
-    return formattedDate;
+String convertDateString(String dateString) {
+  DateTime dateTime = DateTime.parse(dateString);
+  String formattedDate =
+      DateFormat('MMMM d, yyyy \'at\' h:mm a').format(dateTime);
+  return formattedDate;
+}
+
+String convertToElapsedString(String dateString) {
+  DateTime dateTime = DateTime.parse(dateString);
+  DateTime now = DateTime.now();
+  Duration difference = now.difference(dateTime);
+
+  int daysElapsed = difference.inDays;
+  int hoursElapsed = difference.inHours - (daysElapsed * 24);
+  int minutesElapsed = difference.inMinutes - (hoursElapsed * 60);
+
+  String output = "";
+  if (daysElapsed > 0) {
+    output = "$daysElapsed days";
+    return output;
   }
+  if (hoursElapsed > 0) {
+    output = "$hoursElapsed hours";
+    return output;
+  }
+  if (minutesElapsed < 2) {
+    return "now";
+  }
+  output = "$minutesElapsed mins";
+  return output;
+}

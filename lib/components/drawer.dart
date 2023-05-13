@@ -21,6 +21,7 @@ class DrawerScreen extends StatelessWidget {
     return Drawer(
       child: Padding(
         padding: EdgeInsets.all(12.0.h),
+        // TODO: Refactor this to use add more items and reduce user details
         child: ListView(
           children: [
             Card(

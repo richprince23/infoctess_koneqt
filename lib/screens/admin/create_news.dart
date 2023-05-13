@@ -184,24 +184,27 @@ class _CreateNewsState extends State<CreateNews> {
                       height: 10.h,
                     ),
                     TextField(
+                      style: TextStyle(fontSize: 16.sp),
                       controller: titleController,
+                      textCapitalization: TextCapitalization.sentences,
                       decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.all(10),
-                          labelText: 'News Title',
-                          fillColor: const Color.fromRGBO(217, 217, 217, 0.6),
-                          filled: true,
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: cSec,
-                              width: 2,
-                            ),
+                        contentPadding: const EdgeInsets.all(10),
+                        labelText: 'News Title',
+                        fillColor: const Color.fromRGBO(217, 217, 217, 0.6),
+                        filled: true,
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: cSec,
+                            width: 2,
                           ),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: cSec.withOpacity(0.8),
-                              width: 0.5,
-                            ),
-                          )),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: cSec.withOpacity(0.8),
+                            width: 0.5,
+                          ),
+                        ),
+                      ),
                     ),
                     SizedBox(
                       height: 5.h,
