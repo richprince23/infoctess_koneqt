@@ -83,11 +83,12 @@ class _ForumsScreenState extends State<ForumsScreen> {
           ),
         ),
       ),
-      floatingActionButton: ElevatedButton.icon(
-        style: ElevatedButton.styleFrom(
+      floatingActionButton: IconButton(
+        style: IconButton.styleFrom(
           backgroundColor: cSec,
           foregroundColor: Colors.white,
           elevation: 5,
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
         ),
         onPressed: () {
           showModalBottomSheet(
@@ -102,11 +103,11 @@ class _ForumsScreenState extends State<ForumsScreen> {
                 return const CreatePost();
               });
         },
-        icon: Icon(Icons.add, size: 18.w),
-        label: Text(
-          "Create Post",
-          style: TextStyle(fontSize: 14.sp),
-        ),
+        icon: const Icon(Icons.edit_square), iconSize: 20.w,
+        // label: Text(
+        //   "Create Post",
+        //   style: TextStyle(fontSize: 14.sp),
+        // ),
       ),
     );
   }

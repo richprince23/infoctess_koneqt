@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ui';
 
 import 'package:animations/animations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -13,7 +12,6 @@ import 'package:infoctess_koneqt/controllers/utils.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/models/news_model.dart';
 import 'package:infoctess_koneqt/models/poster_model.dart';
-import 'package:infoctess_koneqt/screens/tools/image_viewer.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:resize/resize.dart';
@@ -45,6 +43,7 @@ class _NewsItemState extends State<NewsItem> {
       // AppTheme.themeData(false, context).primaryColor.withOpacity(0.5),
       useRootNavigator: true,
       openElevation: 0,
+      closedElevation: 0,
       transitionType: ContainerTransitionType.fadeThrough,
       closedBuilder: (BuildContext context, void Function() openAction) {
         return ClosedWidget(news: widget.news);
@@ -255,28 +254,26 @@ class _ClosedWidgetState extends State<ClosedWidget> {
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Text(
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
                         "News",
                         style:
                             TextStyle(color: Colors.grey[600], fontSize: 12.sp),
                       ),
-                    ),
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: poster?.posterID == auth.currentUser?.uid
+                      poster?.posterID == auth.currentUser?.uid
                           ? optionButton()
                           : const SizedBox.shrink(),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 Text(
-                  widget.news.title,
+                  "${widget.news.title}\n",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16.sp,
@@ -286,18 +283,18 @@ class _ClosedWidgetState extends State<ClosedWidget> {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-                Text(
-                  jsonDecode(widget.news.body)[0]['insert'],
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 16.sp,
-                    overflow: TextOverflow.ellipsis,
-                    color: AppTheme.themeData(false, context).primaryColorLight,
-                  ),
-                  textAlign: TextAlign.left,
-                ),
+                // Text(
+                //   jsonDecode(widget.news.body)[0]['insert'],
+                //   maxLines: 1,
+                //   overflow: TextOverflow.ellipsis,
+                //   style: TextStyle(
+                //     fontWeight: FontWeight.w400,
+                //     fontSize: 12.sp,
+                //     overflow: TextOverflow.ellipsis,
+                //     color: AppTheme.themeData(false, context).primaryColorLight,
+                //   ),
+                //   textAlign: TextAlign.left,
+                // ),
                 SizedBox(height: 10.h),
                 Align(
                   alignment: Alignment.bottomRight,
@@ -621,7 +618,6 @@ class _OpenWidgetState extends State<OpenWidget> {
                               ),
                             ),
                           ),
-                          
                         ],
                       ),
                     ),
