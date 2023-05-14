@@ -1,6 +1,6 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/components/event_item.dart';
+import 'package:resize/resize.dart';
 
 class EventsScreen extends StatelessWidget {
   const EventsScreen({super.key});
@@ -8,19 +8,25 @@ class EventsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      
       height: double.infinity,
       child: RefreshIndicator(
         onRefresh: () async => print("refreshed"),
-        child: ListView(
-          children: const [
-            EventItem(),
-            EventItem(),
-            EventItem(),
-            EventItem(),
-            EventItem(),
-            EventItem(),
-          ],
+        child: ListView.builder(
+          physics: const BouncingScrollPhysics(),
+          itemCount: 10,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0.w, vertical: 2.0.h),
+              child: const EventItem(
+                  // event: Event(
+                  //   id: "id",
+                  //   title: "title",
+                  //   body: "body",
+                  //   timestamp: DateTime.now(),
+                  // ),
+                  ),
+            );
+          },
         ),
       ),
     );

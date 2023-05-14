@@ -17,7 +17,6 @@ class DrawerScreen extends StatelessWidget {
     // return Drawer(
     //   child: Padding(
     //     padding: EdgeInsets.all(12.0.h),
-    //     // TODO: Refactor this to use add more items and reduce user details
     //     child: ListView(
     //       children: [
     //         Card(
@@ -217,6 +216,7 @@ class DrawerScreen extends StatelessWidget {
     //   ),
     // );
 
+    // TODO: implement routing and on tap events
     return Drawer(
       backgroundColor: Colors.white,
       child: ListView(

@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:animations/animations.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:detectable_text_field/detectable_text_field.dart';
 import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,14 +24,20 @@ class EventItem extends StatefulWidget {
 class _EventItemState extends State<EventItem> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {},
-      child: OpenContainer(
-        closedColor: Colors.white70,
-        transitionDuration: const Duration(milliseconds: 200),
-        closedBuilder: (context, action) => const ClosedEventItem(),
-        openBuilder: (context, action) => const OpenEventItem(),
+    return OpenContainer(
+      tappable: true,
+      closedShape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.r),
       ),
+      transitionDuration: const Duration(milliseconds: 200),
+      closedColor: Colors.white,
+      // AppTheme.themeData(false, context).primaryColor.withOpacity(0.5),
+      useRootNavigator: true,
+      openElevation: 0,
+      closedElevation: 0,
+      transitionType: ContainerTransitionType.fadeThrough,
+      closedBuilder: (context, action) => const ClosedEventItem(),
+      openBuilder: (context, action) => const OpenEventItem(),
     );
   }
 }
@@ -41,64 +49,97 @@ class ClosedEventItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 2.0.w),
-      child: Card(
-        // color: AppTheme.themeData(false, context).primaryColor.withOpacity(0.7),
-        elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5.r),
-        ),
-        surfaceTintColor: Colors.white,
-        child: Container(
-          margin: EdgeInsets.all(8.w),
-          padding: EdgeInsets.all(5.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Infoctess Akwaaba",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.sp,
-                    color:
-                        AppTheme.themeData(false, context).primaryColorLight),
-                textAlign: TextAlign.left,
-              ),
-              Divider(
-                color: cSec,
-                thickness: 1,
-              ),
-              RichText(
-                overflow: TextOverflow.ellipsis,
-                maxLines: 4,
-                text: TextSpan(
-                  text:
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed euismod, nunc ut aliquam ultricies, nunc nisl aliquam nunc, eget aliquam nunc nisl euismod nunc. Sed eu",
-                  style: GoogleFonts.sarabun(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 16.sp,
-                      color:
-                          AppTheme.themeData(false, context).primaryColorLight),
+    return Container(
+      height: 30.vh,
+      margin: EdgeInsets.all(12.w),
+      padding: EdgeInsets.all(0),
+      child: Column(
+        children: [
+          Expanded(
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                CachedNetworkImage(
+                  imageUrl: "https://picsum.photos/250?image=5",
+                  imageBuilder: (context, imageProvider) => Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.r),
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  placeholder: (context, url) => Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.r),
+                      color: Colors.grey[300],
+                    ),
+                  ),
+                  errorWidget: (context, url, error) => Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.r),
+                      color: Colors.grey[300],
+                    ),
+                  ),
                 ),
-              ),
-              SizedBox(height: 10.h),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "President",
-                    style: TextStyle(fontSize: 12.sp),
+
+                //Decorated Box
+                // Container(
+                //   decoration: BoxDecoration(
+                //     borderRadius: BorderRadius.circular(8.r),
+                //     gradient: LinearGradient(
+                //       begin: Alignment.topCenter,
+                //       end: Alignment.bottomCenter,
+                //       colors: [
+                //         Colors.transparent,
+                //         Colors.black.withOpacity(0.7),
+                //       ],
+                //     ),
+                //   ),
+                // ),
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  // width: 100,
+                  // height: 60,
+                  child: Card(
+                    elevation: 5,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "MAY 19",
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
                   ),
-                  Text(
-                    "December 11, 2022, 11:34pm",
-                    style: TextStyle(fontSize: 12.sp),
-                  ),
-                ],
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
-        ),
+          Container(
+            width: 100.vw,
+            padding: EdgeInsets.all(10.w),
+            color: Colors.white,
+            child: Text(
+              "Infoctess Akwaaba",
+              style: GoogleFonts.poppins(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.left,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -240,7 +281,6 @@ class OpenEventItem extends StatelessWidget {
                           ],
                         ),
                       ),
-                      
                       Padding(
                         padding: EdgeInsets.all(4.0.w),
                         child: Row(

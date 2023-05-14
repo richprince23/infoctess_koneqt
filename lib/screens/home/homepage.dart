@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/components/new_post.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/user_provider.dart';
@@ -25,11 +26,11 @@ class _HomePageState extends State<HomePage>
   late TabController _tabController;
   var tabs = [
     Tab(
-      child: Text("News", style: TextStyle(fontSize: 14.sp)),
+      child: Text("Events", style: TextStyle(fontSize: 14.sp)),
     ),
     Tab(
-      child: Text("Events", style: TextStyle(fontSize: 14.sp)),
-    )
+      child: Text("News", style: TextStyle(fontSize: 14.sp)),
+    ),
   ];
 
   @override
@@ -45,12 +46,49 @@ class _HomePageState extends State<HomePage>
     super.dispose();
   }
 
+// TODO: implement search functionality and search history
+  void _showModalSheet() {
+    showBottomSheet(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10.r),
+            topRight: Radius.circular(10.r),
+          ),
+        ),
+        // isScrollControlled: true,
+        context: context,
+        builder: (context) {
+          return Card(
+            child: SizedBox(
+              height: 40.vh,
+              child: Center(
+                child: ListView.builder(
+                  itemBuilder: ((context, index) {
+                    return ListTile(
+                      title: Text("search item $index"),
+                    );
+                  }),
+                ),
+              ),
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: cSec.withOpacity(0.05),
       body: Column(
         children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8.0.h, vertical: 2.0.h),
+            child: InputControl(
+              hintText: "Search",
+              showLabel: false,
+              // onTap: _showModalSheet,
+            ),
+          ),
           TabBar(
             isScrollable: false,
             physics: const BouncingScrollPhysics(),
@@ -64,8 +102,8 @@ class _HomePageState extends State<HomePage>
             child: TabBarView(
               controller: _tabController,
               children: const [
-                NewsScreen(),
                 EventsScreen(),
+                NewsScreen(),
               ],
             ),
           ),

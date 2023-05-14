@@ -149,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 10.h,
                           ),
                           GestureDetector(
-                            //TODO: Change this to reset password, this is just for testing
+                            //TODO: Implement Forgot Password
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(

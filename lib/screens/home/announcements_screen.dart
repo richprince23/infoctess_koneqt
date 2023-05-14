@@ -53,7 +53,7 @@ class NewsScreen extends StatelessWidget {
                     // print("newssssss id ${newsData.data()}");
                     return Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: 8.0.h, vertical: 2.0.h),
+                          horizontal: 8.0.w, vertical: 2.0.h),
                       child: NewsItem(
                           news: News(
                         id: newsData.id,
