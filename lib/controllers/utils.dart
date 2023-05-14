@@ -62,22 +62,31 @@ String convertToElapsedString(String dateString) {
   DateTime now = DateTime.now();
   Duration difference = now.difference(dateTime);
 
+  int weeksElapsed = difference.inDays ~/ 7;
   int daysElapsed = difference.inDays;
   int hoursElapsed = difference.inHours - (daysElapsed * 24);
   int minutesElapsed = difference.inMinutes - (hoursElapsed * 60);
 
   String output = "";
+  if (weeksElapsed > 0) {
+    if (daysElapsed % 7 == 0) {
+      output = "$weeksElapsed w";
+      return output;
+    }
+    output = "$weeksElapsed w, ${daysElapsed % 7} d";
+    return output;
+  }
   if (daysElapsed > 0) {
-    output = "$daysElapsed days";
+    output = "$daysElapsed d";
     return output;
   }
   if (hoursElapsed > 0) {
-    output = "$hoursElapsed hours";
+    output = "$hoursElapsed h";
     return output;
   }
   if (minutesElapsed < 2) {
     return "now";
   }
-  output = "$minutesElapsed mins";
+  output = "$minutesElapsed m";
   return output;
 }
