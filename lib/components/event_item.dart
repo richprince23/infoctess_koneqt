@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:google_fonts/google_fonts.dart';
+import 'package:infoctess_koneqt/app_db.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/utils.dart';
 import 'package:infoctess_koneqt/screens/tools/image_viewer.dart';
@@ -345,7 +346,14 @@ class _OpenEventItemState extends State<OpenEventItem> {
                             borderRadius: BorderRadius.circular(5.r),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () async {
+                          await AppDatabase.instance.addEvent(widget.event);
+                          // print(widget.event
+                          //     .copy(
+                          //       title: "New Event",
+                          //     )
+                          //     .toJson());
+                        },
                         child: Column(
                           children: [
                             const Icon(Icons.calendar_month),

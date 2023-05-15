@@ -1,9 +1,12 @@
 // import 'package:flutter/material.dart';
+import 'package:infoctess_koneqt/controllers/utils.dart';
+import 'package:infoctess_koneqt/models/event_model.dart';
 import 'package:infoctess_koneqt/models/timetable_db.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:infoctess_koneqt/models/courses_db.dart';
 import 'package:infoctess_koneqt/models/notes_db.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AppDatabase {
   static final AppDatabase instance = AppDatabase._init();
@@ -31,7 +34,7 @@ class AppDatabase {
   Future createDB(Database db, int version) async {
     const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     const textType = "STRING NOT NULL";
-    // const intType = "INTEGER NOT NULL";
+    const intType = "INTEGER NOT NULL";
 
     await db.execute('''
   CREATE TABLE $coursesTable(
@@ -42,7 +45,7 @@ class AppDatabase {
   
 ''');
     await db.execute('''CREATE TABLE $notesTable(
-      ${NoteFields.id} $idType, ${NoteFields.title} $textType,
+      ${NoteFields.id} $textType, ${NoteFields.title} $textType,
       ${NoteFields.content} $textType, ${NoteFields.createdAt} $textType
     )''');
 
@@ -51,6 +54,13 @@ class AppDatabase {
       ${TimetableFields.courseTitle} $textType, ${TimetableFields.lecturer} $textType,
       ${TimetableFields.venue} $textType, ${TimetableFields.day} $textType,
       ${TimetableFields.startTime} $textType, ${TimetableFields.endTime} $textType
+    )''');
+
+    await db.execute(''' CREATE TABLE $eventsTable(
+      ${EventModel.id} $idType, ${EventModel.title} $textType, ${EventModel.body} $textType, 
+      ${EventModel.date} $textType, ${EventModel.time} $textType, ${EventModel.imgUrl} $textType, 
+      ${EventModel.venue} $textType, ${EventModel.mode} $textType, ${EventModel.fee} $intType, 
+      ${EventModel.timestamp} $textType
     )''');
   }
 
@@ -145,6 +155,40 @@ class AppDatabase {
   Future deleteSchedule(int id) async {
     final db = await instance.database;
     return await db.delete("timetable", where: 'id = ?', whereArgs: [id]);
+  }
+
+//events operations
+  Future<Event> addEvent(Event event) async {
+    final db = await instance.database;
+    event = event.copy(
+        timestamp:
+            (Timestamp.fromMillisecondsSinceEpoch(event.timestamp!.millisecond))
+                .toDate());
+    print(event.toJson());
+    final id = await db.insert(eventsTable, event.toJson());
+
+    return event.copy(id: id);
+  }
+
+  Future<Event?> getEvent(String id) async {
+    final db = await instance.database;
+    final res = await db.query("events",
+        columns: [EventModel.id.toString()], where: 'id = ?', whereArgs: [id]);
+    // if (res.isNotEmpty) {
+    // inspect(res);
+    return Event.fromJson(res.first);
+    // }
+  }
+
+  Future<List<Event>> getEvents() async {
+    final db = await instance.database;
+    final res = await db.query('events');
+    return res.map((json) => Event.fromJson(json)).toList();
+  }
+
+  Future deleteEvent(int id) async {
+    final db = await instance.database;
+    return await db.delete("events", where: 'id = ?', whereArgs: [id]);
   }
 
 //close database

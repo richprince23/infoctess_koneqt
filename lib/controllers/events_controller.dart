@@ -48,6 +48,21 @@ Future postNewEvent({
   }
 }
 
+//get events from firestore by date
+Future getEventsByDate(String date) async {
+  try {
+    final events = await db
+        .collection("events")
+        .where("date", isEqualTo: date)
+        .orderBy("timestamp", descending: true)
+        .get();
+    print(events.docs);
+    return events.docs;
+  } on FirebaseException catch (e) {
+    throw Exception(e);
+  }
+}
+
 //delete events
 Future deleteEvent(String postID) async {
   try {

@@ -45,23 +45,30 @@ class EventsScreen extends StatelessWidget {
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) {
                     final newsData = snapshot.data!.docs[index];
+                    Event rawEvent = Event.fromJson(newsData.data());
+                    Event event = rawEvent.copy(
+                      id: newsData.id,
+                      timestamp: newsData.data()['timestamp'].toDate(),
+                    );
+                    print(rawEvent.timestamp);
                     return Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: 8.0.w, vertical: 2.0.h),
                       child: EventItem(
-                        event: Event(
-                          id: newsData.id,
-                          title: newsData.data()['title'],
-                          body: newsData.data()['body'],
-                          date: newsData.data()['date'],
-                          time: newsData.data()['time'],
-                          fee: newsData.data()['fee'] ?? 0.0,
-                          venue: newsData.data()['venue'],
-                          mode: newsData.data()['mode'],
-                          posterID: newsData.data()['posterID'],
-                          imgUrl: newsData.data()['imgUrl'],
-                          timestamp: newsData.data()['timestamp'].toDate(),
-                        ),
+                        // event: Event(
+                        //   id: newsData.id,
+                        //   title: newsData.data()['title'],
+                        //   body: newsData.data()['body'],
+                        //   date: newsData.data()['date'],
+                        //   time: newsData.data()['time'],
+                        //   fee: newsData.data()['fee'] ?? 0.0,
+                        //   venue: newsData.data()['venue'],
+                        //   mode: newsData.data()['mode'],
+                        //   posterID: newsData.data()['posterID'],
+                        //   imgUrl: newsData.data()['imgUrl'],
+                        //   timestamp: newsData.data()['timestamp'].toDate(),
+                        // ),
+                        event: event,
                       ),
                     );
                   },

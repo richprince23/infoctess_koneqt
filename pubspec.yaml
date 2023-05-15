@@ -46,6 +46,7 @@ dependencies:
   flutter_keyboard_visibility: ^5.4.0
   flutter_expandable_fab: ^1.7.1
   tuple: ^2.0.1
+  calendar_timeline: ^1.1.2
 
 dev_dependencies:
   flutter_test:

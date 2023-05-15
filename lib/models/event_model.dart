@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+const String eventsTable = "events";
+
 class Event {
-  final String id;
+  final String? id;
   final String title;
   final String body;
   final String? imgUrl;
@@ -14,7 +16,7 @@ class Event {
   final DateTime? timestamp;
 
   Event({
-    required this.id,
+    this.id,
     required this.title,
     required this.body,
     this.imgUrl,
@@ -35,7 +37,7 @@ class Event {
       imgUrl: json['imgUrl'],
       date: json['date'],
       time: json['time'],
-      fee: int.parse(json['fee']),
+      fee: json['fee'],
       venue: json['venue'],
       mode: json['mode'],
       posterID: json['posterID'],
@@ -44,7 +46,7 @@ class Event {
   }
 
   Map<String, dynamic> toJson() => {
-        'id': id,
+        'id': id ?? "",
         'title': title,
         'body': body,
         'imgUrl': imgUrl,
@@ -54,6 +56,47 @@ class Event {
         'venue': venue,
         'mode': mode,
         'posterID': posterID,
-        'timestamp': timestamp!,
+        'timestamp': Timestamp.fromDate(timestamp!),
       };
+
+  Event copy({
+    var id,
+    var title,
+    var body,
+    var imgUrl,
+    var date,
+    var time,
+    var fee,
+    var venue,
+    var mode,
+    var posterID,
+    var timestamp,
+  }) =>
+      Event(
+        id: id ?? this.id ?? "",
+        title: title ?? this.title,
+        body: body ?? this.body,
+        imgUrl: imgUrl ?? this.imgUrl,
+        date: date ?? this.date,
+        time: time ?? this.time,
+        fee: fee ?? 0,
+        venue: venue ?? this.venue,
+        mode: mode ?? this.mode,
+        posterID: posterID ?? this.posterID,
+        timestamp: timestamp ?? this.timestamp,
+      );
+}
+
+class EventModel {
+  static const id = 'id';
+  static const posterID = 'posterID';
+  static const title = 'title';
+  static const body = 'body';
+  static const imgUrl = 'imgUrl';
+  static const timestamp = 'timestamp';
+  static const date = 'date';
+  static const time = 'time';
+  static const fee = 'fee';
+  static const venue = 'venue';
+  static const mode = 'mode';
 }
