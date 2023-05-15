@@ -6,6 +6,7 @@ import 'package:infoctess_koneqt/components/new_post.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/user_provider.dart';
 import 'package:infoctess_koneqt/env.dart';
+import 'package:infoctess_koneqt/screens/admin/create_event.dart';
 import 'package:infoctess_koneqt/screens/admin/create_news.dart';
 import 'package:infoctess_koneqt/screens/home/announcements_screen.dart';
 import 'package:infoctess_koneqt/screens/home/events_screen.dart';
@@ -124,18 +125,7 @@ class _HomePageState extends State<HomePage>
                   backgroundColor: cSec,
                   heroTag: "btn1",
                   onPressed: () {
-                    showModalBottomSheet(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10.r),
-                            topRight: Radius.circular(10.r),
-                          ),
-                        ),
-                        isScrollControlled: true,
-                        context: context,
-                        builder: (context) {
-                          return const CreatePost();
-                        });
+                    Navigator.pushNamed(context, "/new-event");
                   },
                   child: Icon(
                     Icons.event,

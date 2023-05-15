@@ -12,7 +12,6 @@ import 'package:infoctess_koneqt/controllers/news_controller.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:resize/resize.dart';
 import 'package:status_alert/status_alert.dart';
-import 'package:tuple/tuple.dart';
 
 class CreateNews extends StatefulWidget {
   const CreateNews({super.key});
@@ -106,12 +105,6 @@ class _CreateNewsState extends State<CreateNews> {
   @override
   void initState() {
     super.initState();
-    // _quillController.addListener(() {
-    //   setState(() {
-    //     // _content = _quillController.document.toDelta();
-    //     isEmtpyText = _content.length == 1;
-    //   });
-    // });
   }
 
   @override

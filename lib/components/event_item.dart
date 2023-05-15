@@ -1,15 +1,20 @@
+import 'dart:convert';
+
 import 'package:animations/animations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/constants.dart';
+import 'package:infoctess_koneqt/controllers/utils.dart';
 import 'package:infoctess_koneqt/screens/tools/image_viewer.dart';
+import 'package:intl/intl.dart';
 import 'package:resize/resize.dart';
+import '../models/event_model.dart';
 
 class EventItem extends StatefulWidget {
-  const EventItem({super.key});
+  final Event event;
+  const EventItem({required this.event, Key? key}) : super(key: key);
 
   @override
   State<EventItem> createState() => _EventItemState();
@@ -30,16 +35,33 @@ class _EventItemState extends State<EventItem> {
       openElevation: 0,
       closedElevation: 0,
       transitionType: ContainerTransitionType.fadeThrough,
-      closedBuilder: (context, action) => const ClosedEventItem(),
-      openBuilder: (context, action) => OpenEventItem(),
+      closedBuilder: (context, action) => ClosedEventItem(event: widget.event),
+      openBuilder: (context, action) => OpenEventItem(
+        event: widget.event,
+      ),
     );
   }
 }
 
 class ClosedEventItem extends StatelessWidget {
+  final Event event;
   const ClosedEventItem({
+    required this.event,
     Key? key,
   }) : super(key: key);
+
+//function to check whether the event is upcoming or past
+  String isUpcoming() {
+    final now = DateTime.now();
+    final eventDate = DateFormat("dd/MM/yyyy").parse(event.date!);
+    if (now.compareTo(eventDate) < 0) {
+      return "Upcoming";
+    } else if (now.compareTo(eventDate) == 0) {
+      return "Today";
+    } else {
+      return "Past";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,62 +75,57 @@ class ClosedEventItem extends StatelessWidget {
             child: Stack(
               fit: StackFit.expand,
               children: [
-                CachedNetworkImage(
-                  imageUrl: "https://picsum.photos/250?image=5",
-                  imageBuilder: (context, imageProvider) => Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.r),
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  placeholder: (context, url) => Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.r),
-                      color: Colors.grey[300],
-                    ),
-                  ),
-                  errorWidget: (context, url, error) => Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.r),
-                      color: Colors.grey[300],
-                    ),
-                  ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8.r),
+                  child: event.imgUrl != null
+                      ? CachedNetworkImage(
+                          imageUrl:
+                              event.imgUrl ?? "https://via.placeholder.com/150",
+                          fit: BoxFit.cover,
+                          errorWidget: (context, url, error) => Container(
+                            color: Colors.grey[300],
+                          ),
+                          progressIndicatorBuilder: (context, url, progress) =>
+                              Container(
+                            color: Colors.grey[300],
+                            child: Center(
+                              child: Image.asset(
+                                "assets/images/preload.gif",
+                                width: 20.w,
+                                height: 20.w,
+                              ),
+                            ),
+                          ),
+                        )
+                      : Container(
+                          color: Colors.grey[300],
+                          child: Icon(
+                            Icons.calendar_month,
+                            color: Colors.grey[600],
+                            size: 50.w,
+                          ),
+                        ),
                 ),
-
-                //Decorated Box
-                // Container(
-                //   decoration: BoxDecoration(
-                //     borderRadius: BorderRadius.circular(8.r),
-                //     gradient: LinearGradient(
-                //       begin: Alignment.topCenter,
-                //       end: Alignment.bottomCenter,
-                //       colors: [
-                //         Colors.transparent,
-                //         Colors.black.withOpacity(0.7),
-                //       ],
-                //     ),
-                //   ),
-                // ),
                 Positioned(
                   top: 0,
                   right: 0,
-                  // width: 100,
-                  // height: 60,
                   child: Card(
-                    elevation: 5,
+                    // elevation: 5,
+                    color: Colors.white,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.r),
+                      borderRadius: BorderRadius.circular(0),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        "MAY 19",
+                        convertToMonthDayString(event.date!),
                         style: TextStyle(
                           fontSize: 14.sp,
-                          color: Colors.black,
+                          color: isUpcoming() == "Upcoming"
+                              ? Colors.black
+                              : isUpcoming() == "Today"
+                                  ? Colors.blue
+                                  : Colors.red,
                         ),
                       ),
                     ),
@@ -122,7 +139,7 @@ class ClosedEventItem extends StatelessWidget {
             padding: EdgeInsets.all(10.w),
             color: Colors.white,
             child: Text(
-              "Infoctess Akwaaba",
+              event.title,
               style: GoogleFonts.sarabun(
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w500,
@@ -140,7 +157,11 @@ class ClosedEventItem extends StatelessWidget {
 }
 
 class OpenEventItem extends StatefulWidget {
-  OpenEventItem({super.key});
+  final Event event;
+  const OpenEventItem({
+    required this.event,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<OpenEventItem> createState() => _OpenEventItemState();
@@ -149,10 +170,22 @@ class OpenEventItem extends StatefulWidget {
 class _OpenEventItemState extends State<OpenEventItem> {
   late QuillController _controller;
   final scroller = ScrollController();
+  late var myJSON;
+
   @override
   void initState() {
     super.initState();
-    _controller = QuillController.basic();
+    // _controller = QuillController.basic();
+    _controller = QuillController(
+        document: Document.fromJson(jsonDecode(widget.event.body)),
+        selection: const TextSelection.collapsed(offset: 0));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -171,45 +204,63 @@ class _OpenEventItemState extends State<OpenEventItem> {
                 height: 30.vh,
                 width: 100.vw,
                 child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ImageViewer(
-                          image: "https://picsum.photos/250?image=5",
+                  onTap: () => widget.event.imgUrl != null
+                      ? Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ImageViewer(
+                              image: widget.event.imgUrl!,
+                            ),
+                          ),
+                        )
+                      : null,
+                  child: widget.event.imgUrl != null
+                      ? CachedNetworkImage(
+                          imageUrl: widget.event.imgUrl ??
+                              "https://picsum.photos/250?image=5",
+                          imageBuilder: (context, imageProvider) => Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.r),
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          placeholder: (context, url) => Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.r),
+                              color: Colors.grey[300],
+                            ),
+                          ),
+                          errorWidget: (context, url, error) => Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.r),
+                              color: Colors.grey[300],
+                            ),
+                            child: Icon(
+                              Icons.calendar_month,
+                              color: Colors.grey[600],
+                              size: 50.w,
+                            ),
+                          ),
+                        )
+                      : Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.r),
+                            color: Colors.grey[300],
+                          ),
+                          child: Icon(
+                            Icons.calendar_month,
+                            color: Colors.grey[600],
+                            size: 50.w,
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                  child: CachedNetworkImage(
-                    imageUrl: "https://picsum.photos/250?image=5",
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.r),
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    placeholder: (context, url) => Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.r),
-                        color: Colors.grey[300],
-                      ),
-                    ),
-                    errorWidget: (context, url, error) => Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.r),
-                        color: Colors.grey[300],
-                      ),
-                    ),
-                  ),
                 ),
               ),
               SizedBox(height: 10.h),
               Text(
-                "Infoctess Akwaaba",
+                widget.event.title,
                 style: GoogleFonts.sarabun(
                   fontSize: 20.sp,
                   fontWeight: FontWeight.w500,
@@ -218,14 +269,6 @@ class _OpenEventItemState extends State<OpenEventItem> {
                 maxLines: 6,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.left,
-              ),
-              SizedBox(height: 10.h),
-              Text(
-                "Posted by Somebody",
-                style: GoogleFonts.sarabun(
-                  fontSize: 12.sp,
-                  color: Colors.black,
-                ),
               ),
               SizedBox(height: 10.h),
               Container(
@@ -245,14 +288,17 @@ class _OpenEventItemState extends State<OpenEventItem> {
                         child: Column(
                           children: [
                             Text(
-                              "May".substring(0, 3),
+                              convertToMonthDayString(widget.event.date!)
+                                  .split(" ")[0]
+                                  .substring(0, 3),
                               style: TextStyle(
                                 fontSize: 14.sp,
                                 color: Colors.black,
                               ),
                             ),
                             Text(
-                              "19",
+                              convertToMonthDayString(widget.event.date!)
+                                  .split(" ")[1],
                               style: TextStyle(
                                 fontSize: 14.sp,
                                 color: Colors.black,
@@ -273,14 +319,14 @@ class _OpenEventItemState extends State<OpenEventItem> {
                       child: Column(
                         children: [
                           Text(
-                            "Friday",
+                            convertToDayString(widget.event.date!),
                             style: TextStyle(
                               fontSize: 14.sp,
                               color: Colors.black,
                             ),
                           ),
                           Text(
-                            "8:00 am - 5:00 pm",
+                            widget.event.time!,
                             style: TextStyle(
                               fontSize: 14.sp,
                               color: Colors.black,
@@ -318,10 +364,17 @@ class _OpenEventItemState extends State<OpenEventItem> {
                 ),
               ),
               SizedBox(height: 10.h),
-              const Text("Event Details"),
+              Text(
+                "Event Details",
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: Colors.black,
+                ),
+              ),
               SizedBox(height: 10.h),
               AnimatedContainer(
                 duration: const Duration(milliseconds: 200),
+                padding: EdgeInsets.only(bottom: 80.h),
                 height: 70.vh,
                 child: QuillEditor(
                   // maxHeight: 100.vh,
@@ -354,124 +407,79 @@ class _OpenEventItemState extends State<OpenEventItem> {
           ),
         ),
       ),
-    );
-  }
-
-  void showIosActionSheet(BuildContext context) {
-    showCupertinoModalPopup(
-      context: context,
-      builder: ((context) => CupertinoActionSheet(
-            title: const Text("Actions"),
-            // message: const Text("This is a message"),
-            actions: [
-              CupertinoActionSheetAction(
-                child: Text(
-                  "RSVP",
-                  style: TextStyle(
-                    fontSize: 14.sp,
+      bottomSheet: BottomSheet(
+          elevation: 1,
+          enableDrag: false,
+          onClosing: () {},
+          builder: (context) {
+            return Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: 20.w,
+                vertical: 10.h,
+              ),
+              decoration: ShapeDecoration(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20.r),
+                    topRight: Radius.circular(20.r),
                   ),
                 ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+                color: cSec.withOpacity(0.1),
               ),
-              CupertinoActionSheetAction(
-                child: Text(
-                  "Remind Me",
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-            cancelButton: CupertinoActionSheetAction(
-              child: const Text("Cancel"),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          )),
-    );
-  }
-
-  void showAndroidActionSheet(BuildContext context) {
-    showModalBottomSheet(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20.r),
-          topRight: Radius.circular(20.r),
-        ),
-      ),
-      context: context,
-      builder: (BuildContext context) {
-        return SizedBox(
-          height: 180.0.h,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Center(
-                child: Text(
-                  "Actions",
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  padding: EdgeInsets.all(8.0.h),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    // mainAxisSize: MainAxisSize.min,
-                    children: [
-                      OutlinedButton.icon(
-                        icon: Icon(Icons.alarm, size: 20.w),
-                        onPressed: () {
-                          //TODO: Add notification functionality
-                          Navigator.pop(context);
-                        },
-                        label: const Text("Notify"),
-                        style: OutlinedButton.styleFrom(
-                          textStyle: TextStyle(fontSize: 12.sp),
-                          backgroundColor: cPri,
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.r),
-                          ),
-                          fixedSize: Size(100.vw, 50.h),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 5,
+                    child: SizedBox(
+                      height: 50.h,
+                      width: 100.vw,
+                      child: Center(
+                        child: Column(
+                          children: [
+                            Text(
+                              "Total",
+                              style: TextStyle(fontSize: 14.sp),
+                            ),
+                            Text(
+                              "GHS ${widget.event.fee}",
+                              style: TextStyle(
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      SizedBox(
-                        height: 5.h,
-                      ),
-                      OutlinedButton.icon(
-                        icon: Icon(Icons.checklist, size: 20.w),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        label: const Text("RSVP"),
-                        style: OutlinedButton.styleFrom(
-                          textStyle: TextStyle(fontSize: 12.sp),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 5,
+                    child: SizedBox(
+                      height: 50.h,
+                      width: 100.vw,
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          elevation: 0,
                           backgroundColor: cPri,
-                          foregroundColor: Colors.white,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20.w, vertical: 10.h),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.r),
+                            borderRadius: BorderRadius.circular(5.r),
                           ),
-                          fixedSize: Size(100.vw, 50.h),
+                        ),
+                        onPressed: () {},
+                        child: Text(
+                          "Book A Seat",
+                          style:
+                              TextStyle(color: Colors.white, fontSize: 14.sp),
                         ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
-        );
-      },
+            );
+          }),
     );
   }
 }

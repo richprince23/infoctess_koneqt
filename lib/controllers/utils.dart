@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -57,6 +58,18 @@ String convertDateString(String dateString) {
   return formattedDate;
 }
 
+String convertToMonthDayString(String dateString) {
+  DateTime dateTime = DateFormat('d/M/yyyy').parse(dateString);
+  String formattedDate = DateFormat('MMM d').format(dateTime);
+  return formattedDate;
+}
+
+String convertToDayString(String dateString) {
+  DateTime dateTime = DateFormat('d/M/yyyy').parse(dateString);
+  String formattedDate = DateFormat('EEEE').format(dateTime);
+  return formattedDate;
+}
+
 String convertToElapsedString(String dateString) {
   DateTime dateTime = DateTime.parse(dateString);
   DateTime now = DateTime.now();
@@ -90,3 +103,38 @@ String convertToElapsedString(String dateString) {
   output = "$minutesElapsed m";
   return output;
 }
+Time getTimeOfDay(String time) {
+    var components = time.split(':');
+    var hour = int.tryParse(components[0]) ?? 0;
+    var minutePart = components[1].substring(0, 2);
+    var minute = int.tryParse(minutePart) ?? 0;
+
+    if (time.endsWith('PM') && hour != 12) {
+      hour += 12;
+    } else if (time.endsWith('AM') && hour == 12) {
+      hour = 0;
+    }
+
+    return Time(hour, minute, 0);
+  }
+
+  String getSTartTime(String time) {
+    String startTime = time.split("-")[0];
+    // String endTime = time.split("-")[1];
+
+    // convert to 24 hour format
+    if (startTime.contains("PM")) {
+      startTime = startTime.replaceAll("PM", "");
+      startTime =
+          "${int.parse(startTime.split(":")[0]) + 12}:${startTime.split(":")[1]}";
+    } else {
+      startTime = startTime.replaceAll("AM", "");
+    }
+
+    startTime = startTime.trim();
+
+    // _time =
+    // "${DateFormat.jm().format(DateFormat("hh:mm").parse(startTime))} - ${DateFormat.jm().format(DateFormat("hh:mm").parse(endTime))}";
+    return startTime;
+    // return "${DateFormat.jm().format(DateFormat("hh:mm").parse(startTime))} - ${DateFormat.jm().format(DateFormat("hh:mm").parse(endTime))}";
+  }

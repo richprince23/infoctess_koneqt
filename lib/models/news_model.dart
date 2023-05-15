@@ -17,19 +17,14 @@ class NewsModel {
   String? _posterID;
   DateTime? _timestamp;
   List<String>? _views;
-  int? _likes;
 
   String? get id => _id;
-
   String? get body => _body;
-
+  String? get title => _title;
   String? get imgUrl => _imgUrl;
   String? get posterID => _posterID;
-
   DateTime? get timestamp => _timestamp;
-
   List<String>? get views => _views;
-  int? get likes => _likes;
 }
 
 class News {
@@ -40,7 +35,7 @@ class News {
   String? imgUrl;
   DateTime? timestamp;
   List<String>? views;
-  int likes = 0;
+
   News({
     required this.id,
     required this.title,
@@ -48,7 +43,6 @@ class News {
     this.posterID,
     this.imgUrl,
     this.timestamp,
-    this.likes = 0,
     this.views,
   });
 
@@ -60,7 +54,6 @@ class News {
       posterID: data['posterID'] ?? '',
       imgUrl: data['imgUrl'] ?? '',
       timestamp: (data['timestamp'] as Timestamp).toDate(),
-      likes: data['likes'] ?? 0,
       views: data['views'] != null
           ? List<String>.from(data['views'].map((comment) => comment as String))
           : null,
@@ -75,7 +68,6 @@ class News {
       'posterID': posterID,
       'imgUrl': imgUrl,
       'timestamp': timestamp,
-      'likes': likes,
       'views': views?.map((comment) => comment).toList(),
     };
   }
@@ -87,7 +79,6 @@ class News {
     String? posterID,
     String? imgUrl,
     DateTime? timestamp,
-    int? likes,
     List<String>? views,
   }) {
     return News(
@@ -97,7 +88,6 @@ class News {
       posterID: posterID ?? this.posterID,
       imgUrl: imgUrl ?? this.imgUrl,
       timestamp: timestamp ?? this.timestamp,
-      likes: likes ?? this.likes,
       views: views ?? this.views,
     );
   }
@@ -110,7 +100,6 @@ class News {
         'posterID': posterID,
         'imgUrl': imgUrl,
         'timestamp': timestamp,
-        'likes': likes,
         'views': views?.map((comment) => comment).toList(),
       };
 
@@ -125,7 +114,6 @@ class News {
         posterID: json['posterID'],
         imgUrl: json['imgUrl'],
         timestamp: (json['timestamp'] as Timestamp).toDate(),
-        likes: json['likes'],
         views: json['views'] != null
             ? List<String>.from(
                 json['views'].map((comment) => comment as String))

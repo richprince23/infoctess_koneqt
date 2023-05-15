@@ -5,6 +5,7 @@ import 'package:infoctess_koneqt/controllers/notification_service.dart';
 import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
 import 'package:infoctess_koneqt/controllers/page_controller.dart';
 import 'package:infoctess_koneqt/controllers/user_provider.dart';
+import 'package:infoctess_koneqt/screens/admin/create_event.dart';
 import 'package:infoctess_koneqt/screens/main_screen.dart';
 import 'package:infoctess_koneqt/screens/onboarding.dart';
 import 'package:infoctess_koneqt/screens/onboarding/check_index.dart';
@@ -83,6 +84,7 @@ class MyApp extends StatelessWidget {
           "/ai-studymate": (context) => const AIChatScreen(),
           "/ai-imager": (context) => const Imager(),
           "/checker": (context) => const CheckAccessPage(),
+          "/new-event": (context) => CreateEvent(),
         },
         // home: FutureBuilder<bool>(
         //   future: context.watch<UserProvider>().isLoggedIn,
