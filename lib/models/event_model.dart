@@ -14,6 +14,7 @@ class Event {
   final String? mode;
   final String? posterID;
   final DateTime? timestamp;
+  final List<String>? attendees;
 
   Event({
     this.id,
@@ -27,6 +28,7 @@ class Event {
     this.mode,
     this.posterID,
     this.timestamp,
+    this.attendees,
   });
 
   factory Event.fromJson(Map<String, dynamic> json) {
@@ -42,6 +44,9 @@ class Event {
       mode: json['mode'],
       posterID: json['posterID'],
       timestamp: (json['timestamp'] as Timestamp).toDate(),
+      attendees: json['attendees'] != null
+          ? List<String>.from(json['attendees'])
+          : null,
     );
   }
 
@@ -57,6 +62,7 @@ class Event {
         'mode': mode,
         'posterID': posterID,
         'timestamp': timestamp!,
+        'attendees': attendees,
       };
 
   Event copy({
@@ -71,6 +77,7 @@ class Event {
     var mode,
     var posterID,
     var timestamp,
+    var attendees,
   }) =>
       Event(
         id: id ?? this.id ?? "",
@@ -84,6 +91,7 @@ class Event {
         mode: mode ?? this.mode,
         posterID: posterID ?? this.posterID,
         timestamp: timestamp ?? this.timestamp,
+        attendees: attendees ?? this.attendees,
       );
 }
 
@@ -99,4 +107,5 @@ class EventModel {
   static const fee = 'fee';
   static const venue = 'venue';
   static const mode = 'mode';
+  static const attendees = 'attendees';
 }

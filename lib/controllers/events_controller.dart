@@ -42,6 +42,7 @@ Future postNewEvent({
       "time": time,
       "mode": mode,
       "fee": fee,
+      "attendees": [],
     });
   } on Exception catch (e) {
     throw Exception(e);
@@ -59,6 +60,31 @@ Future getEventsByDate(String date) async {
         .then((value) => print(value.docs));
     // print(events.docs);
     // return events.docs;
+  } on FirebaseException catch (e) {
+    throw Exception(e);
+  }
+}
+
+//rsvp to event
+Future rsvpToEvent(String eventID) async {
+  try {
+    await db
+        .collection("events")
+        .doc(eventID)
+        .update({"attendees": FieldValue.arrayUnion([auth.currentUser!.uid])});
+        return true;
+  } on FirebaseException catch (e) {
+    throw Exception(e);
+  }
+}
+
+//unrsvp to event
+Future unrsvpToEvent(String eventID) async {
+  try {
+    await db
+        .collection("events")
+        .doc(eventID)
+        .update({"attendees": FieldValue.arrayRemove([auth.currentUser!.uid])});
   } on FirebaseException catch (e) {
     throw Exception(e);
   }

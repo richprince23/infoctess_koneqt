@@ -7,10 +7,13 @@ import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/app_db.dart';
 import 'package:infoctess_koneqt/constants.dart';
+import 'package:infoctess_koneqt/controllers/events_controller.dart';
 import 'package:infoctess_koneqt/controllers/utils.dart';
 import 'package:infoctess_koneqt/screens/tools/image_viewer.dart';
+import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:intl/intl.dart';
 import 'package:resize/resize.dart';
+import 'package:status_alert/status_alert.dart';
 import '../models/event_model.dart';
 
 class EventItem extends StatefulWidget {
@@ -485,7 +488,35 @@ class _OpenEventItemState extends State<OpenEventItem> {
                             borderRadius: BorderRadius.circular(5.r),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () async {
+                          try {
+                            await rsvpToEvent(widget.event.id!).then(
+                              (value) => StatusAlert.show(
+                                context,
+                                duration: const Duration(seconds: 2),
+                                title: "RSVPed Successfully",
+                                titleOptions: StatusAlertTextConfiguration(
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                maxWidth: 50.vw,
+                                configuration: IconConfiguration(
+                                  icon: Icons.check,
+                                  color: Colors.green,
+                                  size: 50.w,
+                                ),
+                              ),
+                            );
+                          } catch (e) {
+                            print(e);
+                            CustomDialog.show(context,
+                                message:
+                                    "An error occured while booking event. Please try again later");
+                          }
+                        },
                         child: Text(
                           "Book A Seat",
                           style:
