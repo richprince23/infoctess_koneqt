@@ -48,7 +48,7 @@ class EventsScreen extends StatelessWidget {
                     Event rawEvent = Event.fromJson(newsData.data());
                     Event event = rawEvent.copy(
                       id: newsData.id,
-                      timestamp: newsData.data()['timestamp'].toDate(),
+                      // timestamp: newsData.data()['timestamp'].toDate(),
                     );
                     print(rawEvent.timestamp);
                     return Padding(

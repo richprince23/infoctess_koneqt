@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/user_provider.dart';
+import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/screens/login_screen.dart';
 import 'package:infoctess_koneqt/screens/main_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:resize/resize.dart';
+
+import '../models/user_info.dart';
 
 class StartScreen extends StatefulWidget {
   const StartScreen({super.key});
@@ -15,48 +18,58 @@ class StartScreen extends StatefulWidget {
 class _StartScreenState extends State<StartScreen> {
   Future getOfflineUser(BuildContext context) async {
     await Provider.of<UserProvider>(context, listen: false).setUserDetails();
-
-    // print("user details set");
-    // print(curUser!.toJson());
   }
 
   bool isLoggedIn = false;
 
-  @override
-  void initState() {
-    WidgetsFlutterBinding.ensureInitialized();
-    context
-        .read<UserProvider>()
-        .isLoggedIn
-        .then((value) => isLoggedIn = value)
-        .then((value) => print("check login:" "$isLoggedIn"))
-        .then((value) => isLoggedIn ? getOfflineUser(context) : null);
-    super.initState();
+  Future<void> checkLoginStatus() async {
+    final userProvider = context.read<UserProvider>();
+
+    final isLoggedIn = await userProvider.isLoggedIn;
+    print("check login: $isLoggedIn");
+
+    if (isLoggedIn) {
+      await userProvider.getUserID();
+      User? curUser = await userProvider
+          .getUserInfo()
+          .then((value) async => {
+                if (value == null)
+                  {
+                    await getOfflineUser(context),
+                    await userProvider.getUserInfo(),
+                  }
+              })
+          .then(
+            (value) => Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const MainScreen(),
+              ),
+            ),
+          );
+    } else {
+      // ignore: use_build_context_synchronously
+      await Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const LoginScreen(),
+        ),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<bool>(
-      future: context.watch<UserProvider>().isLoggedIn,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          // show loading indicator while waiting for future to complete
-          return Center(
-            child: CircularProgressIndicator(
-              color: cPri,
-            ),
-          );
-        }
-        final initialRoute = snapshot.data;
-        // print(initialRoute);
-        if (initialRoute == true) {
-          getOfflineUser(context);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkLoginStatus();
+    });
 
-          return const MainScreen();
-        } else {
-          return const LoginScreen();
-        }
-      },
+    return Center(
+      child: Image.asset(
+        "assets/images/preload.gif",
+        width: 50.w,
+        height: 50.w,
+      ),
     );
   }
 }

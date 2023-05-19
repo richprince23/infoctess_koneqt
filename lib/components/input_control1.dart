@@ -24,18 +24,23 @@ class InputControl extends StatefulWidget {
 
   final void Function()? onTap;
 
-  InputControl(
-      {Key? inputkey,
-      this.type,
-      this.hintText,
-      this.isPassword,
-      this.readOnly,
-      this.controller,
-      this.validator,
-      this.onTap,
-      this.showLabel = true,
-      this.focusNode})
-      : super(key: inputkey);
+  Icon? leading;
+  bool? isSearch;
+
+  InputControl({
+    Key? inputkey,
+    this.type,
+    this.hintText,
+    this.isPassword,
+    this.readOnly,
+    this.controller,
+    this.validator,
+    this.onTap,
+    this.showLabel = true,
+    this.focusNode,
+    this.leading,
+    this.isSearch = false,
+  }) : super(key: inputkey);
 
   @override
   State<InputControl> createState() => _InputControlState();
@@ -94,25 +99,39 @@ class _InputControlState extends State<InputControl> {
             fontSize: 16.sp,
           ),
           decoration: InputDecoration(
-            suffixIcon: GestureDetector(
-              onTap: () => {
-                setState(
-                  () {
-                    if (widget.controller != null) {
-                      widget.controller!.clear();
-                      textLength = 0;
-                    }
-                  },
-                )
-              },
-              child: textLength > 0
-                  ? Icon(
-                      CupertinoIcons.clear_circled,
-                      color: cSec,
+            prefixIcon: widget.leading,
+            // suffixIcon: widget.trailing,
+            suffixIcon: widget.isSearch == false
+                ? GestureDetector(
+                    onTap: () => {
+                      // if (widget.trailing == null)
+                      setState(
+                        () {
+                          if (widget.controller != null) {
+                            widget.controller!.clear();
+                            textLength = 0;
+                          }
+                        },
+                      )
+                    },
+                    child: textLength > 0
+                        ? Icon(
+                            CupertinoIcons.clear_circled,
+                            color: cSec,
+                            size: 18.sp,
+                          )
+                        : const Icon(null),
+                  )
+                : GestureDetector(
+                    onTap: () => {
+                      // if (widget.trailing == null)
+                    },
+                    child: Icon(
+                      Icons.tune_sharp,
+                      color: Colors.black54,
                       size: 18.sp,
-                    )
-                  : const Icon(null),
-            ),
+                    ),
+                  ),
             // isDense: true,
             hintText: widget.hintText!.toString(),
             hintStyle: TextStyle(

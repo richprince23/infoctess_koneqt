@@ -137,7 +137,7 @@ class ClosedEventItem extends StatelessWidget {
           ),
           Container(
             width: 100.vw,
-            padding: EdgeInsets.all(10.w),
+            padding: EdgeInsets.all(2.w),
             color: Colors.white,
             child: Text(
               event.title,
@@ -260,16 +260,40 @@ class _OpenEventItemState extends State<OpenEventItem> {
                 ),
               ),
               SizedBox(height: 10.h),
-              Text(
-                widget.event.title,
-                style: GoogleFonts.sarabun(
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                ),
-                maxLines: 6,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.left,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Flexible(
+                    child: Text(
+                      widget.event.title,
+                      style: GoogleFonts.sarabun(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                      maxLines: 6,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                  Container(
+                    decoration: ShapeDecoration(
+                      shape: const StadiumBorder(),
+                      color: cSec.withOpacity(0.1),
+                    ),
+                    margin: EdgeInsets.only(left: 10.w),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                    child: Text(
+                      widget.event.mode!,
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        color: Colors.black,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: 10.h),
               Container(
@@ -277,95 +301,79 @@ class _OpenEventItemState extends State<OpenEventItem> {
                 width: 100.vw,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.r),
-                  color: cSec.withOpacity(0.1),
+                  color: cSec.withOpacity(0.06),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Padding(
-                      padding: EdgeInsets.all(12.0.w),
-                      child: Center(
-                        child: Column(
-                          children: [
-                            Text(
-                              convertToMonthDayString(widget.event.date!)
-                                  .split(" ")[0]
-                                  .substring(0, 3),
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                color: Colors.black,
-                              ),
+                      padding: EdgeInsets.symmetric(horizontal: 8.w),
+                      child: Column(
+                        children: [
+                          Text(
+                            convertToDayString(widget.event.date!),
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              color: cPri,
                             ),
-                            Text(
-                              convertToMonthDayString(widget.event.date!)
-                                  .split(" ")[1],
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                color: Colors.black,
-                              ),
+                          ),
+                          Text(
+                            "${convertToMonthDayString(widget.event.date!).split(" ")[0].substring(0, 3)} ${convertToMonthDayString(widget.event.date!).split(" ")[1]}",
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              color: cPri,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                     Container(
                       height: 50.h,
                       width: 0.5.w,
                       color: cPri,
-                      margin: EdgeInsets.symmetric(horizontal: 10.h),
+                      margin: EdgeInsets.symmetric(horizontal: 1.h),
+                    ),
+                    Flexible(
+                      child: Text(
+                        widget.event.venue!,
+                        // "${widget.event.venue!}, liberations hall edumfa",
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          color: Colors.black,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        maxLines: 3,
+                      ),
+                    ),
+                    Container(
+                      height: 50.h,
+                      width: 0.5.w,
+                      color: cPri,
+                      margin: EdgeInsets.symmetric(horizontal: 1.h),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: EdgeInsets.symmetric(horizontal: 8.w),
                       child: Column(
                         children: [
                           Text(
-                            convertToDayString(widget.event.date!),
+                            widget.event.time!.split("-").first.trim(),
                             style: TextStyle(
-                              fontSize: 14.sp,
-                              color: Colors.black,
+                              fontSize: 12.sp,
+                              color: cPri,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                           Text(
-                            widget.event.time!,
+                            widget.event.time!.split("-").last.trim(),
                             style: TextStyle(
-                              fontSize: 14.sp,
-                              color: Colors.black,
+                              fontSize: 12.sp,
+                              color: cPri,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          backgroundColor: cPri,
-                          foregroundColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.r),
-                          ),
-                        ),
-                        onPressed: () async {
-                          await AppDatabase.instance.addEvent(widget.event);
-                          // print(widget.event
-                          //     .copy(
-                          //       title: "New Event",
-                          //     )
-                          //     .toJson());
-                        },
-                        child: Column(
-                          children: [
-                            const Icon(Icons.calendar_month),
-                            Text(
-                              "Save",
-                              style: TextStyle(
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ],
-                        ),
                       ),
                     ),
                   ],
@@ -449,7 +457,9 @@ class _OpenEventItemState extends State<OpenEventItem> {
                               style: TextStyle(fontSize: 14.sp),
                             ),
                             Text(
-                              "GHS ${widget.event.fee}",
+                              widget.event.fee == 0
+                                  ? "Free"
+                                  : "GHS ${widget.event.fee}",
                               style: TextStyle(
                                 fontSize: 20.sp,
                                 fontWeight: FontWeight.bold,

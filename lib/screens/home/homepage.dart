@@ -24,6 +24,8 @@ class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   // final _fabKey = GlobalKey<ExpandableFabState>();
 
+  // final searchController = TextEditingController();
+
   late TabController _tabController;
   var tabs = [
     Tab(
@@ -44,6 +46,7 @@ class _HomePageState extends State<HomePage>
   @override
   void dispose() {
     _tabController.dispose();
+    // searchController.dispose();
     super.dispose();
   }
 
@@ -82,14 +85,6 @@ class _HomePageState extends State<HomePage>
       backgroundColor: cSec.withOpacity(0.05),
       body: Column(
         children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.0.h, vertical: 2.0.h),
-            child: InputControl(
-              hintText: "Search",
-              showLabel: false,
-              // onTap: _showModalSheet,
-            ),
-          ),
           TabBar(
             isScrollable: false,
             physics: const BouncingScrollPhysics(),

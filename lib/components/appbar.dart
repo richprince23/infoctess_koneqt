@@ -22,33 +22,26 @@ class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      // title: Builder(
-      //   builder: (context) =>
-      //       Consumer<UserProvider>(builder: (context, value, child) {
-      //     return Text(
-      //       "Hi, ${curUser?.fullName!.split(' ')[0] ?? 'User'}",
-      //       style: GoogleFonts.sarabun(fontSize: 14.sp),
-      //     );
-      //   }),
-      // ),
       leadingWidth: 40.w,
-      
       surfaceTintColor: cSec.withOpacity(0.3),
-      leading: InkWell(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: CircleAvatar(
-            radius: 5.w,
-            backgroundImage: CachedNetworkImageProvider(curUser?.avatar ??
-                "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle.png"),
-          ),
-        ),
-        onTap: () {
+      leading: IconButton(
+        icon: const Icon(Icons.menu),
+        onPressed: () {
           Scaffold.of(context).openDrawer();
         },
       ),
       automaticallyImplyLeading: false,
       actions: [
+        IconButton(
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const NotificationsSceen()));
+          },
+          iconSize: 20.w,
+          icon: const Icon(CupertinoIcons.search),
+        ),
         IconButton(
           onPressed: () {
             Navigator.push(

@@ -5,6 +5,7 @@ import 'package:infoctess_koneqt/models/user_info.dart' as cUser;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/env.dart';
+import 'package:provider/provider.dart';
 
 class UserProvider extends ChangeNotifier {
   int? _indexNum;
@@ -89,6 +90,34 @@ class UserProvider extends ChangeNotifier {
     if (status == false) setUserID("");
     notifyListeners();
   }
+
+Future<void> getOfflineUser(BuildContext context) async {
+  final userProvider = Provider.of<UserProvider>(context, listen: false);
+  final userID = await userProvider.getUserID();
+  final userDoc = await FirebaseFirestore.instance
+      .collection('user_infos')
+      .doc(userID)
+      .get();
+
+  if (userDoc.exists) {
+    final userData = userDoc.data();
+    final curUser = cUser.User(
+      avatar: userData!['avatar'],
+      emailAddress: userData['emailAddress'],
+      classGroup: userData['classGroup'],
+      fullName: userData['fullName'],
+      gender: userData['gender'],
+      indexNum: userData['indexNum'],
+      phoneNum: userData['phoneNum'],
+      userLevel: userData['userLevel'],
+      userName: userData['userName'],
+      isAdmin: userData['isAdmin'] ?? false,
+    );
+
+    userProvider.setUser(curUser);
+  }
+}
+
 
   Future setUserDetails() async {
     final uid = await getUserID();

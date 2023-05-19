@@ -56,7 +56,7 @@ class Event {
         'venue': venue,
         'mode': mode,
         'posterID': posterID,
-        'timestamp': Timestamp.fromDate(timestamp!),
+        'timestamp': timestamp!,
       };
 
   Event copy({

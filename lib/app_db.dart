@@ -2,6 +2,7 @@
 import 'package:infoctess_koneqt/controllers/utils.dart';
 import 'package:infoctess_koneqt/models/event_model.dart';
 import 'package:infoctess_koneqt/models/timetable_db.dart';
+import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:infoctess_koneqt/models/courses_db.dart';
@@ -158,16 +159,14 @@ class AppDatabase {
   }
 
 //events operations
-  Future<Event> addEvent(Event event) async {
+  Future<Event?> addEvent(Event event) async {
     final db = await instance.database;
-    event = event.copy(
-        timestamp:
-            (Timestamp.fromMillisecondsSinceEpoch(event.timestamp!.millisecond))
-                .toDate());
-    print(event.toJson());
-    final id = await db.insert(eventsTable, event.toJson());
+    // event = event.copy(
+    //     timestamp: DateFormat('yyyy-MM-dd – kk:mm').format(event.timestamp!));
+    print(event.timestamp);
+    // final id = await db.insert(eventsTable, event.toJson());
 
-    return event.copy(id: id);
+    // return event.copy(id: id);
   }
 
   Future<Event?> getEvent(String id) async {

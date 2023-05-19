@@ -53,11 +53,12 @@ Future getEventsByDate(String date) async {
   try {
     final events = await db
         .collection("events")
-        .where("date", isEqualTo: date)
+        .where("date", isEqualTo: date.trim())
         .orderBy("timestamp", descending: true)
-        .get();
-    print(events.docs);
-    return events.docs;
+        .get()
+        .then((value) => print(value.docs));
+    // print(events.docs);
+    // return events.docs;
   } on FirebaseException catch (e) {
     throw Exception(e);
   }

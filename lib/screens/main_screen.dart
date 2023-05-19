@@ -37,11 +37,11 @@ class _MainScreenState extends State<MainScreen> {
   // }
   void setAll() {
     //set CurUser
-    Provider.of<UserProvider>(context, listen: false)
-        .getUserInfo()
-        .then((value) => setState(() {
-              _user = value;
-            }));
+    Provider.of<UserProvider>(context, listen: false).getUserInfo().then(
+          (value) => setState(() {
+            _user = value;
+          }),
+        );
 
     // print("Printing from mainscreen set ALl 1  $curUser");
   }
