@@ -282,10 +282,9 @@ class DrawerScreen extends StatelessWidget {
           // Divider(
           //   color: cPri,
           // ),
-          const SizedBox(height: 20),
-          // const ListItem(icon: Icons.home, title: "Home", route: "/main"),
-          const ListItem(
-              icon: Icons.person, title: "Profile", route: "/profile"),
+          SizedBox(height: 10.h),
+          // const ListItem(
+          //     icon: Icons.person, title: "Profile", route: "/profile"),
           const ListItem(
               icon: Icons.show_chart, title: "My Activity", route: "/my-posts"),
           const ListItem(
@@ -293,8 +292,18 @@ class DrawerScreen extends StatelessWidget {
               title: "Calendar",
               route: "/calendar"),
           const ListItem(icon: Icons.bookmark, title: "Saved Items"),
+          Divider(
+            color: cPri,
+          ),
+          if (curUser?.isAdmin == true)
+            const ListItem(
+              icon: Icons.manage_accounts,
+              title: "Manage Users",
+              route: "/manage-users",
+            ),
+          if (curUser?.isAdmin == true)
+            const ListItem(icon: Icons.event, title: "Manage Events"),
           const ListItem(icon: Icons.settings, title: "Settings"),
-          const ListItem(icon: Icons.info, title: "About"),
           Divider(
             color: cPri,
           ),
@@ -305,7 +314,7 @@ class DrawerScreen extends StatelessWidget {
           ),
           ListItem(
             icon: CupertinoIcons.globe,
-            title: "Infoctess Website",
+            title: "Infoctess",
             onTap: () {},
           ),
           const ListItem(
@@ -315,6 +324,7 @@ class DrawerScreen extends StatelessWidget {
           Divider(
             color: cPri,
           ),
+          const ListItem(icon: Icons.info, title: "About"),
           ListItem(
             icon: Icons.exit_to_app,
             title: "Logout",
