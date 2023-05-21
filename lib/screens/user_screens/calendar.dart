@@ -4,6 +4,7 @@ import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:infoctess_koneqt/components/event_item.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/events_controller.dart';
 import 'package:infoctess_koneqt/models/event_model.dart';
@@ -108,7 +109,22 @@ class CalendarScreenState extends State<CalendarScreen> {
 
                             child: ListTile(
                               onTap: () {
-                                print('${snapshot.data.docs[index]['title']}');
+                                print('${snapshot.data.docs[index].id}');
+                                print('${snapshot.data.docs[index].data()}');
+                                Event event = Event.fromJson(
+                                    snapshot.data.docs[index].data());
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return OpenEventItem(
+                                        event: event.copy(
+                                            id: snapshot.data.docs[index].id,
+                                            timestamp: null),
+                                      );
+                                    },
+                                  ),
+                                );
                               },
                               isThreeLine: true,
                               title: Text(
@@ -116,8 +132,9 @@ class CalendarScreenState extends State<CalendarScreen> {
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18.sp),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18.sp,
+                                ),
                               ),
                               // trailing: Text(
                               //   snapshot.data.docs[index]['mode'],
@@ -127,8 +144,10 @@ class CalendarScreenState extends State<CalendarScreen> {
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Expanded(
-                                      child: Text(
-                                          snapshot.data.docs[index]['venue'])),
+                                    child: Text(
+                                      snapshot.data.docs[index]['venue'],
+                                    ),
+                                  ),
                                   // SizedBox(
                                   //   width: 10.w,
                                   // ),
