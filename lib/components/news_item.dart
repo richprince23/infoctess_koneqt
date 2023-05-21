@@ -218,7 +218,7 @@ class _ClosedWidgetState extends State<ClosedWidget> {
         children: [
           SizedBox(
             width: 100.w,
-            height: 100.h,
+            height: 100.w,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8.r),
               child: widget.news.imgUrl != null

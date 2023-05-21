@@ -28,8 +28,8 @@ class EmptyList extends StatelessWidget {
           children: [
             Image.asset(
               "assets/images/no_data.png",
-              width: 50.h,
-              height: 50.h,
+              width: 50.w,
+              height: 50.w,
             ),
             SizedBox(
               height: 10.h,
@@ -37,6 +37,7 @@ class EmptyList extends StatelessWidget {
             Text(
               text,
               style: TextStyle(fontSize: 13.sp, color: Colors.black),
+              textAlign: TextAlign.center,
               maxLines: 3,
             ),
           ],

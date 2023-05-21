@@ -222,10 +222,14 @@ class _CreateEventState extends State<CreateEvent> {
     return KeyboardDismissOnTap(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Create Event'),
+          title: const Text('Create New Event'),
+          centerTitle: true,
         ),
         body: _isLoading
-            ? Center(child: CircularProgressIndicator())
+            ? Center(
+                child: Image.asset("assets/images/preload.gif",
+                    width: 30.w, height: 30.w),
+              )
             : SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),

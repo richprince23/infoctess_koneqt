@@ -50,16 +50,17 @@ Future postNewEvent({
 }
 
 //get events from firestore by date
-Future getEventsByDate(String date) async {
+Future<QuerySnapshot<Map<String, dynamic>>> getEventsByDate(String date) async {
   try {
-    final events = await db
+    return db
         .collection("events")
         .where("date", isEqualTo: date.trim())
+        .where("attendees", arrayContains: auth.currentUser!.uid)
         .orderBy("timestamp", descending: true)
-        .get()
-        .then((value) => print(value.docs));
+        .get();
+    // .then((value) => print(value.docs));
     // print(events.docs);
-    // return events.docs;
+    // return events;
   } on FirebaseException catch (e) {
     throw Exception(e);
   }
@@ -68,11 +69,10 @@ Future getEventsByDate(String date) async {
 //rsvp to event
 Future rsvpToEvent(String eventID) async {
   try {
-    await db
-        .collection("events")
-        .doc(eventID)
-        .update({"attendees": FieldValue.arrayUnion([auth.currentUser!.uid])});
-        return true;
+    await db.collection("events").doc(eventID).update({
+      "attendees": FieldValue.arrayUnion([auth.currentUser!.uid])
+    });
+    return true;
   } on FirebaseException catch (e) {
     throw Exception(e);
   }
@@ -81,10 +81,9 @@ Future rsvpToEvent(String eventID) async {
 //unrsvp to event
 Future unrsvpToEvent(String eventID) async {
   try {
-    await db
-        .collection("events")
-        .doc(eventID)
-        .update({"attendees": FieldValue.arrayRemove([auth.currentUser!.uid])});
+    await db.collection("events").doc(eventID).update({
+      "attendees": FieldValue.arrayRemove([auth.currentUser!.uid])
+    });
   } on FirebaseException catch (e) {
     throw Exception(e);
   }

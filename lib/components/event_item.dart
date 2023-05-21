@@ -117,7 +117,7 @@ class ClosedEventItem extends StatelessWidget {
                     // elevation: 5,
                     color: Colors.white,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0),
+                      borderRadius: BorderRadius.circular(5.r),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -174,7 +174,7 @@ class OpenEventItem extends StatefulWidget {
 class _OpenEventItemState extends State<OpenEventItem> {
   late QuillController _controller;
   final scroller = ScrollController();
-  late var myJSON;
+  // late var myJSON;
 
   @override
   void initState() {
@@ -489,6 +489,18 @@ class _OpenEventItemState extends State<OpenEventItem> {
                           ),
                         ),
                         onPressed: () async {
+                          //show waiting dialog
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return Center(
+                                  child: Image.asset(
+                                    'assets/images/preload.gif',
+                                    height: 30.w,
+                                    width: 30.w,
+                                  ),
+                                );
+                              });
                           try {
                             await rsvpToEvent(widget.event.id!).then(
                               (value) => StatusAlert.show(
@@ -515,6 +527,8 @@ class _OpenEventItemState extends State<OpenEventItem> {
                             CustomDialog.show(context,
                                 message:
                                     "An error occured while booking event. Please try again later");
+                          } finally {
+                            Navigator.pop(context);
                           }
                         },
                         child: Text(

@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:calendar_timeline/calendar_timeline.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/events_controller.dart';
 import 'package:infoctess_koneqt/models/event_model.dart';
+import 'package:infoctess_koneqt/widgets/empty_list.dart';
 import 'package:intl/intl.dart';
 import 'package:resize/resize.dart';
 
@@ -32,7 +37,8 @@ class CalendarScreenState extends State<CalendarScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const  Text('My Calendar'),
+        title: const Text('My Calendar'),
+        centerTitle: true,
       ),
       body: Column(
         children: [
@@ -44,10 +50,14 @@ class CalendarScreenState extends State<CalendarScreen> {
                 padding: EdgeInsets.all(10.h),
                 child: CalendarTimeline(
                   showYears: true,
-                  initialDate: DateTime.parse(DateTime.now().toString()),
-                  firstDate: DateTime.parse(DateTime.now().toString()),
+                  initialDate: selectedDate,
+                  firstDate: DateTime(2023, 5, 1),
                   lastDate: DateTime(2030, 11, 20),
-                  onDateSelected: (date) => selectedDate = date,
+                  onDateSelected: (date) => {
+                    setState(() {
+                      selectedDate = date;
+                    }),
+                  },
                   leftMargin: 20,
                   monthColor: cPri.withOpacity(0.5),
                   dayColor: cPri,
@@ -63,30 +73,79 @@ class CalendarScreenState extends State<CalendarScreen> {
           Expanded(
             flex: 4,
             child: Container(
-              color: Colors.white,
-              child: FutureBuilder(
-                  // future: getEventsByDate(
-                  //     // DateFormat("d/M/yyyy").format(selectedDate)),
-                  //     "15/05/2023"),
+              color: cSec.withOpacity(0.05),
+              child: FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                  future: getEventsByDate(
+                      DateFormat('d/MM/yyyy').format(selectedDate)),
+                  // "15/05/2023"),
                   builder: (context, AsyncSnapshot snapshot) {
-                print(snapshot.data);
-                if (snapshot.hasData) {
-                  return ListView.builder(
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(snapshot.data[index]['title']),
-                        subtitle: Text(snapshot.data[index]['description']),
-                        trailing: Text(
-                          DateFormat('dd/MM/yyyy')
-                              .format(snapshot.data[index]['date']),
+                    print(snapshot.data?.docs.length);
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: Image.asset(
+                          'assets/images/preload.gif',
+                          height: 30.w,
+                          width: 30.w,
                         ),
                       );
-                    },
-                  );
-                }
-                return Center(child: CircularProgressIndicator());
-              }),
+                    }
+                    if (snapshot.data == null || snapshot.data?.docs.isEmpty) {
+                      return Center(
+                        child: EmptyList(
+                          text:
+                              "You haven't booked any events for today\nBook an event to see it here",
+                        ),
+                      );
+                    } else {
+                      return ListView.builder(
+                        itemCount: snapshot.data!.docs.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            margin: EdgeInsets.all(10.w),
+                            surfaceTintColor: Colors.white,
+                            color: Colors.white,
+                            // padding: EdgeInsets.all(10.w),
+
+                            child: ListTile(
+                              onTap: () {
+                                print('${snapshot.data.docs[index]['title']}');
+                              },
+                              isThreeLine: true,
+                              title: Text(
+                                snapshot.data.docs[index]['title'] + "\n",
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18.sp),
+                              ),
+                              // trailing: Text(
+                              //   snapshot.data.docs[index]['mode'],
+                              // ),
+                              subtitle: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Expanded(
+                                      child: Text(
+                                          snapshot.data.docs[index]['venue'])),
+                                  // SizedBox(
+                                  //   width: 10.w,
+                                  // ),
+                                  Text(
+                                    snapshot.data.docs[index]['time']
+                                        .toString()
+                                        .trim(),
+                                    textAlign: TextAlign.right,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }
+                  }),
             ),
           ),
         ],
