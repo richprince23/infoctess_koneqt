@@ -279,16 +279,17 @@ class DrawerScreen extends StatelessWidget {
               ),
             ),
           ),
-          Divider(
-            color: cPri,
-          ),
+          // Divider(
+          //   color: cPri,
+          // ),
+          const SizedBox(height: 20),
           // const ListItem(icon: Icons.home, title: "Home", route: "/main"),
           const ListItem(
               icon: Icons.person, title: "Profile", route: "/profile"),
           const ListItem(
               icon: Icons.show_chart, title: "My Activity", route: "/my-posts"),
           const ListItem(
-              icon: Icons.calendar_today,
+              icon: Icons.calendar_month,
               title: "Calendar",
               route: "/calendar"),
           const ListItem(icon: Icons.bookmark, title: "Saved Items"),
