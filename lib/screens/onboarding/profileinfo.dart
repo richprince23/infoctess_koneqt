@@ -264,13 +264,14 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                                             subtitle:
                                                 "Your profile has been updated",
                                             maxWidth: 50.vw,
-                                            titleOptions:  StatusAlertTextConfiguration(
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                                            titleOptions:
+                                                StatusAlertTextConfiguration(
+                                              style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 16.sp,
+                                                // fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
                                             configuration: IconConfiguration(
                                               icon: Icons.check,
                                               color: Colors.green,
@@ -289,10 +290,9 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                                         });
                               }
                             } catch (e) {
-                              
-                                    CustomDialog.show(context,
-                                        message:
-                                            "An error occurred while performing you request");
+                              CustomDialog.show(context,
+                                  message:
+                                      "An error occurred while performing you request");
                             }
                             setState(() {
                               Provider.of<OnboardingController>(context,

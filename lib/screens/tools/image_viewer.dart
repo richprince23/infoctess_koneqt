@@ -72,9 +72,9 @@ class ImageViewer extends StatelessWidget {
                         title: "Image saved",
                         titleOptions: StatusAlertTextConfiguration(
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontSize: 16.sp,
+                            // fontWeight: FontWeight.bold,
                           ),
                         ),
                         maxWidth: 50.vw,

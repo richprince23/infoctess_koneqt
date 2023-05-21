@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:infoctess_koneqt/controllers/utils.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 import 'dart:io' show Platform;
@@ -116,6 +117,53 @@ class NotificationService {
     );
   }
 
+  Future<void> scheduleEventNotification({String? date, String? time}) async {
+    var inputDate = convertDateString(date!);
+    var scheduledNotificationDateTime = tz.TZDateTime(
+      tz.local,
+
+      DateTime.parse(inputDate).year,
+      DateTime.parse(inputDate).month,
+      DateTime.parse(inputDate).day,
+      _getTimeOfDay(time!).hour,
+      _getTimeOfDay(time).minute,
+      // notify user 30 minutes before class
+    ).subtract(const Duration(minutes: 30));
+    // while (scheduledNotificationDateTime.weekday != dayOfWeek) {
+    //   scheduledNotificationDateTime =
+    //       scheduledNotificationDateTime.add(const Duration(days: 1));
+    // }
+
+    // print("Scheduled Notification Time: $scheduledNotificationDateTime");
+    // print("Scheduled Notification Time: ${tz.TZDateTime.now(tz.local)}");
+    var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
+      'channelId3',
+      'EventsReminderChannels',
+      importance: Importance.max,
+      priority: Priority.high,
+      showWhen: true,
+    );
+    var iOSPlatformChannelSpecifics = const DarwinNotificationDetails(
+        presentSound: true, presentAlert: true, presentBadge: true);
+    var platformChannelSpecifics = NotificationDetails(
+      android: androidPlatformChannelSpecifics,
+      iOS: iOSPlatformChannelSpecifics,
+    );
+
+    await flnp.zonedSchedule(
+      1,
+      'Scheduled Event Reminder',
+      'You have an upcoming event at $time',
+      scheduledNotificationDateTime,
+      platformChannelSpecifics,
+      androidAllowWhileIdle: true,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      payload: 'Scheduled Event Reminder $date',
+      matchDateTimeComponents: DateTimeComponents.dateAndTime,
+    );
+  }
+
   int _getDayOfWeek(String day) {
     switch (day.toLowerCase()) {
       case 'Monday':
@@ -201,4 +249,23 @@ class NotificationService {
       _notificationsEnabled = granted ?? false;
     }
   }
+
+  // cancelNotification({required String day, required String time}) {
+  //   var dayOfWeek = _getDayOfWeek(day);
+  //   var scheduledNotificationDateTime = tz.TZDateTime(
+  //     tz.local,
+
+  //     DateTime.now().year,
+  //     DateTime.now().month,
+  //     DateTime.now().day,
+  //     _getTimeOfDay(time).hour,
+  //     _getTimeOfDay(time).minute,
+  //     // notify user 30 minutes before class
+  //   ).subtract(const Duration(minutes: 30));
+  //   // while (scheduledNotificationDateTime.weekday != dayOfWeek) {
+  //   scheduledNotificationDateTime =
+  //       scheduledNotificationDateTime.add(const Duration(days: 0));
+  //   // }
+  //   flnp.cancel(1);
+  // }
 }

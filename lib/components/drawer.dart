@@ -334,10 +334,14 @@ class DrawerScreen extends StatelessWidget {
                       (value) => {
                         Provider.of<UserProvider>(context, listen: false)
                             .clearUserDetails()
-                            .then((value) => Provider.of<UserProvider>(context,
-                                    listen: false)
-                                .setLoggedIn(false)
-                                .then((value) => debugPrint("logged out"))),
+                            .then(
+                              (value) => Provider.of<UserProvider>(context,
+                                      listen: false)
+                                  .setLoggedIn(false)
+                                  .then(
+                                    (value) => debugPrint("logged out"),
+                                  ),
+                            ),
                         Navigator.pushNamedAndRemoveUntil(
                             context, "/login", (route) => false),
                       },

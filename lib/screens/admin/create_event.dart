@@ -90,7 +90,7 @@ class _CreateEventState extends State<CreateEvent> {
         title: _titleController.text,
         date: _dateController.text,
         venue: _venueController.text,
-        fee: double.parse(_feeController.text),
+        fee: int.parse(_feeController.text),
         mode: _selectedMode!,
         body: json,
         imagePath: croppedMedia?.path,
@@ -104,9 +104,9 @@ class _CreateEventState extends State<CreateEvent> {
             title: "Sent",
             titleOptions: StatusAlertTextConfiguration(
               style: TextStyle(
-                color: Colors.white,
-                fontSize: 18.sp,
-                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                fontSize: 16.sp,
+                // fontWeight: FontWeight.bold,
               ),
             ),
             maxWidth: 50.vw,
@@ -300,7 +300,7 @@ class _CreateEventState extends State<CreateEvent> {
                               context: context,
                               initialDate: DateTime.now(),
                               firstDate: DateTime.now(),
-                              lastDate: DateTime(2100),
+                              lastDate: DateTime(2030),
                             );
                             if (date != null) {
                               _dateController.text =

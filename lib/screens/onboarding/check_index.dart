@@ -139,13 +139,14 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
                                       StatusAlert.show(
                                         context,
                                         title: "Verified",
-                                        titleOptions:  StatusAlertTextConfiguration(
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                                        titleOptions:
+                                            StatusAlertTextConfiguration(
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 16.sp,
+                                            // fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                         maxWidth: 50.vw,
                                         configuration: IconConfiguration(
                                           icon: Icons.check,
@@ -168,10 +169,10 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
                               } catch (e) {
                                 Navigator.of(context, rootNavigator: true)
                                     .pop();
-                                
-                                      CustomDialog.show(context,
-                                        message:
-                                            "An error occured while performing your request");
+
+                                CustomDialog.show(context,
+                                    message:
+                                        "An error occured while performing your request");
                                 setState(() {
                                   response =
                                       "An error occured. Please try again";
@@ -190,10 +191,10 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
                         );
                       } catch (e) {
                         Navigator.of(context, rootNavigator: true).pop();
-                        
-                              CustomDialog.show(context,
-                                        message:
-                                            "An error occured while performing your request");
+
+                        CustomDialog.show(context,
+                            message:
+                                "An error occured while performing your request");
                         setState(() {
                           response = "An error occured. Please try again";
                         });

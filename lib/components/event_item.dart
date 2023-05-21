@@ -8,7 +8,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/app_db.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/events_controller.dart';
+import 'package:infoctess_koneqt/controllers/notification_service.dart';
 import 'package:infoctess_koneqt/controllers/utils.dart';
+import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/screens/tools/image_viewer.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:intl/intl.dart';
@@ -175,7 +177,7 @@ class _OpenEventItemState extends State<OpenEventItem> {
   late QuillController _controller;
   final scroller = ScrollController();
   // late var myJSON;
-
+  late bool hasBooked;
   @override
   void initState() {
     super.initState();
@@ -183,13 +185,120 @@ class _OpenEventItemState extends State<OpenEventItem> {
     _controller = QuillController(
         document: Document.fromJson(jsonDecode(widget.event.body)),
         selection: const TextSelection.collapsed(offset: 0));
+    hasBooked = widget.event.attendees!.contains(auth.currentUser!.uid);
+    checkIfBooked();
   }
 
   @override
   void dispose() {
     _controller.dispose();
-
     super.dispose();
+  }
+
+  checkIfBooked() async {
+    hasBooked = await hasUserRsvp(widget.event.id!);
+    setState(() {});
+  }
+
+//function to book event
+  Future bookEvent() async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Center(
+            child: Image.asset(
+              'assets/images/preload.gif',
+              height: 30.w,
+              width: 30.w,
+            ),
+          );
+        });
+    try {
+      await rsvpToEvent(widget.event.id!).then(
+        (value) => NotificationService()
+            .scheduleNotification(
+              day: convertToDayString(widget.event.date!),
+              time: widget.event.time!.split("-").first.trim(),
+            )
+            .then(
+              (value) => NotificationService().showNotification(
+                title: "Event RSVP",
+                body: "You have successfully RSVPed to ${widget.event.title}",
+              ),
+            )
+            .then(
+              (value) => StatusAlert.show(
+                context,
+                duration: const Duration(seconds: 2),
+                title: "RSVPed Successfully",
+                titleOptions: StatusAlertTextConfiguration(
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.sp,
+                    // fontWeight: FontWeight.bold,
+                  ),
+                ),
+                maxWidth: 50.vw,
+                configuration: IconConfiguration(
+                  icon: Icons.check,
+                  color: Colors.green,
+                  size: 50.w,
+                ),
+              ),
+            ),
+      );
+    } catch (e) {
+      print(e);
+      CustomDialog.show(context,
+          message:
+              "An error occured while booking event. Please try again later");
+    } finally {
+      Navigator.pop(context);
+    }
+  }
+
+//cancel booking
+  Future cancelBooking() async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Center(
+            child: Image.asset(
+              'assets/images/preload.gif',
+              height: 30.w,
+              width: 30.w,
+            ),
+          );
+        });
+    try {
+      await unrsvpToEvent(widget.event.id!).then(
+        (value) => StatusAlert.show(
+          context,
+          duration: const Duration(seconds: 2),
+          title: "RSVP Cancelled",
+          titleOptions: StatusAlertTextConfiguration(
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 16.sp,
+              // fontWeight: FontWeight.bold,
+            ),
+          ),
+          maxWidth: 50.vw,
+          configuration: IconConfiguration(
+            icon: Icons.check,
+            color: Colors.green,
+            size: 50.w,
+          ),
+        ),
+      );
+    } catch (e) {
+      print(e);
+      CustomDialog.show(context,
+          message:
+              "An error occured while cancelling booking. Please try again later");
+    } finally {
+      Navigator.pop(context);
+    }
   }
 
   @override
@@ -489,50 +598,16 @@ class _OpenEventItemState extends State<OpenEventItem> {
                           ),
                         ),
                         onPressed: () async {
-                          //show waiting dialog
-                          showDialog(
-                              context: context,
-                              builder: (context) {
-                                return Center(
-                                  child: Image.asset(
-                                    'assets/images/preload.gif',
-                                    height: 30.w,
-                                    width: 30.w,
-                                  ),
-                                );
-                              });
-                          try {
-                            await rsvpToEvent(widget.event.id!).then(
-                              (value) => StatusAlert.show(
-                                context,
-                                duration: const Duration(seconds: 2),
-                                title: "RSVPed Successfully",
-                                titleOptions: StatusAlertTextConfiguration(
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                maxWidth: 50.vw,
-                                configuration: IconConfiguration(
-                                  icon: Icons.check,
-                                  color: Colors.green,
-                                  size: 50.w,
-                                ),
-                              ),
-                            );
-                          } catch (e) {
-                            print(e);
-                            CustomDialog.show(context,
-                                message:
-                                    "An error occured while booking event. Please try again later");
-                          } finally {
-                            Navigator.pop(context);
+                          if (hasBooked == false) {
+                            await bookEvent().then((value) => checkIfBooked());
+                          } else {
+                            await cancelBooking()
+                                .then((value) => checkIfBooked());
                           }
+                          // Navigator.pop(context);
                         },
                         child: Text(
-                          "Book A Seat",
+                          hasBooked == false ? "Book A Seat" : "Cancel Booking",
                           style:
                               TextStyle(color: Colors.white, fontSize: 14.sp),
                         ),

@@ -139,9 +139,9 @@ class _ClosedWidgetState extends State<ClosedWidget> {
                     title: "Deleted",
                     titleOptions: StatusAlertTextConfiguration(
                       style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontSize: 16.sp,
+                        // fontWeight: FontWeight.bold,
                       ),
                     ),
                     maxWidth: 50.vw,

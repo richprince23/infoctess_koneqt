@@ -16,7 +16,7 @@ Future postNewEvent({
   required String time,
   required String venue,
   required String mode,
-  required double fee,
+  required int fee,
   required String? imagePath,
 }) async {
   final uid = auth.currentUser!.uid;
@@ -84,6 +84,17 @@ Future unrsvpToEvent(String eventID) async {
     await db.collection("events").doc(eventID).update({
       "attendees": FieldValue.arrayRemove([auth.currentUser!.uid])
     });
+  } on FirebaseException catch (e) {
+    throw Exception(e);
+  }
+}
+
+// check if user has rsvp to event
+Future<bool> hasUserRsvp(String eventID) async {
+  try {
+    final event = await db.collection("events").doc(eventID).get();
+    final attendees = event.data()!["attendees"];
+    return attendees.contains(auth.currentUser!.uid);
   } on FirebaseException catch (e) {
     throw Exception(e);
   }
