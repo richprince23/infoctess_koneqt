@@ -1,5 +1,6 @@
 // import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/controllers/utils.dart';
+import 'package:infoctess_koneqt/models/bookmarks_model.dart';
 import 'package:infoctess_koneqt/models/event_model.dart';
 import 'package:infoctess_koneqt/models/timetable_db.dart';
 import 'package:intl/intl.dart';
@@ -158,36 +159,50 @@ class AppDatabase {
     return await db.delete("timetable", where: 'id = ?', whereArgs: [id]);
   }
 
-//events operations
-  Future<Event?> addEvent(Event event) async {
+//bookmark operations
+  Future saveBookmark({
+    required String ref,
+    required String title,
+    required BookmarkType category,
+    required String data,
+    String? imgUrl,
+  }) async {
     final db = await instance.database;
-    // event = event.copy(
-    //     timestamp: DateFormat('yyyy-MM-dd – kk:mm').format(event.timestamp!));
-    print(event.timestamp);
-    // final id = await db.insert(eventsTable, event.toJson());
-
-    // return event.copy(id: id);
+    final id = await db.insert(bookmarkTable, {
+      'ref': ref,
+      'title': title,
+      'image': imgUrl,
+      'data': data,
+      'category': category.toString(),
+      'createdAt': DateFormat('yyyy-MM-dd').format(DateTime.now()),
+      'updatedAt': DateFormat('yyyy-MM-dd').format(DateTime.now()),
+    });
+    return id;
   }
 
-  Future<Event?> getEvent(String id) async {
+// get all bookmarks
+  Future<List<BookmarkModel>> getAllBookmarks() async {
     final db = await instance.database;
-    final res = await db.query("events",
-        columns: [EventModel.id.toString()], where: 'id = ?', whereArgs: [id]);
-    // if (res.isNotEmpty) {
-    // inspect(res);
-    return Event.fromJson(res.first);
-    // }
+    final res = await db.query(bookmarkTable);
+    return res.map((json) => BookmarkModel.fromJson(json)).toList();
   }
 
-  Future<List<Event>> getEvents() async {
+// get bookmark by id
+  Future<BookmarkModel?> getBookmark(String ref) async {
     final db = await instance.database;
-    final res = await db.query('events');
-    return res.map((json) => Event.fromJson(json)).toList();
+    final res = await db.query(bookmarkTable,
+        where: 'ref = ?', whereArgs: [ref], limit: 1);
+    if (res.isNotEmpty) {
+      return BookmarkModel.fromJson(res.first);
+    } else {
+      return null;
+    }
   }
 
-  Future deleteEvent(int id) async {
+// delete bookmark
+  Future deleteBookmark(String ref) async {
     final db = await instance.database;
-    return await db.delete("events", where: 'id = ?', whereArgs: [id]);
+    return await db.delete(bookmarkTable, where: 'ref = ?', whereArgs: [ref]);
   }
 
 //close database

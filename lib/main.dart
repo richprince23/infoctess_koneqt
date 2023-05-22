@@ -21,6 +21,7 @@ import 'package:infoctess_koneqt/screens/tools/schedules/add_schedule.dart';
 import 'package:infoctess_koneqt/screens/tools/schedules/timetable.dart';
 import 'package:infoctess_koneqt/screens/tools/studymate/ai_imager.dart';
 import 'package:infoctess_koneqt/screens/tools/studymate/aichat_screen.dart';
+import 'package:infoctess_koneqt/screens/user_screens/bookmarks.dart';
 import 'package:infoctess_koneqt/screens/user_screens/calendar.dart';
 import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
@@ -86,7 +87,8 @@ class MyApp extends StatelessWidget {
           "/ai-imager": (context) => const Imager(),
           "/checker": (context) => const CheckAccessPage(),
           "/new-event": (context) => CreateEvent(),
-          "/calendar": (context) => CalendarScreen(),
+          "/calendar": (context) => const CalendarScreen(),
+          "/bookmarks": (context) => BookmarksScreen(),
         },
         // home: FutureBuilder<bool>(
         //   future: context.watch<UserProvider>().isLoggedIn,

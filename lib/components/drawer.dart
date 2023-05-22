@@ -291,7 +291,8 @@ class DrawerScreen extends StatelessWidget {
               icon: Icons.calendar_month,
               title: "Calendar",
               route: "/calendar"),
-          const ListItem(icon: Icons.bookmark, title: "Saved Items"),
+          const ListItem(
+              icon: Icons.bookmark, title: "Saved Items", route: "/bookmarks"),
           Divider(
             color: cPri,
           ),

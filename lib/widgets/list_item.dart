@@ -36,7 +36,7 @@ class ListItem extends StatelessWidget {
         //if onTap is null, then it will push to route
         onTap: () => onTap != null
             ? onTap!()
-            : Navigator.pushNamed(context, route?.toString() ?? "/main"),
+            : Navigator.popAndPushNamed(context, route?.toString() ?? "/main"),
       ),
     );
   }
