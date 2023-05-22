@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:infoctess_koneqt/controllers/utils.dart';
+import 'package:intl/intl.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
 import 'dart:io' show Platform;
@@ -118,17 +119,20 @@ class NotificationService {
   }
 
   Future<void> scheduleEventNotification({String? date, String? time}) async {
-    var inputDate = convertDateString(date!);
+    var inputFormat = DateFormat('d/MM/yyyy');
+    var dayTime = inputFormat.parse(date!);
+
     var scheduledNotificationDateTime = tz.TZDateTime(
       tz.local,
 
-      DateTime.parse(inputDate).year,
-      DateTime.parse(inputDate).month,
-      DateTime.parse(inputDate).day,
+      dayTime.year,
+      dayTime.month,
+      dayTime.day,
       _getTimeOfDay(time!).hour,
       _getTimeOfDay(time).minute,
       // notify user 30 minutes before class
     ).subtract(const Duration(minutes: 30));
+
     // while (scheduledNotificationDateTime.weekday != dayOfWeek) {
     //   scheduledNotificationDateTime =
     //       scheduledNotificationDateTime.add(const Duration(days: 1));
@@ -151,7 +155,7 @@ class NotificationService {
     );
 
     await flnp.zonedSchedule(
-      1,
+      2,
       'Scheduled Event Reminder',
       'You have an upcoming event at $time',
       scheduledNotificationDateTime,

@@ -5,7 +5,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:google_fonts/google_fonts.dart';
-import 'package:infoctess_koneqt/app_db.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/events_controller.dart';
 import 'package:infoctess_koneqt/controllers/notification_service.dart';
@@ -16,6 +15,7 @@ import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:intl/intl.dart';
 import 'package:resize/resize.dart';
 import 'package:status_alert/status_alert.dart';
+
 import '../models/event_model.dart';
 
 class EventItem extends StatefulWidget {
@@ -216,15 +216,9 @@ class _OpenEventItemState extends State<OpenEventItem> {
     try {
       await rsvpToEvent(widget.event.id!).then(
         (value) => NotificationService()
-            .scheduleNotification(
-              day: convertToDayString(widget.event.date!),
+            .scheduleEventNotification(
+              date: widget.event.date!,
               time: widget.event.time!.split("-").first.trim(),
-            )
-            .then(
-              (value) => NotificationService().showNotification(
-                title: "Event RSVP",
-                body: "You have successfully RSVPed to ${widget.event.title}",
-              ),
             )
             .then(
               (value) => StatusAlert.show(
@@ -245,15 +239,17 @@ class _OpenEventItemState extends State<OpenEventItem> {
                   size: 50.w,
                 ),
               ),
+            )
+            .then(
+              (value) => Navigator.pop(context),
             ),
       );
     } catch (e) {
-      print(e);
+      print(e.toString());
+      Navigator.pop(context);
       CustomDialog.show(context,
           message:
               "An error occured while booking event. Please try again later");
-    } finally {
-      Navigator.pop(context);
     }
   }
 
@@ -296,8 +292,6 @@ class _OpenEventItemState extends State<OpenEventItem> {
       CustomDialog.show(context,
           message:
               "An error occured while cancelling booking. Please try again later");
-    } finally {
-      Navigator.pop(context);
     }
   }
 
@@ -592,7 +586,7 @@ class _OpenEventItemState extends State<OpenEventItem> {
                       child: TextButton(
                         style: TextButton.styleFrom(
                           elevation: 0,
-                          backgroundColor: cPri,
+                          backgroundColor: hasBooked == true ? cSec : cPri,
                           padding: EdgeInsets.symmetric(
                               horizontal: 20.w, vertical: 10.h),
                           shape: RoundedRectangleBorder(

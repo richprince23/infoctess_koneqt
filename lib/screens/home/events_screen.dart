@@ -50,7 +50,7 @@ class EventsScreen extends StatelessWidget {
                       id: newsData.id,
                       // timestamp: newsData.data()['timestamp'].toDate(),
                     );
-                    print(rawEvent.timestamp);
+                    // print(rawEvent.timestamp);
                     return Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: 8.0.w, vertical: 2.0.h),

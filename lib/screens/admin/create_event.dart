@@ -28,6 +28,7 @@ class _CreateEventState extends State<CreateEvent> {
   final QuillController _quillController = QuillController.basic();
   final TextEditingController _timeRangeController = TextEditingController();
   late final _content = _quillController.document.toDelta();
+  final qFocusNode = FocusNode();
 
   String? _selectedMode;
   bool _isOnline = false;
@@ -193,6 +194,7 @@ class _CreateEventState extends State<CreateEvent> {
     _feeController.dispose();
     _quillController.dispose();
     _timeRangeController.dispose();
+    qFocusNode.dispose();
     selectedMedia = null;
     croppedMedia = null;
     super.dispose();
@@ -424,14 +426,14 @@ class _CreateEventState extends State<CreateEvent> {
                               color: cSec,
                             ),
                           ),
-                          height: 40.vh,
+                          height: 30.vh,
                           child: QuillEditor(
                             maxHeight: 20.vh,
                             textCapitalization: TextCapitalization.sentences,
                             scrollable: true,
                             expands: true,
                             autoFocus: false,
-                            focusNode: FocusNode(),
+                            focusNode: qFocusNode,
                             padding: EdgeInsets.all(10.w),
                             scrollController: ScrollController(),
                             controller: _quillController,
