@@ -2,7 +2,8 @@ const String bookmarkTable = 'bookmarks';
 
 enum BookmarkType { post, news, event }
 
-class BookmarkModel {
+class Bookmark {
+  final int? id;
   final String ref;
   final String title;
   final String? image;
@@ -11,7 +12,8 @@ class BookmarkModel {
   final String createdAt;
   final String updatedAt;
 
-  BookmarkModel({
+  Bookmark({
+    this.id,
     required this.ref,
     required this.title,
     required this.image,
@@ -21,8 +23,9 @@ class BookmarkModel {
     required this.updatedAt,
   });
 
-  factory BookmarkModel.fromJson(Map<String, dynamic> json) {
-    return BookmarkModel(
+  factory Bookmark.fromJson(Map<String, dynamic> json) {
+    return Bookmark(
+      id: json['id'],
       ref: json['ref'],
       title: json['title'],
       image: json['image'],
@@ -34,6 +37,7 @@ class BookmarkModel {
   }
 
   Map<String, dynamic> toJson() => {
+        'id': id,
         'ref': ref,
         'title': title,
         'image': image,
@@ -43,7 +47,8 @@ class BookmarkModel {
         'updatedAt': updatedAt,
       };
 
-  BookmarkModel copyWith({
+  Bookmark copyWith({
+    int? id,
     String? ref,
     String? title,
     String? image,
@@ -52,7 +57,8 @@ class BookmarkModel {
     String? createdAt,
     String? updatedAt,
   }) {
-    return BookmarkModel(
+    return Bookmark(
+      id: id ?? this.id,
       ref: ref ?? this.ref,
       title: title ?? this.title,
       image: image ?? this.image,
@@ -62,4 +68,14 @@ class BookmarkModel {
       updatedAt: updatedAt ?? this.updatedAt,
     );
   }
+}
+class BookmarkModel{
+ static const String id = "id";
+ static const String ref = "ref";
+ static const String title ="title";
+ static const String image = "image";
+ static const String data = "data";
+ static const String category   = "category";
+ static const String createdAt = "createdAt";
+ static const String updatedAt = "updatedAt";
 }

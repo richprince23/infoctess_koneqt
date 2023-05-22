@@ -58,11 +58,10 @@ class AppDatabase {
       ${TimetableFields.startTime} $textType, ${TimetableFields.endTime} $textType
     )''');
 
-    await db.execute(''' CREATE TABLE $eventsTable(
-      ${EventModel.id} $idType, ${EventModel.title} $textType, ${EventModel.body} $textType, 
-      ${EventModel.date} $textType, ${EventModel.time} $textType, ${EventModel.imgUrl} $textType, 
-      ${EventModel.venue} $textType, ${EventModel.mode} $textType, ${EventModel.fee} $intType, 
-      ${EventModel.timestamp} $textType
+    await db.execute(''' CREATE TABLE $bookmarkTable(
+      ${BookmarkModel.id} $idType, ${BookmarkModel.ref} $textType, ${BookmarkModel.title} $textType, 
+      ${BookmarkModel.data} $textType, ${BookmarkModel.category} $textType, ${BookmarkModel.image} $textType, 
+      ${BookmarkModel.createdAt} $textType, ${BookmarkModel.updatedAt} $textType,
     )''');
   }
 
@@ -181,19 +180,19 @@ class AppDatabase {
   }
 
 // get all bookmarks
-  Future<List<BookmarkModel>> getAllBookmarks() async {
+  Future<List<Bookmark>> getAllBookmarks() async {
     final db = await instance.database;
     final res = await db.query(bookmarkTable);
-    return res.map((json) => BookmarkModel.fromJson(json)).toList();
+    return res.map((json) => Bookmark.fromJson(json)).toList();
   }
 
 // get bookmark by id
-  Future<BookmarkModel?> getBookmark(String ref) async {
+  Future<Bookmark?> getBookmark(String ref) async {
     final db = await instance.database;
     final res = await db.query(bookmarkTable,
         where: 'ref = ?', whereArgs: [ref], limit: 1);
     if (res.isNotEmpty) {
-      return BookmarkModel.fromJson(res.first);
+      return Bookmark.fromJson(res.first);
     } else {
       return null;
     }

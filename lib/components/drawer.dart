@@ -311,7 +311,9 @@ class DrawerScreen extends StatelessWidget {
           ListItem(
             icon: CupertinoIcons.globe,
             title: "OSIS Portal",
-            onTap: () {},
+            onTap: () {
+              print("OSIS Portal");
+            },
           ),
           ListItem(
             icon: CupertinoIcons.globe,
@@ -330,6 +332,7 @@ class DrawerScreen extends StatelessWidget {
             icon: Icons.exit_to_app,
             title: "Logout",
             onTap: () async {
+              Navigator.pop(context);
               try {
                 await auth.signOut().then(
                       (value) => {
