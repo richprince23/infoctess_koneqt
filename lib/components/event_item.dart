@@ -541,9 +541,11 @@ class _OpenEventItemState extends State<OpenEventItem> {
           onClosing: () {},
           builder: (context) {
             return Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: 20.w,
-                vertical: 10.h,
+              padding: EdgeInsets.only(
+                left: 20.w,
+                right: 20.w,
+                bottom: 18.w,
+                top: 10.w,
               ),
               decoration: ShapeDecoration(
                 shape: RoundedRectangleBorder(
