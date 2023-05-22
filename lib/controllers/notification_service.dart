@@ -44,9 +44,13 @@ class NotificationService {
     var initSettings = InitializationSettings(android: android, iOS: ios);
     await flnp.initialize(
       initSettings,
-      // onDidReceiveBackgroundNotificationResponse: (details) async {},
+      // onDidReceiveBackgroundNotificationResponse: (details) async {
+      //   print(
+      //       "Notification Received background ${details.id}, ${details.payload}");
+      // },
       onDidReceiveNotificationResponse: (details) {
-        print("Notification Received ${details.id}, ${details.payload}");
+        print(
+            "Notification Received foreground ${details.id}, ${details.payload}");
       },
     );
     await flnp.initialize(initSettings);
