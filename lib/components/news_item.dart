@@ -17,6 +17,7 @@ import 'package:infoctess_koneqt/models/news_model.dart';
 import 'package:infoctess_koneqt/models/poster_model.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
+import 'package:infoctess_koneqt/widgets/empty_list.dart';
 import 'package:resize/resize.dart';
 import 'package:status_alert/status_alert.dart';
 
@@ -770,14 +771,18 @@ class _FindNewsItemState extends State<FindNewsItem> {
       future: db.collection("news").doc(widget.newsID).get(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasError) {
-          return const Center(
-            child: Text("Something went wrong"),
+          return Center(
+            child: EmptyList(
+              text: "Error loading news",
+            ),
           );
         }
 
         if (snapshot.hasData && !snapshot.data!.exists) {
-          return const Center(
-            child: Text("Document does not exist"),
+          return Center(
+            child: EmptyList(
+              text: "News not found",
+            ),
           );
         }
 
@@ -794,8 +799,12 @@ class _FindNewsItemState extends State<FindNewsItem> {
           ));
         }
 
-        return const Center(
-          child: CircularProgressIndicator(),
+        return Center(
+          child: Image.asset(
+            "assets/images/preload.gif",
+            width: 30.w,
+            height: 30.w,
+          ),
         );
       },
     );
