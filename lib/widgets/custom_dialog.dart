@@ -86,7 +86,7 @@ class CustomActionDialog extends StatelessWidget {
     return Platform.isAndroid
         ? AlertDialog(
             title: Text(title ?? "Confirmation",
-                style: TextStyle(fontSize: 18.sp)),
+                style: TextStyle(fontSize: 18.sp + 1)),
             content: Text(message),
             actions: <Widget>[
               TextButton(

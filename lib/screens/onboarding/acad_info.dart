@@ -69,9 +69,7 @@ class _AcademicInfoScreenState extends State<AcademicInfoScreen> {
                   Provider.of<OnboardingController>(context, listen: false)
                       .goBack();
                 },
-                icon: const Icon(
-                  Icons.arrow_back,
-                ),
+                icon: const BackButtonIcon(),
                 color: Colors.white,
                 iconSize: 24.h,
               ),
@@ -234,7 +232,7 @@ class _AcademicInfoScreenState extends State<AcademicInfoScreen> {
                                   textStyle: TextStyle(
                                     fontWeight: FontWeight.w400,
                                     decoration: TextDecoration.none,
-                                    fontSize: 18.sp,
+                                    fontSize: 18.sp + 1,
                                     color: Colors.white,
                                   ),
                                 ),

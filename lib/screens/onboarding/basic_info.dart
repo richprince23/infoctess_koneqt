@@ -68,12 +68,9 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                 onPressed: () {
                   Navigator.popAndPushNamed(context, "/login");
                 },
-                icon: const Icon(
-                  Icons.arrow_back,
-                  // size: 24,
-                  color: Colors.white,
-                ),
+                icon: const BackButtonIcon(),
                 iconSize: 24.h,
+                color: Colors.white,
               ),
               expandedHeight: 160.h,
               flexibleSpace: FlexibleSpaceBar(

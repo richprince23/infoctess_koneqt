@@ -126,7 +126,7 @@ class ClosedEventItem extends StatelessWidget {
                       child: Text(
                         convertToMonthDayString(event.date!),
                         style: TextStyle(
-                          fontSize: 14.sp,
+                          fontSize: 14.sp + 1,
                           color: isUpcoming() == "Upcoming"
                               ? Colors.black
                               : isUpcoming() == "Today"
@@ -147,7 +147,7 @@ class ClosedEventItem extends StatelessWidget {
             child: Text(
               event.title,
               style: GoogleFonts.sarabun(
-                fontSize: 18.sp,
+                fontSize: 18.sp + 1,
                 fontWeight: FontWeight.w500,
                 color: Colors.black,
               ),
@@ -228,7 +228,7 @@ class _OpenEventItemState extends State<OpenEventItem> {
                 titleOptions: StatusAlertTextConfiguration(
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 16.sp,
+                    fontSize: 16.sp + 1,
                     // fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -275,7 +275,7 @@ class _OpenEventItemState extends State<OpenEventItem> {
           titleOptions: StatusAlertTextConfiguration(
             style: TextStyle(
               color: Colors.black,
-              fontSize: 16.sp,
+              fontSize: 16.sp + 1,
               // fontWeight: FontWeight.bold,
             ),
           ),
@@ -373,7 +373,7 @@ class _OpenEventItemState extends State<OpenEventItem> {
                     child: Text(
                       widget.event.title,
                       style: GoogleFonts.sarabun(
-                        fontSize: 20.sp,
+                        fontSize: 20.sp + 1,
                         fontWeight: FontWeight.w500,
                         color: Colors.black,
                       ),
@@ -393,7 +393,7 @@ class _OpenEventItemState extends State<OpenEventItem> {
                     child: Text(
                       widget.event.mode!,
                       style: TextStyle(
-                        fontSize: 12.sp,
+                        fontSize: 12.sp + 1,
                         color: Colors.black,
                         fontStyle: FontStyle.italic,
                       ),
@@ -420,14 +420,14 @@ class _OpenEventItemState extends State<OpenEventItem> {
                           Text(
                             convertToDayString(widget.event.date!),
                             style: TextStyle(
-                              fontSize: 12.sp,
+                              fontSize: 12.sp + 1,
                               color: cPri,
                             ),
                           ),
                           Text(
                             "${convertToMonthDayString(widget.event.date!).split(" ")[0].substring(0, 3)} ${convertToMonthDayString(widget.event.date!).split(" ")[1]}",
                             style: TextStyle(
-                              fontSize: 12.sp,
+                              fontSize: 12.sp + 1,
                               color: cPri,
                             ),
                           ),
@@ -445,7 +445,7 @@ class _OpenEventItemState extends State<OpenEventItem> {
                         widget.event.venue!,
                         // "${widget.event.venue!}, liberations hall edumfa",
                         style: TextStyle(
-                          fontSize: 12.sp,
+                          fontSize: 12.sp + 1,
                           color: Colors.black,
                         ),
                         overflow: TextOverflow.ellipsis,
@@ -466,7 +466,7 @@ class _OpenEventItemState extends State<OpenEventItem> {
                           Text(
                             widget.event.time!.split("-").first.trim(),
                             style: TextStyle(
-                              fontSize: 12.sp,
+                              fontSize: 12.sp + 1,
                               color: cPri,
                               fontWeight: FontWeight.w600,
                             ),
@@ -474,7 +474,7 @@ class _OpenEventItemState extends State<OpenEventItem> {
                           Text(
                             widget.event.time!.split("-").last.trim(),
                             style: TextStyle(
-                              fontSize: 12.sp,
+                              fontSize: 12.sp + 1,
                               color: cPri,
                               fontWeight: FontWeight.w600,
                             ),
@@ -489,7 +489,7 @@ class _OpenEventItemState extends State<OpenEventItem> {
               Text(
                 "Event Details",
                 style: TextStyle(
-                  fontSize: 14.sp,
+                  fontSize: 14.sp + 1,
                   color: Colors.black,
                 ),
               ),
@@ -516,7 +516,7 @@ class _OpenEventItemState extends State<OpenEventItem> {
                       TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.normal,
-                        fontSize: 16.sp,
+                        fontSize: 16.sp + 1,
                       ),
                       const VerticalSpacing(8, 0),
                       const VerticalSpacing(0, 0),
@@ -562,14 +562,14 @@ class _OpenEventItemState extends State<OpenEventItem> {
                           children: [
                             Text(
                               "Total",
-                              style: TextStyle(fontSize: 14.sp),
+                              style: TextStyle(fontSize: 14.sp + 1),
                             ),
                             Text(
                               widget.event.fee == 0
                                   ? "Free"
                                   : "GHS ${widget.event.fee}",
                               style: TextStyle(
-                                fontSize: 20.sp,
+                                fontSize: 20.sp + 1,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -604,8 +604,8 @@ class _OpenEventItemState extends State<OpenEventItem> {
                         },
                         child: Text(
                           hasBooked == false ? "Book A Seat" : "Cancel Booking",
-                          style:
-                              TextStyle(color: Colors.white, fontSize: 14.sp),
+                          style: TextStyle(
+                              color: Colors.white, fontSize: 14.sp + 1),
                         ),
                       ),
                     ),

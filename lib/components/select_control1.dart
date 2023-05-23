@@ -44,12 +44,12 @@ class _SelectControlState extends State<SelectControl> {
             style: GoogleFonts.sarabun(
                 fontWeight: FontWeight.normal,
                 color: Colors.black87,
-                fontSize: 16.sp,
+                fontSize: 16.sp + 1,
                 decoration: TextDecoration.none),
           ),
         if (widget.showLabel == true)
           SizedBox(
-            height: 10.sp,
+            height: 10.sp + 1,
           ),
         DropdownButtonFormField(
           items: widget.items,
@@ -60,7 +60,7 @@ class _SelectControlState extends State<SelectControl> {
             hintStyle: TextStyle(
               color: Colors.black54,
               fontWeight: FontWeight.w400,
-              fontSize: 16.sp,
+              fontSize: 16.sp + 1,
             ),
             contentPadding:
                 EdgeInsets.symmetric(horizontal: 30.h, vertical: 10.h),

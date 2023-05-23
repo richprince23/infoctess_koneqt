@@ -92,9 +92,7 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                 Provider.of<OnboardingController>(context, listen: false)
                     .goBack();
               },
-              icon: const Icon(
-                Icons.arrow_back,
-              ),
+              icon: const BackButtonIcon(),
               iconSize: 24.h,
               color: Colors.white,
             ),
@@ -268,7 +266,7 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                                                 StatusAlertTextConfiguration(
                                               style: TextStyle(
                                                 color: Colors.black,
-                                                fontSize: 16.sp,
+                                                fontSize: 16.sp + 1,
                                                 // fontWeight: FontWeight.bold,
                                               ),
                                             ),

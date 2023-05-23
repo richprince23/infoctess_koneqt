@@ -80,7 +80,6 @@ class CalendarScreenState extends State<CalendarScreen> {
                       DateFormat('d/MM/yyyy').format(selectedDate)),
                   // "15/05/2023"),
                   builder: (context, AsyncSnapshot snapshot) {
-                    print(snapshot.data?.docs.length);
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(
                         child: Image.asset(
@@ -127,13 +126,16 @@ class CalendarScreenState extends State<CalendarScreen> {
                                 );
                               },
                               isThreeLine: true,
+                              leading: Icon(
+                                Icons.event,
+                                color: cPri,
+                              ),
                               title: Text(
                                 snapshot.data.docs[index]['title'] + "\n",
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18.sp,
+                                  fontSize: 16.sp + 1,
                                 ),
                               ),
                               // trailing: Text(

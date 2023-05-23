@@ -28,7 +28,7 @@ class ListItem extends StatelessWidget {
         title: Text(
           title ?? "",
           style: GoogleFonts.sarabun().copyWith(
-            fontSize: 16.sp,
+            fontSize: 16.sp + 1,
             color: Colors.grey[800],
             fontWeight: FontWeight.w400,
           ),

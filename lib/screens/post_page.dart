@@ -102,7 +102,7 @@ class PostDetails extends StatelessWidget {
                               // maxLines: 3,
                               basicStyle: GoogleFonts.sarabun(
                                   fontWeight: FontWeight.w400,
-                                  fontSize: 16.sp,
+                                  fontSize: 16.sp + 1,
                                   color: AppTheme.themeData(false, context)
                                       .primaryColorLight),
                               callback: (bool readMore) {

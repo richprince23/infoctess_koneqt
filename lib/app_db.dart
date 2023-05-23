@@ -1,14 +1,11 @@
 // import 'package:flutter/material.dart';
-import 'package:infoctess_koneqt/controllers/utils.dart';
 import 'package:infoctess_koneqt/models/bookmarks_model.dart';
-import 'package:infoctess_koneqt/models/event_model.dart';
+import 'package:infoctess_koneqt/models/courses_db.dart';
+import 'package:infoctess_koneqt/models/notes_db.dart';
 import 'package:infoctess_koneqt/models/timetable_db.dart';
 import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:infoctess_koneqt/models/courses_db.dart';
-import 'package:infoctess_koneqt/models/notes_db.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AppDatabase {
   static final AppDatabase instance = AppDatabase._init();
@@ -21,7 +18,7 @@ class AppDatabase {
     if (_database != null) {
       return _database!;
     } else {
-      _database = await _initDB('test1.db');
+      _database = await _initDB('test4.db');
       return _database!;
     }
   }
@@ -30,7 +27,11 @@ class AppDatabase {
     final dbPath = await getDatabasesPath();
 
     final path = join(dbPath, filePath);
-    return await openDatabase(path, version: 1, onCreate: createDB);
+    return await openDatabase(
+      path,
+      version: 1,
+      onCreate: createDB,
+    );
   }
 
   Future createDB(Database db, int version) async {
@@ -43,7 +44,7 @@ class AppDatabase {
     ${CourseFields.id} $idType, ${CourseFields.courseCode} $textType,
     ${CourseFields.courseTitle} $textType, ${CourseFields.semester} $textType,
     ${CourseFields.level} $textType, ${CourseFields.creditHours} $textType
-  );
+  )
   
 ''');
     await db.execute('''CREATE TABLE $notesTable(
@@ -58,10 +59,10 @@ class AppDatabase {
       ${TimetableFields.startTime} $textType, ${TimetableFields.endTime} $textType
     )''');
 
-    await db.execute(''' CREATE TABLE $bookmarkTable(
+    await db.execute('''CREATE TABLE $bookmarkTable(
       ${BookmarkModel.id} $idType, ${BookmarkModel.ref} $textType, ${BookmarkModel.title} $textType, 
-      ${BookmarkModel.data} $textType, ${BookmarkModel.category} $textType, ${BookmarkModel.image} $textType, 
-      ${BookmarkModel.createdAt} $textType, ${BookmarkModel.updatedAt} $textType,
+      ${BookmarkModel.data} $textType, ${BookmarkModel.category} $textType,
+      ${BookmarkModel.createdAt} $textType, ${BookmarkModel.updatedAt} $textType
     )''');
   }
 
@@ -164,15 +165,13 @@ class AppDatabase {
     required String title,
     required BookmarkType category,
     required String data,
-    String? imgUrl,
   }) async {
     final db = await instance.database;
     final id = await db.insert(bookmarkTable, {
       'ref': ref,
       'title': title,
-      'image': imgUrl,
       'data': data,
-      'category': category.toString(),
+      'category': category.name,
       'createdAt': DateFormat('yyyy-MM-dd').format(DateTime.now()),
       'updatedAt': DateFormat('yyyy-MM-dd').format(DateTime.now()),
     });
@@ -183,6 +182,7 @@ class AppDatabase {
   Future<List<Bookmark>> getAllBookmarks() async {
     final db = await instance.database;
     final res = await db.query(bookmarkTable);
+    // print(res[1]);
     return res.map((json) => Bookmark.fromJson(json)).toList();
   }
 

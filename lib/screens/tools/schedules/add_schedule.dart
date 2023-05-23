@@ -256,7 +256,7 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                               titleOptions: StatusAlertTextConfiguration(
                                 style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 16.sp,
+                                  fontSize: 16.sp + 1,
                                 ),
                               ),
                               configuration: IconConfiguration(

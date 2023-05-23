@@ -124,7 +124,7 @@ class _PostItemState extends State<PostItem> {
                     titleOptions: StatusAlertTextConfiguration(
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 16.sp,
+                        fontSize: 16.sp + 1,
                         // fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -154,7 +154,7 @@ class _PostItemState extends State<PostItem> {
               children: [
                 Text(
                   'Edit Post',
-                  style: TextStyle(fontSize: 14.sp),
+                  style: TextStyle(fontSize: 14.sp + 1),
                 ),
                 Icon(
                   CupertinoIcons.pencil,
@@ -173,7 +173,7 @@ class _PostItemState extends State<PostItem> {
               children: [
                 Text(
                   'Delete Post',
-                  style: TextStyle(fontSize: 14.sp),
+                  style: TextStyle(fontSize: 14.sp + 1),
                 ),
                 Icon(
                   CupertinoIcons.delete,
@@ -254,7 +254,7 @@ class _PostItemState extends State<PostItem> {
                                       child: Text(
                                         poster.posterName ?? "Anonymous",
                                         style: GoogleFonts.sarabun(
-                                          fontSize: 14.sp,
+                                          fontSize: 14.sp + 1,
                                           // color: Colors.black,
                                           // fontWeight: FontWeight.w500,
                                         ),
@@ -273,7 +273,7 @@ class _PostItemState extends State<PostItem> {
                                             // ),
                                             child: Icon(
                                               Icons.verified,
-                                              size: 14.sp,
+                                              size: 14.sp + 1,
                                               color: cSec,
                                             ),
                                           )
@@ -285,7 +285,7 @@ class _PostItemState extends State<PostItem> {
                                       widget.post.timestamp.toString()),
                                   style: GoogleFonts.sarabun(
                                       fontWeight: FontWeight.w400,
-                                      fontSize: 12.sp,
+                                      fontSize: 12.sp + 1,
                                       color: Colors.black54),
                                 ),
                               ],
@@ -338,7 +338,7 @@ class _PostItemState extends State<PostItem> {
                               textAlign: TextAlign.left,
                               basicStyle: GoogleFonts.sarabun(
                                   fontWeight: FontWeight.w400,
-                                  fontSize: 16.sp,
+                                  fontSize: 16.sp + 1,
                                   color: AppTheme.themeData(false, context)
                                       .primaryColorLight),
                               callback: (bool readMore) {
@@ -381,21 +381,21 @@ class _PostItemState extends State<PostItem> {
                         Text(
                           "${widget.post.likes} likes",
                           style: TextStyle(
-                            fontSize: 12.sp,
+                            fontSize: 12.sp + 1,
                             color: Colors.black87,
                           ),
                         ),
                         Text(
                           "$postComments comments",
                           style: TextStyle(
-                            fontSize: 12.sp,
+                            fontSize: 12.sp + 1,
                             color: Colors.black87,
                           ),
                         ),
                         Text(
                           "23 shares",
                           style: TextStyle(
-                            fontSize: 12.sp,
+                            fontSize: 12.sp + 1,
                             color: Colors.black87,
                           ),
                         ),
@@ -418,7 +418,7 @@ class _PostItemState extends State<PostItem> {
                           label: Text(
                             "like",
                             style: TextStyle(
-                              fontSize: 14.sp,
+                              fontSize: 14.sp + 1,
                               color: Colors.black87,
                             ),
                           ),
@@ -444,7 +444,7 @@ class _PostItemState extends State<PostItem> {
                           label: Text(
                             "comment",
                             style: TextStyle(
-                              fontSize: 14.sp,
+                              fontSize: 14.sp + 1,
                               color: Colors.black87,
                             ),
                           ),
@@ -461,7 +461,7 @@ class _PostItemState extends State<PostItem> {
                           label: Text(
                             "share",
                             style: TextStyle(
-                              fontSize: 14.sp,
+                              fontSize: 14.sp + 1,
                               color: Colors.black87,
                             ),
                           ),

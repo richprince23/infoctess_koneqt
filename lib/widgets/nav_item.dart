@@ -35,7 +35,7 @@ class NavItem extends StatelessWidget {
           Text(
             label,
             style: TextStyle(
-              fontSize: 10.sp,
+              fontSize: 10.sp + 1,
               // color: AppTheme.themeData(false, context).primaryColor,
               color: Colors.black,
             ),

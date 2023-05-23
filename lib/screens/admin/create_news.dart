@@ -177,7 +177,7 @@ class _CreateNewsState extends State<CreateNews> {
                       height: 10.h,
                     ),
                     TextField(
-                      style: TextStyle(fontSize: 16.sp),
+                      style: TextStyle(fontSize: 16.sp + 1),
                       controller: titleController,
                       textCapitalization: TextCapitalization.sentences,
                       decoration: InputDecoration(
@@ -259,7 +259,7 @@ class _CreateNewsState extends State<CreateNews> {
                                     TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.normal,
-                                      fontSize: 16.sp,
+                                      fontSize: 16.sp + 1,
                                     ),
                                     const VerticalSpacing(8, 0),
                                     const VerticalSpacing(0, 0),
@@ -304,7 +304,7 @@ class _CreateNewsState extends State<CreateNews> {
                                             StatusAlertTextConfiguration(
                                           style: TextStyle(
                                             color: Colors.black,
-                                            fontSize: 16.sp,
+                                            fontSize: 16.sp + 1,
                                             // fontWeight: FontWeight.bold,
                                           ),
                                         ),
@@ -343,7 +343,7 @@ class _CreateNewsState extends State<CreateNews> {
                                   foregroundColor: Colors.white),
                               child: Text(
                                 "Post News",
-                                style: TextStyle(fontSize: 16.sp),
+                                style: TextStyle(fontSize: 16.sp + 1),
                               ),
                             ),
                           ),

@@ -156,7 +156,7 @@ class CreatePostState extends State<CreatePost> {
                   "What's up, ${curUser?.fullName?.split(' ')[0].toString() ?? 'Somebody'}?",
               hintStyle: TextStyle(
                 fontStyle: FontStyle.italic,
-                fontSize: 14.sp,
+                fontSize: 14.sp + 1,
               ),
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(style: BorderStyle.solid, color: cSec),
@@ -205,14 +205,14 @@ class CreatePostState extends State<CreatePost> {
                   ),
                   label: Text(
                     "image",
-                    style: TextStyle(fontSize: 12.sp),
+                    style: TextStyle(fontSize: 12.sp + 1),
                   ),
                 ),
                 Expanded(
                   child: Text(
                     " ${postController.text.length}/ 256",
-                    style:
-                        TextStyle(fontSize: 10.sp, fontStyle: FontStyle.italic),
+                    style: TextStyle(
+                        fontSize: 10.sp + 1, fontStyle: FontStyle.italic),
                   ),
                 ),
                 TextButton(
@@ -242,7 +242,7 @@ class CreatePostState extends State<CreatePost> {
                               titleOptions: StatusAlertTextConfiguration(
                                 style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 16.sp,
+                                  fontSize: 16.sp + 1,
                                   // fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -272,7 +272,7 @@ class CreatePostState extends State<CreatePost> {
                               titleOptions: StatusAlertTextConfiguration(
                                 style: TextStyle(
                                   color: Colors.black,
-                                  fontSize: 16.sp,
+                                  fontSize: 16.sp + 1,
                                 ),
                               ),
                               maxWidth: 50.vw,

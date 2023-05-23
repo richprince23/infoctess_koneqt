@@ -39,7 +39,7 @@ class DrawerScreen extends StatelessWidget {
     //                 Text(
     //                   "${curUser?.fullName ?? 'Someone'} ", // fullname
     //                   style: GoogleFonts.sarabun().copyWith(
-    //                     fontSize: 16.sp,
+    //                     fontSize: 16.sp + 1,
     //                     fontWeight: FontWeight.bold,
     //                   ),
     //                   textAlign: TextAlign.center,
@@ -49,7 +49,7 @@ class DrawerScreen extends StatelessWidget {
     //                 Text(
     //                   "@${curUser?.userName ?? 'someone'} ", // @username
     //                   style: GoogleFonts.sarabun().copyWith(
-    //                     fontSize: 14.sp,
+    //                     fontSize: 14.sp + 1,
     //                     color: Colors.black54,
     //                     fontWeight: FontWeight.w400,
     //                   ),
@@ -59,7 +59,7 @@ class DrawerScreen extends StatelessWidget {
     //                 Text(
     //                   "${curUser?.classGroup ?? 'Group 0'} ", // class group
     //                   style: GoogleFonts.sarabun().copyWith(
-    //                     fontSize: 16.sp,
+    //                     fontSize: 16.sp + 1,
     //                     fontWeight: FontWeight.w400,
     //                   ),
     //                 ),
@@ -106,7 +106,7 @@ class DrawerScreen extends StatelessWidget {
     //                   label: Text(
     //                     "Logout",
     //                     style: GoogleFonts.sarabun().copyWith(
-    //                       fontSize: 12.sp,
+    //                       fontSize: 12.sp + 1,
     //                       color: AppTheme.themeData(true, context).focusColor,
     //                       fontWeight: FontWeight.w400,
     //                     ),
@@ -127,7 +127,7 @@ class DrawerScreen extends StatelessWidget {
     //           title: Text(
     //             "UEW Website",
     //             style: GoogleFonts.sarabun().copyWith(
-    //               fontSize: 16.sp,
+    //               fontSize: 16.sp + 1,
     //               color: AppTheme.themeData(true, context).focusColor,
     //               fontWeight: FontWeight.w400,
     //             ),
@@ -142,7 +142,7 @@ class DrawerScreen extends StatelessWidget {
     //           title: Text(
     //             "UEW VClass",
     //             style: GoogleFonts.sarabun().copyWith(
-    //               fontSize: 16.sp,
+    //               fontSize: 16.sp + 1,
     //               color: AppTheme.themeData(true, context).focusColor,
     //               fontWeight: FontWeight.w400,
     //             ),
@@ -158,7 +158,7 @@ class DrawerScreen extends StatelessWidget {
     //             "OSIS Portal",
     //             style: GoogleFonts.sarabun().copyWith(
     //               color: AppTheme.themeData(true, context).focusColor,
-    //               fontSize: 16.sp,
+    //               fontSize: 16.sp + 1,
     //               fontWeight: FontWeight.w400,
     //             ),
     //           ),
@@ -177,7 +177,7 @@ class DrawerScreen extends StatelessWidget {
     //           title: Text(
     //             "Settings",
     //             style: GoogleFonts.sarabun().copyWith(
-    //               fontSize: 16.sp,
+    //               fontSize: 16.sp + 1,
     //               color: AppTheme.themeData(true, context).focusColor,
     //             ),
     //           ),
@@ -191,7 +191,7 @@ class DrawerScreen extends StatelessWidget {
     //           title: Text(
     //             "About",
     //             style: GoogleFonts.sarabun().copyWith(
-    //               fontSize: 16.sp,
+    //               fontSize: 16.sp + 1,
     //               color: AppTheme.themeData(true, context).focusColor,
     //             ),
     //           ),
@@ -205,7 +205,7 @@ class DrawerScreen extends StatelessWidget {
     //           title: Text(
     //             "Exit",
     //             style: GoogleFonts.sarabun().copyWith(
-    //               fontSize: 16.sp,
+    //               fontSize: 16.sp + 1,
     //               color: AppTheme.themeData(true, context).focusColor,
     //             ),
     //           ),
@@ -255,7 +255,7 @@ class DrawerScreen extends StatelessWidget {
                           child: Text(
                             curUser?.fullName!.split(" ")[0] ?? "User",
                             style: GoogleFonts.sarabun().copyWith(
-                              fontSize: 16.sp,
+                              fontSize: 16.sp + 1,
                               color: Colors.black,
                               fontWeight: FontWeight.w400,
                             ),
@@ -266,7 +266,7 @@ class DrawerScreen extends StatelessWidget {
                           child: Text(
                             curUser?.emailAddress ?? "email",
                             style: GoogleFonts.sarabun().copyWith(
-                              fontSize: 12.sp,
+                              fontSize: 12.sp + 1,
                               color: Colors.black87,
                               fontWeight: FontWeight.w400,
                             ),

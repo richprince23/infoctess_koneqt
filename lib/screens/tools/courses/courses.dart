@@ -194,7 +194,7 @@ class _ManageCoursesState extends State<ManageCourses> {
         title: const Text("My Courses"),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const BackButtonIcon(),
           onPressed: () {
             Navigator.pop(context);
           },

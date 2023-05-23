@@ -42,12 +42,10 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
           surfaceTintColor: Colors.white,
           centerTitle: true,
           elevation: 0,
-          title: Text("Verify", style: TextStyle(fontSize: 18.sp)),
+          title: Text("Verify", style: TextStyle(fontSize: 18.sp + 1)),
           toolbarHeight: 48.h,
           leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-            ),
+            icon: const BackButtonIcon(),
             iconSize: 24.h,
             onPressed: () => Navigator.pushReplacementNamed(context, "/login"),
           ),
@@ -66,7 +64,7 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
                     "Please verify that you are a member of INFOCTESS, UEW",
                     softWrap: true,
                     style: TextStyle(
-                      fontSize: 16.sp,
+                      fontSize: 16.sp + 1,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -91,7 +89,8 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
                   response != ""
                       ? Text(
                           "$response ",
-                          style: TextStyle(color: Colors.red, fontSize: 12.sp),
+                          style:
+                              TextStyle(color: Colors.red, fontSize: 12.sp + 1),
                         )
                       : const SizedBox.shrink(),
                   SizedBox(height: sh1(context)),
@@ -143,7 +142,7 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
                                             StatusAlertTextConfiguration(
                                           style: TextStyle(
                                             color: Colors.black,
-                                            fontSize: 16.sp,
+                                            fontSize: 16.sp + 1,
                                             // fontWeight: FontWeight.bold,
                                           ),
                                         ),
@@ -202,7 +201,7 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
                     },
                     child: Text(
                       "verify",
-                      style: TextStyle(fontSize: 16.sp),
+                      style: TextStyle(fontSize: 16.sp + 1),
                     ),
                   ),
                   SizedBox(

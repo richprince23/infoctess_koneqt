@@ -106,7 +106,7 @@ class _CreateEventState extends State<CreateEvent> {
             titleOptions: StatusAlertTextConfiguration(
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 16.sp,
+                fontSize: 16.sp + 1,
                 // fontWeight: FontWeight.bold,
               ),
             ),
@@ -443,7 +443,7 @@ class _CreateEventState extends State<CreateEvent> {
                                 TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.normal,
-                                  fontSize: 16.sp,
+                                  fontSize: 16.sp + 1,
                                 ),
                                 const VerticalSpacing(8, 0),
                                 const VerticalSpacing(0, 0),
@@ -474,7 +474,7 @@ class _CreateEventState extends State<CreateEvent> {
                           },
                           child: Text(
                             'Create Event',
-                            style: TextStyle(fontSize: 16.sp),
+                            style: TextStyle(fontSize: 16.sp + 1),
                           ),
                         ),
                       ],

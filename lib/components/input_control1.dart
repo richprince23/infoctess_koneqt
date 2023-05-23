@@ -68,7 +68,7 @@ class _InputControlState extends State<InputControl> {
             style: GoogleFonts.sarabun(
                 fontWeight: FontWeight.normal,
                 color: Colors.black87,
-                fontSize: 16.sp,
+                fontSize: 16.sp + 1,
                 decoration: TextDecoration.none),
           ),
         if (widget.showLabel == true)
@@ -96,7 +96,7 @@ class _InputControlState extends State<InputControl> {
           style: TextStyle(
             color: Colors.black87,
             fontWeight: FontWeight.w400,
-            fontSize: 16.sp,
+            fontSize: 16.sp + 1,
           ),
           decoration: InputDecoration(
             prefixIcon: widget.leading,
@@ -118,7 +118,7 @@ class _InputControlState extends State<InputControl> {
                         ? Icon(
                             CupertinoIcons.clear_circled,
                             color: cSec,
-                            size: 18.sp,
+                            size: 18.sp + 1,
                           )
                         : const Icon(null),
                   )
@@ -129,7 +129,7 @@ class _InputControlState extends State<InputControl> {
                     child: Icon(
                       Icons.tune_sharp,
                       color: Colors.black54,
-                      size: 18.sp,
+                      size: 18.sp + 1,
                     ),
                   ),
             // isDense: true,
@@ -137,7 +137,7 @@ class _InputControlState extends State<InputControl> {
             hintStyle: TextStyle(
               color: Colors.black54,
               fontWeight: FontWeight.w400,
-              fontSize: 16.sp,
+              fontSize: 16.sp + 1,
             ),
             contentPadding: EdgeInsets.symmetric(
               horizontal: 20.h,

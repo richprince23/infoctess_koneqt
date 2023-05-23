@@ -10,8 +10,10 @@ import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/models/notes_db.dart';
 import 'package:infoctess_koneqt/screens/tools/notes/read_note.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
+import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
 import 'package:resize/resize.dart';
+import 'package:status_alert/status_alert.dart';
 
 class MyNotes extends StatefulWidget {
   const MyNotes({Key? key}) : super(key: key);
@@ -63,7 +65,7 @@ class _MyNotesState extends State<MyNotes> with RouteAware {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const BackButtonIcon(),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -147,86 +149,38 @@ class _MyNotesState extends State<MyNotes> with RouteAware {
                       flex: 1,
                       borderRadius: BorderRadius.circular(10),
                       onPressed: (context) async {
-                        Platform.isIOS
-                            ? showCupertinoDialog(
-                                context: context,
-                                builder: ((context) => CupertinoAlertDialog(
-                                      content: const Text("Delete this note?"),
-                                      actions: [
-                                        CupertinoDialogAction(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: const Text("Cancel"),
-                                        ),
-                                        CupertinoDialogAction(
-                                          isDestructiveAction: true,
-                                          onPressed: () async {
-                                            await AppDatabase.instance
-                                                .deleteNote(
-                                                    snapshot.data[index].id)
-                                                .then((value) {
-                                                  setState(() {
-                                                    snapshot.data!
-                                                        .removeAt(index);
-                                                  });
-                                                })
-                                                .then((value) =>
-                                                    Navigator.pop(context))
-                                                .then((value) =>
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(
-                                                      SnackBar(
-                                                        content: Text(
-                                                            "${snapshot.data![index].title} deleted!"),
-                                                      ),
-                                                    ));
-                                          },
-                                          child: const Text("Delete"),
-                                        ),
-                                      ],
-                                    )),
-                              )
-                            : showDialog(
-                                context: context,
-                                builder: ((context) => AlertDialog(
-                                      content: const Text("Delete this note?"),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          child: const Text("Cancel"),
-                                        ),
-                                        TextButton(
-                                          onPressed: () async {
-                                            await AppDatabase.instance
-                                                .deleteNote(
-                                                    snapshot.data[index].id)
-                                                .then((value) {
-                                                  setState(() {
-                                                    snapshot.data!
-                                                        .removeAt(index);
-                                                  });
-                                                })
-                                                .then((value) =>
-                                                    Navigator.pop(context))
-                                                .then((value) =>
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(
-                                                      const SnackBar(
-                                                        content: Text(
-                                                            "Note deleted!"),
-                                                      ),
-                                                    ));
-                                          },
-                                          child: const Text("Delete"),
-                                        ),
-                                      ],
-                                    )),
+                        CustomDialog.showWithAction(context,
+                            message: "Delete this note?",
+                            title: "Delete", action: () async {
+                          await AppDatabase.instance
+                              .deleteNote(snapshot.data[index].id)
+                              .then((value) {
+                                setState(() {
+                                  snapshot.data!.removeAt(index);
+                                });
+                              })
+                              .then((value) => Navigator.pop(context))
+                              .then(
+                                (value) => StatusAlert.show(
+                                  context,
+                                  duration: const Duration(seconds: 2),
+                                  title: "Note deleted successfully",
+                                  titleOptions: StatusAlertTextConfiguration(
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16.sp + 1,
+                                      // fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  maxWidth: 50.vw,
+                                  configuration: IconConfiguration(
+                                    icon: Icons.check,
+                                    color: Colors.green,
+                                    size: 50.w,
+                                  ),
+                                ),
                               );
+                        });
                       },
                       backgroundColor: Colors.red.shade300,
                       foregroundColor: Colors.white,
@@ -288,8 +242,8 @@ class _MyNotesState extends State<MyNotes> with RouteAware {
         return Center(
           child: Image.asset(
             "assets/images/preload.gif",
-            height: 50,
-            width: 50,
+            height: 30.w,
+            width: 30.w,
           ),
         );
         // return const Center(child: Text("No Notes added"));

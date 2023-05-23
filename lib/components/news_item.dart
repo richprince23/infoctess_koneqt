@@ -2,14 +2,17 @@ import 'dart:convert';
 
 import 'package:animations/animations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
+import 'package:infoctess_koneqt/app_db.dart';
 import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/news_controller.dart' hide db;
 import 'package:infoctess_koneqt/controllers/utils.dart';
 import 'package:infoctess_koneqt/env.dart';
+import 'package:infoctess_koneqt/models/bookmarks_model.dart';
 import 'package:infoctess_koneqt/models/news_model.dart';
 import 'package:infoctess_koneqt/models/poster_model.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
@@ -140,7 +143,7 @@ class _ClosedWidgetState extends State<ClosedWidget> {
                     titleOptions: StatusAlertTextConfiguration(
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 16.sp,
+                        fontSize: 16.sp + 1,
                         // fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -170,7 +173,7 @@ class _ClosedWidgetState extends State<ClosedWidget> {
               children: [
                 Text(
                   'Edit News',
-                  style: TextStyle(fontSize: 14.sp),
+                  style: TextStyle(fontSize: 14.sp + 1),
                 ),
                 Icon(
                   CupertinoIcons.pencil,
@@ -189,7 +192,7 @@ class _ClosedWidgetState extends State<ClosedWidget> {
               children: [
                 Text(
                   'Delete News',
-                  style: TextStyle(fontSize: 14.sp),
+                  style: TextStyle(fontSize: 14.sp + 1),
                 ),
                 Icon(
                   CupertinoIcons.delete,
@@ -263,8 +266,8 @@ class _ClosedWidgetState extends State<ClosedWidget> {
                     children: [
                       Text(
                         "News",
-                        style:
-                            TextStyle(color: Colors.grey[600], fontSize: 12.sp),
+                        style: TextStyle(
+                            color: Colors.grey[600], fontSize: 12.sp + 1),
                       ),
                       poster?.posterID == auth.currentUser?.uid
                           ? optionButton()
@@ -276,7 +279,7 @@ class _ClosedWidgetState extends State<ClosedWidget> {
                   "${widget.news.title}\n",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 16.sp,
+                      fontSize: 16.sp + 1,
                       color:
                           AppTheme.themeData(false, context).primaryColorLight),
                   textAlign: TextAlign.left,
@@ -289,7 +292,7 @@ class _ClosedWidgetState extends State<ClosedWidget> {
                 //   overflow: TextOverflow.ellipsis,
                 //   style: TextStyle(
                 //     fontWeight: FontWeight.w400,
-                //     fontSize: 12.sp,
+                //     fontSize: 12.sp + 1,
                 //     overflow: TextOverflow.ellipsis,
                 //     color: AppTheme.themeData(false, context).primaryColorLight,
                 //   ),
@@ -301,7 +304,7 @@ class _ClosedWidgetState extends State<ClosedWidget> {
                   child: Text(
                     convertDateString(widget.news.timestamp!.toString()),
                     style: TextStyle(
-                        fontSize: 13.sp,
+                        fontSize: 13.sp + 1,
                         fontStyle: FontStyle.italic,
                         color: Colors.grey[600]),
                   ),
@@ -328,6 +331,7 @@ class _OpenWidgetState extends State<OpenWidget> {
   // ignore: prefer_typing_uninitialized_variables
   late var myJSON;
   late QuillController _controller;
+  int viewsCount = 0;
 
   Future getPosterDetails() async {
     final userInfo = await db
@@ -358,7 +362,8 @@ class _OpenWidgetState extends State<OpenWidget> {
     poster = Poster();
     getPosterDetails();
     myJSON = jsonDecode(widget.news.body.toString());
-
+    //count the view
+    countView();
     _controller = QuillController(
       document: Document.fromJson(myJSON),
       keepStyleOnNewLine: true,
@@ -371,6 +376,24 @@ class _OpenWidgetState extends State<OpenWidget> {
     poster = null;
     _controller.dispose();
     super.dispose();
+  }
+
+  Future countView() async {
+    var views;
+    final newsRef = db.collection("news").doc(widget.news.id);
+    await newsRef.update({
+      "views": FieldValue.arrayUnion([auth.currentUser?.uid])
+    }).then((value) async => {
+          newsRef.get().then((value) => {
+                views = value.data()?["views"] as List<dynamic>?,
+                if (mounted)
+                  {
+                    setState(() {
+                      viewsCount = views?.length;
+                    })
+                  }
+              })
+        });
   }
 
   final controller = ScrollController();
@@ -432,7 +455,7 @@ class _OpenWidgetState extends State<OpenWidget> {
                     // foregroundColor: Colors.white,
                   ),
                   onPressed: () => Navigator.pop(context),
-                  icon: const Icon(Icons.arrow_back),
+                  icon: const BackButtonIcon(),
                 ),
                 const Spacer(),
                 IconButton(
@@ -443,7 +466,15 @@ class _OpenWidgetState extends State<OpenWidget> {
                     backgroundColor: Colors.white.withOpacity(0.5),
                     // foregroundColor: Colors.white,
                   ),
-                  onPressed: () {},
+                  onPressed: () async {
+                    await AppDatabase.instance.saveBookmark(
+                      ref: widget.news.id,
+                      title: widget.news.title,
+                      category: BookmarkType.news,
+                      data: widget.news.toJson().toString(),
+                    );
+                    print("saved");
+                  },
                   icon: const Icon(Icons.bookmark_border),
                   // color: Colors.white,
                 ),
@@ -495,8 +526,8 @@ class _OpenWidgetState extends State<OpenWidget> {
                                 ),
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: 10.0.w,
-                                    vertical: 5.h,
+                                    horizontal: 5.0.w,
+                                    vertical: 5.w,
                                   ),
                                   child: Row(
                                     children: [
@@ -515,7 +546,7 @@ class _OpenWidgetState extends State<OpenWidget> {
                                       Text(
                                         "${poster!.posterName?.split(" ")[0] ?? 'Anonymous'}  ${poster!.posterName?.split(" ")[1].substring(0, 1) ?? '.'}.",
                                         style: TextStyle(
-                                          fontSize: 12.sp,
+                                          fontSize: 13.sp + 1,
                                           color: Colors.white,
                                           fontWeight: FontWeight.normal,
                                         ),
@@ -535,7 +566,7 @@ class _OpenWidgetState extends State<OpenWidget> {
                                     children: [
                                       Icon(
                                         Icons.access_time,
-                                        size: 15.sp,
+                                        size: 15.sp + 1,
                                         color: Colors.grey.shade800,
                                       ),
                                       SizedBox(width: 5.w),
@@ -543,7 +574,7 @@ class _OpenWidgetState extends State<OpenWidget> {
                                         convertToElapsedString(
                                             widget.news.timestamp!.toString()),
                                         style: TextStyle(
-                                          fontSize: 12.sp,
+                                          fontSize: 12.sp + 1,
                                           color: Colors.grey.shade900,
                                           fontWeight: FontWeight.normal,
                                         ),
@@ -563,15 +594,14 @@ class _OpenWidgetState extends State<OpenWidget> {
                                     children: [
                                       Icon(
                                         Icons.remove_red_eye_outlined,
-                                        size: 15.sp,
+                                        size: 15.sp + 1,
                                         color: Colors.grey.shade800,
                                       ),
                                       SizedBox(width: 5.w),
                                       Text(
-                                        widget.news.views?.length.toString() ??
-                                            "0",
+                                        viewsCount.toString(),
                                         style: TextStyle(
-                                          fontSize: 12.sp,
+                                          fontSize: 12.sp + 1,
                                           color: Colors.grey.shade900,
                                           fontWeight: FontWeight.normal,
                                         ),
@@ -585,7 +615,7 @@ class _OpenWidgetState extends State<OpenWidget> {
                           Text(
                             widget.news.title,
                             style: TextStyle(
-                              fontSize: 20.sp,
+                              fontSize: 20.sp + 1,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -609,7 +639,7 @@ class _OpenWidgetState extends State<OpenWidget> {
                                   TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.normal,
-                                    fontSize: 16.sp,
+                                    fontSize: 16.sp + 1,
                                   ),
                                   const VerticalSpacing(8, 0),
                                   const VerticalSpacing(0, 0),

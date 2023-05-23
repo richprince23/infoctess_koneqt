@@ -105,7 +105,7 @@ class _ForumsScreenState extends State<ForumsScreen> {
         icon: const Icon(Icons.edit_square), iconSize: 20.w,
         // label: Text(
         //   "Create Post",
-        //   style: TextStyle(fontSize: 14.sp),
+        //   style: TextStyle(fontSize: 14.sp + 1),
         // ),
       ),
     );

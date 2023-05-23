@@ -36,7 +36,7 @@ class EmptyList extends StatelessWidget {
             ),
             Text(
               text,
-              style: TextStyle(fontSize: 13.sp, color: Colors.black),
+              style: TextStyle(fontSize: 13.sp + 1, color: Colors.black),
               textAlign: TextAlign.center,
               maxLines: 3,
             ),

@@ -64,7 +64,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               response != ""
                   ? Text(
                       "$response ",
-                      style: TextStyle(color: Colors.red, fontSize: 14.sp),
+                      style: TextStyle(color: Colors.red, fontSize: 14.sp + 1),
                     )
                   : const SizedBox.shrink(),
               SizedBox(

@@ -74,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Text(
                         "INFOCTESS KONEQT",
                         style: GoogleFonts.sarabun(
-                            fontSize: 24.sp,
+                            fontSize: 24.sp + 1,
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             decoration: TextDecoration.none),
@@ -85,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Text(
                         "Welcome Back",
                         style: GoogleFonts.sarabun(
-                            fontSize: 20.sp,
+                            fontSize: 20.sp + 1,
                             color: Colors.white,
                             fontWeight: FontWeight.normal,
                             decoration: TextDecoration.none),
@@ -165,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 style: GoogleFonts.sarabun(
                                   textStyle: TextStyle(
                                     decoration: TextDecoration.underline,
-                                    fontSize: 14.sp,
+                                    fontSize: 14.sp + 1,
                                     color: AppTheme.themeData(false, context)
                                         .focusColor,
                                   ),
@@ -267,7 +267,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               "login",
                               style: TextStyle(
                                 fontWeight: FontWeight.w400,
-                                fontSize: 16.sp,
+                                fontSize: 16.sp + 1,
                                 color: Colors.white,
                               ),
                             ),
@@ -285,7 +285,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 style: GoogleFonts.sarabun(
                                   textStyle: TextStyle(
                                     decoration: TextDecoration.underline,
-                                    fontSize: 16.sp,
+                                    fontSize: 16.sp + 1,
                                     color: AppTheme.themeData(false, context)
                                         .focusColor,
                                   ),

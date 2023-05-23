@@ -45,8 +45,8 @@ class ImageViewer extends StatelessWidget {
                       padding: const EdgeInsets.all(0),
                       shape: const CircleBorder(),
                       backgroundColor: Colors.white),
-                  icon: const Icon(Icons.arrow_back_outlined,
-                      color: Colors.black),
+                  icon: const BackButtonIcon(),
+                  color: Colors.black,
                   onPressed: () => Navigator.pop(context),
                 ),
                 IconButton(
@@ -73,7 +73,7 @@ class ImageViewer extends StatelessWidget {
                         titleOptions: StatusAlertTextConfiguration(
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: 16.sp,
+                            fontSize: 16.sp + 1,
                             // fontWeight: FontWeight.bold,
                           ),
                         ),
