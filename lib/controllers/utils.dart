@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -103,38 +105,59 @@ String convertToElapsedString(String dateString) {
   output = "$minutesElapsed m";
   return output;
 }
+
 Time getTimeOfDay(String time) {
-    var components = time.split(':');
-    var hour = int.tryParse(components[0]) ?? 0;
-    var minutePart = components[1].substring(0, 2);
-    var minute = int.tryParse(minutePart) ?? 0;
+  var components = time.split(':');
+  var hour = int.tryParse(components[0]) ?? 0;
+  var minutePart = components[1].substring(0, 2);
+  var minute = int.tryParse(minutePart) ?? 0;
 
-    if (time.endsWith('PM') && hour != 12) {
-      hour += 12;
-    } else if (time.endsWith('AM') && hour == 12) {
-      hour = 0;
-    }
-
-    return Time(hour, minute, 0);
+  if (time.endsWith('PM') && hour != 12) {
+    hour += 12;
+  } else if (time.endsWith('AM') && hour == 12) {
+    hour = 0;
   }
 
-  String getSTartTime(String time) {
-    String startTime = time.split("-")[0];
-    // String endTime = time.split("-")[1];
+  return Time(hour, minute, 0);
+}
 
-    // convert to 24 hour format
-    if (startTime.contains("PM")) {
-      startTime = startTime.replaceAll("PM", "");
-      startTime =
-          "${int.parse(startTime.split(":")[0]) + 12}:${startTime.split(":")[1]}";
-    } else {
-      startTime = startTime.replaceAll("AM", "");
-    }
+String getSTartTime(String time) {
+  String startTime = time.split("-")[0];
+  // String endTime = time.split("-")[1];
 
-    startTime = startTime.trim();
-
-    // _time =
-    // "${DateFormat.jm().format(DateFormat("hh:mm").parse(startTime))} - ${DateFormat.jm().format(DateFormat("hh:mm").parse(endTime))}";
-    return startTime;
-    // return "${DateFormat.jm().format(DateFormat("hh:mm").parse(startTime))} - ${DateFormat.jm().format(DateFormat("hh:mm").parse(endTime))}";
+  // convert to 24 hour format
+  if (startTime.contains("PM")) {
+    startTime = startTime.replaceAll("PM", "");
+    startTime =
+        "${int.parse(startTime.split(":")[0]) + 12}:${startTime.split(":")[1]}";
+  } else {
+    startTime = startTime.replaceAll("AM", "");
   }
+
+  startTime = startTime.trim();
+
+  // _time =
+  // "${DateFormat.jm().format(DateFormat("hh:mm").parse(startTime))} - ${DateFormat.jm().format(DateFormat("hh:mm").parse(endTime))}";
+  return startTime;
+  // return "${DateFormat.jm().format(DateFormat("hh:mm").parse(startTime))} - ${DateFormat.jm().format(DateFormat("hh:mm").parse(endTime))}";
+}
+
+Map<String, dynamic> extractModel(String jsonString) {
+  final inputMap = jsonDecode(jsonString);
+  final dataValue = inputMap['data'];
+  if (dataValue is String) {
+    final jsonData = jsonDecode(dataValue);
+    if (jsonData is Map<String, dynamic>) {
+      return jsonData;
+    }
+  }
+  return {};
+}
+
+// Map<String, dynamic> extractModel(String jsonString) {
+//   final jsonData = jsonDecode(jsonString);
+//   if (jsonData is Map<String, dynamic>) {
+//     return jsonData;
+//   }
+//   return {};
+// }

@@ -108,8 +108,8 @@ class CalendarScreenState extends State<CalendarScreen> {
 
                             child: ListTile(
                               onTap: () {
-                                print('${snapshot.data.docs[index].id}');
-                                print('${snapshot.data.docs[index].data()}');
+                                // print('${snapshot.data.docs[index].id}');
+                                // print('${snapshot.data.docs[index].data()}');
                                 Event event = Event.fromJson(
                                     snapshot.data.docs[index].data());
                                 Navigator.push(

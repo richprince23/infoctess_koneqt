@@ -332,6 +332,7 @@ class _OpenWidgetState extends State<OpenWidget> {
   late var myJSON;
   late QuillController _controller;
   int viewsCount = 0;
+  bool isSaved = false;
 
   Future getPosterDetails() async {
     final userInfo = await db
@@ -356,6 +357,32 @@ class _OpenWidgetState extends State<OpenWidget> {
     return userInfo;
   }
 
+  //check if already bookmarked
+  Future<bool> isBookmarked() async {
+    final bookmarks = await AppDatabase.instance.getAllBookmarks();
+    try {
+      final bookmark = bookmarks.firstWhere(
+        (element) => element.ref == widget.news.id,
+        orElse: () => Bookmark(
+            category: BookmarkType.event, data: "", ref: "", title: ""),
+      );
+      if (mounted) {
+        if (bookmark.ref != "" && bookmark.id != null) {
+          setState(() {
+            isSaved = true;
+          });
+        } else {
+          setState(() {
+            isSaved = false;
+          });
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
+    return isSaved;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -364,6 +391,9 @@ class _OpenWidgetState extends State<OpenWidget> {
     myJSON = jsonDecode(widget.news.body.toString());
     //count the view
     countView();
+    //check if already bookmarked
+    isBookmarked();
+
     _controller = QuillController(
       document: Document.fromJson(myJSON),
       keepStyleOnNewLine: true,
@@ -379,7 +409,7 @@ class _OpenWidgetState extends State<OpenWidget> {
   }
 
   Future countView() async {
-    var views;
+    List<dynamic>? views = <dynamic>[];
     final newsRef = db.collection("news").doc(widget.news.id);
     await newsRef.update({
       "views": FieldValue.arrayUnion([auth.currentUser?.uid])
@@ -389,7 +419,7 @@ class _OpenWidgetState extends State<OpenWidget> {
                 if (mounted)
                   {
                     setState(() {
-                      viewsCount = views?.length;
+                      viewsCount = views!.length;
                     })
                   }
               })
@@ -463,20 +493,19 @@ class _OpenWidgetState extends State<OpenWidget> {
                     shape: const CircleBorder(),
                     // elevation: 5,
                     padding: EdgeInsets.all(10.w),
-                    backgroundColor: Colors.white.withOpacity(0.5),
-                    // foregroundColor: Colors.white,
+                    backgroundColor: (isSaved == true)
+                        ? cSec.withOpacity(1)
+                        : Colors.white.withOpacity(0.5),
+                    foregroundColor: (isSaved == true) ? Colors.white : null,
                   ),
-                  onPressed: () async {
-                    await AppDatabase.instance.saveBookmark(
-                      ref: widget.news.id,
-                      title: widget.news.title,
-                      category: BookmarkType.news,
-                      data: widget.news.toJson().toString(),
-                    );
-                    print("saved");
-                  },
+                  onPressed: isSaved == true
+                      ? () async {
+                          await deleteBookmark(context);
+                        }
+                      : () async {
+                          await addBookmark(context);
+                        },
                   icon: const Icon(Icons.bookmark_border),
-                  // color: Colors.white,
                 ),
               ],
             ),
@@ -658,6 +687,117 @@ class _OpenWidgetState extends State<OpenWidget> {
           ),
         ],
       ),
+    );
+  }
+
+  addBookmark(BuildContext context) async {
+    await AppDatabase.instance
+        .saveBookmark(
+          ref: widget.news.id,
+          title: widget.news.title,
+          category: BookmarkType.news,
+          data: widget.news.toJson().toString(),
+        )
+        .then((value) => StatusAlert.show(
+              context,
+              title: "Saved",
+              titleOptions: StatusAlertTextConfiguration(
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.sp + 1,
+                  // fontWeight: FontWeight.bold,
+                ),
+              ),
+              maxWidth: 50.vw,
+              configuration: IconConfiguration(
+                icon: Icons.check,
+                color: Colors.green,
+                size: 50.w,
+              ),
+            ))
+        .then(
+          (value) => setState(() {
+            isSaved = !isSaved;
+          }),
+        );
+  }
+
+  deleteBookmark(BuildContext context) async {
+    await AppDatabase.instance
+        .deleteBookmark(
+          widget.news.id,
+        )
+        .then((value) => StatusAlert.show(
+              context,
+              title: "Removed",
+              titleOptions: StatusAlertTextConfiguration(
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.sp + 1,
+                  // fontWeight: FontWeight.bold,
+                ),
+              ),
+              maxWidth: 50.vw,
+              configuration: IconConfiguration(
+                icon: Icons.check,
+                color: Colors.green,
+                size: 50.w,
+              ),
+            ))
+        .then(
+          (value) => setState(() {
+            isSaved = !isSaved;
+          }),
+        );
+  }
+}
+
+class FindNewsItem extends StatefulWidget {
+  final String newsID;
+  const FindNewsItem({
+    Key? key,
+    required this.newsID,
+  }) : super(key: key);
+
+  @override
+  State<FindNewsItem> createState() => _FindNewsItemState();
+}
+
+class _FindNewsItemState extends State<FindNewsItem> {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: db.collection("news").doc(widget.newsID).get(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasError) {
+          return const Center(
+            child: Text("Something went wrong"),
+          );
+        }
+
+        if (snapshot.hasData && !snapshot.data!.exists) {
+          return const Center(
+            child: Text("Document does not exist"),
+          );
+        }
+
+        if (snapshot.hasData && snapshot.data!.exists) {
+          final data = snapshot.data!.data();
+          // print(data);
+          // var news = News.fromJson(data);
+          // News n = news.copyWith(id: snapshot.data!.id);
+          // print(n.id);
+          News news = News.fromMap(data);
+          return OpenWidget(
+              news: news.copyWith(
+            id: snapshot.data!.id,
+          ));
+        }
+
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
   }
 }

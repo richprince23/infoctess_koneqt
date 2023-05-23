@@ -4,8 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:infoctess_koneqt/app_db.dart';
+import 'package:infoctess_koneqt/components/news_item.dart';
 import 'package:infoctess_koneqt/constants.dart';
+import 'package:infoctess_koneqt/controllers/utils.dart';
 import 'package:infoctess_koneqt/models/bookmarks_model.dart';
+import 'package:infoctess_koneqt/models/news_model.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
 import 'package:resize/resize.dart';
@@ -134,14 +137,16 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                         subtitle: Text(snapshot.data![index].createdAt!),
                         trailing: Text(snapshot.data![index].category.name),
                         onTap: () async {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => ReadNoteScreen(
-                          //         noteID: snapshot.data[index].id!,
-                          //         title: snapshot.data[index].title.toString(),
-                          //         content: snapshot.data[index].content.toString()),
-                          //   ),
+                          if (snapshot.data![index].category.name == 'news') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FindNewsItem(
+                                  newsID: snapshot.data![index].ref,
+                                ),
+                              ),
+                            );
+                          }
                           // ).then((value) {});
                         },
                       ),
