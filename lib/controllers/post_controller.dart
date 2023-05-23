@@ -71,3 +71,19 @@ Future sendLike(String postID) async {
     throw Exception(e);
   }
 }
+
+int getCommentsCount(String postID) {
+    int count = 0;
+    db.collection("comments").where("postID", isEqualTo: postID).get().then((value) {
+      count = value.docs.length;
+    });
+    return count;
+  } 
+
+  int getLikesCount(String postID) {
+    int count = 0;
+    db.collection("likes").where("postID", isEqualTo: postID).get().then((value) {
+      count = value.docs.length;
+    });
+    return count;
+  }

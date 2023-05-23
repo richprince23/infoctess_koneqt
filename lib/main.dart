@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
           '/login': (context) => const LoginScreen(),
           "/main": (context) => const MainScreen(),
           "/onboarding": (context) => const OnboardingScreen(),
-          "/post-details": (context) => PostDetails(),
+          // "/post-details": (context) => PostDetails(),
           "/gpa-calculator": (context) => const GPAScreen(),
           "/cgpa-screen": (context) => const CGPAScreen(),
           "/my-courses": (context) => const ManageCourses(),

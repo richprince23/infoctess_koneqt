@@ -334,7 +334,7 @@ class _OpenWidgetState extends State<OpenWidget> {
   late QuillController _controller;
   int viewsCount = 0;
   bool isSaved = false;
-
+  final controller = ScrollController();
   Future getPosterDetails() async {
     final userInfo = await db
         .collection("user_infos")
@@ -384,6 +384,24 @@ class _OpenWidgetState extends State<OpenWidget> {
     return isSaved;
   }
 
+  Future countView() async {
+    List<dynamic>? views = <dynamic>[];
+    final newsRef = db.collection("news").doc(widget.news.id);
+    await newsRef.update({
+      "views": FieldValue.arrayUnion([auth.currentUser?.uid])
+    }).then((value) async => {
+          newsRef.get().then((value) => {
+                views = value.data()?["views"] as List<dynamic>?,
+                if (mounted)
+                  {
+                    setState(() {
+                      viewsCount = views!.length;
+                    })
+                  }
+              })
+        });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -408,26 +426,6 @@ class _OpenWidgetState extends State<OpenWidget> {
     _controller.dispose();
     super.dispose();
   }
-
-  Future countView() async {
-    List<dynamic>? views = <dynamic>[];
-    final newsRef = db.collection("news").doc(widget.news.id);
-    await newsRef.update({
-      "views": FieldValue.arrayUnion([auth.currentUser?.uid])
-    }).then((value) async => {
-          newsRef.get().then((value) => {
-                views = value.data()?["views"] as List<dynamic>?,
-                if (mounted)
-                  {
-                    setState(() {
-                      viewsCount = views!.length;
-                    })
-                  }
-              })
-        });
-  }
-
-  final controller = ScrollController();
 
   @override
   Widget build(BuildContext context) {
