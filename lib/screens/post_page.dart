@@ -85,6 +85,30 @@ class _PostDetailsState extends State<PostDetails> {
     super.dispose();
   }
 
+//get commenter details
+  Poster commenter = Poster();
+  Future getPosterDetails({required Comment comment}) async {
+    final userInfo = await FirebaseFirestore.instance
+        .collection("user_infos")
+        .where("userID", isEqualTo: comment.authorID)
+        .get()
+        .then((value) {
+      var details = value.docs[0].data();
+      // if (mounted) {
+      //   setState(() {
+      commenter.posterName = details['fullName'];
+      commenter.posterID = details['userID'];
+      commenter.userName = details['userName'];
+      commenter.posterAvatarUrl = details['avatar'];
+      commenter.isPosterAdmin = details['isAdmin'];
+      // postComments = int.parse(getCommentsCount(widget.post.id).toString());
+      // postLikes = int.parse(getLikesCount(widget.post.id).toString());
+      //   });
+      // }
+    });
+    return userInfo;
+  }
+
   @override
   Widget build(BuildContext context) {
     poster = ModalRoute.of(context)!.settings.arguments as Poster;
@@ -350,16 +374,18 @@ class _PostDetailsState extends State<PostDetails> {
                   } else {
                     return ListView.builder(
                       controller: listScroll,
-                      itemCount: snapshot.data!.docs.length ,
+                      itemCount: snapshot.data!.docs.length,
                       itemBuilder: ((context, index) {
                         Comment data =
                             Comment.fromJson(snapshot.data!.docs[index].data());
                         Comment comment = data.copyWith(
                           id: snapshot.data!.docs[index].id,
                         );
-                        print(comment.toJson());
+                        getPosterDetails(comment: comment);
+
                         return CommentItem(
                           comment: comment,
+                          user: commenter,
                         );
                       }),
                     );

@@ -4,11 +4,12 @@ import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/models/comments_model.dart';
+import 'package:infoctess_koneqt/models/poster_model.dart';
 
 class CommentItem extends StatelessWidget {
   final Comment comment;
-  const CommentItem({super.key, required this.comment});
-
+  final Poster user;
+  const CommentItem({super.key, required this.comment, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -58,15 +59,17 @@ class CommentItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Angelina Abena Darling Afriyie",
+                          user.posterName ?? "Anonymous",
                           style:
                               GoogleFonts.sarabun(fontWeight: FontWeight.w500),
                         ),
-                        Text("December 12, 2022 8:56pm",
-                            style: GoogleFonts.sarabun(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 12,
-                                color: Colors.black54)),
+                        Text(
+                          "December 12, 2022 8:56pm",
+                          style: GoogleFonts.sarabun(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12,
+                              color: Colors.black54),
+                        ),
                       ],
                     ),
                   ],
@@ -77,8 +80,7 @@ class CommentItem extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: DetectableText(
                 detectionRegExp: detectionRegExp()!,
-                text:
-                    comment.text,
+                text: comment.text,
               ),
             )
           ],
