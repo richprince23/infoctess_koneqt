@@ -117,7 +117,7 @@ class ClosedEventItem extends StatelessWidget {
                   right: 0,
                   child: Card(
                     // elevation: 5,
-                    color: Colors.white,
+                    color: Colors.white.withOpacity(0.7),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5.r),
                     ),
@@ -144,16 +144,32 @@ class ClosedEventItem extends StatelessWidget {
             width: 100.vw,
             padding: EdgeInsets.all(2.w),
             color: Colors.white,
-            child: Text(
-              event.title,
-              style: GoogleFonts.sarabun(
-                fontSize: 18.sp + 1,
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.left,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  event.title,
+                  style: GoogleFonts.sarabun(
+                    fontSize: 18.sp + 1,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.left,
+                ),
+                SizedBox(height: 5.h),
+                Text(
+                  event.venue!,
+                  style: TextStyle(
+                    fontSize: 12.sp + 1,
+                    color: Colors.black,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.left,
+                  maxLines: 1,
+                ),
+              ],
             ),
           ),
         ],
@@ -176,6 +192,7 @@ class OpenEventItem extends StatefulWidget {
 class _OpenEventItemState extends State<OpenEventItem> {
   late QuillController _controller;
   final scroller = ScrollController();
+  final pageScroller = ScrollController();
   // late var myJSON;
   late bool hasBooked;
   @override
@@ -300,7 +317,7 @@ class _OpenEventItemState extends State<OpenEventItem> {
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
-        controller: scroller,
+        controller: pageScroller,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
@@ -421,14 +438,14 @@ class _OpenEventItemState extends State<OpenEventItem> {
                             convertToDayString(widget.event.date!),
                             style: TextStyle(
                               fontSize: 12.sp + 1,
-                              color: cPri,
+                              // color: cPri,
                             ),
                           ),
                           Text(
                             "${convertToMonthDayString(widget.event.date!).split(" ")[0].substring(0, 3)} ${convertToMonthDayString(widget.event.date!).split(" ")[1]}",
                             style: TextStyle(
                               fontSize: 12.sp + 1,
-                              color: cPri,
+                              // color: cPri,
                             ),
                           ),
                         ],
@@ -437,7 +454,7 @@ class _OpenEventItemState extends State<OpenEventItem> {
                     Container(
                       height: 50.h,
                       width: 0.5.w,
-                      color: cPri,
+                      // color: cPri,
                       margin: EdgeInsets.symmetric(horizontal: 1.h),
                     ),
                     Flexible(
@@ -467,7 +484,7 @@ class _OpenEventItemState extends State<OpenEventItem> {
                             widget.event.time!.split("-").first.trim(),
                             style: TextStyle(
                               fontSize: 12.sp + 1,
-                              color: cPri,
+                              // color: cPri,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -475,7 +492,7 @@ class _OpenEventItemState extends State<OpenEventItem> {
                             widget.event.time!.split("-").last.trim(),
                             style: TextStyle(
                               fontSize: 12.sp + 1,
-                              color: cPri,
+                              // color: cPri,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
