@@ -3,11 +3,13 @@ import 'package:detectable_text_field/detectable_text_field.dart';
 import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:infoctess_koneqt/models/comments_model.dart';
 
 class CommentItem extends StatelessWidget {
-  const CommentItem({super.key});
+  final Comment comment;
+  const CommentItem({super.key, required this.comment});
 
-  @override
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -76,7 +78,7 @@ class CommentItem extends StatelessWidget {
               child: DetectableText(
                 detectionRegExp: detectionRegExp()!,
                 text:
-                    "Do the best you can, and leave the rest to God; https://bukyia.com  but also, be faithful to your loved ones sglgh dklgd fgdfghd dfhgkdjfhgdkj",
+                    comment.text,
               ),
             )
           ],

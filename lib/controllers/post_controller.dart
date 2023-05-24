@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:infoctess_koneqt/env.dart';
+import 'package:infoctess_koneqt/models/comments_model.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 FirebaseStorage storage = FirebaseStorage.instance;
@@ -46,16 +48,15 @@ Future deletePost(String postID) async {
 
 Future sendComment(String commentText, String postID) async {
   final uid = _auth.currentUser!.uid;
+  Comment comment = Comment(
+    text: commentText,
+    authorID: uid,
+    timestamp: DateTime.now(),
+  );
   try {
-    await db.collection("posts").doc(postID).update({
-      "comments": FieldValue.arrayUnion([
-        {
-          "text": commentText,
-          "authorID": uid,
-          "timestamp": Timestamp.now(),
-        }
-      ])
-    });
+    await db.collection("posts").doc(postID).collection("comments").add(
+          comment.toJson(),
+        );
   } on FirebaseException catch (e) {
     throw Exception(e);
   }
@@ -73,17 +74,35 @@ Future sendLike(String postID) async {
 }
 
 int getCommentsCount(String postID) {
-    int count = 0;
-    db.collection("comments").where("postID", isEqualTo: postID).get().then((value) {
-      count = value.docs.length;
-    });
-    return count;
-  } 
+  int count = 0;
+  db
+      .collection("comments")
+      .where("postID", isEqualTo: postID)
+      .get()
+      .then((value) {
+    count = value.docs.length;
+  });
+  return count;
+}
 
-  int getLikesCount(String postID) {
-    int count = 0;
-    db.collection("likes").where("postID", isEqualTo: postID).get().then((value) {
-      count = value.docs.length;
-    });
-    return count;
-  }
+int getLikesCount(String postID) {
+  int count = 0;
+  db.collection("posts").doc(postID).get().then((value) {
+    count = value.data()!["likes"].length;
+  });
+  return count;
+}
+
+//count the view
+Future countViews(String postID) async {
+  List<dynamic>? views = <dynamic>[];
+  final postRef = db.collection("posts").doc(postID);
+  await postRef.update({
+    "views": FieldValue.arrayUnion([auth.currentUser?.uid])
+  }).then((value) async => {
+        postRef.get().then((value) => {
+              views = value.data()?["views"] as List<dynamic>?,
+            })
+      });
+  return views?.length;
+}

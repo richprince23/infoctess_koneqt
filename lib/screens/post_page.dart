@@ -13,8 +13,10 @@ import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/components/comment_input.dart';
 import 'package:infoctess_koneqt/components/comment_item.dart';
 import 'package:infoctess_koneqt/constants.dart';
+import 'package:infoctess_koneqt/controllers/post_controller.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/models/bookmarks_model.dart';
+import 'package:infoctess_koneqt/models/comments_model.dart';
 import 'package:infoctess_koneqt/models/poster_model.dart';
 import 'package:infoctess_koneqt/models/posts_model.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
@@ -34,33 +36,10 @@ class _PostDetailsState extends State<PostDetails> {
   ScrollController pageScroll = ScrollController();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   int viewsCount = 0;
+  int likesCount = 0;
   bool isSaved = false;
   final controller = ScrollController();
   Poster? poster;
-
-  // Future getPosterDetails() async {
-  //   final userInfo = await db
-  //       .collection("user_infos")
-  //       .where("userID", isEqualTo: widget.post.posterID.toString().trim())
-  //       .get()
-  //       .then((value) {
-  //     var details = value.docs[0].data();
-
-  //     if (mounted) {
-  //       setState(() {
-  //         poster?.posterName = details['fullName'];
-  //         poster?.posterID = details['userID'];
-  //         poster?.userName = details['userName'];
-  //         poster?.posterAvatarUrl = details['avatar'];
-  //         poster?.isPosterAdmin = details['isAdmin'];
-  //         // postComments = int.parse(getCommentsCount(widget.post.id).toString());
-  //         // postLikes = int.parse(getLikesCount(widget.post.id).toString());
-  //       });
-  //     }
-  //   });
-  //   return userInfo;
-  // }
-
   //check if already bookmarked
   Future<bool> isBookmarked() async {
     final bookmarks = await AppDatabase.instance.getAllBookmarks();
@@ -87,31 +66,11 @@ class _PostDetailsState extends State<PostDetails> {
     return isSaved;
   }
 
-  //count the view
-  Future countView() async {
-    List<dynamic>? views = <dynamic>[];
-    final postRef = db.collection("posts").doc(widget.post.id);
-    await postRef.update({
-      "views": FieldValue.arrayUnion([auth.currentUser?.uid])
-    }).then((value) async => {
-          postRef.get().then((value) => {
-                views = value.data()?["views"] as List<dynamic>?,
-                if (mounted)
-                  {
-                    setState(() {
-                      viewsCount = views!.length;
-                    })
-                  }
-              })
-        });
-  }
-
   @override
   void initState() {
     // getPosterDetails();
 
     //count the view
-    countView();
     //check if already bookmarked
     isBookmarked();
     super.initState();
@@ -268,7 +227,7 @@ class _PostDetailsState extends State<PostDetails> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "153 likes",
+                          "$likesCount likes",
                           style: TextStyle(
                               fontSize: 12,
                               color: AppTheme.themeData(false, context)
@@ -315,8 +274,18 @@ class _PostDetailsState extends State<PostDetails> {
                         ),
                         TextButton.icon(
                           onPressed: () {
-                            scaffoldKey.currentState!
-                                .showBottomSheet((context) => CommentInput());
+                            showModalBottomSheet(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(10.r),
+                                      topRight: Radius.circular(10.r)),
+                                ),
+                                isScrollControlled: true,
+                                clipBehavior: Clip.antiAlias,
+                                context: context,
+                                builder: (context) => CommentInput(
+                                      postID: widget.post.id,
+                                    ));
                           },
                           icon: Icon(
                             CupertinoIcons.chat_bubble,
@@ -361,13 +330,41 @@ class _PostDetailsState extends State<PostDetails> {
             height: 80.vh,
             color: cSec.withOpacity(0.1),
             // margin: EdgeInsets.only(top: 10.w),
-            child: ListView.builder(
-              controller: listScroll,
-              itemCount: 10,
-              itemBuilder: ((context, index) {
-                return CommentItem();
-              }),
-            ),
+            child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                stream: FirebaseFirestore.instance
+                    .collection("posts")
+                    .doc(widget.post.id)
+                    .collection("comments")
+                    .orderBy("timestamp", descending: true)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (snapshot.data?.docs.isEmpty ?? true) {
+                    return const Center(
+                      child: Text("No comments yet"),
+                    );
+                  } else {
+                    return ListView.builder(
+                      controller: listScroll,
+                      itemCount: snapshot.data!.docs.length ,
+                      itemBuilder: ((context, index) {
+                        Comment data =
+                            Comment.fromJson(snapshot.data!.docs[index].data());
+                        Comment comment = data.copyWith(
+                          id: snapshot.data!.docs[index].id,
+                        );
+                        print(comment.toJson());
+                        return CommentItem(
+                          comment: comment,
+                        );
+                      }),
+                    );
+                  }
+                }),
           ),
         ]),
       ),

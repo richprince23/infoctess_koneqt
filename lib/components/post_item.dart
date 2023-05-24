@@ -461,7 +461,9 @@ class _PostItemState extends State<PostItem> {
                                     isScrollControlled: true,
                                     clipBehavior: Clip.antiAlias,
                                     context: context,
-                                    builder: (context) => const CommentInput());
+                                    builder: (context) => CommentInput(
+                                          postID: widget.post.id,
+                                        ));
                               },
                               icon: Icon(
                                 CupertinoIcons.chat_bubble,

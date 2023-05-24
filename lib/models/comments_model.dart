@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Comment {
-  String id;
+  String? id;
   String authorID;
   String text;
   DateTime? timestamp;
 
   Comment({
-    required this.id,
+    this.id,
     required this.authorID,
     required this.text,
     this.timestamp,
@@ -25,7 +25,7 @@ class Comment {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'author': authorID,
+      'authorID': authorID,
       'text': text,
       'timestamp': timestamp,
     };
@@ -34,17 +34,17 @@ class Comment {
   // to json
   Map<String, dynamic> toJson() => {
         'id': id,
-        'author': authorID,
+        'authorID': authorID,
         'text': text,
         'timestamp': timestamp,
       };
 
   // from json
   factory Comment.fromJson(Map<String, dynamic> json) => Comment(
-        id: json['id'],
+        id: json['id'] ?? "",
         authorID: json['authorID'],
         text: json['text'],
-        timestamp: json['timestamp'],
+        timestamp: (json['timestamp'] as Timestamp).toDate(),
       );
 
   Comment copyWith({
@@ -54,10 +54,10 @@ class Comment {
     DateTime? timestamp,
   }) {
     return Comment(
-      id: id!,
-      authorID: authorID!,
-      text: text!,
-      timestamp: timestamp,
+      id: id ?? this.id,
+      authorID: authorID ?? this.authorID,
+      text: text ?? this.text,
+      timestamp: timestamp ?? this.timestamp,
     );
   }
 }
