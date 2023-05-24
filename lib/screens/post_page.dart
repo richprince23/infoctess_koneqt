@@ -86,28 +86,28 @@ class _PostDetailsState extends State<PostDetails> {
   }
 
 //get commenter details
-  Poster commenter = Poster();
-  Future getPosterDetails({required Comment comment}) async {
-    final userInfo = await FirebaseFirestore.instance
-        .collection("user_infos")
-        .where("userID", isEqualTo: comment.authorID)
-        .get()
-        .then((value) {
-      var details = value.docs[0].data();
-      // if (mounted) {
-      //   setState(() {
-      commenter.posterName = details['fullName'];
-      commenter.posterID = details['userID'];
-      commenter.userName = details['userName'];
-      commenter.posterAvatarUrl = details['avatar'];
-      commenter.isPosterAdmin = details['isAdmin'];
-      // postComments = int.parse(getCommentsCount(widget.post.id).toString());
-      // postLikes = int.parse(getLikesCount(widget.post.id).toString());
-      //   });
-      // }
-    });
-    return userInfo;
-  }
+  // Poster commenter = Poster();
+  // Future getPosterDetails({required Comment comment}) async {
+  //   final userInfo = await FirebaseFirestore.instance
+  //       .collection("user_infos")
+  //       .where("userID", isEqualTo: comment.authorID)
+  //       .get()
+  //       .then((value) {
+  //     var details = value.docs[0].data();
+  //     // if (mounted) {
+  //     //   setState(() {
+  //     commenter.posterName = details['fullName'];
+  //     commenter.posterID = details['userID'];
+  //     commenter.userName = details['userName'];
+  //     commenter.posterAvatarUrl = details['avatar'];
+  //     commenter.isPosterAdmin = details['isAdmin'];
+  //     // postComments = int.parse(getCommentsCount(widget.post.id).toString());
+  //     // postLikes = int.parse(getLikesCount(widget.post.id).toString());
+  //     //   });
+  //     // }
+  //   });
+  //   return userInfo;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -153,7 +153,8 @@ class _PostDetailsState extends State<PostDetails> {
                                 clipBehavior: Clip.antiAlias,
                                 child: CachedNetworkImage(
                                   fit: BoxFit.fill,
-                                  width: 120,
+                                  width: 120.w,
+                                  height: 120.w,
                                   imageUrl: poster?.posterAvatarUrl ??
                                       "https://i.pravatar.cc/150?img=3",
                                 ),
@@ -381,11 +382,11 @@ class _PostDetailsState extends State<PostDetails> {
                         Comment comment = data.copyWith(
                           id: snapshot.data!.docs[index].id,
                         );
-                        getPosterDetails(comment: comment);
+                        // getPosterDetails(comment: comment);
 
                         return CommentItem(
                           comment: comment,
-                          user: commenter,
+                          // user: commenter,
                         );
                       }),
                     );
