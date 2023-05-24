@@ -538,7 +538,7 @@ class _OpenEventItemState extends State<OpenEventItem> {
               padding: EdgeInsets.only(
                 left: 20.w,
                 right: 20.w,
-                bottom: 18.w,
+                bottom: 20.w,
                 top: 10.w,
               ),
               decoration: ShapeDecoration(
@@ -555,7 +555,7 @@ class _OpenEventItemState extends State<OpenEventItem> {
                   Expanded(
                     flex: 5,
                     child: SizedBox(
-                      height: 50.h,
+                      height: 60.h,
                       width: 100.vw,
                       child: Center(
                         child: Column(
