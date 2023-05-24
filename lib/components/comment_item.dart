@@ -13,12 +13,12 @@ class CommentItem extends StatelessWidget {
   final Comment comment;
   // final Poster user;
   CommentItem({
-    super.key,
+    Key? key,
     required this.comment,
     // required this.user
-  });
+  }) : super(key: key);
 
-  Poster commenter = Poster();
+  final Poster commenter = Poster();
   Future getPosterDetails({required Comment comment}) async {
     final userInfo = await FirebaseFirestore.instance
         .collection("user_infos")
