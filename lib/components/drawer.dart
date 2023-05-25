@@ -240,10 +240,9 @@ class DrawerScreen extends StatelessWidget {
                   CircleAvatar(
                     radius: 20.r,
                     backgroundImage: CachedNetworkImageProvider(
-                      curUser?.avatar ??
-                          "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle.png",
+                      curUser?.avatar ?? "https://i.pravatar.cc/150?img=3",
                       errorListener: () =>
-                          Image.network("https://picsum.photos/id/2/367/267"),
+                          const Icon(Icons.account_circle, color: Colors.grey),
                     ),
                   ),
                   Expanded(

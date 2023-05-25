@@ -220,55 +220,58 @@ class _PostDetailsState extends State<PostDetails> {
                             : const SizedBox.shrink(),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: 10.h),
-                        child: RichText(
-                          // overflow: TextOverflow.ellipsis,
-                          // maxLines: 5,
-                          text: WidgetSpan(
-                            child: DetectableText(
-                              text: widget.post.body.trim(),
-                              detectionRegExp: detectionRegExp()!,
-                              // overflow: TextOverflow.ellipsis,
-                              // maxLines: 3,
-                              basicStyle: GoogleFonts.sarabun(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16.sp + 1,
-                                color: Colors.black,
-                              ),
-                              textAlign: TextAlign.left,
-                              callback: (bool readMore) {
-                                debugPrint('Read more >>>>>>> $readMore');
-                              },
-                              onTap: (tappedText) async {
-                                if (tappedText.startsWith('#')) {
-                                  print('DetectableText >>>>>>> #');
-                                } else if (tappedText.startsWith('@')) {
-                                  print('DetectableText >>>>>>> @');
-                                } else if (tappedText.startsWith('http')) {
-                                  print('DetectableText >>>>>>> http');
-                                  Uri url = Uri.parse(tappedText);
-                                  if (await canLaunchUrl(url)) {
-                                    await launchUrl(url);
+                        padding: EdgeInsets.only(top: 10.h),
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: RichText(
+                            // overflow: TextOverflow.ellipsis,
+                            // maxLines: 5,
+                            text: WidgetSpan(
+                              child: DetectableText(
+                                text: widget.post.body.trim(),
+                                detectionRegExp: detectionRegExp()!,
+                                // overflow: TextOverflow.ellipsis,
+                                // maxLines: 3,
+                                textAlign: TextAlign.left,
+                                basicStyle: GoogleFonts.sarabun(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16.sp + 1,
+                                  color: Colors.black,
+                                ),
+                                callback: (bool readMore) {
+                                  debugPrint('Read more >>>>>>> $readMore');
+                                },
+                                onTap: (tappedText) async {
+                                  if (tappedText.startsWith('#')) {
+                                    print('DetectableText >>>>>>> #');
+                                  } else if (tappedText.startsWith('@')) {
+                                    print('DetectableText >>>>>>> @');
+                                  } else if (tappedText.startsWith('http')) {
+                                    print('DetectableText >>>>>>> http');
+                                    Uri url = Uri.parse(tappedText);
+                                    if (await canLaunchUrl(url)) {
+                                      await launchUrl(url);
+                                    } else {
+                                      throw 'Could not launch $tappedText';
+                                    }
                                   } else {
-                                    throw 'Could not launch $tappedText';
+                                    print("Post Details");
                                   }
-                                } else {
-                                  print("Post Details");
-                                }
-                              },
-                              alwaysDetectTap: true,
+                                },
+                                alwaysDetectTap: true,
+                              ),
                             ),
                           ),
                         ),
                       ),
                       SizedBox(
-                        height: 20.h,
+                        height: 10.h,
                       ),
                       FutureBuilder(
                           // future: getStat(),
                           builder: (context, snapshot) {
                         return Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
                               "$likesCount likes",
@@ -277,6 +280,9 @@ class _PostDetailsState extends State<PostDetails> {
                                 color: Colors.black54,
                               ),
                             ),
+                            SizedBox(
+                              width: 10.w,
+                            ),
                             Text(
                               "$commentsCount comments",
                               style: TextStyle(
@@ -284,13 +290,13 @@ class _PostDetailsState extends State<PostDetails> {
                                 color: Colors.black54,
                               ),
                             ),
-                            Text(
-                              "23 shares",
-                              style: TextStyle(
-                                fontSize: 12.sp,
-                                color: Colors.black54,
-                              ),
-                            ),
+                            // Text(
+                            //   "23 shares",
+                            //   style: TextStyle(
+                            //     fontSize: 12.sp,
+                            //     color: Colors.black54,
+                            //   ),
+                            // ),
                           ],
                         );
                       }),
@@ -303,7 +309,7 @@ class _PostDetailsState extends State<PostDetails> {
                         children: [
                           TextButton.icon(
                             onPressed: () {},
-                            icon: Icon(
+                            icon: const Icon(
                               CupertinoIcons.heart,
                               color: Colors.black,
                               size: 18,
@@ -332,7 +338,7 @@ class _PostDetailsState extends State<PostDetails> {
                                 ),
                               );
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               CupertinoIcons.chat_bubble,
                               color: Colors.black87,
                               size: 18,
@@ -347,7 +353,7 @@ class _PostDetailsState extends State<PostDetails> {
                           ),
                           TextButton.icon(
                             onPressed: () {},
-                            icon: Icon(
+                            icon: const Icon(
                               CupertinoIcons.share,
                               color: Colors.black87,
                               size: 18,

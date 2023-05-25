@@ -563,11 +563,10 @@ class _OpenWidgetState extends State<OpenWidget> {
                                         backgroundImage:
                                             CachedNetworkImageProvider(
                                           poster?.posterAvatarUrl ??
-                                              "https://picsum.photos/id/2/367/267",
+                                              "https://i.pravatar.cc/150?img=3",
                                           errorListener: () => const Icon(
-                                            Icons.account_circle,
-                                            color: Colors.white,
-                                          ),
+                                              Icons.account_circle,
+                                              color: Colors.grey),
                                         ),
                                       ),
                                       SizedBox(width: 5.w),

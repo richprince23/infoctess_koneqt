@@ -247,7 +247,7 @@ class _PostItemState extends State<PostItem> {
                               foregroundImage: CachedNetworkImageProvider(
                                 // fit: BoxFit.fill,
                                 poster.posterAvatarUrl ??
-                                    "https://picsum.photos/200",
+                                    "https://i.pravatar.cc/150?img=3",
                                 maxWidth: 120.w.toInt(),
                               ),
                             ),
@@ -364,7 +364,7 @@ class _PostItemState extends State<PostItem> {
                               : const SizedBox.shrink(),
                         ),
                         Container(
-                          padding: EdgeInsets.symmetric(vertical: 10.h),
+                          padding: EdgeInsets.only(top: 10.h),
                           child: Align(
                             alignment: Alignment.topLeft,
                             child: RichText(
@@ -382,8 +382,7 @@ class _PostItemState extends State<PostItem> {
                                   basicStyle: GoogleFonts.sarabun(
                                       fontWeight: FontWeight.w400,
                                       fontSize: 16.sp + 1,
-                                      color: AppTheme.themeData(false, context)
-                                          .primaryColorLight),
+                                      color: Colors.black),
                                   callback: (bool readMore) {
                                     debugPrint('Read more >>>>>>> $readMore');
                                   },
@@ -416,13 +415,13 @@ class _PostItemState extends State<PostItem> {
                           ),
                         ),
                         SizedBox(
-                          height: 20.h,
+                          height: 10.h,
                         ),
                         FutureBuilder(
                             // future: null,
                             builder: (context, snapshot) {
                           return Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Text(
                                 "${widget.post.likes} likes",
@@ -431,6 +430,9 @@ class _PostItemState extends State<PostItem> {
                                   color: Colors.black54,
                                 ),
                               ),
+                              SizedBox(
+                                width: 10.w,
+                              ),
                               Text(
                                 "$postComments comments",
                                 style: TextStyle(
@@ -438,13 +440,13 @@ class _PostItemState extends State<PostItem> {
                                   color: Colors.black54,
                                 ),
                               ),
-                              Text(
-                                "23 shares",
-                                style: TextStyle(
-                                  fontSize: 12.sp + 1,
-                                  color: Colors.black54,
-                                ),
-                              ),
+                              // Text(
+                              //   "23 shares",
+                              //   style: TextStyle(
+                              //     fontSize: 12.sp + 1,
+                              //     color: Colors.black54,
+                              //   ),
+                              // ),
                             ],
                           );
                         }),
