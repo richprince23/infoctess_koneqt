@@ -140,7 +140,7 @@ class CreatePostState extends State<CreatePost> {
             maxLengthEnforcement: MaxLengthEnforcement.enforced,
             keyboardType: TextInputType.multiline,
             inputFormatters: [
-              LengthLimitingTextInputFormatter(256),
+              LengthLimitingTextInputFormatter(512),
             ],
             controller: postController,
             minLines: 1,
@@ -210,7 +210,7 @@ class CreatePostState extends State<CreatePost> {
                 ),
                 Expanded(
                   child: Text(
-                    " ${postController.text.length}/ 256",
+                    " ${postController.text.runes.length}/ 512",
                     style: TextStyle(
                         fontSize: 10.sp + 1, fontStyle: FontStyle.italic),
                   ),

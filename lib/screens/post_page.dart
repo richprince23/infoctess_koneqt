@@ -17,6 +17,7 @@ import 'package:infoctess_koneqt/models/comments_model.dart';
 import 'package:infoctess_koneqt/models/poster_model.dart';
 import 'package:infoctess_koneqt/models/posts_model.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
+import 'package:infoctess_koneqt/widgets/empty_list.dart';
 import 'package:resize/resize.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -238,6 +239,16 @@ class _PostDetailsState extends State<PostDetails> {
                                   fontSize: 16.sp + 1,
                                   color: Colors.black,
                                 ),
+                                lessStyle: GoogleFonts.sarabun(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16.sp + 1,
+                                  color: cPri,
+                                ),
+                                moreStyle: GoogleFonts.sarabun(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16.sp + 1,
+                                  color: cPri,
+                                ),
                                 callback: (bool readMore) {
                                   debugPrint('Read more >>>>>>> $readMore');
                                 },
@@ -374,7 +385,7 @@ class _PostDetailsState extends State<PostDetails> {
               ),
             ),
             Container(
-              height: 80.vh,
+              height: 75.vh,
               color: cSec.withOpacity(0.1),
               // margin: EdgeInsets.only(top: 10.w),
               child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
@@ -391,8 +402,35 @@ class _PostDetailsState extends State<PostDetails> {
                       );
                     }
                     if (snapshot.data?.docs.isEmpty ?? true) {
-                      return const Center(
-                        child: Text("No comments yet"),
+                      return Center(
+                        child: Container(
+                          color: Colors.white,
+                          child: Column(
+                            children: [
+                              EmptyList(
+                                text: "No comments yet",
+                              ),
+                              FilledButton.icon(
+                                  icon: const Icon(Icons.add),
+                                  label: const Text("Add Comment"),
+                                  onPressed: () {
+                                    showModalBottomSheet(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(10.r),
+                                            topRight: Radius.circular(10.r)),
+                                      ),
+                                      isScrollControlled: true,
+                                      clipBehavior: Clip.antiAlias,
+                                      context: context,
+                                      builder: (context) => CommentInput(
+                                        postID: widget.post.id,
+                                      ),
+                                    );
+                                  }),
+                            ],
+                          ),
+                        ),
                       );
                     } else {
                       return ListView.builder(
