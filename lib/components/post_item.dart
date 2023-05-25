@@ -66,6 +66,11 @@ class _PostItemState extends State<PostItem> {
           .collection('comments')
           .get();
       totalDocuments = querySnapshot.size;
+      if (mounted) {
+        setState(() {
+          postComments = totalDocuments;
+        });
+      }
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -78,16 +83,27 @@ class _PostItemState extends State<PostItem> {
       final querySnapshot =
           await FirebaseFirestore.instance.collection("posts").doc(docID).get();
       totalLikes = querySnapshot.data()!['likes'].length;
+      if (mounted) {
+        setState(() {
+          postLikes = totalLikes;
+        });
+      }
     } catch (e) {
       debugPrint(e.toString());
     }
     return totalLikes;
   }
 
+  Future getStat() async {
+    await getCommentsCount(widget.post.id);
+    await getLikesCount(widget.post.id);
+  }
+
   @override
   void initState() {
     super.initState();
     poster = Poster();
+    getStat();
     // getPosterDetails();
   }
 
@@ -301,7 +317,7 @@ class _PostItemState extends State<PostItem> {
                   ),
                   // show post image
                   InkWell(
-                    enableFeedback: true,
+                    // enableFeedback: true,
                     onDoubleTap: () {
                       print("Like post");
                       StatusAlert.show(
@@ -402,32 +418,36 @@ class _PostItemState extends State<PostItem> {
                         SizedBox(
                           height: 20.h,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "${widget.post.likes} likes",
-                              style: TextStyle(
-                                fontSize: 12.sp + 1,
-                                color: Colors.black87,
+                        FutureBuilder(
+                            // future: null,
+                            builder: (context, snapshot) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "${widget.post.likes} likes",
+                                style: TextStyle(
+                                  fontSize: 12.sp + 1,
+                                  color: Colors.black54,
+                                ),
                               ),
-                            ),
-                            Text(
-                              "$postComments comments",
-                              style: TextStyle(
-                                fontSize: 12.sp + 1,
-                                color: Colors.black87,
+                              Text(
+                                "$postComments comments",
+                                style: TextStyle(
+                                  fontSize: 12.sp + 1,
+                                  color: Colors.black54,
+                                ),
                               ),
-                            ),
-                            Text(
-                              "23 shares",
-                              style: TextStyle(
-                                fontSize: 12.sp + 1,
-                                color: Colors.black87,
+                              Text(
+                                "23 shares",
+                                style: TextStyle(
+                                  fontSize: 12.sp + 1,
+                                  color: Colors.black54,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
+                            ],
+                          );
+                        }),
                         Divider(
                           color: cSec,
                           thickness: 1,

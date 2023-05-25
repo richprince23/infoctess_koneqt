@@ -16,12 +16,6 @@ class ForumsScreen extends StatefulWidget {
 }
 
 class _ForumsScreenState extends State<ForumsScreen> {
-  Stream<QuerySnapshot<Map<String, dynamic>>> postsStream = FirebaseFirestore
-      .instance
-      .collection('posts')
-      .orderBy('timestamp', descending: true)
-      .snapshots();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,12 +29,10 @@ class _ForumsScreenState extends State<ForumsScreen> {
           width: MediaQuery.of(context).size.width,
           child: RefreshIndicator(
             onRefresh: () async {
-              setState(() {
-                postsStream = FirebaseFirestore.instance
-                    .collection('posts')
-                    .orderBy('timestamp', descending: true)
-                    .snapshots();
-              });
+              FirebaseFirestore.instance
+                  .collection('posts')
+                  .orderBy('timestamp', descending: true)
+                  .snapshots();
             },
             child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                 stream: FirebaseFirestore.instance
@@ -52,12 +44,12 @@ class _ForumsScreenState extends State<ForumsScreen> {
                     return Center(
                       child: Image.asset(
                         "assets/images/preload.gif",
-                        width: 50.h,
-                        height: 50.h,
+                        width: 50.w,
+                        height: 50.w,
                       ),
                     );
                   }
-                  if (snapshot.hasData == null || snapshot.hasError == true) {
+                  if (snapshot.hasData == false || snapshot.hasError == true) {
                     return EmptyList(
                       text:
                           "It seems there isn't any post to view🤔\n Click on 'Create Post' button to post an update",

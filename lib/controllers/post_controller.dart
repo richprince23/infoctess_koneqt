@@ -65,9 +65,18 @@ Future sendComment(String commentText, String postID) async {
 Future sendLike(String postID) async {
   final uid = _auth.currentUser!.uid;
   try {
+    // check if user has already liked the post
+    final post = await db.collection("posts").doc(postID).get();
+    if (post.data()?["likes"].contains(uid)) {
+      await db.collection("posts").doc(postID).update({
+        "likes": FieldValue.arrayRemove([uid])
+      });
+      return 'unliked';
+    }
     await db.collection("posts").doc(postID).update({
       "likes": FieldValue.arrayUnion([uid])
     });
+    return 'liked';
   } on FirebaseException catch (e) {
     throw Exception(e);
   }
@@ -82,6 +91,7 @@ int getCommentsCount(String postID) {
       .then((value) {
     count = value.docs.length;
   });
+
   return count;
 }
 
