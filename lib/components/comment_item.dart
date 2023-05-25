@@ -4,10 +4,12 @@ import 'package:detectable_text_field/detectable_text_field.dart';
 import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/utils.dart';
 import 'package:infoctess_koneqt/models/comments_model.dart';
 import 'package:infoctess_koneqt/models/poster_model.dart';
 import 'package:resize/resize.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CommentItem extends StatelessWidget {
   final Comment comment;
@@ -126,6 +128,34 @@ class CommentItem extends StatelessWidget {
                             fontWeight: FontWeight.w400,
                             color: Colors.black87,
                           ),
+                          moreStyle: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14.sp + 1,
+                            color: cPri,
+                          ),
+                          lessStyle: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14.sp + 1,
+                            color: cPri,
+                          ),
+                          onTap: (tappedText) async {
+                            if (tappedText.startsWith('#')) {
+                              print('DetectableText >>>>>>> #');
+                            } else if (tappedText.startsWith('@')) {
+                              print('DetectableText >>>>>>> @');
+                            } else if (tappedText.startsWith('http')) {
+                              print('DetectableText >>>>>>> http');
+                              Uri url = Uri.parse(tappedText);
+                              if (await canLaunchUrl(url)) {
+                                await launchUrl(url);
+                              } else {
+                                throw 'Could not launch $tappedText';
+                              }
+                            } else {
+                              print("Post Details");
+                            }
+                          },
+                          alwaysDetectTap: true,
                         ),
                         Align(
                           alignment: Alignment.centerRight,
