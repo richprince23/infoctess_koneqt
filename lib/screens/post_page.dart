@@ -138,11 +138,11 @@ class _PostDetailsState extends State<PostDetails> {
           scrollDirection: Axis.vertical,
           child: Column(mainAxisSize: MainAxisSize.max, children: [
             Container(
-              margin: EdgeInsets.only(
-                  top: 5.w, left: 5.w, right: 5.w, bottom: 10.w),
+              margin:
+                  EdgeInsets.only(top: 5.w, left: 5.w, right: 5.w, bottom: 0.w),
               child: Material(
                 borderRadius: BorderRadius.circular(5.r),
-                elevation: 0.5,
+                elevation: 0,
                 shadowColor: Colors.grey,
                 color: Colors.white,
                 child: Padding(
@@ -400,9 +400,12 @@ class _PostDetailsState extends State<PostDetails> {
                           );
                           // getPosterDetails(comment: comment);
 
-                          return CommentItem(
-                            comment: comment,
-                            // user: commenter,
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CommentItem(
+                              comment: comment,
+                              // user: commenter,
+                            ),
                           );
                         }),
                       );

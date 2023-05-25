@@ -48,12 +48,12 @@ class CommentItem extends StatelessWidget {
         builder: (context, snapshot) {
           return Card(
             surfaceTintColor: Colors.white,
-            elevation: 0.5,
+            elevation: 0,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(5.r),
             ),
             child: Padding(
-              padding: EdgeInsets.all(12.0.w),
+              padding: EdgeInsets.all(5.0.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -62,11 +62,11 @@ class CommentItem extends StatelessWidget {
                       print("profile tapped");
                     },
                     child: Container(
-                      padding: EdgeInsets.all(10.w),
+                      padding: EdgeInsets.symmetric(horizontal: 5.w),
                       // height: 50,
                       decoration: BoxDecoration(
                         color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(5),
+                        borderRadius: BorderRadius.circular(5.r),
                       ),
                       child: Row(
                         children: [
@@ -100,12 +100,10 @@ class CommentItem extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                convertDateString(
-                                    comment.timestamp!.toString()),
+                                "@${commenter.userName}",
                                 style: GoogleFonts.sarabun(
                                   fontWeight: FontWeight.w400,
                                   fontSize: 12.sp,
-                                  fontStyle: FontStyle.italic,
                                   color: Colors.black54,
                                 ),
                               ),
@@ -116,15 +114,32 @@ class CommentItem extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10.w),
-                    child: DetectableText(
-                      detectionRegExp: detectionRegExp()!,
-                      text: comment.text,
-                      basicStyle: TextStyle(
-                        fontSize: 14.sp + 1,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black87,
-                      ),
+                    padding: EdgeInsets.only(top: 10.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        DetectableText(
+                          detectionRegExp: detectionRegExp()!,
+                          text: comment.text,
+                          basicStyle: TextStyle(
+                            fontSize: 14.sp + 1,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black87,
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            convertDateString(comment.timestamp!.toString()),
+                            style: GoogleFonts.sarabun(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12.sp,
+                              fontStyle: FontStyle.italic,
+                              color: Colors.black54,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   )
                 ],
