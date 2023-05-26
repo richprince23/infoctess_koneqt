@@ -7,7 +7,9 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/post_controller.dart';
-import 'package:infoctess_koneqt/theme/mytheme.dart';
+import 'package:provider/provider.dart';
+import 'package:resize/resize.dart';
+import 'package:status_alert/status_alert.dart';
 
 class CommentInput extends StatefulWidget {
   final String postID;
@@ -22,7 +24,6 @@ class _CommentInputState extends State<CommentInput> {
   final commentText = TextEditingController();
   FocusNode focusNode = FocusNode();
   bool isEmtpyText = true;
-  
   // final scroll = ScrollController();
   @override
   void dispose() {
@@ -37,20 +38,22 @@ class _CommentInputState extends State<CommentInput> {
     return KeyboardDismissOnTap(
       child: Material(
         type: MaterialType.transparency,
-        shape: const RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10),
-            topRight: Radius.circular(10),
+            topLeft: Radius.circular(10.r),
+            topRight: Radius.circular(10.r),
           ),
         ),
         clipBehavior: Clip.antiAlias,
         child: Container(
           // margin: const EdgeInsets.symmetric(horizontal: 5),
-          padding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: AppTheme.themeData(false, context).dialogBackgroundColor),
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.black45,
+          ),
           clipBehavior: Clip.antiAlias,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -60,12 +63,13 @@ class _CommentInputState extends State<CommentInput> {
               SizedBox(
                 height: 20,
                 child: IconButton(
-                    style: IconButton.styleFrom(
-                        fixedSize: const Size(20, 20),
-                        padding: const EdgeInsets.all(5)),
-                    onPressed: () => Navigator.pop(context),
-                    icon: const Icon(CupertinoIcons.clear),
-                    iconSize: 16),
+                  style: IconButton.styleFrom(
+                      fixedSize: const Size(20, 20),
+                      padding: const EdgeInsets.all(5)),
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(CupertinoIcons.clear),
+                  iconSize: 16,
+                ),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -92,15 +96,15 @@ class _CommentInputState extends State<CommentInput> {
                       focusNode: focusNode,
                       // autofocus: true,
                       decoration: InputDecoration(
-                          alignLabelWithHint: false,
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                style: BorderStyle.solid,
-                                color: AppTheme.themeData(false, context)
-                                    .focusColor),
+                        alignLabelWithHint: false,
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            style: BorderStyle.solid,
+                            color: cSec,
                           ),
-                          focusColor:
-                              AppTheme.themeData(false, context).focusColor),
+                        ),
+                        focusColor: cSec,
+                      ),
                       basicStyle: GoogleFonts.sarabun(),
                     ),
                     Padding(
@@ -120,14 +124,36 @@ class _CommentInputState extends State<CommentInput> {
                           ),
                           Expanded(
                             child:
-                                Text("${commentText.text.runes.length}/ 250"),
+                                Text("${commentText.text.runes.length}/ 256"),
                           ),
                           TextButton(
-                            onPressed: (() {
+                            onPressed: (() async {
                               isEmtpyText
                                   ? null
-                                  : sendComment(commentText.text, widget.postID);
-                              Navigator.pop(context);
+                                  : await sendComment(
+                                          commentText.text, widget.postID)
+                                      .then(
+                                        (value) => Provider.of<Stats>(context,
+                                                listen: false)
+                                            .getStats(widget.postID),
+                                      )
+                                      .then(
+                                        (value) => StatusAlert.show(
+                                          context,
+                                          backgroundColor: Colors.transparent,
+                                          title: "Sent",
+                                          configuration: IconConfiguration(
+                                            icon: Icons.check,
+                                            color: Colors.green,
+                                            size: 50.w,
+                                          ),
+                                          maxWidth: 50.vw,
+                                          duration: const Duration(seconds: 1),
+                                        ),
+                                      )
+                                      .then(
+                                        (value) => Navigator.pop(context),
+                                      );
                             }),
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.all(0),

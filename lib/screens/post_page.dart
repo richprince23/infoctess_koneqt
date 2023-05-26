@@ -19,6 +19,7 @@ import 'package:infoctess_koneqt/models/posts_model.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
 import 'package:resize/resize.dart';
+import 'package:status_alert/status_alert.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PostDetails extends StatefulWidget {
@@ -37,6 +38,7 @@ class _PostDetailsState extends State<PostDetails> {
   int likesCount = 0;
   int commentsCount = 0;
   bool isSaved = false;
+  bool isLiked = false;
   final controller = ScrollController();
   Poster? poster;
   //check if already bookmarked
@@ -65,21 +67,25 @@ class _PostDetailsState extends State<PostDetails> {
     return isSaved;
   }
 
-  @override
-  void initState() {
-    //check if already bookmarked
-    isBookmarked();
-    getStat();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    poster = null;
-    listScroll.dispose();
-    pageScroll.dispose();
-    controller.dispose();
-    super.dispose();
+  //like /unlike post
+  //like post
+  likePost(BuildContext context) async {
+    await sendLike(widget.post.id)
+        .then((value) => {isLiked = value as bool, getStat()})
+        .then((value) => setState(() {}))
+        .then((value) => isLiked == true
+            ? StatusAlert.show(
+                backgroundColor: Colors.transparent,
+                context,
+                configuration: IconConfiguration(
+                  icon: Icons.favorite,
+                  color: Colors.red,
+                  size: 50.w,
+                ),
+                maxWidth: 50.vw,
+                duration: const Duration(seconds: 1),
+              )
+            : null);
   }
 
   Future<int> getCommentsCount(String docID) async {
@@ -122,6 +128,23 @@ class _PostDetailsState extends State<PostDetails> {
   Future getStat() async {
     await getCommentsCount(widget.post.id);
     await getLikesCount(widget.post.id);
+  }
+
+  @override
+  void initState() {
+    //check if already bookmarked
+    // isBookmarked();
+    getStat();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    poster = null;
+    listScroll.dispose();
+    pageScroll.dispose();
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -319,11 +342,17 @@ class _PostDetailsState extends State<PostDetails> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TextButton.icon(
-                            onPressed: () {},
-                            icon: const Icon(
-                              CupertinoIcons.heart,
-                              color: Colors.black,
-                              size: 18,
+                            onPressed: () async {
+                              await likePost(context);
+                            },
+                            icon: Icon(
+                              isLiked == false
+                                  ? Icons.favorite_outline
+                                  : Icons.favorite,
+                              color: isLiked == false
+                                  ? Colors.black87
+                                  : Colors.red,
+                              size: 18.w,
                             ),
                             label: Text(
                               "like",
@@ -443,14 +472,15 @@ class _PostDetailsState extends State<PostDetails> {
                             id: snapshot.data!.docs[index].id,
                           );
                           // getPosterDetails(comment: comment);
-
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CommentItem(
-                              comment: comment,
-                              // user: commenter,
-                            ),
-                          );
+                          if (mounted) {
+                            return Padding(
+                              padding: EdgeInsets.only(right: 8.w, top: 5.w),
+                              child: CommentItem(
+                                comment: comment,
+                                // user: commenter,
+                              ),
+                            );
+                          }
                         }),
                       );
                     }

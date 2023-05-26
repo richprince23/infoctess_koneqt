@@ -1,6 +1,6 @@
 import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:detectable_text_field/detectable_text_field.dart';
 import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,15 +14,15 @@ import 'package:infoctess_koneqt/controllers/utils.dart';
 import 'package:infoctess_koneqt/models/poster_model.dart';
 import 'package:infoctess_koneqt/models/posts_model.dart';
 import 'package:infoctess_koneqt/screens/post_page.dart';
-import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
+import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 import 'package:status_alert/status_alert.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PostItem extends StatefulWidget {
-  Post post;
-  PostItem({super.key, required this.post});
+  final Post post;
+  const PostItem({super.key, required this.post});
 
   @override
   State<PostItem> createState() => _PostItemState();
@@ -34,7 +34,9 @@ class _PostItemState extends State<PostItem> {
   int postLikes = 0;
   int postComments = 0;
   late Poster poster;
+  bool isLiked = false;
 
+//get poster's details
   Future getPosterDetails() async {
     final userInfo = await db
         .collection("user_infos")
@@ -54,57 +56,52 @@ class _PostItemState extends State<PostItem> {
         });
       }
     });
+    // await getStat();
     return userInfo;
   }
 
-  Future<int> getCommentsCount(String docID) async {
-    int totalDocuments = 0;
-    try {
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection("posts")
-          .doc(docID)
-          .collection('comments')
-          .get();
-      totalDocuments = querySnapshot.size;
-      if (mounted) {
-        setState(() {
-          postComments = totalDocuments;
-        });
-      }
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-    return totalDocuments;
+//like post
+  likePost(BuildContext context) async {
+    await sendLike(widget.post.id)
+        .then((value) => {
+              isLiked = value as bool,
+              // getStat()
+              // Provider.of<Stats>(context, listen: false)
+              //     .getStats(widget.post.id)
+            })
+        // .then((value) => setState(() {}))
+        .then((value) => isLiked == true
+            ? StatusAlert.show(
+                backgroundColor: Colors.transparent,
+                context,
+                configuration: IconConfiguration(
+                  icon: Icons.favorite,
+                  color: Colors.red,
+                  size: 50.w,
+                ),
+                maxWidth: 50.vw,
+                duration: const Duration(seconds: 1),
+              )
+            : null);
   }
 
-  Future<int> getLikesCount(String docID) async {
-    int totalLikes = 0;
-    try {
-      final querySnapshot =
-          await FirebaseFirestore.instance.collection("posts").doc(docID).get();
-      totalLikes = querySnapshot.data()!['likes'].length;
-      if (mounted) {
-        setState(() {
-          postLikes = totalLikes;
-        });
-      }
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-    return totalLikes;
-  }
-
+  //get all post stats
   Future getStat() async {
-    await getCommentsCount(widget.post.id);
-    await getLikesCount(widget.post.id);
+    // await getCommentsCount(widget.post.id);
+    // await getLikesCount(widget.post.id);
+    await Provider.of<Stats>(context, listen: false).getStats(widget.post.id);
   }
 
   @override
   void initState() {
+    WidgetsFlutterBinding.ensureInitialized();
     super.initState();
     poster = Poster();
-    getStat();
-    // getPosterDetails();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getPosterDetails();
+      // getStat();
+    });
+    // getStat();
   }
 
   Widget optionButton() {
@@ -317,20 +314,9 @@ class _PostItemState extends State<PostItem> {
                   ),
                   // show post image
                   InkWell(
-                    // enableFeedback: true,
-                    onDoubleTap: () {
-                      print("Like post");
-                      StatusAlert.show(
-                        backgroundColor: Colors.transparent,
-                        context,
-                        configuration: IconConfiguration(
-                          icon: Icons.favorite,
-                          color: Colors.red,
-                          size: 50.w,
-                        ),
-                        maxWidth: 50.vw,
-                        duration: const Duration(seconds: 1),
-                      );
+                    enableFeedback: false,
+                    onDoubleTap: () async {
+                      await likePost(context);
                     },
                     onTap: () async {
                       await Navigator.push(
@@ -417,39 +403,41 @@ class _PostItemState extends State<PostItem> {
                         SizedBox(
                           height: 10.h,
                         ),
-                        FutureBuilder(
-                            // future: null,
-                            builder: (context, snapshot) {
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                "${widget.post.likes} likes",
-                                style: TextStyle(
-                                  fontSize: 12.sp + 1,
-                                  color: Colors.black54,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Text(
-                                "$postComments comments",
-                                style: TextStyle(
-                                  fontSize: 12.sp + 1,
-                                  color: Colors.black54,
-                                ),
-                              ),
-                              // Text(
-                              //   "23 shares",
-                              //   style: TextStyle(
-                              //     fontSize: 12.sp + 1,
-                              //     color: Colors.black54,
-                              //   ),
-                              // ),
-                            ],
-                          );
-                        }),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.end,
+                        //   children: [
+                        //     Consumer<Stats>(
+                        //       builder: (context, value, child) => Text(
+                        //         "${value.likes} likes",
+                        //         style: TextStyle(
+                        //           fontSize: 12.sp + 1,
+                        //           color: Colors.black54,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     SizedBox(
+                        //       width: 10.w,
+                        //     ),
+                        //     Consumer<Stats>(builder: (context, value, child) {
+                        //       print(value.comments);
+                        //       return Text(
+                        //         "${value.comments} comments",
+                        //         style: TextStyle(
+                        //           fontSize: 12.sp + 1,
+                        //           color: Colors.black54,
+                        //         ),
+                        //       );
+                        //     }),
+                        //     // Text(
+                        //     //   "23 shares",
+                        //     //   style: TextStyle(
+                        //     //     fontSize: 12.sp + 1,
+                        //     //     color: Colors.black54,
+                        //     //   ),
+                        //     // ),
+                        //   ],
+                        // ),
+
                         Divider(
                           color: cSec,
                           thickness: 1,
@@ -458,10 +446,16 @@ class _PostItemState extends State<PostItem> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             TextButton.icon(
-                              onPressed: () {},
+                              onPressed: () async {
+                                await likePost(context);
+                              },
                               icon: Icon(
-                                CupertinoIcons.heart,
-                                color: Colors.black87,
+                                isLiked == false
+                                    ? Icons.favorite_outline
+                                    : Icons.favorite,
+                                color: isLiked == false
+                                    ? Colors.black87
+                                    : Colors.red,
                                 size: 18.w,
                               ),
                               label: Text(

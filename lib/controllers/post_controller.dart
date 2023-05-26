@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/models/comments_model.dart';
 
@@ -71,12 +72,12 @@ Future sendLike(String postID) async {
       await db.collection("posts").doc(postID).update({
         "likes": FieldValue.arrayRemove([uid])
       });
-      return 'unliked';
+      return false;
     }
     await db.collection("posts").doc(postID).update({
       "likes": FieldValue.arrayUnion([uid])
     });
-    return 'liked';
+    return true;
   } on FirebaseException catch (e) {
     throw Exception(e);
   }
@@ -85,8 +86,10 @@ Future sendLike(String postID) async {
 int getCommentsCount(String postID) {
   int count = 0;
   db
+      .collection("posts")
+      .doc(postID)
       .collection("comments")
-      .where("postID", isEqualTo: postID)
+      // .where("postID", isEqualTo: postID)
       .get()
       .then((value) {
     count = value.docs.length;
@@ -115,4 +118,63 @@ Future countViews(String postID) async {
             })
       });
   return views?.length;
+}
+
+class Stats extends ChangeNotifier {
+  int? _likes = 0;
+  int? _comments = 0;
+  int? _views = 0;
+
+  get likes => _likes;
+  get comments => _comments;
+
+  Future getComments(String postID) async {
+    getCommentsCount(postID);
+    notifyListeners();
+    // return _comments!;
+  }
+
+  Future setLikes(String postID) async {
+    getLikesCount(postID);
+    notifyListeners();
+  }
+
+  Future setViews(String postID) async {
+    countViews(postID);
+    notifyListeners();
+  }
+
+  Future<int> commentsCount(String docID) async {
+    int totalDocuments = 0;
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection("posts")
+          .doc(docID)
+          .collection('comments')
+          .get();
+      totalDocuments = querySnapshot.size;
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return totalDocuments;
+  }
+
+  Future<int> getLikesCount(String docID) async {
+    int totalLikes = 0;
+    try {
+      final querySnapshot =
+          await FirebaseFirestore.instance.collection("posts").doc(docID).get();
+      totalLikes = querySnapshot.data()!['likes'].length;
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    return totalLikes;
+  }
+
+  Future getStats(String postID) async {
+    commentsCount(postID).then((value) => _comments = value);
+    getLikesCount(postID).then((value) => _likes = value);
+    //  _views = countViews(postID);
+    notifyListeners();
+  }
 }

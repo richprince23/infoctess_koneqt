@@ -15,7 +15,7 @@ class PostModel {
   String? _posterID;
   DateTime? _timestamp;
   List<Comment>? _comments;
-  int? _likes;
+  List<String>? _likes;
 
   String? get id => _id;
 
@@ -27,7 +27,7 @@ class PostModel {
   DateTime? get timestamp => _timestamp;
 
   List<Comment>? get comments => _comments;
-  int? get likes => _likes;
+  List<String>? get likes => _likes ?? [];
 }
 
 class Post {
@@ -37,14 +37,14 @@ class Post {
   String? imgUrl;
   DateTime? timestamp;
   List<Comment>? comments;
-  int likes = 0;
+  List<String>? likes;
   Post({
     required this.id,
     required this.body,
     this.posterID,
     this.imgUrl,
     this.timestamp,
-    this.likes = 0,
+    this.likes,
     this.comments,
   });
 
@@ -81,7 +81,7 @@ class Post {
     String? posterID,
     String? imgUrl,
     DateTime? timestamp,
-    int? likes,
+    List<String>? likes,
     List<Comment>? comments,
   }) {
     return Post(
@@ -113,7 +113,9 @@ class Post {
         posterID: json['posterID'],
         imgUrl: json['imgUrl'],
         timestamp: json['timestamp'],
-        likes: json['likes'],
+        likes: json['likes'] != null
+            ? List<String>.from(json['likes'].map((like) => like))
+            : null,
         comments: json['comments'] != null
             ? List<Comment>.from(
                 json['comments'].map((comment) => Comment.fromMap(comment)))

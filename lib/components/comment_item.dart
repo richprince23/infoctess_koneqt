@@ -48,132 +48,146 @@ class CommentItem extends StatelessWidget {
     return FutureBuilder(
         future: getPosterDetails(comment: comment),
         builder: (context, snapshot) {
-          return Card(
-            surfaceTintColor: Colors.white,
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5.r),
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(5.0.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  InkWell(
-                    onTap: () async {
-                      print("profile tapped");
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 5.w),
-                      // height: 50,
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(5.r),
+          return Padding(
+            padding: EdgeInsets.all(5.0.w),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 4.0.w),
+                  child: CircleAvatar(
+                    // radius: 25,
+                    child: ClipOval(
+                      clipBehavior: Clip.antiAlias,
+                      child: CachedNetworkImage(
+                        fit: BoxFit.cover,
+                        width: 120.w,
+                        height: 120.w,
+                        imageUrl: commenter.posterAvatarUrl ??
+                            "https://i.pravatar.cc/150?img=3",
                       ),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.0.w),
-                            child: CircleAvatar(
-                              // radius: 25,
-                              child: ClipOval(
-                                clipBehavior: Clip.antiAlias,
-                                child: CachedNetworkImage(
-                                  fit: BoxFit.cover,
-                                  width: 120.w,
-                                  height: 120.w,
-                                  imageUrl: commenter.posterAvatarUrl ??
-                                      "https://i.pravatar.cc/150?img=3",
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.all(10.w),
+                    decoration: ShapeDecoration(
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20.r),
+                          topRight: Radius.circular(20.r),
+                          bottomLeft: const Radius.circular(0),
+                          bottomRight: Radius.circular(20.r),
+                        ),
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          onTap: () async {
+                            print("profile tapped");
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 10.w,
+                              vertical: 5.w,
+                            ),
+                            // height: 50,
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade50,
+                              borderRadius: BorderRadius.circular(5.r),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: 100.vw,
+                                  child: Text(
+                                    commenter.posterName ?? "Anonymous",
+                                    style: GoogleFonts.sarabun(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14.sp,
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                // Text(
+                                //   "@${commenter.userName}",
+                                //   style: GoogleFonts.sarabun(
+                                //     fontWeight: FontWeight.w400,
+                                //     fontSize: 12.sp,
+                                //     color: Colors.black54,
+                                //   ),
+                                // ),
+                              ],
                             ),
                           ),
-                          SizedBox(
-                            width: 10.h,
-                          ),
-                          Column(
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 5.w),
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                commenter.posterName ?? "Anonymous",
-                                style: GoogleFonts.sarabun(
-                                  fontWeight: FontWeight.w500,
+                              DetectableText(
+                                detectionRegExp: detectionRegExp()!,
+                                text: comment.text,
+                                basicStyle: TextStyle(
                                   fontSize: 14.sp + 1,
-                                ),
-                              ),
-                              Text(
-                                "@${commenter.userName}",
-                                style: GoogleFonts.sarabun(
                                   fontWeight: FontWeight.w400,
-                                  fontSize: 12.sp,
-                                  color: Colors.black54,
+                                  color: Colors.black87,
+                                ),
+                                moreStyle: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14.sp + 1,
+                                  color: cPri,
+                                ),
+                                lessStyle: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14.sp + 1,
+                                  color: cPri,
+                                ),
+                                onTap: (tappedText) async {
+                                  if (tappedText.startsWith('#')) {
+                                    print('DetectableText >>>>>>> #');
+                                  } else if (tappedText.startsWith('@')) {
+                                    print('DetectableText >>>>>>> @');
+                                  } else if (tappedText.startsWith('http')) {
+                                    print('DetectableText >>>>>>> http');
+                                    Uri url = Uri.parse(tappedText);
+                                    if (await canLaunchUrl(url)) {
+                                      await launchUrl(url);
+                                    } else {
+                                      throw 'Could not launch $tappedText';
+                                    }
+                                  } else {
+                                    print("Post Details");
+                                  }
+                                },
+                                alwaysDetectTap: true,
+                              ),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  convertDateString(
+                                      comment.timestamp!.toString()),
+                                  style: GoogleFonts.sarabun(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12.sp,
+                                    fontStyle: FontStyle.italic,
+                                    color: Colors.black54,
+                                  ),
                                 ),
                               ),
                             ],
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 10.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        DetectableText(
-                          detectionRegExp: detectionRegExp()!,
-                          text: comment.text,
-                          basicStyle: TextStyle(
-                            fontSize: 14.sp + 1,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black87,
-                          ),
-                          moreStyle: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14.sp + 1,
-                            color: cPri,
-                          ),
-                          lessStyle: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14.sp + 1,
-                            color: cPri,
-                          ),
-                          onTap: (tappedText) async {
-                            if (tappedText.startsWith('#')) {
-                              print('DetectableText >>>>>>> #');
-                            } else if (tappedText.startsWith('@')) {
-                              print('DetectableText >>>>>>> @');
-                            } else if (tappedText.startsWith('http')) {
-                              print('DetectableText >>>>>>> http');
-                              Uri url = Uri.parse(tappedText);
-                              if (await canLaunchUrl(url)) {
-                                await launchUrl(url);
-                              } else {
-                                throw 'Could not launch $tappedText';
-                              }
-                            } else {
-                              print("Post Details");
-                            }
-                          },
-                          alwaysDetectTap: true,
-                        ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                            convertDateString(comment.timestamp!.toString()),
-                            style: GoogleFonts.sarabun(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12.sp,
-                              fontStyle: FontStyle.italic,
-                              color: Colors.black54,
-                            ),
-                          ),
-                        ),
+                        )
                       ],
                     ),
-                  )
-                ],
-              ),
+                  ),
+                ),
+              ],
             ),
           );
         });
