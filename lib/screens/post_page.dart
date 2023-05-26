@@ -152,6 +152,9 @@ class _PostDetailsState extends State<PostDetails> {
       child: Scaffold(
         key: scaffoldKey,
         appBar: AppBar(
+          surfaceTintColor: Colors.white,
+          elevation: 0.0,
+          shadowColor: cSec.withOpacity(0.5),
           title: Text("${poster!.posterName?.split(" ")[0] ?? ''}'s Post"),
         ),
         body: SingleChildScrollView(
