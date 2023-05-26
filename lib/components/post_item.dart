@@ -60,29 +60,49 @@ class _PostItemState extends State<PostItem> {
     return userInfo;
   }
 
-//like post
+  //like post
   likePost(BuildContext context) async {
     await sendLike(widget.post.id)
-        .then((value) => {
-              isLiked = value as bool,
-              // getStat()
-              // Provider.of<Stats>(context, listen: false)
-              //     .getStats(widget.post.id)
-            })
+        .then((value) => {isLiked = value as bool, getStat()})
         // .then((value) => setState(() {}))
-        .then((value) => isLiked == true
-            ? StatusAlert.show(
-                backgroundColor: Colors.transparent,
-                context,
-                configuration: IconConfiguration(
-                  icon: Icons.favorite,
-                  color: Colors.red,
-                  size: 50.w,
-                ),
-                maxWidth: 50.vw,
-                duration: const Duration(seconds: 1),
-              )
-            : null);
+        // .then((value) => isLiked = isLikedPost())
+        .then(
+          (value) => isLiked == true
+              ? StatusAlert.show(
+                  backgroundColor: Colors.transparent,
+                  context,
+                  configuration: IconConfiguration(
+                    icon: Icons.favorite,
+                    color: Colors.red,
+                    size: 50.w,
+                  ),
+                  maxWidth: 50.vw,
+                  duration: const Duration(seconds: 1),
+                )
+              : null,
+        );
+  }
+
+// check if already liked
+  bool isLikedPost() {
+    final _isLiked =
+        Provider.of<Stats>(context, listen: false).checkLike(widget.post.id);
+    try {
+      if (mounted) {
+        if (_isLiked == true) {
+          setState(() {
+            isLiked = true;
+          });
+        } else {
+          setState(() {
+            isLiked = false;
+          });
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
+    return isLiked;
   }
 
   //get all post stats
@@ -97,6 +117,7 @@ class _PostItemState extends State<PostItem> {
     WidgetsFlutterBinding.ensureInitialized();
     super.initState();
     poster = Poster();
+    isLiked = isLikedPost();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       getPosterDetails();
       // getStat();
@@ -438,80 +459,100 @@ class _PostItemState extends State<PostItem> {
                         //   ],
                         // ),
 
-                        Divider(
-                          color: cSec,
-                          thickness: 1,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TextButton.icon(
-                              onPressed: () async {
-                                await likePost(context);
-                              },
-                              icon: Icon(
-                                isLiked == false
-                                    ? Icons.favorite_outline
-                                    : Icons.favorite,
-                                color: isLiked == false
-                                    ? Colors.black87
-                                    : Colors.red,
-                                size: 18.w,
-                              ),
-                              label: Text(
-                                "like",
-                                style: TextStyle(
-                                  fontSize: 14.sp + 1,
-                                  color: Colors.black87,
-                                ),
-                              ),
+                        // Divider(
+                        //   color: cSec,
+                        //   thickness: 1,
+                        // ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     TextButton.icon(
+                        //       onPressed: () async {
+                        //         await likePost(context);
+                        //       },
+                        //       icon: Consumer<Stats>(
+                        //         builder: (context, value, child) => Icon(
+                        //           value.isLiked == false
+                        //               ? Icons.favorite_outline
+                        //               : Icons.favorite,
+                        //           color: value.isLiked == false
+                        //               ? Colors.black87
+                        //               : Colors.red,
+                        //           size: 18.w,
+                        //         ),
+                        //       ),
+                        //       label: Text(
+                        //         "like",
+                        //         style: TextStyle(
+                        //           fontSize: 14.sp + 1,
+                        //           color: Colors.black87,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     TextButton.icon(
+                        //       onPressed: () {
+                        //         showModalBottomSheet(
+                        //             shape: RoundedRectangleBorder(
+                        //               borderRadius: BorderRadius.only(
+                        //                   topLeft: Radius.circular(10.r),
+                        //                   topRight: Radius.circular(10.r)),
+                        //             ),
+                        //             isScrollControlled: true,
+                        //             clipBehavior: Clip.antiAlias,
+                        //             context: context,
+                        //             builder: (context) => CommentInput(
+                        //                   postID: widget.post.id,
+                        //                 ));
+                        //       },
+                        //       icon: Icon(
+                        //         CupertinoIcons.chat_bubble,
+                        //         color: Colors.black87,
+                        //         size: 18.w,
+                        //       ),
+                        //       label: Text(
+                        //         "comment",
+                        //         style: TextStyle(
+                        //           fontSize: 14.sp + 1,
+                        //           color: Colors.black87,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     TextButton.icon(
+                        //       onPressed: () {},
+                        //       icon: Icon(
+                        //         Platform.isAndroid
+                        //             ? CupertinoIcons.arrowshape_turn_up_right
+                        //             : CupertinoIcons.share,
+                        //         color: Colors.black87,
+                        //         size: 18.w,
+                        //       ),
+                        //       label: Text(
+                        //         "share",
+                        //         style: TextStyle(
+                        //           fontSize: 14.sp + 1,
+                        //           color: Colors.black87,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        Container(
+                          width: 100.vw,
+                          padding: EdgeInsets.symmetric(vertical: 10.w),
+                          decoration: BoxDecoration(
+                            // color: Colors.black12,
+                            border:
+                                Border.all(color: Colors.black12, width: 1.w),
+                            borderRadius: BorderRadius.circular(10.r),
+                          ),
+                          child: Text(
+                            "View Post",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 14.sp + 1,
+                              color: Colors.black54,
                             ),
-                            TextButton.icon(
-                              onPressed: () {
-                                showModalBottomSheet(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(10.r),
-                                          topRight: Radius.circular(10.r)),
-                                    ),
-                                    isScrollControlled: true,
-                                    clipBehavior: Clip.antiAlias,
-                                    context: context,
-                                    builder: (context) => CommentInput(
-                                          postID: widget.post.id,
-                                        ));
-                              },
-                              icon: Icon(
-                                CupertinoIcons.chat_bubble,
-                                color: Colors.black87,
-                                size: 18.w,
-                              ),
-                              label: Text(
-                                "comment",
-                                style: TextStyle(
-                                  fontSize: 14.sp + 1,
-                                  color: Colors.black87,
-                                ),
-                              ),
-                            ),
-                            TextButton.icon(
-                              onPressed: () {},
-                              icon: Icon(
-                                Platform.isAndroid
-                                    ? CupertinoIcons.arrowshape_turn_up_right
-                                    : CupertinoIcons.share,
-                                color: Colors.black87,
-                                size: 18.w,
-                              ),
-                              label: Text(
-                                "share",
-                                style: TextStyle(
-                                  fontSize: 14.sp + 1,
-                                  color: Colors.black87,
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ],
                     ),
