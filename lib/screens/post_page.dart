@@ -16,6 +16,7 @@ import 'package:infoctess_koneqt/models/bookmarks_model.dart';
 import 'package:infoctess_koneqt/models/comments_model.dart';
 import 'package:infoctess_koneqt/models/poster_model.dart';
 import 'package:infoctess_koneqt/models/posts_model.dart';
+import 'package:infoctess_koneqt/screens/tools/image_viewer.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
 import 'package:provider/provider.dart';
@@ -228,18 +229,32 @@ class _PostDetailsState extends State<PostDetails> {
                       ),
                       SizedBox(
                         child: widget.post.imgUrl != null
-                            ? CachedNetworkImage(
-                                progressIndicatorBuilder:
-                                    (context, url, progress) => Center(
-                                  child: Image.asset(
-                                    "assets/images/preload.gif",
-                                    width: 30.w,
-                                    height: 30.w,
+                            ? InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return ImageViewer(
+                                          image: widget.post.imgUrl!,
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
+                                child: CachedNetworkImage(
+                                  progressIndicatorBuilder:
+                                      (context, url, progress) => Center(
+                                    child: Image.asset(
+                                      "assets/images/preload.gif",
+                                      width: 30.w,
+                                      height: 30.w,
+                                    ),
                                   ),
+                                  fit: BoxFit.cover,
+                                  width: 100.vw,
+                                  imageUrl: widget.post.imgUrl!,
                                 ),
-                                fit: BoxFit.cover,
-                                width: 100.vw,
-                                imageUrl: widget.post.imgUrl!,
                               )
                             : const SizedBox.shrink(),
                       ),
