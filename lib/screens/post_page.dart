@@ -18,6 +18,7 @@ import 'package:infoctess_koneqt/models/poster_model.dart';
 import 'package:infoctess_koneqt/models/posts_model.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
+import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 import 'package:status_alert/status_alert.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -72,69 +73,65 @@ class _PostDetailsState extends State<PostDetails> {
   likePost(BuildContext context) async {
     await sendLike(widget.post.id)
         .then((value) => {isLiked = value as bool, getStat()})
-        .then((value) => setState(() {}))
-        .then((value) => isLiked == true
-            ? StatusAlert.show(
-                backgroundColor: Colors.transparent,
-                context,
-                configuration: IconConfiguration(
-                  icon: Icons.favorite,
-                  color: Colors.red,
-                  size: 50.w,
-                ),
-                maxWidth: 50.vw,
-                duration: const Duration(seconds: 1),
-              )
-            : null);
+        // .then((value) => setState(() {}))
+        // .then((value) => isLiked = isLikedPost())
+        .then(
+          (value) => isLiked == true
+              ? StatusAlert.show(
+                  backgroundColor: Colors.transparent,
+                  context,
+                  configuration: IconConfiguration(
+                    icon: Icons.favorite,
+                    color: Colors.red,
+                    size: 50.w,
+                  ),
+                  maxWidth: 50.vw,
+                  duration: const Duration(seconds: 1),
+                )
+              : null,
+        );
   }
 
-  Future<int> getCommentsCount(String docID) async {
-    int totalDocuments = 0;
+// check if already liked
+  bool isLikedPost() {
+    final _isLiked =
+        Provider.of<Stats>(context, listen: false).checkLike(widget.post.id);
     try {
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection("posts")
-          .doc(docID)
-          .collection('comments')
-          .get();
-      totalDocuments = querySnapshot.size;
       if (mounted) {
-        setState(() {
-          commentsCount = totalDocuments;
-        });
+        if (_isLiked == true) {
+          setState(() {
+            isLiked = true;
+          });
+        } else {
+          setState(() {
+            isLiked = false;
+          });
+        }
       }
     } catch (e) {
-      debugPrint(e.toString());
+      print(e);
     }
-    return totalDocuments;
-  }
-
-  Future<int> getLikesCount(String docID) async {
-    int totalLikes = 0;
-    try {
-      final querySnapshot =
-          await FirebaseFirestore.instance.collection("posts").doc(docID).get();
-      totalLikes = querySnapshot.data()!['likes'].length;
-      if (mounted) {
-        setState(() {
-          likesCount = totalLikes;
-        });
-      }
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-    return totalLikes;
+    return isLiked;
   }
 
   Future getStat() async {
-    await getCommentsCount(widget.post.id);
-    await getLikesCount(widget.post.id);
+    // await getCommentsCount(widget.post.id);
+    // await getLikesCount(widget.post.id);
+    // await isBookmarked();
+    await Provider.of<Stats>(context, listen: false).getStats(widget.post.id);
   }
 
   @override
   void initState() {
     //check if already bookmarked
     // isBookmarked();
-    getStat();
+
+    //check if already liked
+    isLiked = isLikedPost();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getStat();
+    });
+    // getStat();
     super.initState();
   }
 
@@ -307,21 +304,25 @@ class _PostDetailsState extends State<PostDetails> {
                         return Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Text(
-                              "$likesCount likes",
-                              style: TextStyle(
-                                fontSize: 12.sp,
-                                color: Colors.black54,
+                            Consumer<Stats>(
+                              builder: (context, value, child) => Text(
+                                "${value.likes} likes",
+                                style: TextStyle(
+                                  fontSize: 12.sp + 1,
+                                  color: Colors.black54,
+                                ),
                               ),
                             ),
                             SizedBox(
                               width: 10.w,
                             ),
-                            Text(
-                              "$commentsCount comments",
-                              style: TextStyle(
-                                fontSize: 12.sp,
-                                color: Colors.black54,
+                            Consumer<Stats>(
+                              builder: (context, value, child) => Text(
+                                "${value.comments} comments",
+                                style: TextStyle(
+                                  fontSize: 12.sp + 1,
+                                  color: Colors.black54,
+                                ),
                               ),
                             ),
                             // Text(
@@ -345,14 +346,16 @@ class _PostDetailsState extends State<PostDetails> {
                             onPressed: () async {
                               await likePost(context);
                             },
-                            icon: Icon(
-                              isLiked == false
-                                  ? Icons.favorite_outline
-                                  : Icons.favorite,
-                              color: isLiked == false
-                                  ? Colors.black87
-                                  : Colors.red,
-                              size: 18.w,
+                            icon: Consumer<Stats>(
+                              builder: (context, value, child) => Icon(
+                                value.isLiked == false
+                                    ? Icons.favorite_outline
+                                    : Icons.favorite,
+                                color: value.isLiked == false
+                                    ? Colors.black87
+                                    : Colors.red,
+                                size: 18.w,
+                              ),
                             ),
                             label: Text(
                               "like",
@@ -474,7 +477,7 @@ class _PostDetailsState extends State<PostDetails> {
                           // getPosterDetails(comment: comment);
                           if (mounted) {
                             return Padding(
-                              padding: EdgeInsets.only(right: 8.w, top: 5.w),
+                              padding: EdgeInsets.only(right: 8.w, top: 1.w),
                               child: CommentItem(
                                 comment: comment,
                                 // user: commenter,

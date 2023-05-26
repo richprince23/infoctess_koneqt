@@ -124,9 +124,12 @@ class Stats extends ChangeNotifier {
   int? _likes = 0;
   int? _comments = 0;
   int? _views = 0;
+  bool? _isLiked = false;
 
   get likes => _likes;
   get comments => _comments;
+  get views => _views;
+  get isLiked => _isLiked;
 
   Future getComments(String postID) async {
     getCommentsCount(postID);
@@ -174,7 +177,26 @@ class Stats extends ChangeNotifier {
   Future getStats(String postID) async {
     commentsCount(postID).then((value) => _comments = value);
     getLikesCount(postID).then((value) => _likes = value);
+    checkLike(postID);
     //  _views = countViews(postID);
     notifyListeners();
+  }
+
+  Future<bool> checkLike(String postID) async {
+    final uid = _auth.currentUser!.uid;
+    try {
+      // check if user has already liked the post
+      final post = await db.collection("posts").doc(postID).get();
+      if (post.data()?["likes"].contains(uid)) {
+        _isLiked = true;
+        notifyListeners();
+        return _isLiked!;
+      }
+      _isLiked = false;
+      notifyListeners();
+      return _isLiked!;
+    } on FirebaseException catch (e) {
+      throw Exception(e);
+    }
   }
 }
