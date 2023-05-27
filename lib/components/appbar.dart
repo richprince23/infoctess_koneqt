@@ -6,6 +6,7 @@ import 'package:infoctess_koneqt/components/notiffications_screen.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/user_provider.dart';
 import 'package:infoctess_koneqt/env.dart';
+import 'package:infoctess_koneqt/screens/search_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 
@@ -34,10 +35,8 @@ class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
       actions: [
         IconButton(
           onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const NotificationsSceen()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const SearchScreen()));
           },
           iconSize: 20.w,
           icon: const Icon(CupertinoIcons.search),

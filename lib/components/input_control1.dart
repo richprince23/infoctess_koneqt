@@ -70,6 +70,7 @@ class _InputControlState extends State<InputControl> {
                 color: Colors.black87,
                 fontSize: 16.sp + 1,
                 decoration: TextDecoration.none),
+            overflow: TextOverflow.ellipsis,
           ),
         if (widget.showLabel == true)
           SizedBox(
@@ -86,6 +87,11 @@ class _InputControlState extends State<InputControl> {
               textLength = value.length;
             }),
           },
+          textInputAction: (widget.isSearch == true)
+              ? TextInputAction.search
+              : widget.type == TextInputType.multiline
+                  ? TextInputAction.newline
+                  : TextInputAction.next,
           onTap: widget.onTap,
           validator: widget.validator,
           keyboardType: widget.type ?? TextInputType.text,
