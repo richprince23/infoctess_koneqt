@@ -36,7 +36,7 @@ class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
         IconButton(
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const SearchScreen()));
+                MaterialPageRoute(builder: (context) => SearchScreen()));
           },
           iconSize: 20.w,
           icon: const Icon(CupertinoIcons.search),

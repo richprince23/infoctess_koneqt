@@ -23,6 +23,7 @@ class InputControl extends StatefulWidget {
   final bool? readOnly;
 
   final void Function()? onTap;
+  final void Function(String)? onChanged;
 
   Icon? leading;
   bool? isSearch;
@@ -40,6 +41,7 @@ class InputControl extends StatefulWidget {
     this.focusNode,
     this.leading,
     this.isSearch = false,
+    this.onChanged,
   }) : super(key: inputkey);
 
   @override
@@ -86,6 +88,11 @@ class _InputControlState extends State<InputControl> {
             setState(() {
               textLength = value.length;
             }),
+            Future.delayed(const Duration(milliseconds: 1000), () {
+              if (widget.onChanged != null) widget.onChanged!(value);
+            }
+                // widget.onChanged(value),
+                )
           },
           textInputAction: (widget.isSearch == true)
               ? TextInputAction.search
@@ -131,6 +138,7 @@ class _InputControlState extends State<InputControl> {
                 : GestureDetector(
                     onTap: () => {
                       // if (widget.trailing == null)
+                      print("Filter")
                     },
                     child: Icon(
                       Icons.tune_sharp,
