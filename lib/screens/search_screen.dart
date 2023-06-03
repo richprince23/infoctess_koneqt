@@ -15,30 +15,67 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   final _searchController = TextEditingController();
   List searchResults = [];
-  List searchResults1 = [];
+  // List searchResults1 = [];
 
   Future<void> search(String query) async {
-    searchResults.clear();
+    // searchResults.clear();
 
-    // Search for posts from Firebase Firestore
     final posts = await db
         .collection('posts')
         .where('body', isGreaterThanOrEqualTo: query.toLowerCase())
         .get();
 
-    if (posts.docs.isNotEmpty) {
+    // final news = await db
+    //     .collection('news')
+    //     .where('body', isGreaterThanOrEqualTo: query.toLowerCase())
+    //     .get();
+
+    // final events = await db
+    //     .collection('events')
+    //     .where('body', isGreaterThanOrEqualTo: query.toLowerCase())
+    //     .get();
+
+    // final users = await db
+    //     .collection('user_infos')
+    //     .where('name', isGreaterThanOrEqualTo: query.toLowerCase())
+    //     .get();
+    setState(() {
+      searchResults.clear();
+    });
+
+    for (var item in posts.docs) {
+      print(item.data()['body']);
       setState(() {
-        searchResults = posts.docs.toList();
+        searchResults.add(item.data());
       });
-      print(searchResults[0].data());
+      // searchResults.add(item.data());
     }
+
+    // searchResults
+    //     .addAll(posts.docs.map((doc) => doc.data() as Map<String, dynamic>));
+    // searchResults
+    //     .addAll(news.docs.map((doc) => doc.data() as Map<String, dynamic>));
+    // searchResults
+    //     .addAll(events.docs.map((doc) => doc.data() as Map<String, dynamic>));
+    // print(searchResults.length);
+    // print(searchResults[0]['body']);
+
+    // searchResults
+    //     .addAll(users.docs.map((doc) => doc.data() as Map<String, dynamic>));
   }
 
   @override
   void initState() {
     super.initState();
     searchResults = [];
-    search("");
+    // search("");
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    searchResults.clear();
+    super.dispose();
   }
 
   @override
@@ -51,15 +88,30 @@ class _SearchScreenState extends State<SearchScreen> {
           isSearch: true,
           hintText: "Search for Posts, Events, News, People, Hashtags, etc..",
           onChanged: (value) async {
-            searchResults1.clear();
-            for (var item in searchResults) {
-              if (item['body'].toLowerCase().contains(value.toLowerCase())) {
-                setState(() {
-                  searchResults1.add(item);
-                });
-                print(searchResults1[0].data());
-              }
+            setState(() {
+              searchResults.clear();
+            });
+            if (value.isEmpty ||
+                value == null ||
+                value == "" ||
+                value.length < 3) {
+              return;
             }
+            // if (value.length < 3) {
+            //   return;
+            // }
+            showDialog(
+              context: context,
+              builder: (context) => Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+            await search(value).then((value) {
+              setState(() {});
+            }).then(
+              (value) => Navigator.pop(context),
+            );
+            print(searchResults.length);
           },
         ),
         toolbarHeight: kToolbarHeight + 40.w,
@@ -74,14 +126,32 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Widget buildSearchList() {
     if (searchResults.isNotEmpty) {
+      // print(searchResults);
       return ListView.builder(
-        itemCount: searchResults1.length,
+        itemCount: searchResults.length,
         itemBuilder: (context, index) {
+          final item = searchResults[index];
+
+          // if (item.containsKey('title')) {
+          //   return ListTile(
+          //     title: Text(
+          //       item['title'] as String,
+          //       overflow: TextOverflow.ellipsis,
+          //       maxLines: 2,
+          //     ),
+          //     leading: Icon(Icons.newspaper),
+          //   );
+          // } else {
           return ListTile(
-            title: Text(searchResults1[index]['body'] + " $index"),
-            leading: Icon(Icons.search),
+            title: Text(
+              item['body'] as String,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+            ),
+            leading: Icon(Icons.textsms),
           );
         },
+        // },
       );
     }
     return Center(
