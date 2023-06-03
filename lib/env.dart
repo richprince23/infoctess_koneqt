@@ -2,17 +2,17 @@
 // import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart' hide User;
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
+import 'package:infoctess_koneqt/messages.dart';
 import 'package:infoctess_koneqt/models/user_info.dart';
 import 'package:infoctess_koneqt/screens/forums.dart';
 import 'package:infoctess_koneqt/screens/home/homepage.dart';
-import 'package:infoctess_koneqt/screens/misc/misc_screen.dart';
 import 'package:infoctess_koneqt/screens/onboarding/acad_info.dart';
 import 'package:infoctess_koneqt/screens/onboarding/basic_info.dart';
 import 'package:infoctess_koneqt/screens/onboarding/profileinfo.dart';
 import 'package:infoctess_koneqt/screens/tools/utilies_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_remote_config/firebase_remote_config.dart';
 
 // extension Capitalized on String {
 //   String capitalized() =>
@@ -41,7 +41,8 @@ var kMainPages = <Widget>[
   const HomePage(),
   const ForumsScreen(),
   const UtilitiesScreen(),
-  const MiscScreen(),
+  // const MiscScreen(),
+  const ChatlistScreen(),
 ];
 
 final Future<SharedPreferences> mainPrefs = SharedPreferences.getInstance();

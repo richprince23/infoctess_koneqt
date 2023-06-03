@@ -6,11 +6,14 @@ import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
 import 'package:infoctess_koneqt/controllers/page_controller.dart';
 import 'package:infoctess_koneqt/controllers/post_controller.dart';
 import 'package:infoctess_koneqt/controllers/user_provider.dart';
+import 'package:infoctess_koneqt/messages.dart';
 import 'package:infoctess_koneqt/screens/admin/create_event.dart';
 import 'package:infoctess_koneqt/screens/main_screen.dart';
 import 'package:infoctess_koneqt/screens/onboarding.dart';
 import 'package:infoctess_koneqt/screens/onboarding/check_index.dart';
+import 'package:infoctess_koneqt/screens/onboarding/profileinfo.dart';
 import 'package:infoctess_koneqt/screens/post_page.dart';
+import 'package:infoctess_koneqt/screens/profile.dart';
 import 'package:infoctess_koneqt/screens/start.dart';
 import 'package:infoctess_koneqt/screens/tools/courses/add_course.dart';
 import 'package:infoctess_koneqt/screens/tools/courses/courses.dart';
@@ -90,6 +93,8 @@ class MyApp extends StatelessWidget {
           "/new-event": (context) => CreateEvent(),
           "/calendar": (context) => const CalendarScreen(),
           "/bookmarks": (context) => BookmarksScreen(),
+          "/profile": (context) => ProfileScreen(),
+          "/chatlist": (context) => ChatlistScreen(),
         },
       ),
     );
