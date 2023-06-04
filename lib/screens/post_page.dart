@@ -213,7 +213,7 @@ class _PostDetailsState extends State<PostDetails> {
                                   ),
                                 ),
                                 Text(
-                                  convertDateString(
+                                  convertDateTimeString(
                                     widget.post.timestamp!.toString(),
                                   ),
                                   style: GoogleFonts.sarabun(

@@ -303,7 +303,7 @@ class _ClosedWidgetState extends State<ClosedWidget> {
                 Align(
                   alignment: Alignment.bottomRight,
                   child: Text(
-                    convertDateString(widget.news.timestamp!.toString()),
+                    convertDateTimeString(widget.news.timestamp!.toString()),
                     style: TextStyle(
                         fontSize: 13.sp + 1,
                         fontStyle: FontStyle.italic,

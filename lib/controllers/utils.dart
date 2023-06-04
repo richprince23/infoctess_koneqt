@@ -55,6 +55,12 @@ class Utils {
 
 String convertDateString(String dateString) {
   DateTime dateTime = DateTime.parse(dateString);
+  String formattedDate = DateFormat('MMM d, yy').format(dateTime);
+  return formattedDate;
+}
+
+String convertDateTimeString(String dateString) {
+  DateTime dateTime = DateTime.parse(dateString);
   String formattedDate =
       DateFormat('MMMM d, yyyy \'at\' h:mm a').format(dateTime);
   return formattedDate;
@@ -77,20 +83,18 @@ String convertToElapsedString(String dateString) {
   DateTime now = DateTime.now();
   Duration difference = now.difference(dateTime);
 
-  int weeksElapsed = difference.inDays ~/ 7;
+  // int weeksElapsed = difference.inDays ~/ 7;
   int daysElapsed = difference.inDays;
   int hoursElapsed = difference.inHours - (daysElapsed * 24);
   int minutesElapsed = difference.inMinutes - (hoursElapsed * 60);
 
   String output = "";
-  if (weeksElapsed > 0) {
-    if (daysElapsed % 7 == 0) {
-      output = "$weeksElapsed w";
-      return output;
-    }
-    output = "$weeksElapsed w, ${daysElapsed % 7} d";
+
+  if (daysElapsed >= 7) {
+    output = convertDateString(dateString);
     return output;
   }
+
   if (daysElapsed > 0) {
     output = "$daysElapsed d";
     return output;

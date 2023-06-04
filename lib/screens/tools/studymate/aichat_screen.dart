@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/controllers/ai_controller.dart';
 import 'package:infoctess_koneqt/widgets/chat_bubble.dart';
+import 'package:resize/resize.dart';
 
 class AIChatScreen extends StatefulWidget {
   const AIChatScreen({super.key});
@@ -19,7 +20,7 @@ class AIChatScreenState extends State<AIChatScreen> {
 
   @override
   void initState() {
-    messages.add(ChatItem(
+    messages.add(ChatBubble(
       isUser: false,
       message: "Hi! I'm AI StudyMate. Ask me anything! 😊",
     ));
@@ -86,7 +87,7 @@ class AIChatScreenState extends State<AIChatScreen> {
             onPressed: () {
               setState(() {
                 messages.clear();
-                messages.add(ChatItem(
+                messages.add(ChatBubble(
                   isUser: false,
                   message: "Hi! I'm AI StudyMate. Ask me anything! 😊",
                 ));
@@ -103,8 +104,9 @@ class AIChatScreenState extends State<AIChatScreen> {
         scrollDirection: Axis.vertical,
         child: SizedBox(
           height: MediaQuery.of(context).size.height * 0.83,
-          width: MediaQuery.of(context).size.width,
+          // width: MediaQuery.of(context).size.width,
           child: ListView.builder(
+            padding: EdgeInsets.symmetric(horizontal: 10.w),
             controller: scrollController,
             scrollDirection: Axis.vertical,
             itemCount: messages.length,
@@ -150,7 +152,7 @@ class AIChatScreenState extends State<AIChatScreen> {
   void sendMessage() async {
     prompt = inputController.text.trim();
     setState(() {
-      messages.add(ChatItem(
+      messages.add(ChatBubble(
         isUser: true,
         message: inputController.text,
       ));
@@ -159,16 +161,11 @@ class AIChatScreenState extends State<AIChatScreen> {
     showDialog(
       barrierDismissible: false,
       context: context,
-      builder: (context) => AlertDialog(
-        contentPadding: const EdgeInsets.all(0),
-        // backgroundColor: Colors.black.withOpacity(0.2),
-        // title: const Text('Processing....'),
-        content: SizedBox(
-          height: 60,
-          width: 100,
-          child: Center(
-            child: Image.asset("assets/images/preload.gif", height: 40),
-          ),
+      builder: (context) => Center(
+        child: Image.asset(
+          "assets/images/preload.gif",
+          height: 40.w,
+          width: 40.w,
         ),
       ),
     );
@@ -176,7 +173,7 @@ class AIChatScreenState extends State<AIChatScreen> {
     await getCompletions(prompt).then((value) {
       inputController.clear();
       setState(() {
-        messages.add(ChatItem(
+        messages.add(ChatBubble(
           isUser: false,
           message: value,
         ));

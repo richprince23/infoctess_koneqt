@@ -59,7 +59,7 @@ class ImagerState extends State<Imager> {
             child: isDone == true
                 ? SizedBox(
                     height: 80,
-                    child: ChatItem(isUser: true, message: prompt),
+                    child: ChatBubble(isUser: true, message: prompt),
                   )
                 : const SizedBox.shrink(),
           ),

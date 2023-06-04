@@ -95,6 +95,8 @@ class Auth {
         "userName": userName,
         "userID": _auth.currentUser!.uid,
         "fullName": fullName,
+        "followers": [],
+        "following": [],
       }).then((value) => docID = value.id);
       return docID;
     } on FirebaseException catch (e) {

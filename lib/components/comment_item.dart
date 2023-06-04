@@ -170,7 +170,7 @@ class CommentItem extends StatelessWidget {
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: Text(
-                                  convertDateString(
+                                  convertDateTimeString(
                                       comment.timestamp!.toString()),
                                   style: GoogleFonts.sarabun(
                                     fontWeight: FontWeight.w400,

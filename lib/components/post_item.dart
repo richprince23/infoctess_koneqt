@@ -311,7 +311,7 @@ class _PostItemState extends State<PostItem> {
                                   ],
                                 ),
                                 Text(
-                                  convertDateString(
+                                  convertDateTimeString(
                                       widget.post.timestamp.toString()),
                                   style: GoogleFonts.sarabun(
                                       fontWeight: FontWeight.w400,
