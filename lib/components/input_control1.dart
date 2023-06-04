@@ -28,6 +28,8 @@ class InputControl extends StatefulWidget {
   Icon? leading;
   bool? isSearch;
 
+  bool isCollapsed;
+
   InputControl({
     Key? inputkey,
     this.type,
@@ -42,6 +44,7 @@ class InputControl extends StatefulWidget {
     this.leading,
     this.isSearch = false,
     this.onChanged,
+    this.isCollapsed = false,
   }) : super(key: inputkey);
 
   @override
@@ -153,11 +156,14 @@ class _InputControlState extends State<InputControl> {
               fontWeight: FontWeight.w400,
               fontSize: 16.sp + 1,
             ),
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 20.h,
-              vertical: 10.h,
-            ),
+            contentPadding: widget.isCollapsed == false
+                ? EdgeInsets.symmetric(
+                    horizontal: 20.w,
+                    vertical: 10.w,
+                  )
+                : EdgeInsets.symmetric(horizontal: 10.w, vertical: 0),
             filled: true,
+            isCollapsed: widget.isCollapsed,
             fillColor: const Color.fromRGBO(217, 217, 217, 0.6),
             focusedBorder: OutlineInputBorder(
               borderSide:

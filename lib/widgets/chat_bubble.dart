@@ -56,7 +56,7 @@ class ChatBubble extends StatelessWidget {
               // elevation: 0,
               alignment: isUser ? Alignment.topRight : Alignment.topLeft,
               margin: const EdgeInsets.all(8),
-              padding: EdgeInsets.all(12.w),
+              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.w),
               decoration: ShapeDecoration(
                 color: getBubbleColor(),
                 shape: RoundedRectangleBorder(

@@ -100,13 +100,14 @@ String convertToElapsedString(String dateString) {
     return output;
   }
   if (hoursElapsed > 0) {
-    output = "$hoursElapsed h";
+    output = "$hoursElapsed h, $minutesElapsed m";
     return output;
   }
   if (minutesElapsed < 2) {
     return "now";
   }
-  output = "$minutesElapsed m";
+  output =
+      "$minutesElapsed m, ${difference.inSeconds - (minutesElapsed * 60)} s";
   return output;
 }
 

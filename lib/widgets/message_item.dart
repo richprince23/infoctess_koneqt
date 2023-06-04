@@ -1,9 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/constants.dart';
-import 'package:infoctess_koneqt/env.dart';
+import 'package:infoctess_koneqt/controllers/chat_controller.dart';
+import 'package:infoctess_koneqt/controllers/utils.dart';
 import 'package:infoctess_koneqt/models/poster_model.dart';
+import 'package:infoctess_koneqt/screens/convo_screen.dart';
 import 'package:resize/resize.dart';
 
 class ChatItem extends StatefulWidget {
@@ -22,6 +25,7 @@ class ChatItem extends StatefulWidget {
 
 class ChatItemState extends State<ChatItem> {
   final Poster sender = Poster();
+  //get poster details
   Future getPosterDetails({required userID}) async {
     final userInfo = await db
         .collection("user_infos")
@@ -41,18 +45,57 @@ class ChatItemState extends State<ChatItem> {
         });
       }
     });
+    // }).then(
+    //   (value) async => await getUnreadMessages(chatID: widget.chatID),
+    // );
     return userInfo;
   }
 
-  
+  String? lastMessage;
+  bool? isRead;
+  String? lastMessageTime;
+
+  Future<void> getLastMessage() async {
+    final QuerySnapshot<Map<String, dynamic>> message = await db
+        .collection("chats")
+        .doc(widget.chatID)
+        .collection("messages")
+        .orderBy("timestamp", descending: true)
+        .limit(1)
+        .get();
+
+    if (message.docs.isNotEmpty) {
+      lastMessage = message.docs[0].data()['message'];
+      isRead = message.docs[0].data()['isRead'];
+      lastMessageTime = message.docs[0].data()['timestamp'].toDate().toString();
+    } else {
+      lastMessage = '';
+      isRead = false;
+      lastMessageTime = null;
+    }
+
+    await getUnreadMessages(chatID: widget.chatID);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getLastMessage();
+  }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: getPosterDetails(userID: widget.senderID),
         builder: (context, snapshot) {
-          print(sender.posterAvatarUrl);
           return InkWell(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    ConvoScreen(sender: sender, chatID: widget.chatID),
+              ),
+            ),
             child: Container(
               padding: EdgeInsets.all(10.w),
               margin: EdgeInsets.symmetric(vertical: 1.w, horizontal: 10.w),
@@ -93,7 +136,7 @@ class ChatItemState extends State<ChatItem> {
                           maxLines: 1,
                         ),
                         Text(
-                          "Last Message",
+                          lastMessage ?? "No message yet",
                           style: TextStyle(
                             color: Colors.grey,
                             fontWeight: FontWeight.w300,
@@ -105,19 +148,44 @@ class ChatItemState extends State<ChatItem> {
                       ],
                     ),
                   ),
-                  Badge.count(
-                    count: 10,
-                    backgroundColor: cSec,
-                    textColor: Colors.white,
-                    // textStyle: TextStyle(fontSize: 18.sp),
-                    // largeSize: 30,
-                    // padding: EdgeInsets.all(5.w),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      unreadMessageList.isNotEmpty
+                          ? Badge.count(
+                              count: unreadMessageList.length,
+                              backgroundColor: cSec,
+                              textColor: Colors.white,
+                              // textStyle: TextStyle(fontSize: 18.sp),
+                              // largeSize: 30,
+                              // padding: EdgeInsets.all(5.w),
+                            )
+                          : const SizedBox(
+                              height: 3,
+                            ),
+                      SizedBox(
+                        height: 5.w,
+                      ),
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: Text(
+                          convertToElapsedString(
+                              lastMessageTime ?? DateTime.now().toString()),
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.w300,
+                            fontSize: 12.sp,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
           );
         });
-    ;
   }
 }

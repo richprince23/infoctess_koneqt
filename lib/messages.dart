@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/constants.dart';
+import 'package:infoctess_koneqt/env.dart';
+import 'package:infoctess_koneqt/widgets/empty_list.dart';
 import 'package:infoctess_koneqt/widgets/message_item.dart';
 import 'package:resize/resize.dart';
 
@@ -16,6 +19,7 @@ class ChatlistScreen extends StatelessWidget {
             padding: EdgeInsets.all(
               10.w,
             ),
+            alignment: Alignment.centerLeft,
             child: Text(
               "Messages",
               style: TextStyle(
@@ -26,16 +30,38 @@ class ChatlistScreen extends StatelessWidget {
           ),
           Expanded(
             child: StreamBuilder(
-              stream: null,
+              stream: db.collection("chats").snapshots(),
               builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text(
+                      "Something went wrong",
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 18.sp,
+                      ),
+                    ),
+                  );
+                }
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: EmptyList(
+                      text:
+                          "You don't have any messages yet\nStart a conversation with someone to see them here",
+                    ),
+                  );
+                }
                 return ListView.builder(
                   cacheExtent: 100.vh,
                   physics: const BouncingScrollPhysics(),
-                  itemCount: 15,
+                  itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) {
                     return ChatItem(
-                      chatID: "as12ekj",
-                      senderID: "8YPl5OCGyMZUwZZ8jpbpCtFquC03",
+                      chatID: snapshot.data!.docs[index].id,
+                      senderID: snapshot.data!.docs[index]['members'][0] ==
+                              auth.currentUser!.uid
+                          ? snapshot.data!.docs[index]['members'][1]
+                          : snapshot.data!.docs[index]['members'][0],
                     );
                   },
                 );
