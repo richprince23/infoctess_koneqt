@@ -32,6 +32,8 @@ class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
         },
       ),
       automaticallyImplyLeading: false,
+      elevation: 0,
+      scrolledUnderElevation: 0,
       actions: [
         IconButton(
           onPressed: () {
