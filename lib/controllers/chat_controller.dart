@@ -34,5 +34,4 @@ Future markChatAsRead({required String chatID}) async {
   for (var msg in chats.docs) {
     msg.reference.update({"isRead": true});
   }
-  print('all read');
 }

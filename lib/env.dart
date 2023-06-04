@@ -42,7 +42,7 @@ var kMainPages = <Widget>[
   const ForumsScreen(),
   const UtilitiesScreen(),
   // const MiscScreen(),
-  const ChatlistScreen(),
+  ChatlistScreen(),
 ];
 
 final Future<SharedPreferences> mainPrefs = SharedPreferences.getInstance();

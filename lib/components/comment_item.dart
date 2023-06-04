@@ -65,6 +65,11 @@ class CommentItem extends StatelessWidget {
                         height: 120.w,
                         imageUrl: commenter.posterAvatarUrl ??
                             "https://i.pravatar.cc/150?img=3",
+                        placeholder: (context, url) => Icon(
+                          Icons.person,
+                          // size: 120.w,
+                          color: Colors.grey.shade400,
+                        ),
                       ),
                     ),
                   ),
