@@ -27,7 +27,7 @@ class InputControl extends StatefulWidget {
 
   Icon? leading;
   bool? isSearch;
-
+  double radius;
   bool isCollapsed;
 
   InputControl({
@@ -41,6 +41,7 @@ class InputControl extends StatefulWidget {
     this.onTap,
     this.showLabel = true,
     this.focusNode,
+    this.radius = 30,
     this.leading,
     this.isSearch = false,
     this.onChanged,
@@ -103,6 +104,8 @@ class _InputControlState extends State<InputControl> {
                   ? TextInputAction.newline
                   : TextInputAction.next,
           onTap: widget.onTap,
+          maxLines: widget.type == TextInputType.multiline ? 5 : 1,
+          minLines: 1,
           validator: widget.validator,
           keyboardType: widget.type ?? TextInputType.text,
           obscureText: showPass,
@@ -163,25 +166,26 @@ class _InputControlState extends State<InputControl> {
                   )
                 : EdgeInsets.symmetric(horizontal: 10.w, vertical: 0),
             filled: true,
+
             isCollapsed: widget.isCollapsed,
             fillColor: const Color.fromRGBO(217, 217, 217, 0.6),
             focusedBorder: OutlineInputBorder(
               borderSide:
                   BorderSide(color: cSec, width: 1, style: BorderStyle.solid),
-              borderRadius: BorderRadius.circular(50),
+              borderRadius: BorderRadius.circular(widget.radius.r),
             ),
             border: OutlineInputBorder(
               borderSide: const BorderSide(style: BorderStyle.none),
-              borderRadius: BorderRadius.circular(50),
+              borderRadius: BorderRadius.circular(widget.radius.r),
             ),
             enabledBorder: OutlineInputBorder(
               borderSide: const BorderSide(width: 0, style: BorderStyle.none),
-              borderRadius: BorderRadius.circular(50),
+              borderRadius: BorderRadius.circular(widget.radius.r),
             ),
             errorBorder: OutlineInputBorder(
               borderSide: const BorderSide(
                   color: Colors.red, width: 1, style: BorderStyle.solid),
-              borderRadius: BorderRadius.circular(50),
+              borderRadius: BorderRadius.circular(widget.radius.r),
             ),
           ),
         ),

@@ -100,15 +100,16 @@ class ChatlistScreen extends StatelessWidget {
                                     .collection("chats")
                                     .doc(snapshot.data!.docs[index].id)
                                     .delete()
-                                    .then((value) => StatusAlert.show(
-                                          context,
-                                          duration: const Duration(seconds: 2),
-                                          title: 'Chat deleted',
-                                          configuration:
-                                              const IconConfiguration(
-                                            icon: Icons.check,
-                                          ),
-                                        ));
+                                    .then(
+                                      (value) => StatusAlert.show(
+                                        context,
+                                        duration: const Duration(seconds: 2),
+                                        title: 'Chat deleted',
+                                        configuration: const IconConfiguration(
+                                          icon: Icons.check,
+                                        ),
+                                      ),
+                                    );
                               });
                             },
                             label: 'Delete',
