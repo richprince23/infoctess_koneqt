@@ -54,6 +54,7 @@ class _ManageCoursesState extends State<ManageCourses> {
   }
 
   Widget buildCourses() => ListView.builder(
+    cacheExtent: 50.vh,
       itemCount: courses.length,
       itemBuilder: (context, int index) {
         var course = courses[index];

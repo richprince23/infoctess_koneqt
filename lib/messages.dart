@@ -232,6 +232,7 @@ class ChatlistScreen extends StatelessWidget {
                     return ListView.builder(
                       // controller: scrollController,
                       // itemCount: 10,
+                      cacheExtent: 100.vh,
                       itemCount: following.length,
                       itemBuilder: (context, int index) {
                         return ContactItem(

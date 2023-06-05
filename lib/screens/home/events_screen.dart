@@ -41,6 +41,7 @@ class EventsScreen extends StatelessWidget {
                 );
               } else {
                 return ListView.builder(
+                  cacheExtent: 100.vh,
                   physics: const BouncingScrollPhysics(),
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) {

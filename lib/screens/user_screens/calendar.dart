@@ -98,6 +98,7 @@ class CalendarScreenState extends State<CalendarScreen> {
                       );
                     } else {
                       return ListView.builder(
+                        cacheExtent: 50.vh,
                         itemCount: snapshot.data!.docs.length,
                         itemBuilder: (context, index) {
                           return Card(

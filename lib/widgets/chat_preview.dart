@@ -90,16 +90,30 @@ class MediaPreview extends StatelessWidget {
                   ),
                   onPressed: () async {
                     if (captionController.text.isNotEmpty) {
+                      showDialog(
+                        context: context,
+                        builder: (context) => Center(
+                          child: Image.asset(
+                            "assets/images/preload.gif",
+                            width: 30.w,
+                            height: 30.w,
+                          ),
+                        ),
+                      );
                       await sendMessage(
                         chatID: chatID,
                         attachment: filePath,
                         message: captionController.text.trim(),
-                      ).then(
-                        (value) => {
-                          captionController.clear(),
-                          Navigator.pop(context),
-                        },
-                      );
+                      )
+                          .then(
+                            (value) => {
+                              captionController.clear(),
+                              Navigator.pop(context),
+                            },
+                          )
+                          .then(
+                            (value) => Navigator.pop(context),
+                          );
                     }
                   },
                   icon: const Icon(Icons.send),

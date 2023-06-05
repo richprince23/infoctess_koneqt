@@ -8,6 +8,7 @@ import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/models/timetable_db.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:intl/intl.dart';
+import 'package:resize/resize.dart';
 
 class AllSchedules extends StatefulWidget {
   const AllSchedules({super.key});
@@ -135,6 +136,7 @@ class AllSchedulesState extends State<AllSchedules> {
                       .length *
                   80,
               child: ListView.builder(
+                cacheExtent: 50.vh,
                 itemCount: allScehdules
                     .where((element) => element.day == weekday)
                     .toList()

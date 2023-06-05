@@ -137,6 +137,7 @@ class _MyNotesState extends State<MyNotes> with RouteAware {
 
         if (snapshot.hasData) {
           return ListView.builder(
+            cacheExtent: 50.vh,
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
               return Slidable(

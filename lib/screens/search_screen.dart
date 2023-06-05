@@ -128,6 +128,7 @@ class _SearchScreenState extends State<SearchScreen> {
     if (searchResults.isNotEmpty) {
       // print(searchResults);
       return ListView.builder(
+        cacheExtent: 100.vh,
         itemCount: searchResults.length,
         itemBuilder: (context, index) {
           final item = searchResults[index];

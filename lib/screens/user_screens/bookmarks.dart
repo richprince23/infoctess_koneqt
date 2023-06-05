@@ -53,6 +53,7 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
               );
             } else {
               return ListView.builder(
+                cacheExtent: 50.vh,
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
                   return Slidable(

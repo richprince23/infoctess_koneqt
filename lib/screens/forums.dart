@@ -59,7 +59,7 @@ class _ForumsScreenState extends State<ForumsScreen> {
                   }
                   return ListView.builder(
                       itemCount: snapshot.data!.docs.length,
-                      cacheExtent: 1000,
+                      cacheExtent: 100.vh,
                       itemBuilder: (context, index) {
                         final post = snapshot.data!.docs[index];
                         // Provider.of<Stats>(context, listen: false).getStats(post.id);

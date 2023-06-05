@@ -106,6 +106,7 @@ class AIChatScreenState extends State<AIChatScreen> {
           height: MediaQuery.of(context).size.height * 0.83,
           // width: MediaQuery.of(context).size.width,
           child: ListView.builder(
+            cacheExtent: 50.vh,
             padding: EdgeInsets.symmetric(horizontal: 10.w),
             controller: scrollController,
             scrollDirection: Axis.vertical,

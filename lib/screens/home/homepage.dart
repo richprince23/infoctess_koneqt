@@ -67,6 +67,7 @@ class _HomePageState extends State<HomePage>
               height: 40.vh,
               child: Center(
                 child: ListView.builder(
+                  cacheExtent: 100.vh,
                   itemBuilder: ((context, index) {
                     return ListTile(
                       title: Text("search item $index"),

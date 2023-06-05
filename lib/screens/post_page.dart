@@ -484,6 +484,7 @@ class _PostDetailsState extends State<PostDetails> {
                       );
                     } else {
                       return ListView.builder(
+                        cacheExtent: 100.vh,
                         controller: listScroll,
                         itemCount: snapshot.data!.docs.length,
                         itemBuilder: ((context, index) {

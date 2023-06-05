@@ -123,6 +123,7 @@ class _ConvoScreenState extends State<ConvoScreen> {
                       );
                     }
                     return ListView.builder(
+                      cacheExtent: 100.vh,
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {
                         final data = snapshot.data!.docs[index];
@@ -340,7 +341,21 @@ class _ConvoScreenState extends State<ConvoScreen> {
                       await uploadImageFromCamera()
                           .then((value) => cropImage())
                           .then(
-                            (value) => Navigator.pop(context),
+                            (value) => {
+                              Navigator.pop(context),
+                              showModalBottomSheet(
+                                // isDismissible: true,
+                                isScrollControlled: true,
+                                enableDrag: true,
+                                context: context,
+                                builder: ((context) {
+                                  return MediaPreview(
+                                    chatID: widget.chatID,
+                                    filePath: croppedMedia!.path,
+                                  );
+                                }),
+                              ),
+                            },
                           );
                     },
                   ),
