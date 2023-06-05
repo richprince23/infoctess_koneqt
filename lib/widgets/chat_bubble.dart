@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/utils.dart';
-import 'package:infoctess_koneqt/theme/mytheme.dart';
+import 'package:infoctess_koneqt/screens/tools/image_viewer.dart';
+import 'package:path/path.dart' as path;
+import 'package:mime/mime.dart';
 import 'package:resize/resize.dart';
 
 class ChatBubble extends StatelessWidget {
@@ -12,12 +16,14 @@ class ChatBubble extends StatelessWidget {
   bool showAvatar;
   bool hasTime;
   String time;
+  String? mediaUrl;
 
   ChatBubble(
       {required this.isUser,
       required this.message,
       this.avatar,
       this.showAvatar = true,
+      this.mediaUrl,
       this.hasTime = false,
       this.time = "",
       super.key});
@@ -79,7 +85,8 @@ class ChatBubble extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
+                  buildMediaPreview(),
+                  SelectableText(
                     message,
                     style: TextStyle(
                       color: Colors.black,
@@ -88,9 +95,7 @@ class ChatBubble extends StatelessWidget {
                   ),
                   if (hasTime == true && time != "")
                     Text(
-                      convertTime(time)
-                      //TODO: Add dynamic time here
-                      ,
+                      convertTime(time),
                       style: TextStyle(
                         color: Colors.grey,
                         fontSize: 12.sp,
@@ -116,6 +121,63 @@ class ChatBubble extends StatelessWidget {
                 : null,
           ),
       ],
+    );
+  }
+
+  buildMediaPreview() {
+    return FutureBuilder(
+      future: Future.delayed(const Duration(seconds: 2)).then((_) => mediaUrl),
+      builder: (context, snapshot) {
+        if (snapshot.hasData && snapshot.data != null && snapshot.data != '') {
+          String fileUrl = snapshot.data!.split("?")[0];
+          String mime = lookupMimeType(fileUrl)!;
+          String fileName = path.basename(fileUrl.split("%").last).toString();
+
+          if (mime.contains("image")) {
+            return InkWell(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ImageViewer(image: mediaUrl!),
+                ),
+              ),
+              child: IntrinsicWidth(
+                child: Container(
+                  padding: EdgeInsets.all(5.w),
+                  child: CachedNetworkImage(
+                    imageUrl: mediaUrl!,
+                    placeholder: (context, url) => Icon(
+                      Icons.photo,
+                      size: 80.w,
+                    ),
+                    errorWidget: (context, url, error) =>
+                        const SizedBox.shrink(),
+                  ),
+                ),
+              ),
+            );
+          } else {
+            return Container(
+              padding: EdgeInsets.all(10.w),
+              width: 60.vw,
+              decoration: ShapeDecoration(
+                color: Colors.grey[300],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.r),
+                  side: BorderSide(color: cPri, width: 0.5),
+                ),
+              ),
+              child: Text(
+                "File: $fileName",
+                style: TextStyle(color: Colors.black, fontSize: 12.sp),
+                overflow: TextOverflow.ellipsis,
+              ),
+            );
+          }
+        }
+
+        return const SizedBox.shrink();
+      },
     );
   }
 }

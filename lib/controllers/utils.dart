@@ -105,15 +105,19 @@ String convertToElapsedString(String dateString) {
     output = "$daysElapsed d";
     return output;
   }
+  if (hoursElapsed >= 24 && hoursElapsed <=48) {
+    return "Yesterday";
+  }
+  
   if (hoursElapsed > 0) {
     output = "$hoursElapsed h, $minutesElapsed m";
     return output;
   }
-  if (minutesElapsed < 2) {
+  if (minutesElapsed < 1) {
     return "now";
   }
-  output =
-      "$minutesElapsed m, ${difference.inSeconds - (minutesElapsed * 60)} s";
+  output = "$minutesElapsed m";
+  // "$minutesElapsed m, ${difference.inSeconds - (minutesElapsed * 60)} s";
   return output;
 }
 

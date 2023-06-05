@@ -4,6 +4,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/constants.dart';
@@ -11,6 +13,7 @@ import 'package:infoctess_koneqt/controllers/chat_controller.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/models/poster_model.dart';
 import 'package:infoctess_koneqt/widgets/chat_bubble.dart';
+import 'package:infoctess_koneqt/widgets/chat_preview.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
 import 'package:resize/resize.dart';
 
@@ -28,6 +31,8 @@ class _ConvoScreenState extends State<ConvoScreen> {
   final msgController = TextEditingController();
   bool? isTyping;
   bool isEmpty = true;
+  XFile? selectedMedia;
+  CroppedFile? croppedMedia;
 
   @override
   void initState() {
@@ -49,41 +54,42 @@ class _ConvoScreenState extends State<ConvoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return KeyboardDismissOnTap(
-      child: Scaffold(
-        appBar: AppBar(
-          elevation: 0.5,
-          scrolledUnderElevation: 1,
-          surfaceTintColor: cSec.withOpacity(0.1),
-          title: Row(
-            children: [
-              CircleAvatar(
-                radius: 15.r,
-                backgroundImage: CachedNetworkImageProvider(
-                  widget.sender.posterAvatarUrl!,
-                  // "https://i.pravatar.cc/150?img=3",
-                  errorListener: () => const Icon(Icons.person),
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      appBar: AppBar(
+        elevation: 0.5,
+        scrolledUnderElevation: 1,
+        surfaceTintColor: cSec.withOpacity(0.1),
+        title: Row(
+          children: [
+            CircleAvatar(
+              radius: 15.r,
+              backgroundImage: CachedNetworkImageProvider(
+                widget.sender.posterAvatarUrl!,
+                // "https://i.pravatar.cc/150?img=3",
+                errorListener: () => const Icon(Icons.person),
+              ),
+            ),
+            SizedBox(
+              width: 10.w,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.sender.posterName ?? "User",
+                  overflow: TextOverflow.ellipsis,
                 ),
-              ),
-              SizedBox(
-                width: 10.w,
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.sender.posterName ?? "User",
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text("online", style: TextStyle(fontSize: 12.sp)),
-                ],
-              ),
-            ],
-          ),
-          // actions: [],
+                Text("online", style: TextStyle(fontSize: 12.sp)),
+              ],
+            ),
+          ],
         ),
-        body: Column(
+        // actions: [],
+      ),
+      body: KeyboardDismissOnTap(
+        child: Column(
           children: [
             Expanded(
               flex: 9,
@@ -94,6 +100,7 @@ class _ConvoScreenState extends State<ConvoScreen> {
                       .collection("chats")
                       .doc(widget.chatID)
                       .collection("messages")
+                      .orderBy("timestamp", descending: false)
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
@@ -118,15 +125,14 @@ class _ConvoScreenState extends State<ConvoScreen> {
                     return ListView.builder(
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {
+                        final data = snapshot.data!.docs[index];
                         return ChatBubble(
-                          message: snapshot.data!.docs[index]['message'],
-                          isUser: snapshot.data!.docs[index]['senderID'] ==
-                              auth.currentUser!.uid,
+                          message: data['message'],
+                          isUser: data['senderID'] == auth.currentUser!.uid,
                           hasTime: true,
-                          time: snapshot.data!.docs[index]['timestamp']
-                              .toDate()
-                              .toString(),
+                          time: data['timestamp'].toDate().toString(),
                           showAvatar: false,
+                          mediaUrl: data['mediaUrl'] ?? "",
                         );
                       },
                     );
@@ -175,11 +181,10 @@ class _ConvoScreenState extends State<ConvoScreen> {
                           ),
                           onPressed: () async {
                             if (msgController.text.isNotEmpty) {
-                              // await sendMessage(
-                              //   chatID: widget.chatID,
-                              //   message: msgController.text,
-                              //   senderID: auth.currentUser!.uid,
-                              // );
+                              await sendMessage(
+                                chatID: widget.chatID,
+                                message: msgController.text.trim(),
+                              );
                               msgController.clear();
                             }
                           },
@@ -192,6 +197,67 @@ class _ConvoScreenState extends State<ConvoScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> cropImage() async {
+    if (selectedMedia != null) {
+      final croppedFile = await ImageCropper().cropImage(
+        sourcePath: selectedMedia!.path,
+        compressFormat: ImageCompressFormat.jpg,
+        compressQuality: 50, // 50% compression
+        uiSettings: [
+          AndroidUiSettings(
+            toolbarTitle: 'Crop Media',
+            toolbarColor: Colors.black,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.ratio3x2,
+            lockAspectRatio: false,
+            showCropGrid: true,
+            hideBottomControls: false,
+          ),
+          IOSUiSettings(
+            title: 'Crop Media',
+            rotateButtonsHidden: false,
+            rotateClockwiseButtonHidden: false,
+          ),
+        ],
+      );
+      if (croppedFile != null) {
+        setState(() {
+          croppedMedia = croppedFile;
+          // selectedMedia = croppedFile as XFile;
+        });
+      }
+    }
+  }
+
+//pick image from gallery
+  Future<void> uploadImageFromGallery() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        selectedMedia = pickedFile;
+      });
+    }
+  }
+
+//pick image from camera
+  Future<void> uploadImageFromCamera() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.camera);
+    if (pickedFile != null) {
+      setState(() {
+        selectedMedia = pickedFile;
+      });
+    }
+  }
+
+  void clear() {
+    setState(() {
+      selectedMedia = null;
+      croppedMedia = null;
+    });
   }
 
   // Attach media modal widget
@@ -270,22 +336,38 @@ class _ConvoScreenState extends State<ConvoScreen> {
                       Icons.camera_alt,
                     ),
                     title: const Text('Camera'),
-                    onTap: () {
-                      Navigator.pop(context);
+                    onTap: () async {
+                      await uploadImageFromCamera()
+                          .then((value) => cropImage())
+                          .then(
+                            (value) => Navigator.pop(context),
+                          );
                     },
                   ),
                   ListTile(
                     leading: const Icon(Icons.photo),
                     title: const Text('Gallery'),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.video_library),
-                    title: const Text('Video'),
-                    onTap: () {
-                      Navigator.pop(context);
+                    onTap: () async {
+                      await uploadImageFromGallery()
+                          .then((value) => cropImage())
+                          .then(
+                            (value) => {
+                              Navigator.pop(context),
+                              showModalBottomSheet(
+                                // isDismissible: true,
+                                isScrollControlled: true,
+                                enableDrag: true,
+                                context: context,
+                                builder: ((context) {
+                                  return MediaPreview(
+                                    chatID: widget.chatID,
+                                    filePath: croppedMedia!.path,
+                                  );
+                                }),
+                              ),
+                            },
+                          );
+                      // Navigator.pop(context);
                     },
                   ),
                   ListTile(
