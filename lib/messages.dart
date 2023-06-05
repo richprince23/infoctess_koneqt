@@ -1,14 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/models/poster_model.dart';
 import 'package:infoctess_koneqt/widgets/contact_item.dart';
+import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
 import 'package:infoctess_koneqt/widgets/message_item.dart';
 import 'package:resize/resize.dart';
+import 'package:status_alert/status_alert.dart';
 
 class ChatlistScreen extends StatelessWidget {
   ChatlistScreen({super.key});
@@ -82,12 +85,45 @@ class ChatlistScreen extends StatelessWidget {
                   physics: const BouncingScrollPhysics(),
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) {
-                    return ChatItem(
-                      chatID: snapshot.data!.docs[index].id,
-                      senderID: snapshot.data!.docs[index]['members'][0] ==
-                              auth.currentUser!.uid
-                          ? snapshot.data!.docs[index]['members'][1]
-                          : snapshot.data!.docs[index]['members'][0],
+                    return Slidable(
+                      direction: Axis.horizontal,
+                      endActionPane: ActionPane(
+                        extentRatio: 0.2,
+                        motion: const ScrollMotion(),
+                        children: [
+                          SlidableAction(
+                            autoClose: true,
+                            onPressed: (context) async {
+                              CustomDialog.showWithAction(context,
+                                  message: "Delete Chat", action: () async {
+                                await db
+                                    .collection("chats")
+                                    .doc(snapshot.data!.docs[index].id)
+                                    .delete()
+                                    .then((value) => StatusAlert.show(
+                                          context,
+                                          duration: const Duration(seconds: 2),
+                                          title: 'Chat deleted',
+                                          configuration:
+                                              const IconConfiguration(
+                                            icon: Icons.check,
+                                          ),
+                                        ));
+                              });
+                            },
+                            label: 'Delete',
+                            backgroundColor: Colors.red,
+                            icon: Icons.delete,
+                          ),
+                        ],
+                      ),
+                      child: ChatItem(
+                        chatID: snapshot.data!.docs[index].id,
+                        senderID: snapshot.data!.docs[index]['members'][0] ==
+                                auth.currentUser!.uid
+                            ? snapshot.data!.docs[index]['members'][1]
+                            : snapshot.data!.docs[index]['members'][0],
+                      ),
                     );
                   },
                 );

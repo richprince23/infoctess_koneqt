@@ -41,11 +41,13 @@ class CustomDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Platform.isAndroid
         ? AlertDialog(
-            title: Text(title ?? ""),
+            title: Text(title ?? "", style: TextStyle(fontSize: 18.sp + 1)),
             content: Text(message),
             actions: <Widget>[
               TextButton(
-                child: const Text('OK'),
+                child: Text('OK',
+                    style: TextStyle(
+                        fontSize: 16.sp + 1, fontWeight: FontWeight.bold)),
                 onPressed: () {
                   Navigator.of(context, rootNavigator: true).pop();
                 },
@@ -53,11 +55,11 @@ class CustomDialog extends StatelessWidget {
             ],
           )
         : CupertinoAlertDialog(
-            title: Text(title ?? ""),
+            title: Text(title ?? "", style: TextStyle(fontSize: 18.sp + 1)),
             content: Text(message),
             actions: <Widget>[
               CupertinoDialogAction(
-                child: const Text('OK'),
+                child: Text('OK', style: TextStyle(fontSize: 16.sp + 1)),
                 onPressed: () {
                   Navigator.of(context, rootNavigator: true).pop();
                 },
@@ -87,18 +89,19 @@ class CustomActionDialog extends StatelessWidget {
         ? AlertDialog(
             title: Text(title ?? "Confirmation",
                 style: TextStyle(fontSize: 18.sp + 1)),
-            content: Text(message),
+            content: Text(message, style: TextStyle(fontSize: 16.sp + 1)),
             actions: <Widget>[
               TextButton(
                 child: Text(actionText!,
-                    style: const TextStyle(fontWeight: FontWeight.bold)),
+                    style: TextStyle(
+                        fontSize: 16.sp + 1, fontWeight: FontWeight.bold)),
                 onPressed: () {
                   action();
                   Navigator.of(context, rootNavigator: true).pop(true);
                 },
               ),
               TextButton(
-                child: const Text('Cancel'),
+                child: Text('Cancel', style: TextStyle(fontSize: 16.sp + 1)),
                 onPressed: () {
                   Navigator.of(context, rootNavigator: true).pop(false);
                 },
@@ -106,19 +109,20 @@ class CustomActionDialog extends StatelessWidget {
             ],
           )
         : CupertinoAlertDialog(
-            title: Text(title ?? "Confirmation"),
-            content: Text(message),
+            title: Text(title ?? "Confirmation",
+                style: TextStyle(fontSize: 18.sp + 1)),
+            content: Text(message, style: TextStyle(fontSize: 16.sp + 1)),
             actions: <Widget>[
               CupertinoDialogAction(
                 isDefaultAction: true,
-                child: Text(actionText!),
+                child: Text(actionText!, style: TextStyle(fontSize: 16.sp + 1)),
                 onPressed: () {
                   action();
                   Navigator.of(context, rootNavigator: true).pop(true);
                 },
               ),
               CupertinoDialogAction(
-                child: const Text('Cancel'),
+                child: Text('Cancel', style: TextStyle(fontSize: 16.sp + 1)),
                 onPressed: () {
                   Navigator.of(context, rootNavigator: true).pop(false);
                 },
