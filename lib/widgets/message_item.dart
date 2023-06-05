@@ -74,6 +74,7 @@ class ChatItemState extends State<ChatItem> {
       lastMessageTime = null;
     }
 
+    print(lastMessageTime);
     await getUnreadMessages(chatID: widget.chatID);
   }
 

@@ -59,6 +59,12 @@ String convertDateString(String dateString) {
   return formattedDate;
 }
 
+String convertTime(String dateString) {
+  DateTime dateTime = DateTime.parse(dateString);
+  String formattedDate = DateFormat('h:mm a').format(dateTime);
+  return formattedDate.toLowerCase();
+}
+
 String convertDateTimeString(String dateString) {
   DateTime dateTime = DateTime.parse(dateString);
   String formattedDate =

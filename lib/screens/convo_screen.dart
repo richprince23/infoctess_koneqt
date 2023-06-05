@@ -123,6 +123,9 @@ class _ConvoScreenState extends State<ConvoScreen> {
                           isUser: snapshot.data!.docs[index]['senderID'] ==
                               auth.currentUser!.uid,
                           hasTime: true,
+                          time: snapshot.data!.docs[index]['timestamp']
+                              .toDate()
+                              .toString(),
                           showAvatar: false,
                         );
                       },

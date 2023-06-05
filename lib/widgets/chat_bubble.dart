@@ -11,6 +11,7 @@ class ChatBubble extends StatelessWidget {
   String? avatar;
   bool showAvatar;
   bool hasTime;
+  String time;
 
   ChatBubble(
       {required this.isUser,
@@ -18,6 +19,7 @@ class ChatBubble extends StatelessWidget {
       this.avatar,
       this.showAvatar = true,
       this.hasTime = false,
+      this.time = "",
       super.key});
 
   @override
@@ -38,7 +40,7 @@ class ChatBubble extends StatelessWidget {
           isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        if (isUser == false && showAvatar! == true)
+        if (isUser == false && showAvatar == true)
           CircleAvatar(
             radius: 15.r,
             backgroundColor: Colors.black,
@@ -84,9 +86,9 @@ class ChatBubble extends StatelessWidget {
                       fontSize: 16.sp,
                     ),
                   ),
-                  if (hasTime == true)
+                  if (hasTime == true && time != "")
                     Text(
-                      convertToElapsedString(DateTime.now().toString())
+                      convertTime(time)
                       //TODO: Add dynamic time here
                       ,
                       style: TextStyle(
