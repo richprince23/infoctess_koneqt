@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/constants.dart';
@@ -51,37 +50,10 @@ class ChatItemState extends State<ChatItem> {
     return userInfo;
   }
 
-  String? lastMessage;
-  bool? isRead;
-  String? lastMessageTime;
-
-  Future<void> getLastMessage() async {
-    final QuerySnapshot<Map<String, dynamic>> message = await db
-        .collection("chats")
-        .doc(widget.chatID)
-        .collection("messages")
-        .orderBy("timestamp", descending: true)
-        .limit(1)
-        .get();
-
-    if (message.docs.isNotEmpty) {
-      lastMessage = message.docs[0].data()['message'];
-      isRead = message.docs[0].data()['isRead'];
-      lastMessageTime = message.docs[0].data()['timestamp'].toDate().toString();
-    } else {
-      lastMessage = '';
-      isRead = false;
-      lastMessageTime = null;
-    }
-
-    print(lastMessageTime);
-    await getUnreadMessages(chatID: widget.chatID);
-  }
-
   @override
   void initState() {
     super.initState();
-    getLastMessage();
+    getLastMessage(chatID: widget.chatID);
   }
 
   @override
@@ -117,7 +89,7 @@ class ChatItemState extends State<ChatItem> {
                       sender.posterAvatarUrl ??
                           "https://i.pravatar.cc/150?img=3",
                       errorListener: () =>
-                          const Icon(Icons.account_circle, color: Colors.grey),
+                          const Icon(Icons.person, color: Colors.grey),
                     ),
                   ),
                   SizedBox(
@@ -128,7 +100,7 @@ class ChatItemState extends State<ChatItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          sender.posterName ?? "Anonymous",
+                          sender.posterName ?? "Loading...",
                           style: TextStyle(
                             // fontWeight: FontWeight.bold,
                             fontSize: 18.sp,

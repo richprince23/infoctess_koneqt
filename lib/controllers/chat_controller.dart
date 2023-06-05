@@ -5,6 +5,32 @@ import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/env.dart';
 
 var unreadMessageList = [];
+ String? lastMessage;
+  bool? isRead;
+  String? lastMessageTime;
+
+Future<void> getLastMessage({required String chatID}) async {
+    final QuerySnapshot<Map<String, dynamic>> message = await db
+        .collection("chats")
+        .doc(chatID)
+        .collection("messages")
+        .orderBy("timestamp", descending: true)
+        .limit(1)
+        .get();
+
+    if (message.docs.isNotEmpty) {
+      lastMessage = message.docs[0].data()['message'];
+      isRead = message.docs[0].data()['isRead'];
+      lastMessageTime = message.docs[0].data()['timestamp'].toDate().toString();
+    } else {
+      lastMessage = '';
+      isRead = false;
+      lastMessageTime = null;
+    }
+
+    // print(lastMessageTime);
+    await getUnreadMessages(chatID: chatID);
+  }
 
 //get unread messages
 Future getUnreadMessages({required chatID}) async {

@@ -180,32 +180,27 @@ class CreatePostState extends State<CreatePost> {
                 IconButton(
                   style: IconButton.styleFrom(
                       padding: const EdgeInsets.all(0),
-                      fixedSize: const Size(20, 20)),
+                      fixedSize: const Size(24, 24)),
                   onPressed: () => focusNode.hasFocus
                       ? FocusScope.of(context).unfocus()
                       : FocusScope.of(context).requestFocus(),
                   icon: const Icon(CupertinoIcons.keyboard),
                   iconSize: 18.w,
                 ),
-                TextButton.icon(
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.black,
-                    side: const BorderSide(color: Colors.grey, width: 1),
-                    padding: const EdgeInsets.symmetric(horizontal: 4),
-                    fixedSize: const Size(70, 26),
-                    minimumSize: const Size(70, 26),
-                    maximumSize: const Size(70, 26),
+                IconButton(
+                  style: IconButton.styleFrom(
+                    padding: const EdgeInsets.all(0),
+                    fixedSize: const Size(24, 24),
+                    // fixedSize: const Size(70, 26),
+                    // minimumSize: const Size(70, 26),
+                    // maximumSize: const Size(70, 26),
                   ),
                   onPressed: () async {
                     await uploadImage().then((value) => cropImage());
                   },
                   icon: Icon(
-                    CupertinoIcons.camera,
+                    CupertinoIcons.photo,
                     size: 12.w,
-                  ),
-                  label: Text(
-                    "image",
-                    style: TextStyle(fontSize: 12.sp + 1),
                   ),
                 ),
                 Expanded(
