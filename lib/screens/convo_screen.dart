@@ -134,6 +134,8 @@ class _ConvoScreenState extends State<ConvoScreen> {
                           time: data['timestamp'].toDate().toString(),
                           showAvatar: false,
                           mediaUrl: data['mediaUrl'] ?? "",
+                          msgID: data.id,
+                          chatID: widget.chatID,
                         );
                       },
                     );

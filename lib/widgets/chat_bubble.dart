@@ -1,13 +1,17 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:infoctess_koneqt/constants.dart';
+import 'package:infoctess_koneqt/controllers/chat_controller.dart';
 import 'package:infoctess_koneqt/controllers/utils.dart';
 import 'package:infoctess_koneqt/screens/tools/image_viewer.dart';
 import 'package:path/path.dart' as path;
 import 'package:mime/mime.dart';
 import 'package:resize/resize.dart';
+import 'package:status_alert/status_alert.dart';
 
 class ChatBubble extends StatelessWidget {
   bool isUser;
@@ -17,15 +21,21 @@ class ChatBubble extends StatelessWidget {
   bool hasTime;
   String time;
   String? mediaUrl;
+  bool hasOptions;
+  String msgID;
+  String chatID;
 
   ChatBubble(
       {required this.isUser,
       required this.message,
+      this.msgID = "",
+      this.chatID = "",
       this.avatar,
       this.showAvatar = true,
       this.mediaUrl,
       this.hasTime = false,
       this.time = "",
+      this.hasOptions = true,
       super.key});
 
   @override
@@ -40,87 +50,101 @@ class ChatBubble extends StatelessWidget {
       }
     }
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      mainAxisAlignment:
-          isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        if (isUser == false && showAvatar == true)
-          CircleAvatar(
-            radius: 15.r,
-            backgroundColor: Colors.black,
-            child: const Text(
-              "AI",
-              style: TextStyle(
-                color: Colors.white,
-              ),
+    return InkWell(
+      onLongPress: () {
+        print("how options here");
+        showDialog(
+          barrierDismissible: true,
+          context: context,
+          builder: ((context) {
+            return buildChatOptions(context);
+          }),
+        );
+      },
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment:
+            isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (isUser == false && showAvatar == true)
+            CircleAvatar(
+              radius: 20,
+              backgroundImage:
+                  avatar != null ? CachedNetworkImageProvider(avatar!) : null,
+              backgroundColor: avatar == null ? Colors.white : null,
+              child: avatar == null
+                  ? const Icon(
+                      Icons.person,
+                      color: Colors.black,
+                    )
+                  : null,
             ),
-          ),
-        Flexible(
-          fit: FlexFit.loose,
-          child: IntrinsicWidth(
-            child: Container(
-              // elevation: 0,
-              alignment: isUser ? Alignment.topRight : Alignment.topLeft,
-              margin: const EdgeInsets.all(8),
-              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.w),
-              decoration: ShapeDecoration(
-                color: getBubbleColor(),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: const Radius.circular(16),
-                    topRight: const Radius.circular(16),
-                    bottomLeft: isUser
-                        ? const Radius.circular(16)
-                        : const Radius.circular(0),
-                    bottomRight: isUser
-                        ? const Radius.circular(0)
-                        : const Radius.circular(16),
+          Flexible(
+            fit: FlexFit.loose,
+            child: IntrinsicWidth(
+              child: Container(
+                // elevation: 0,
+                alignment: isUser ? Alignment.topRight : Alignment.topLeft,
+                margin: const EdgeInsets.all(8),
+                padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.w),
+                decoration: ShapeDecoration(
+                  color: getBubbleColor(),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: const Radius.circular(16),
+                      topRight: const Radius.circular(16),
+                      bottomLeft: isUser
+                          ? const Radius.circular(16)
+                          : const Radius.circular(0),
+                      bottomRight: isUser
+                          ? const Radius.circular(0)
+                          : const Radius.circular(16),
+                    ),
                   ),
                 ),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  buildMediaPreview(),
-                  SelectableText(
-                    message,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16.sp,
-                    ),
-                  ),
-                  if (hasTime == true && time != "")
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    buildMediaPreview(),
                     Text(
-                      convertTime(time),
+                      message,
                       style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 12.sp,
-                        fontStyle: FontStyle.italic,
+                        color: Colors.black,
+                        fontSize: 16.sp,
                       ),
                     ),
-                ],
+                    if (hasTime == true && time != "")
+                      Text(
+                        convertTime(time),
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 12.sp,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        if (isUser == true && showAvatar == true)
-          CircleAvatar(
-            radius: 20,
-            backgroundImage:
-                avatar != null ? CachedNetworkImageProvider(avatar!) : null,
-            backgroundColor: avatar == null ? Colors.white : null,
-            child: avatar == null
-                ? const Icon(
-                    Icons.person,
-                    color: Colors.black,
-                  )
-                : null,
-          ),
-      ],
+          if (isUser == true && showAvatar == true)
+            CircleAvatar(
+              radius: 20,
+              backgroundImage:
+                  avatar != null ? CachedNetworkImageProvider(avatar!) : null,
+              backgroundColor: avatar == null ? Colors.white : null,
+              child: avatar == null
+                  ? const Icon(
+                      Icons.person,
+                      color: Colors.black,
+                    )
+                  : null,
+            ),
+        ],
+      ),
     );
   }
 
@@ -178,6 +202,103 @@ class ChatBubble extends StatelessWidget {
 
         return const SizedBox.shrink();
       },
+    );
+  }
+
+  buildChatOptions(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Center(
+        child: IntrinsicHeight(
+          child: Padding(
+            padding: EdgeInsets.all(40.w),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Card(
+                  color: Colors.white,
+                  child: SizedBox(
+                    width: 100.vw,
+                    child: ChatBubble(
+                      isUser: isUser,
+                      message: message,
+                      showAvatar: false,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10.w,
+                ),
+                Expanded(
+                  child: Card(
+                    child: Column(
+                      children: [
+                        ListTile(
+                          title: const Text("Reply"),
+                          leading: const Icon(CupertinoIcons.reply),
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                        ListTile(
+                          title: const Text("Forward"),
+                          leading: const Icon(
+                              CupertinoIcons.arrowshape_turn_up_right),
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                        ListTile(
+                          title: const Text("Copy"),
+                          leading: const Icon(CupertinoIcons.doc_on_doc),
+                          onTap: () {
+                            //copy to clipboard
+                            Clipboard.setData(ClipboardData(text: message))
+                                .then(
+                              (value) => Navigator.pop(context),
+                            );
+                          },
+                        ),
+                        ListTile(
+                          title: const Text("Delete"),
+                          leading: const Icon(CupertinoIcons.delete),
+                          onTap: () async {
+                            await deleteMessage(
+                                    chatID: chatID, messageID: msgID)
+                                .then((value) => StatusAlert.show(
+                                      backgroundColor: Colors.transparent,
+                                      context,
+                                      configuration: IconConfiguration(
+                                        icon: Icons.check,
+                                        color: Colors.green,
+                                        size: 50.w,
+                                      ),
+                                      maxWidth: 50.vw,
+                                      duration: const Duration(seconds: 1),
+                                    ))
+                                .then(
+                                  (value) => Navigator.pop(context),
+                                );
+                          },
+                        ),
+                        const Divider(),
+                        ListTile(
+                          title: const Text("Cancel"),
+                          leading: const Icon(CupertinoIcons.xmark_circle_fill),
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

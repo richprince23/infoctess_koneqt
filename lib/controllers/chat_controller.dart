@@ -100,3 +100,18 @@ Future sendMessage({
     "isRead": false,
   });
 }
+
+//delete message
+
+Future deleteMessage(
+    {required String chatID, required String messageID}) async {
+  if (messageID.isNotEmpty || messageID != "") {
+    await db
+        .collection("chats")
+        .doc()
+        .collection("messages")
+        .doc(messageID)
+        .delete();
+    print("message deleted");
+  }
+}
