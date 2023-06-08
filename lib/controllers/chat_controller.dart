@@ -105,13 +105,55 @@ Future sendMessage({
 
 Future deleteMessage(
     {required String chatID, required String messageID}) async {
-  if (messageID.isNotEmpty || messageID != "") {
-    await db
+  final storage = FirebaseStorage.instance;
+
+  if (messageID.isNotEmpty &&
+      messageID != "" &&
+      chatID.isNotEmpty &&
+      chatID != "") {
+    final docRef = db
         .collection("chats")
-        .doc()
+        .doc(chatID)
         .collection("messages")
         .doc(messageID)
-        .delete();
-    print("message deleted");
+        .get();
+
+    if ((await docRef).exists) {
+      await db
+          .collection("chats")
+          .doc(chatID)
+          .collection("messages")
+          .doc(messageID)
+          .delete();
+      if ((await docRef).data()!['mediaUrl'] != null) {
+        await storage.refFromURL((await docRef).data()!['mediaUrl']).delete();
+      }
+    }
   }
+}
+
+Future<String> startChat({required String memberID}) async {
+  // Check if chat already exists
+  final chatRef = db
+      .collection("chats")
+      .where('members', arrayContains: auth.currentUser!.uid);
+
+  final chatData = await chatRef.get();
+
+  for (final doc in chatData.docs) {
+    final members = doc.data()['members'] as List<dynamic>;
+    if (members.contains(memberID)) {
+      // Chat already exists
+      return doc.id;
+    }
+  }
+
+  // Chat does not exist, create a new one
+  final chatDocument = db.collection("chats").doc();
+  chatDocument.set({
+    'members': [auth.currentUser!.uid, memberID],
+    'timestamp': DateTime.now(),
+  });
+
+  return chatDocument.id;
 }

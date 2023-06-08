@@ -266,20 +266,9 @@ class ChatBubble extends StatelessWidget {
                           onTap: () async {
                             await deleteMessage(
                                     chatID: chatID, messageID: msgID)
-                                .then((value) => StatusAlert.show(
-                                      backgroundColor: Colors.transparent,
-                                      context,
-                                      configuration: IconConfiguration(
-                                        icon: Icons.check,
-                                        color: Colors.green,
-                                        size: 50.w,
-                                      ),
-                                      maxWidth: 50.vw,
-                                      duration: const Duration(seconds: 1),
-                                    ))
                                 .then(
-                                  (value) => Navigator.pop(context),
-                                );
+                              (value) => Navigator.pop(context),
+                            );
                           },
                         ),
                         const Divider(),

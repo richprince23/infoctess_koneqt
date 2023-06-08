@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -50,6 +51,8 @@ class _ConvoScreenState extends State<ConvoScreen> {
   void dispose() {
     super.dispose();
     msgController.dispose();
+    selectedMedia = null;
+    croppedMedia = null;
   }
 
   @override
@@ -122,10 +125,17 @@ class _ConvoScreenState extends State<ConvoScreen> {
                         ),
                       );
                     }
+                    // Get the documents that have been deleted.
                     return ListView.builder(
                       cacheExtent: 100.vh,
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {
+                        // Get the list of documents
+                        // List<DocumentSnapshot> documents = snapshot.data!.docs;
+                        // // Remove any deleted documents
+                        // documents.removeWhere(
+                        //     (document) => document.exists == false);
+
                         final data = snapshot.data!.docs[index];
                         return ChatBubble(
                           message: data['message'],

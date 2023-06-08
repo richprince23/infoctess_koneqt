@@ -4,8 +4,10 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/constants.dart';
+import 'package:infoctess_koneqt/controllers/chat_controller.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/models/poster_model.dart';
+import 'package:infoctess_koneqt/screens/convo_screen.dart';
 import 'package:infoctess_koneqt/widgets/contact_item.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
@@ -37,6 +39,33 @@ class ChatlistScreen extends StatelessWidget {
     });
 
     return following;
+  }
+
+  final Poster sender = Poster();
+  //get poster details
+  Future getPosterDetails({required userID}) async {
+    final userInfo = await db
+        .collection("user_infos")
+        .where("userID", isEqualTo: userID)
+        .get()
+        .then((value) {
+      var details = value.docs[0].data();
+      // if (mounted) {
+      //   setState(() {
+      sender.posterName = details['fullName'];
+      sender.posterID = details['userID'];
+      sender.userName = details['userName'];
+      sender.posterAvatarUrl = details['avatar'];
+      sender.isPosterAdmin = details['isAdmin'];
+      // postComments = int.parse(getCommentsCount(widget.post.id).toString());
+      // postLikes = int.parse(getLikesCount(widget.post.id).toString());
+      // });
+      // }
+    });
+    // }).then(
+    //   (value) async => await getUnreadMessages(chatID: widget.chatID),
+    // );
+    return userInfo;
   }
 
   @override
@@ -235,8 +264,25 @@ class ChatlistScreen extends StatelessWidget {
                       cacheExtent: 100.vh,
                       itemCount: following.length,
                       itemBuilder: (context, int index) {
-                        return ContactItem(
-                          userID: following[index],
+                        return ListTile(
+                          onTap: () async {
+                            getPosterDetails(userID: following[index]);
+                            print(sender.posterName);
+                            await startChat(memberID: following[index]).then(
+                              (value) => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ConvoScreen(
+                                    chatID: value,
+                                    sender: sender,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                          title: ContactItem(
+                            userID: following[index],
+                          ),
                         );
                       },
                     );
