@@ -16,7 +16,7 @@ import 'package:resize/resize.dart';
 import 'package:status_alert/status_alert.dart';
 
 class ChatlistScreen extends StatelessWidget {
-  ChatlistScreen({super.key});
+  ChatlistScreen({Key? key}):super(key: key);
   List<Poster> followingList = [];
   List following = [];
 
@@ -267,18 +267,19 @@ class ChatlistScreen extends StatelessWidget {
                         return ListTile(
                           onTap: () async {
                             getPosterDetails(userID: following[index]);
-                            print(sender.posterName);
-                            await startChat(memberID: following[index]).then(
-                              (value) => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ConvoScreen(
-                                    chatID: value,
-                                    sender: sender,
-                                  ),
-                                ),
-                              ),
-                            );
+                            await startChat(memberID: following[index])
+                                .then((value) => {
+                                      Navigator.pop(context),
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => ConvoScreen(
+                                            chatID: value,
+                                            sender: sender,
+                                          ),
+                                        ),
+                                      ),
+                                    });
                           },
                           title: ContactItem(
                             userID: following[index],

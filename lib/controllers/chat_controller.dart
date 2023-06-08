@@ -4,11 +4,9 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart' as path;
 import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/env.dart';
+import 'package:path/path.dart' as path;
 
 final chatMediaRef = storage.ref("chat_media");
 UploadTask? task;
@@ -20,6 +18,10 @@ bool? isRead;
 String? lastMessageTime;
 
 Future<void> getLastMessage({required String chatID}) async {
+  lastMessage = '';
+  isRead = false;
+  lastMessageTime = null;
+
   final QuerySnapshot<Map<String, dynamic>> message = await db
       .collection("chats")
       .doc(chatID)
