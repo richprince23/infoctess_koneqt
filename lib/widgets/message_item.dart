@@ -141,16 +141,20 @@ class ChatItemState extends State<ChatItem> {
                       ),
                       Align(
                         alignment: Alignment.bottomRight,
-                        child: Text(
-                          convertToElapsedString(
-                              lastMessageTime ?? DateTime.now().toString()),
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.w300,
-                            fontSize: 12.sp,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
+                        child: Builder(
+                          builder: (context) {
+                            return Text(
+                              convertToElapsedString(
+                                  lastMessageTime ?? DateTime.now().toString()),
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.w300,
+                                fontSize: 12.sp,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            );
+                          }
                         ),
                       ),
                     ],

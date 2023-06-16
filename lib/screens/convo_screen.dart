@@ -13,6 +13,7 @@ import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/chat_controller.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/models/poster_model.dart';
+import 'package:infoctess_koneqt/screens/user_screens/profile_screen.dart';
 import 'package:infoctess_koneqt/widgets/chat_bubble.dart';
 import 'package:infoctess_koneqt/widgets/chat_preview.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
@@ -61,33 +62,45 @@ class _ConvoScreenState extends State<ConvoScreen> {
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
         elevation: 0.5,
-        scrolledUnderElevation: 1,
+        scrolledUnderElevation: 0.5,
         surfaceTintColor: cSec.withOpacity(0.1),
-        title: Row(
-          children: [
-            CircleAvatar(
-              radius: 15.r,
-              backgroundImage: CachedNetworkImageProvider(
-                widget.sender.posterAvatarUrl!,
-                // "https://i.pravatar.cc/150?img=3",
-                errorListener: () => const Icon(Icons.person),
-              ),
-            ),
-            SizedBox(
-              width: 10.w,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.sender.posterName ?? "User",
-                  overflow: TextOverflow.ellipsis,
+        title: InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => UserProfile(
+                  userID: widget.sender.posterID!,
                 ),
-                Text("online", style: TextStyle(fontSize: 12.sp)),
-              ],
-            ),
-          ],
+              ),
+            );
+          },
+          child: Row(
+            children: [
+              CircleAvatar(
+                radius: 15.r,
+                backgroundImage: CachedNetworkImageProvider(
+                  widget.sender.posterAvatarUrl!,
+                  // "https://i.pravatar.cc/150?img=3",
+                  errorListener: () => const Icon(Icons.person),
+                ),
+              ),
+              SizedBox(
+                width: 10.w,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.sender.posterName ?? "User",
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text("online", style: TextStyle(fontSize: 12.sp)),
+                ],
+              ),
+            ],
+          ),
         ),
         // actions: [],
       ),

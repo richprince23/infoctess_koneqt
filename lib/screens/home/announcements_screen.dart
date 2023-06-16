@@ -56,14 +56,15 @@ class NewsScreen extends StatelessWidget {
                       padding: EdgeInsets.symmetric(
                           horizontal: 8.0.w, vertical: 2.0.h),
                       child: NewsItem(
-                          news: News(
-                        id: newsData.id,
-                        title: newsData.data()['title'],
-                        body: newsData.data()['body'],
-                        imgUrl: newsData.data()['imgUrl'],
-                        posterID: newsData.data()['posterID'],
-                        timestamp: newsData.data()['timestamp'].toDate(),
-                      )),
+                        news: News(
+                          id: newsData.id,
+                          title: newsData.data()['title'],
+                          body: newsData.data()['body'],
+                          imgUrl: newsData.data()['imgUrl'],
+                          posterID: newsData.data()['posterID'],
+                          timestamp: newsData.data()['timestamp'].toDate(),
+                        ),
+                      ),
                     );
                   },
                 );

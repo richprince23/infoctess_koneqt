@@ -14,6 +14,7 @@ import 'package:infoctess_koneqt/controllers/utils.dart';
 import 'package:infoctess_koneqt/models/poster_model.dart';
 import 'package:infoctess_koneqt/models/posts_model.dart';
 import 'package:infoctess_koneqt/screens/post_page.dart';
+import 'package:infoctess_koneqt/screens/user_screens/profile_screen.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
@@ -247,6 +248,14 @@ class _PostItemState extends State<PostItem> {
                   InkWell(
                     onTap: () async {
                       debugPrint("Go to user profle");
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UserProfile(
+                            userID: widget.post.posterID!,
+                          ),
+                        ),
+                      );
                     },
                     child: Container(
                       padding: EdgeInsets.all(10.w),

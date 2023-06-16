@@ -16,6 +16,8 @@ var unreadMessageList = [];
 String? lastMessage;
 bool? isRead;
 String? lastMessageTime;
+List<String> followerList = [];
+List<String> followingList = [];
 
 Future<void> getLastMessage({required String chatID}) async {
   lastMessage = '';

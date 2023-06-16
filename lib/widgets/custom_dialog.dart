@@ -4,23 +4,41 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:resize/resize.dart';
 
+///enum to define the type of alert icon
+enum AlertStyle { warning, info, success, error }
+
 class CustomDialog extends StatelessWidget {
   final String? title;
   final String message;
-
-  const CustomDialog({Key? key, this.title, required this.message})
+  final AlertStyle? alertStyle;
+  const CustomDialog(
+      {Key? key,
+      this.title,
+      required this.message,
+      this.alertStyle = AlertStyle.info})
       : super(key: key);
 
+  ///show a normal dialog with an OK button
+  ///[title] is the title of the dialog
+  ///[message] is the message to be displayed
   static void show(BuildContext context,
-      {String? title, required String message}) {
+      {String? title, required String message, AlertStyle? alertStyle}) {
     showDialog(
       context: context,
       builder: (context) => CustomDialog(
         title: title,
         message: message,
+        alertStyle: alertStyle,
       ),
     );
   }
+
+  ///show a dialog with an action button
+  ///[title] is the title of the dialog
+  ///[message] is the message to be displayed
+  ///[action] is the action to be performed when the action button is pressed
+  ///[actionText] is the text to be displayed on the action button
+  ///[actionText] defaults to "Proceed"
 
   static void showWithAction(BuildContext context,
       {String? title,
@@ -30,10 +48,11 @@ class CustomDialog extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => CustomActionDialog(
-          title: title,
-          message: message,
-          action: action,
-          actionText: actionText),
+        title: title,
+        message: message,
+        action: action,
+        actionText: actionText,
+      ),
     );
   }
 
@@ -41,8 +60,31 @@ class CustomDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Platform.isAndroid
         ? AlertDialog(
-            title: Text(title ?? "", style: TextStyle(fontSize: 18.sp + 1)),
-            content: Text(message),
+            title: Text(title ?? "", style: TextStyle(fontSize: 16.sp + 1)),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  alertStyle == AlertStyle.warning
+                      ? Icons.warning
+                      : alertStyle == AlertStyle.info
+                          ? Icons.info
+                          : alertStyle == AlertStyle.success
+                              ? Icons.check_circle
+                              : Icons.error,
+                  color: alertStyle == AlertStyle.warning
+                      ? Colors.amber
+                      : alertStyle == AlertStyle.info
+                          ? Colors.blue
+                          : alertStyle == AlertStyle.success
+                              ? Colors.green
+                              : Colors.red,
+                  size: 40.sp,
+                ),
+                SizedBox(height: 10.w),
+                Text(message, style: TextStyle(fontSize: 16.sp)),
+              ],
+            ),
             actions: <Widget>[
               TextButton(
                 child: Text('OK',
@@ -55,8 +97,30 @@ class CustomDialog extends StatelessWidget {
             ],
           )
         : CupertinoAlertDialog(
-            title: Text(title ?? "", style: TextStyle(fontSize: 18.sp + 1)),
-            content: Text(message),
+            title: Text(title ?? "", style: TextStyle(fontSize: 16.sp + 1)),
+            content: Column(
+              children: [
+                Icon(
+                  alertStyle == AlertStyle.warning
+                      ? Icons.warning
+                      : alertStyle == AlertStyle.info
+                          ? Icons.info
+                          : alertStyle == AlertStyle.success
+                              ? Icons.check_circle
+                              : Icons.error,
+                  color: alertStyle == AlertStyle.warning
+                      ? Colors.amber
+                      : alertStyle == AlertStyle.info
+                          ? Colors.blue
+                          : alertStyle == AlertStyle.success
+                              ? Colors.green
+                              : Colors.red,
+                  size: 40.sp,
+                ),
+                SizedBox(height: 10.w),
+                Text(message, style: TextStyle(fontSize: 16.sp)),
+              ],
+            ),
             actions: <Widget>[
               CupertinoDialogAction(
                 child: Text('OK', style: TextStyle(fontSize: 16.sp + 1)),
@@ -74,6 +138,7 @@ class CustomActionDialog extends StatelessWidget {
   final String message;
   final VoidCallback action;
   final String? actionText;
+  final AlertStyle? alertStyle;
 
   const CustomActionDialog({
     Key? key,
@@ -81,6 +146,7 @@ class CustomActionDialog extends StatelessWidget {
     required this.message,
     required this.action,
     this.actionText = "Proceed",
+    this.alertStyle = AlertStyle.warning,
   }) : super(key: key);
 
   @override
@@ -88,8 +154,31 @@ class CustomActionDialog extends StatelessWidget {
     return Platform.isAndroid
         ? AlertDialog(
             title: Text(title ?? "Confirmation",
-                style: TextStyle(fontSize: 18.sp + 1)),
-            content: Text(message, style: TextStyle(fontSize: 16.sp + 1)),
+                style: TextStyle(fontSize: 16.sp + 1)),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  alertStyle == AlertStyle.warning
+                      ? Icons.warning
+                      : alertStyle == AlertStyle.info
+                          ? Icons.info
+                          : alertStyle == AlertStyle.success
+                              ? Icons.check_circle
+                              : Icons.error,
+                  color: alertStyle == AlertStyle.warning
+                      ? Colors.amber
+                      : alertStyle == AlertStyle.info
+                          ? Colors.blue
+                          : alertStyle == AlertStyle.success
+                              ? Colors.green
+                              : Colors.red,
+                  size: 40.sp,
+                ),
+                SizedBox(height: 10.w),
+                Text(message, style: TextStyle(fontSize: 16.sp)),
+              ],
+            ),
             actions: <Widget>[
               TextButton(
                 child: Text(actionText!,
@@ -110,8 +199,30 @@ class CustomActionDialog extends StatelessWidget {
           )
         : CupertinoAlertDialog(
             title: Text(title ?? "Confirmation",
-                style: TextStyle(fontSize: 18.sp + 1)),
-            content: Text(message, style: TextStyle(fontSize: 16.sp + 1)),
+                style: TextStyle(fontSize: 16.sp + 1)),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  alertStyle == AlertStyle.warning
+                      ? Icons.warning
+                      : alertStyle == AlertStyle.info
+                          ? Icons.info
+                          : alertStyle == AlertStyle.success
+                              ? Icons.check_circle
+                              : Icons.error,
+                  color: alertStyle == AlertStyle.warning
+                      ? Colors.amber
+                      : alertStyle == AlertStyle.info
+                          ? Colors.blue
+                          : alertStyle == AlertStyle.success
+                              ? Colors.green
+                              : Colors.red,
+                  size: 40.sp,
+                ),
+                Text(message, style: TextStyle(fontSize: 16.sp)),
+              ],
+            ),
             actions: <Widget>[
               CupertinoDialogAction(
                 isDefaultAction: true,
