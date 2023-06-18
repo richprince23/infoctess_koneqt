@@ -5,6 +5,7 @@ import 'package:infoctess_koneqt/controllers/notification_service.dart';
 import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
 import 'package:infoctess_koneqt/controllers/page_controller.dart';
 import 'package:infoctess_koneqt/controllers/post_controller.dart';
+import 'package:infoctess_koneqt/controllers/profile_controller.dart';
 import 'package:infoctess_koneqt/controllers/user_provider.dart';
 import 'package:infoctess_koneqt/messages.dart';
 import 'package:infoctess_koneqt/screens/admin/create_event.dart';
@@ -47,6 +48,7 @@ void main() async {
       ChangeNotifierProvider(create: (_) => PageControl()),
       ChangeNotifierProvider(create: (_) => UserProvider()),
       ChangeNotifierProvider(create: (_) => Stats()),
+      ChangeNotifierProvider(create: (_) => ProfileProvider()),
     ], child: const MyApp()),
   );
 }

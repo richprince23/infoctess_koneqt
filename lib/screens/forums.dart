@@ -26,7 +26,7 @@ class _ForumsScreenState extends State<ForumsScreen> {
         dismissOnCapturedTaps: true,
         child: Container(
           color: cSec.withOpacity(0.1),
-          padding: EdgeInsets.symmetric(horizontal: 5.w),
+          // padding: EdgeInsets.symmetric(horizontal: 5.w),
           height: double.infinity,
           width: MediaQuery.of(context).size.width,
           child: RefreshIndicator(

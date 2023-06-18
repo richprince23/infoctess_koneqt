@@ -15,6 +15,7 @@ import 'package:infoctess_koneqt/screens/post_page.dart';
 import 'package:infoctess_koneqt/screens/tools/image_viewer.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
+import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 
 class UserProfile extends StatefulWidget {
@@ -27,7 +28,7 @@ class UserProfile extends StatefulWidget {
 
 class _UserProfileState extends State<UserProfile>
     with SingleTickerProviderStateMixin {
-  String followingStatus = "Follow";
+  // String followingStatus = "Follow";
   bool isChecking = false;
   final Poster user = Poster();
   final tabs = [
@@ -39,30 +40,20 @@ class _UserProfileState extends State<UserProfile>
     ),
   ];
 
-  //get poster details
-  Future getPosterDetails({required userID}) async {
-    final userInfo = await db
-        .collection("user_infos")
-        .where("userID", isEqualTo: userID)
-        .get()
-        .then((value) {
-      var details = value.docs[0].data();
-      user.posterName = details['fullName'];
-      user.posterID = details['userID'];
-      user.userName = details['userName'];
-      user.posterAvatarUrl = details['avatar'];
-      user.isPosterAdmin = details['isAdmin'];
-    });
-    // Future.delayed(const Duration(seconds: 1));
-    return userInfo;
-  }
-
   late TabController tabController;
   @override
   void initState() {
     super.initState();
     tabController = TabController(length: 2, vsync: this);
-    getUserSharedMedia(userID: widget.userID);
+    // getUserSharedMedia(userID: widget.userID);
+    init();
+  }
+
+  init() async {
+    await Provider.of<ProfileProvider>(context, listen: false)
+        .checkIfFollowing(userID: widget.userID);
+    await getUserSharedMedia(userID: widget.userID);
+    await getUserPosts(userID: widget.userID);
   }
 
   @override
@@ -74,7 +65,8 @@ class _UserProfileState extends State<UserProfile>
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: getPosterDetails(userID: widget.userID),
+      future: Provider.of<ProfileProvider>(context)
+          .getPosterDetails(userID: widget.userID, user: user),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
@@ -130,47 +122,43 @@ class _UserProfileState extends State<UserProfile>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ElevatedButton(
-                      onPressed: () async {
-                        //check if user is a follower and enable follow button
-                        try {
-                          await followUser(userID: widget.userID).then(
-                            (value) => setState(
-                              () {
-                                followingStatus = value;
-                              },
+                    Consumer<ProfileProvider>(builder: (context, value, child) {
+                      return ElevatedButton(
+                        onPressed: () async {
+                          //check if user is a follower and enable follow button
+                          try {
+                            await value.followUser(userID: widget.userID);
+                          } catch (e) {
+                            CustomDialog.show(
+                              context,
+                              title: "Error",
+                              message: "An error occured. Please try again",
+                              // message: e.toString(),
+                            );
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 20.w,
+                            vertical: 8.w,
+                          ),
+                          elevation: value.isFollowing ? 0 : 1,
+                          backgroundColor:
+                              value.isFollowing ? Colors.white : cPri,
+                          foregroundColor:
+                              value.isFollowing ? cPri : Colors.white,
+                          surfaceTintColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.r),
+                            side: BorderSide(
+                              color: Colors.grey.shade300,
                             ),
-                          );
-                        } catch (e) {
-                          CustomDialog.show(
-                            context,
-                            title: "Error",
-                            message: "An error occured. Please try again",
-                          );
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 20.w,
-                          vertical: 8.w,
-                        ),
-                        elevation: 0,
-                        backgroundColor: Colors.white,
-                        foregroundColor: cPri,
-                        surfaceTintColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.r),
-                          side: BorderSide(
-                            color: Colors.black.withOpacity(0.5),
                           ),
                         ),
-                      ),
-                      child: isChecking == true
-                          ? Center(
-                              child: CircularProgressIndicator(),
-                            )
-                          : Text("$followingStatus"),
-                    ),
+                        child: Text(
+                            value.isFollowing == true ? "Following" : "Follow"),
+                      );
+                    }),
                     SizedBox(width: 20.w),
                     //TODO: check if user is a follower and enable message button
                     ElevatedButton(
@@ -208,14 +196,14 @@ class _UserProfileState extends State<UserProfile>
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(
                             horizontal: 20.w, vertical: 8.w),
-                        elevation: 0,
+                        elevation: 0.5,
                         backgroundColor: Colors.white,
                         foregroundColor: cPri,
                         surfaceTintColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.r),
                           side: BorderSide(
-                            color: Colors.black.withOpacity(0.5),
+                            color: Colors.grey.shade300,
                           ),
                         ),
                       ),

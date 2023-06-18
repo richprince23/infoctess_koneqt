@@ -234,8 +234,9 @@ class _PostItemState extends State<PostItem> {
           margin: const EdgeInsets.symmetric(
             vertical: 1,
           ),
+          padding: EdgeInsets.zero,
           child: Material(
-            borderRadius: BorderRadius.circular(8.r),
+            // borderRadius: BorderRadius.circular(8.r),
             elevation: 0,
             // shadowColor: Colors.grey,
             color: Colors.white,
@@ -344,7 +345,6 @@ class _PostItemState extends State<PostItem> {
                   ),
                   // show post image
                   InkWell(
-                    enableFeedback: false,
                     onDoubleTap: () async {
                       await likePost(context);
                     },
