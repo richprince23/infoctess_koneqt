@@ -12,6 +12,7 @@ import 'package:infoctess_koneqt/screens/onboarding/acad_info.dart';
 import 'package:infoctess_koneqt/screens/onboarding/basic_info.dart';
 import 'package:infoctess_koneqt/screens/onboarding/profileinfo.dart';
 import 'package:infoctess_koneqt/screens/tools/utilies_screen.dart';
+import 'package:infoctess_koneqt/screens/user_screens/user_account.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // extension Capitalized on String {
@@ -41,8 +42,8 @@ var kMainPages = <Widget>[
   const HomePage(),
   const ForumsScreen(),
   const UtilitiesScreen(),
-  // const MiscScreen(),
   ChatlistScreen(),
+  UserAccountScreen(),
 ];
 
 final Future<SharedPreferences> mainPrefs = SharedPreferences.getInstance();

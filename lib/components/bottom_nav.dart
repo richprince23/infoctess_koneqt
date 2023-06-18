@@ -123,6 +123,30 @@ class _BottomNavState extends State<BottomNav> {
                     ),
             ),
           ),
+          SizedBox(
+            height: 50.h,
+            // width: size.height * 0.06,
+            child: InkWell(
+              // iconSize: 16,
+              onTap: () {
+                setState(() {
+                  pageIndex = 4;
+                  Provider.of<PageControl>(context, listen: false)
+                      .setPageIndex(4);
+                });
+              },
+              child: pageIndex == 4
+                  ? NavItem(
+                      label: "Profle",
+                      icon: CupertinoIcons.person_alt_circle_fill,
+                    )
+                  : Icon(
+                      CupertinoIcons.person_alt_circle,
+                      color: Colors.black,
+                      size: 24.w,
+                    ),
+            ),
+          ),
         ],
       ),
     );
