@@ -84,7 +84,8 @@ class UserAccountScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     ListTile(
-                      leading: const Icon(Icons.people),
+                      iconColor: cSec,
+                      leading: const Icon(Icons.people_outline),
                       title: Text(
                         "Friends",
                         style: TextStyle(
@@ -96,6 +97,8 @@ class UserAccountScreen extends StatelessWidget {
                       trailing: const Icon(Icons.arrow_forward_ios),
                     ),
                     ListTile(
+                      onTap: () {},
+                      iconColor: cSec,
                       leading: const Icon(Icons.show_chart_rounded),
                       title: Text(
                         "My Activity",
@@ -131,6 +134,7 @@ class UserAccountScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     ListTile(
+                      iconColor: cSec,
                       leading: const Icon(Icons.star_border),
                       title: Text(
                         "Starred Messages",
@@ -143,6 +147,7 @@ class UserAccountScreen extends StatelessWidget {
                       trailing: const Icon(Icons.arrow_forward_ios),
                     ),
                     ListTile(
+                      iconColor: cSec,
                       leading: const Icon(Icons.show_chart_rounded),
                       title: Text(
                         "Chat Background",
@@ -155,7 +160,8 @@ class UserAccountScreen extends StatelessWidget {
                       trailing: const Icon(Icons.arrow_forward_ios),
                     ),
                     ListTile(
-                      leading: const Icon(Icons.photo_library),
+                      iconColor: cSec,
+                      leading: const Icon(Icons.photo_library_outlined),
                       title: Text(
                         "My Shared Media",
                         style: TextStyle(
@@ -190,6 +196,7 @@ class UserAccountScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     ListTile(
+                      iconColor: cSec,
                       leading: const Icon(Icons.help_outline),
                       title: Text(
                         "Help and Support",
@@ -202,6 +209,7 @@ class UserAccountScreen extends StatelessWidget {
                       trailing: const Icon(Icons.arrow_forward_ios),
                     ),
                     ListTile(
+                      iconColor: cSec,
                       leading: const Icon(Icons.privacy_tip_outlined),
                       title: Text(
                         "Privacy Policy",
@@ -214,6 +222,7 @@ class UserAccountScreen extends StatelessWidget {
                       trailing: const Icon(Icons.arrow_forward_ios),
                     ),
                     ListTile(
+                      iconColor: cSec,
                       leading: const Icon(Icons.handshake_outlined),
                       title: Text(
                         "Terms and Conditions",
@@ -249,7 +258,8 @@ class UserAccountScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     ListTile(
-                      leading: const Icon(Icons.delete_forever),
+                      iconColor: cSec,
+                      leading: const Icon(Icons.delete_forever_outlined),
                       title: Text(
                         "Clear All Chats",
                         style: TextStyle(
@@ -261,7 +271,8 @@ class UserAccountScreen extends StatelessWidget {
                       trailing: const Icon(Icons.arrow_forward_ios),
                     ),
                     ListTile(
-                      leading: const Icon(Icons.sd_storage),
+                      iconColor: cSec,
+                      leading: const Icon(Icons.sd_storage_outlined),
                       title: Text(
                         "Clear Cache",
                         style: TextStyle(
