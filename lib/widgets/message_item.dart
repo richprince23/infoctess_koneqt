@@ -75,7 +75,7 @@ class ChatItemState extends State<ChatItem> {
               decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.w),
+                  borderRadius: BorderRadius.circular(10.r),
                   side: BorderSide(
                     color: Colors.grey.withOpacity(0.5),
                   ),

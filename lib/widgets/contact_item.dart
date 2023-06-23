@@ -55,11 +55,11 @@ class _ContactItemState extends State<ContactItem> {
         return InkWell(
           child: Container(
             padding: EdgeInsets.all(10.w),
-            margin: EdgeInsets.symmetric(vertical: 1.w, horizontal: 10.w),
+            margin: EdgeInsets.symmetric(vertical: 0, horizontal: 10.w),
             decoration: ShapeDecoration(
               color: Colors.white,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.w),
+                borderRadius: BorderRadius.circular(10.r),
                 side: BorderSide(
                   color: Colors.grey.withOpacity(0.5),
                 ),
@@ -84,6 +84,7 @@ class _ContactItemState extends State<ContactItem> {
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w500,
                   ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
