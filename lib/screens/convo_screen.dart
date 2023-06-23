@@ -186,6 +186,7 @@ class _ConvoScreenState extends State<ConvoScreen> {
                       type: TextInputType.multiline,
                       controller: msgController,
                       isCollapsed: true,
+                      radius: 8.r,
                     ),
                   ),
                   SizedBox(

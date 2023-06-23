@@ -164,7 +164,7 @@ class _InputControlState extends State<InputControl> {
                     horizontal: 20.w,
                     vertical: 10.w,
                   )
-                : EdgeInsets.symmetric(horizontal: 10.w, vertical: 0),
+                : EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.w),
             filled: true,
 
             isCollapsed: widget.isCollapsed,
