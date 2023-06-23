@@ -315,8 +315,26 @@ class _ConvoScreenState extends State<ConvoScreen> {
                         ),
                         const Text('Camera')
                       ]),
-                  onPressed: () {
-                    Navigator.pop(context, 'Camera');
+                  onPressed: () async {
+                    await uploadImageFromCamera()
+                        .then((value) => cropImage())
+                        .then(
+                          (value) => {
+                            Navigator.pop(context),
+                            showModalBottomSheet(
+                              // isDismissible: true,
+                              isScrollControlled: true,
+                              enableDrag: true,
+                              context: context,
+                              builder: ((context) {
+                                return MediaPreview(
+                                  chatID: widget.chatID,
+                                  filePath: croppedMedia!.path,
+                                );
+                              }),
+                            ),
+                          },
+                        );
                   },
                 ),
                 CupertinoActionSheetAction(
@@ -330,8 +348,27 @@ class _ConvoScreenState extends State<ConvoScreen> {
                       const Text('Gallery'),
                     ],
                   ),
-                  onPressed: () {
-                    Navigator.pop(context, 'Gallery');
+                  onPressed: () async {
+                    await uploadImageFromGallery()
+                        .then((value) => cropImage())
+                        .then(
+                          (value) => {
+                            Navigator.pop(context),
+                            showModalBottomSheet(
+                              // isDismissible: true,
+                              isScrollControlled: true,
+                              enableDrag: true,
+                              context: context,
+                              builder: ((context) {
+                                return MediaPreview(
+                                  chatID: widget.chatID,
+                                  filePath: croppedMedia!.path,
+                                );
+                              }),
+                            ),
+                          },
+                        );
+                    // Navigator.pop(context);
                   },
                 ),
                 CupertinoActionSheetAction(

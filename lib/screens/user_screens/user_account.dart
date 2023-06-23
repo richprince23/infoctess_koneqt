@@ -84,6 +84,7 @@ class UserAccountScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     ListTile(
+                      onTap: () => Navigator.pushNamed(context, '/my-friends'),
                       iconColor: cSec,
                       leading: const Icon(Icons.people_outline),
                       title: Text(

@@ -91,6 +91,51 @@ class ProfileProvider extends ChangeNotifier {
 
   String get followText => _followText;
 
+  List _followingList = [];
+  List _followersList = [];
+
+  //get following list of current user
+
+  Future<List> getFollowingList() async {
+    // List<Poster> following = []; // Updated: Initialize as a List<Poster>
+    await db
+        .collection("user_infos")
+        .where("userID", isEqualTo: auth.currentUser!.uid)
+        .get()
+        .then((value) async {
+      var user = value.docs[0];
+      _followingList.clear();
+      for (var element in user.data()['following']) {
+        // print(element);
+        _followingList.add(element);
+      }
+      // print(following.length);
+    });
+    notifyListeners();
+    return _followingList;
+  }
+
+  //get followers list of current user
+  Future<List> getFollowersList() async {
+    // List<Poster> followers = []; // Updated: Initialize as a List<Poster>
+    await db
+        .collection("user_infos")
+        .where("userID", isEqualTo: auth.currentUser!.uid)
+        .get()
+        .then((value) async {
+      var user = value.docs[0];
+      _followersList.clear();
+      for (var element in user.data()['followers']) {
+        // print(element);
+        _followersList.add(element);
+      }
+      // print(followers.length);
+    });
+    notifyListeners();
+    return _followersList;
+  }
+
+//check if user is following
   Future<void> checkIfFollowing({required String userID}) async {
     final result = await db
         .collection("user_infos")

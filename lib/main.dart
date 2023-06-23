@@ -28,6 +28,7 @@ import 'package:infoctess_koneqt/screens/tools/studymate/ai_imager.dart';
 import 'package:infoctess_koneqt/screens/tools/studymate/aichat_screen.dart';
 import 'package:infoctess_koneqt/screens/user_screens/bookmarks.dart';
 import 'package:infoctess_koneqt/screens/user_screens/calendar.dart';
+import 'package:infoctess_koneqt/screens/user_screens/my_friends.dart';
 import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 
@@ -97,6 +98,7 @@ class MyApp extends StatelessWidget {
           "/bookmarks": (context) => BookmarksScreen(),
           "/profile": (context) => ProfileScreen(),
           "/chatlist": (context) => ChatlistScreen(),
+          "/my-friends": (context) => const MyFriendsScreen(),
         },
       ),
     );
