@@ -107,7 +107,9 @@ class ProfileProvider extends ChangeNotifier {
       _followingList.clear();
       for (var element in user.data()['following']) {
         // print(element);
-        _followingList.add(element);
+        if (element != auth.currentUser!.uid) {
+          _followingList.add(element);
+        }
       }
       // print(following.length);
     });
@@ -127,7 +129,9 @@ class ProfileProvider extends ChangeNotifier {
       _followersList.clear();
       for (var element in user.data()['followers']) {
         // print(element);
-        _followersList.add(element);
+        if (element != auth.currentUser!.uid) {
+          _followersList.add(element);
+        }
       }
       // print(followers.length);
     });

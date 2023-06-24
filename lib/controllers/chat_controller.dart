@@ -146,7 +146,7 @@ Future<String> startChat({required String memberID}) async {
 
   for (final doc in chatData.docs) {
     final members = doc.data()['members'] as List<dynamic>;
-    if (members.contains(memberID)) {
+    if (members.contains(memberID) && members.contains(auth.currentUser!.uid)) {
       // Chat already exists
       return doc.id;
     }
