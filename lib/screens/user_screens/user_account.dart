@@ -98,7 +98,7 @@ class UserAccountScreen extends StatelessWidget {
                       trailing: const Icon(Icons.arrow_forward_ios),
                     ),
                     ListTile(
-                      onTap: () {},
+                      onTap: () => Navigator.pushNamed(context, '/my-activity'),
                       iconColor: cSec,
                       leading: const Icon(Icons.show_chart_rounded),
                       title: Text(

@@ -29,6 +29,7 @@ class InputControl extends StatefulWidget {
   bool? isSearch;
   double radius;
   bool isCollapsed;
+  bool? showFilter;
 
   InputControl({
     Key? inputkey,
@@ -46,6 +47,7 @@ class InputControl extends StatefulWidget {
     this.isSearch = false,
     this.onChanged,
     this.isCollapsed = false,
+    this.showFilter = false,
   }) : super(key: inputkey);
 
   @override
@@ -141,17 +143,19 @@ class _InputControlState extends State<InputControl> {
                           )
                         : const Icon(null),
                   )
-                : GestureDetector(
-                    onTap: () => {
-                      // if (widget.trailing == null)
-                      print("Filter")
-                    },
-                    child: Icon(
-                      Icons.tune_sharp,
-                      color: Colors.black54,
-                      size: 18.sp + 1,
-                    ),
-                  ),
+                : (widget.showFilter == true
+                    ? GestureDetector(
+                        onTap: () => {
+                          // if (widget.trailing == null)
+                          print("Filter")
+                        },
+                        child: Icon(
+                          Icons.tune_sharp,
+                          color: Colors.black54,
+                          size: 18.sp + 1,
+                        ),
+                      )
+                    : null),
             // isDense: true,
             hintText: widget.hintText!.toString(),
             hintStyle: TextStyle(

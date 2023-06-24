@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/env.dart';
+import 'package:infoctess_koneqt/models/comments_model.dart';
 import 'package:infoctess_koneqt/models/poster_model.dart';
+import 'package:infoctess_koneqt/models/posts_model.dart';
 
 //get user posts
 Future getUserPosts({required String userID}) async {
@@ -209,5 +211,52 @@ class ProfileProvider extends ChangeNotifier {
     });
     // Future.delayed(const Duration(seconds: 1));
     return userInfo;
+  }
+
+  // get user activity like posts, comments,
+  Future getUserActivity({required String userID}) async {
+    List<Post> postList = [];
+    List<Comment> commentList = [];
+    List activityList = [];
+    final posts =
+        await db.collection("posts").where("posterID", isEqualTo: userID).get();
+    for (var doc in posts.docs) {
+      Post post = Post.fromMap(doc.data());
+      postList.add(post);
+    }
+    final comments = await db
+        .collection("comments")
+        .where("posterID", isEqualTo: userID)
+        .get();
+    for (var doc in comments.docs) {
+      Comment comment = Comment.fromMap(doc.data());
+      commentList.add(comment);
+    }
+    activityList.addAll(postList);
+    activityList.addAll(commentList);
+    return activityList;
+  }
+
+  //get user posts
+  Future<List<Post>> getUserPosts() async {
+    List<Post> postList = [];
+    final posts = await db
+        .collection("posts")
+        .where("posterID", isEqualTo: auth.currentUser!.uid)
+        .get();
+    for (var doc in posts.docs) {
+      var p = doc.data();
+      Post post = Post(
+        id: doc.id,
+        body: p['body'],
+        posterID: p['posterID'],
+        // comments: p['comments'] as List<Comment>,
+        imgUrl: p['image'],
+        // likes: p['likes'],
+        timestamp: p['timestamp'].toDate(),
+      );
+      postList.add(post);
+    }
+    return postList;
   }
 }
