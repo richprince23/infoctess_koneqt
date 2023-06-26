@@ -24,6 +24,7 @@ class ChatBubble extends StatelessWidget {
   bool hasOptions;
   String msgID;
   String chatID;
+  Color fontColor;
 
   ChatBubble(
       {required this.isUser,
@@ -36,6 +37,7 @@ class ChatBubble extends StatelessWidget {
       this.hasTime = false,
       this.time = "",
       this.hasOptions = true,
+      this.fontColor = Colors.black,
       super.key});
 
   @override
@@ -114,7 +116,7 @@ class ChatBubble extends StatelessWidget {
                     Text(
                       message,
                       style: TextStyle(
-                        color: Colors.black,
+                        color: fontColor,
                         fontSize: 16.sp,
                       ),
                     ),

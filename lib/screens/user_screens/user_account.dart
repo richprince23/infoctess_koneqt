@@ -148,6 +148,7 @@ class UserAccountScreen extends StatelessWidget {
                       trailing: const Icon(Icons.arrow_forward_ios),
                     ),
                     ListTile(
+                      onTap: () => Navigator.pushNamed(context, '/chat-background'),
                       iconColor: cSec,
                       leading: const Icon(Icons.show_chart_rounded),
                       title: Text(
