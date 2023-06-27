@@ -246,6 +246,7 @@ class ChatBubble extends StatelessWidget {
                       isUser: isUser,
                       message: message,
                       showAvatar: false,
+                      hasOptions: false,
                     ),
                   ),
                 ),
@@ -268,6 +269,14 @@ class ChatBubble extends StatelessWidget {
                           leading: const Icon(
                               CupertinoIcons.arrowshape_turn_up_right),
                           onTap: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                        ListTile(
+                          title: const Text("Star"),
+                          leading: const Icon(CupertinoIcons.star),
+                          onTap: () {
+                            //TODO: add to starred messages
                             Navigator.pop(context);
                           },
                         ),

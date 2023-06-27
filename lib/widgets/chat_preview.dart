@@ -152,7 +152,7 @@ class MediaPreview extends StatelessWidget {
                       await sendMessage(
                         chatID: chatID,
                         attachment: filePath,
-                        message: isImage() == false
+                        message: isImage() == true
                             ? captionController.text.trim()
                             : "Attachment",
                       )

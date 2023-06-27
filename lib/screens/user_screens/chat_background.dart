@@ -27,7 +27,6 @@ class _ChatBackgroundScreenState extends State<ChatBackgroundScreen> {
         actions: [
           TextButton(
             onPressed: () {
-              //todo: reset background
               Provider.of<ChatProvider>(context, listen: false)
                   .setBackgroundImage(path: "")
                   .then(
