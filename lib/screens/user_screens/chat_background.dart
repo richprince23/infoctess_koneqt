@@ -2,7 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:infoctess_koneqt/constants.dart';
+import 'package:infoctess_koneqt/controllers/chat_controller.dart';
 import 'package:infoctess_koneqt/widgets/chat_bubble.dart';
+import 'package:infoctess_koneqt/widgets/status_snack.dart';
+import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 
 class ChatBackgroundScreen extends StatefulWidget {
@@ -20,6 +24,22 @@ class _ChatBackgroundScreenState extends State<ChatBackgroundScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Choose Backgound"),
+        actions: [
+          TextButton(
+            onPressed: () {
+              //todo: reset background
+              Provider.of<ChatProvider>(context, listen: false)
+                  .setBackgroundImage(path: "")
+                  .then(
+                    (value) => 
+                      CustomSnackBar.show(context,
+                        message: "Chat background has been reset",                      
+                    ),
+                  );
+            },
+            child: const Text("Reset"),
+          )
+        ],
       ),
       body: Column(
         children: [
@@ -30,11 +50,16 @@ class _ChatBackgroundScreenState extends State<ChatBackgroundScreen> {
               await chooseImage();
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.color_lens),
-            title: const Text("Choose from Solid Colors"),
-            onTap: () {},
-          ),
+          // ListTile(
+          //   leading: const Icon(Icons.color_lens),
+          //   title: const Text("Choose from Solid Colors"),
+          //   onTap: () {},
+          // ),
+          // ListTile(
+          //   leading: const Icon(Icons.format_paint),
+          //   title: const Text("Choose Font Color"),
+          //   onTap: () {},
+          // ),
           SizedBox(
             height: 10.w,
           ),
@@ -49,7 +74,17 @@ class _ChatBackgroundScreenState extends State<ChatBackgroundScreen> {
           Container(
             height: 50.vh,
             width: 60.vw,
-            color: Colors.blue,
+            decoration: BoxDecoration(
+              color: cSec.withOpacity(0.05),
+              image: context.watch<ChatProvider>().chatBackground != ""
+                  ? DecorationImage(
+                      opacity: 0.8,
+                      image: FileImage(
+                          File(context.watch<ChatProvider>().chatBackground)),
+                      fit: BoxFit.cover,
+                    )
+                  : null,
+            ),
             child: Stack(
               children: [
                 if (_image != null)
@@ -68,6 +103,7 @@ class _ChatBackgroundScreenState extends State<ChatBackgroundScreen> {
                         isUser: false,
                         showAvatar: false,
                         // fontColor: Colors.white,
+                        hasOptions: false,
                       ),
                     ),
                     SizedBox(
@@ -86,16 +122,40 @@ class _ChatBackgroundScreenState extends State<ChatBackgroundScreen> {
                 ),
               ],
             ),
-          )
+          ),
+          const Spacer(),
+          SizedBox(
+            // height: 50.w,
+            width: 60.vw,
+            child: _image != null
+                ? ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: cPri,
+                      elevation: 0,
+                      foregroundColor: Colors.white,
+                      fixedSize: btnLarge(context),
+                    ),
+                    onPressed: () async {
+                      await Provider.of<ChatProvider>(context, listen: false)
+                          .setBackgroundImage(path: _image!.path)
+                          .then(
+                            (value) => Navigator.pop(context),
+                          );
+                    },
+                    child: Text(
+                      "Save",
+                      style: TextStyle(fontSize: 18.sp),
+                    ),
+                  )
+                : const SizedBox.shrink(),
+          ),
+          SizedBox(
+            height: 20.w,
+          ),
         ],
       ),
     );
   }
-
-  // //choose solid color
-  // Color chooseColor() {
-  //   ColorP
-  // }
 
   //choose from gallery
   Future<void> chooseImage() async {

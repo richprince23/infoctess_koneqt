@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:path/path.dart' as path;
@@ -160,4 +161,37 @@ Future<String> startChat({required String memberID}) async {
   });
 
   return chatDocument.id;
+}
+
+///Provider for chat related functions and data
+class ChatProvider extends ChangeNotifier {
+  String chatBackground = "";
+
+  ///Set background image for chat screen using shared preferences
+  ///
+  ///[path] is the path of the image
+  Future<void> setBackgroundImage({required String path}) async {
+    final prefs = await mainPrefs;
+    await prefs.setString("chatBackground", path);
+    chatBackground = path;
+    notifyListeners();
+  }
+
+  ///Get background image for chat screen using shared preferences
+  ///Retyrns the image path
+  ///If no image is set, return null
+  Future<String?> getBackgroundImage() async {
+    final prefs = await mainPrefs;
+    final path = prefs.getString("chatBackground");
+    chatBackground = path ?? "";
+    return path;
+  }
+
+  ///Remove background image for chat screen using shared preferences
+  Future<void> removeBackgroundImage() async {
+    final prefs = await mainPrefs;
+    await prefs.remove("chatBackground");
+    chatBackground = "";
+    notifyListeners();
+  }
 }

@@ -45,23 +45,24 @@ class ChatBubble extends StatelessWidget {
     Color getBubbleColor() {
       if (isUser) {
         // return Colors.black87;
-        return cPri.withOpacity(0.1);
+        return const Color(0xFFFFD9F0);
       } else {
         // return Colors.black54;
-        return cSec.withOpacity(0.1);
+        return Colors.white;
       }
     }
 
     return InkWell(
       onLongPress: () {
-        print("how options here");
-        showDialog(
-          barrierDismissible: true,
-          context: context,
-          builder: ((context) {
-            return buildChatOptions(context);
-          }),
-        );
+        if (hasOptions == true) {
+          showDialog(
+            barrierDismissible: true,
+            context: context,
+            builder: ((context) {
+              return buildChatOptions(context);
+            }),
+          );
+        }
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -199,6 +200,7 @@ class ChatBubble extends StatelessWidget {
                 "File: $fileName",
                 style: TextStyle(color: Colors.black, fontSize: 12.sp),
                 overflow: TextOverflow.ellipsis,
+                maxLines: 2,
               ),
             );
           }

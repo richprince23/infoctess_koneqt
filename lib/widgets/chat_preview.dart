@@ -5,6 +5,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/chat_controller.dart';
+import 'package:mime/mime.dart';
 import 'package:resize/resize.dart';
 
 class MediaPreview extends StatelessWidget {
@@ -13,11 +14,16 @@ class MediaPreview extends StatelessWidget {
   final captionController = TextEditingController();
   MediaPreview({super.key, required this.chatID, required this.filePath});
 
+  bool isImage() {
+    String mime = lookupMimeType(filePath)!;
+    return mime.contains("image");
+  }
+
   @override
   Widget build(BuildContext context) {
     return KeyboardDismissOnTap(
       child: Container(
-        height: 90.vh,
+        height: isImage() == true ? 90.vh : 200.w,
         // margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         padding:
             EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -60,22 +66,62 @@ class MediaPreview extends StatelessWidget {
               ),
             ),
             //change this to dynamic media by checking mime type
-            Expanded(
-              child: Image.file(
-                File(filePath),
-                fit: BoxFit.contain,
-              ),
-            ),
+            //check if the supplied file is an image or other file format
+            isImage() == true
+                ? Expanded(
+                    child: Image.file(
+                      File(filePath),
+                      fit: BoxFit.contain,
+                    ),
+                  )
+                : Expanded(
+                    child: Center(
+                      child: Container(
+                        padding: EdgeInsets.all(20.w),
+                        width: 80.vw,
+                        decoration: ShapeDecoration(
+                          color: Colors.grey[300],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.r),
+                            side: BorderSide(color: cSec, width: 0.5),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.insert_drive_file),
+                            SizedBox(
+                              width: 10.w,
+                            ),
+                            Expanded(
+                              child: Text(
+                                File(filePath).path.split('/').last,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14.sp,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
             Container(
               padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.w),
               child: Row(children: [
                 Expanded(
                   child: InputControl(
                     showLabel: false,
-                    hintText: "Add a caption",
+                    hintText:
+                        isImage() == true ? "Add a caption" : "Attachment",
                     type: TextInputType.multiline,
                     controller: captionController,
                     isCollapsed: true,
+                    radius: 10.r,
+                    readOnly: !isImage(),
                   ),
                 ),
                 SizedBox(
@@ -89,6 +135,9 @@ class MediaPreview extends StatelessWidget {
                     foregroundColor: Colors.white,
                   ),
                   onPressed: () async {
+                    if (!isImage()) {
+                      captionController.text = "Attachment";
+                    }
                     if (captionController.text.isNotEmpty) {
                       showDialog(
                         context: context,
@@ -103,7 +152,9 @@ class MediaPreview extends StatelessWidget {
                       await sendMessage(
                         chatID: chatID,
                         attachment: filePath,
-                        message: captionController.text.trim(),
+                        message: isImage() == false
+                            ? captionController.text.trim()
+                            : "Attachment",
                       )
                           .then(
                             (value) => {

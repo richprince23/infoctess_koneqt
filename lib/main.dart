@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:infoctess_koneqt/controllers/chat_controller.dart';
 import 'package:infoctess_koneqt/controllers/notification_service.dart';
 import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
 import 'package:infoctess_koneqt/controllers/page_controller.dart';
@@ -52,6 +53,7 @@ void main() async {
       ChangeNotifierProvider(create: (_) => UserProvider()),
       ChangeNotifierProvider(create: (_) => Stats()),
       ChangeNotifierProvider(create: (_) => ProfileProvider()),
+      ChangeNotifierProvider(create: (_) => ChatProvider()),
     ], child: const MyApp()),
   );
 }

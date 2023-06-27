@@ -1,14 +1,9 @@
-import 'dart:io';
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
-import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:resize/resize.dart';
 import 'package:status_alert/status_alert.dart';
@@ -46,29 +41,29 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
           toolbarHeight: 48.h,
           leading: IconButton(
             icon: const BackButtonIcon(),
-            iconSize: 24.h,
+            iconSize: 24.sp,
             onPressed: () => Navigator.pushReplacementNamed(context, "/login"),
           ),
         ),
         body: Center(
           child: SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.all(40.0.h),
+              padding: EdgeInsets.all(40.0.w),
               child: Column(
                 // mainAxisAlignment: MainAxisAlignment.center,
                 // mainAxisSize: MainAxisSize.max,
                 children: [
-                  Icon(Icons.lock, size: sw24(context), color: cSec),
-                  SizedBox(height: 10.h),
+                  Icon(Icons.lock, size: 24.sp, color: cSec),
+                  SizedBox(height: 10.w),
                   Text(
-                    "Please verify that you are a member of INFOCTESS, UEW",
+                    "Please verify that you are a member of INFOCTESS-UEW",
                     softWrap: true,
                     style: TextStyle(
                       fontSize: 16.sp + 1,
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 10.h),
+                  SizedBox(height: 10.w),
                   Form(
                     key: _formKey,
                     child: InputControl(
@@ -83,25 +78,24 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
                       },
                     ),
                   ),
-                  response.isEmpty
-                      ? SizedBox(height: 10.h)
-                      : const SizedBox.shrink(),
-                  response != ""
-                      ? Text(
-                          "$response ",
-                          style:
-                              TextStyle(color: Colors.red, fontSize: 12.sp + 1),
-                        )
-                      : const SizedBox.shrink(),
+                  // response.isEmpty
+                  //     ? SizedBox(height: 10.h)
+                  //     : const SizedBox.shrink(),
+                  // response != ""
+                  //     ? Text(
+                  //         "$response ",
+                  //         style:
+                  //             TextStyle(color: Colors.red, fontSize: 12.sp + 1),
+                  //       )
+                  //     : const SizedBox.shrink(),
                   SizedBox(height: sh1(context)),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         elevation: 0,
                         fixedSize: btnLarge(context),
-                        backgroundColor:
-                            AppTheme.themeData(false, context).backgroundColor,
+                        backgroundColor: cPri,
                         foregroundColor: Colors.white,
-                        textStyle: TextStyle(fontSize: f18(context))),
+                        textStyle: TextStyle(fontSize: 18.sp)),
                     onPressed: () async {
                       if (!_formKey.currentState!.validate()) {
                         return;
@@ -116,8 +110,8 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
                           // title: const Text("Verification"),
                           child: Image.asset(
                             "assets/images/preload.gif",
-                            height: 50.h,
-                            width: 50.h,
+                            height: 30.w,
+                            width: 30.w,
                           ),
                         ),
                       );
@@ -159,6 +153,10 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
                                         "/onboarding",
                                       );
                                     } else {
+                                      CustomDialog.show(context,
+                                          message:
+                                              "You already have an account with us. Please login",
+                                          alertStyle: AlertStyle.error);
                                       setState(() {
                                         response = "User already exists";
                                       });
@@ -171,7 +169,8 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
 
                                 CustomDialog.show(context,
                                     message:
-                                        "An error occured while performing your request");
+                                        "An error occured while performing your request",
+                                    alertStyle: AlertStyle.error);
                                 setState(() {
                                   response =
                                       "An error occured. Please try again";
@@ -180,6 +179,10 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
                               }
                             } else {
                               Navigator.of(context, rootNavigator: true).pop();
+                              CustomDialog.show(context,
+                                  message:
+                                      "Sorry, we couldn't verify your identity",
+                                  alertStyle: AlertStyle.error);
                               setState(() {
                                 response =
                                     "Sorry, we couldn't verify your identity";
@@ -193,7 +196,8 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
 
                         CustomDialog.show(context,
                             message:
-                                "An error occured while performing your request");
+                                "An error occured while performing your request",
+                            alertStyle: AlertStyle.error);
                         setState(() {
                           response = "An error occured. Please try again";
                         });
@@ -205,7 +209,7 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
                     ),
                   ),
                   SizedBox(
-                    height: 10.h,
+                    height: 10.w,
                   ),
                 ],
               ),

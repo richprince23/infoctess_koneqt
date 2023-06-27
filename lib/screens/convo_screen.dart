@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -17,6 +18,7 @@ import 'package:infoctess_koneqt/screens/user_screens/profile_screen.dart';
 import 'package:infoctess_koneqt/widgets/chat_bubble.dart';
 import 'package:infoctess_koneqt/widgets/chat_preview.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
+import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 
 class ConvoScreen extends StatefulWidget {
@@ -35,11 +37,15 @@ class _ConvoScreenState extends State<ConvoScreen> {
   bool isEmpty = true;
   XFile? selectedMedia;
   CroppedFile? croppedMedia;
+  File? selectedFile;
 
   @override
   void initState() {
     super.initState();
+    //mark chat as read
     markChatAsRead(chatID: widget.chatID);
+    //get chat background Image
+    //listen to keyboard visibility
     msgController.addListener(() {
       setState(() {
         msgController.text.isEmpty ? isTyping = false : isTyping = true;
@@ -110,7 +116,19 @@ class _ConvoScreenState extends State<ConvoScreen> {
             Expanded(
               flex: 9,
               child: Container(
-                color: cSec.withOpacity(0.05),
+                decoration: BoxDecoration(
+                  color: cSec.withOpacity(0.05),
+                  // ignore: unnecessary_null_comparison
+                  image: context.watch<ChatProvider>().chatBackground != null
+                      ? DecorationImage(
+                          opacity: 0.8,
+                          image: Image.file(
+                            File(context.watch<ChatProvider>().chatBackground),
+                          ).image,
+                          fit: BoxFit.cover,
+                        )
+                      : null,
+                ),
                 child: StreamBuilder(
                   stream: db
                       .collection("chats")
@@ -280,6 +298,33 @@ class _ConvoScreenState extends State<ConvoScreen> {
     }
   }
 
+  ///pick file from storage using file picker
+  Future<void> uploadFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: [
+        'pdf',
+        'doc',
+        'docx',
+        'xls',
+        'xlsx',
+        'ppt',
+        'pptx',
+        'txt',
+        'zip',
+        'rar',
+        'csv',
+      ],
+    );
+    //restrict file size to 5mb
+    if (result != null && result.files.single.size < 5000000) {
+      setState(() {
+        selectedFile = File(result.files.single.path!);
+      });
+    }
+  }
+
+  ///clear selected media
   void clear() {
     setState(() {
       selectedMedia = null;
@@ -382,8 +427,24 @@ class _ConvoScreenState extends State<ConvoScreen> {
                       const Text('File'),
                     ],
                   ),
-                  onPressed: () {
-                    Navigator.pop(context, 'File');
+                  onPressed: () async {
+                    await uploadFile().then((value) => null).then(
+                          (value) => {
+                            Navigator.pop(context),
+                            showModalBottomSheet(
+                              // isDismissible: true,
+                              isScrollControlled: true,
+                              enableDrag: true,
+                              context: context,
+                              builder: ((context) {
+                                return MediaPreview(
+                                  chatID: widget.chatID,
+                                  filePath: selectedMedia!.path,
+                                );
+                              }),
+                            ),
+                          },
+                        );
                   },
                 ),
               ],
@@ -451,8 +512,24 @@ class _ConvoScreenState extends State<ConvoScreen> {
                   ListTile(
                     leading: const Icon(Icons.insert_drive_file),
                     title: const Text('File'),
-                    onTap: () {
-                      Navigator.pop(context);
+                    onTap: () async {
+                      await uploadFile().then((value) => null).then(
+                            (value) => {
+                              Navigator.pop(context),
+                              showModalBottomSheet(
+                                // isDismissible: true,
+                                isScrollControlled: true,
+                                enableDrag: true,
+                                context: context,
+                                builder: ((context) {
+                                  return MediaPreview(
+                                    chatID: widget.chatID,
+                                    filePath: selectedFile!.path,
+                                  );
+                                }),
+                              ),
+                            },
+                          );
                     },
                   ),
                 ],
