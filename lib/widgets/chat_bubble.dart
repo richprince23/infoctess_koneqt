@@ -196,11 +196,27 @@ class ChatBubble extends StatelessWidget {
                   side: BorderSide(color: cPri, width: 0.5),
                 ),
               ),
-              child: Text(
-                "File: $fileName",
-                style: TextStyle(color: Colors.black, fontSize: 12.sp),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.insert_drive_file,
+                    color: Colors.black,
+                    size: 30.sp,
+                  ),
+                  SizedBox(width: 10.w),
+                  Expanded(
+                    child: Text(
+                      fileName,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12.sp,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                    ),
+                  ),
+                ],
               ),
             );
           }

@@ -119,7 +119,7 @@ class _ConvoScreenState extends State<ConvoScreen> {
                 decoration: BoxDecoration(
                   color: cSec.withOpacity(0.05),
                   // ignore: unnecessary_null_comparison
-                  image: context.watch<ChatProvider>().chatBackground != null
+                  image: context.watch<ChatProvider>().chatBackground != ""
                       ? DecorationImage(
                           opacity: 0.8,
                           image: Image.file(
