@@ -16,7 +16,7 @@ import 'package:resize/resize.dart';
 import 'package:status_alert/status_alert.dart';
 
 class ChatlistScreen extends StatelessWidget {
-  ChatlistScreen({Key? key}):super(key: key);
+  ChatlistScreen({Key? key}) : super(key: key);
   List<Poster> followingList = [];
   List following = [];
 
@@ -106,6 +106,13 @@ class ChatlistScreen extends StatelessWidget {
                     child: EmptyList(
                       text:
                           "You don't have any messages yet\nStart a conversation with someone to see them here",
+                    ),
+                  );
+                }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: cSec,
                     ),
                   );
                 }

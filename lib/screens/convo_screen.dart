@@ -17,7 +17,9 @@ import 'package:infoctess_koneqt/models/poster_model.dart';
 import 'package:infoctess_koneqt/screens/user_screens/profile_screen.dart';
 import 'package:infoctess_koneqt/widgets/chat_bubble.dart';
 import 'package:infoctess_koneqt/widgets/chat_preview.dart';
+import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
+import 'package:infoctess_koneqt/widgets/status_snack.dart';
 import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 
@@ -317,9 +319,17 @@ class _ConvoScreenState extends State<ConvoScreen> {
       ],
     );
     //restrict file size to 5mb
-    if (result != null && result.files.single.size < 5000000) {
+    if (result != null && result.files.single.size <= 5200000) {
       setState(() {
         selectedFile = File(result.files.single.path!);
+      });
+    } else if (result != null && result.files.single.size > 5200000) {
+      setState(() {
+        selectedFile = null;
+      });
+    } else {
+      setState(() {
+        selectedFile = null;
       });
     }
   }
@@ -428,23 +438,29 @@ class _ConvoScreenState extends State<ConvoScreen> {
                     ],
                   ),
                   onPressed: () async {
-                    await uploadFile().then((value) => null).then(
-                          (value) => {
-                            Navigator.pop(context),
-                            showModalBottomSheet(
-                              // isDismissible: true,
-                              isScrollControlled: true,
-                              enableDrag: true,
-                              context: context,
-                              builder: ((context) {
-                                return MediaPreview(
-                                  chatID: widget.chatID,
-                                  filePath: selectedMedia!.path,
-                                );
-                              }),
-                            ),
-                          },
-                        );
+                    await uploadFile().then(
+                      (value) {
+                        if (selectedFile != null) {
+                          Navigator.pop(context);
+                          showModalBottomSheet(
+                            // isDismissible: true,
+                            isScrollControlled: true,
+                            enableDrag: true,
+                            context: context,
+                            builder: ((context) {
+                              return MediaPreview(
+                                chatID: widget.chatID,
+                                filePath: selectedMedia!.path,
+                              );
+                            }),
+                          );
+                        } else {
+                          Navigator.pop(context);
+                          CustomSnackBar.show(context,
+                              message: "File is bigger than 5mb");
+                        }
+                      },
+                    );
                   },
                 ),
               ],
@@ -513,23 +529,29 @@ class _ConvoScreenState extends State<ConvoScreen> {
                     leading: const Icon(Icons.insert_drive_file),
                     title: const Text('File'),
                     onTap: () async {
-                      await uploadFile().then((value) => null).then(
-                            (value) => {
-                              Navigator.pop(context),
-                              showModalBottomSheet(
-                                // isDismissible: true,
-                                isScrollControlled: true,
-                                enableDrag: true,
-                                context: context,
-                                builder: ((context) {
-                                  return MediaPreview(
-                                    chatID: widget.chatID,
-                                    filePath: selectedFile!.path,
-                                  );
-                                }),
-                              ),
-                            },
-                          );
+                      await uploadFile().then(
+                        (value) {
+                          if (selectedFile != null) {
+                            Navigator.pop(context);
+                            showModalBottomSheet(
+                              // isDismissible: true,
+                              isScrollControlled: true,
+                              enableDrag: true,
+                              context: context,
+                              builder: ((context) {
+                                return MediaPreview(
+                                  chatID: widget.chatID,
+                                  filePath: selectedFile!.path,
+                                );
+                              }),
+                            );
+                          } else {
+                            Navigator.pop(context);
+                            CustomSnackBar.show(context,
+                                message: "File is bigger than 5mb");
+                          }
+                        },
+                      );
                     },
                   ),
                 ],

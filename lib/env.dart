@@ -20,6 +20,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 //       this.substring(0, 1).toUpperCase() + this.substring(1).toLowerCase();
 // }
 FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
+RemoteConfigSettings configSettings = RemoteConfigSettings(
+  fetchTimeout: const Duration(seconds: 30),
+  minimumFetchInterval: const Duration(hours: 12),
+);
+
 User? curUser;
 FirebaseAuth auth = FirebaseAuth.instance;
 

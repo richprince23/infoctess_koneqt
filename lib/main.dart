@@ -8,6 +8,7 @@ import 'package:infoctess_koneqt/controllers/page_controller.dart';
 import 'package:infoctess_koneqt/controllers/post_controller.dart';
 import 'package:infoctess_koneqt/controllers/profile_controller.dart';
 import 'package:infoctess_koneqt/controllers/user_provider.dart';
+import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/messages.dart';
 import 'package:infoctess_koneqt/screens/admin/create_event.dart';
 import 'package:infoctess_koneqt/screens/main_screen.dart';
@@ -32,6 +33,7 @@ import 'package:infoctess_koneqt/screens/user_screens/calendar.dart';
 import 'package:infoctess_koneqt/screens/user_screens/chat_background.dart';
 import 'package:infoctess_koneqt/screens/user_screens/my_activity.dart';
 import 'package:infoctess_koneqt/screens/user_screens/my_friends.dart';
+import 'package:infoctess_koneqt/screens/user_screens/starred_messages.dart';
 import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 
@@ -44,6 +46,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await remoteConfig.setConfigSettings(configSettings);
   // await dotenv.load();
 
   runApp(
@@ -105,6 +108,7 @@ class MyApp extends StatelessWidget {
           "/my-friends": (context) => const MyFriendsScreen(),
           "/my-activity": (context) => const MyActivityScreen(),
           "/chat-background": (context) => const ChatBackgroundScreen(),
+          "/starred-messages": (context) => const StarredMessagesScreen(),
         },
       ),
     );

@@ -135,6 +135,8 @@ class UserAccountScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     ListTile(
+                      onTap: () =>
+                          Navigator.pushNamed(context, '/starred-messages'),
                       iconColor: cSec,
                       leading: const Icon(Icons.star_border),
                       title: Text(
@@ -148,7 +150,8 @@ class UserAccountScreen extends StatelessWidget {
                       trailing: const Icon(Icons.arrow_forward_ios),
                     ),
                     ListTile(
-                      onTap: () => Navigator.pushNamed(context, '/chat-background'),
+                      onTap: () =>
+                          Navigator.pushNamed(context, '/chat-background'),
                       iconColor: cSec,
                       leading: const Icon(Icons.show_chart_rounded),
                       title: Text(
