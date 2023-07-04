@@ -115,8 +115,9 @@ class MediaPreview extends StatelessWidget {
                 Expanded(
                   child: InputControl(
                     showLabel: false,
-                    hintText:
-                        isImage() == true ? "Add a caption" : "Attachment",
+                    hintText: isImage() == true
+                        ? "Add a caption"
+                        : File(filePath).path.split('/').last,
                     type: TextInputType.multiline,
                     controller: captionController,
                     isCollapsed: true,
@@ -136,7 +137,8 @@ class MediaPreview extends StatelessWidget {
                   ),
                   onPressed: () async {
                     if (!isImage()) {
-                      captionController.text = "Attachment";
+                      captionController.text =
+                          File(filePath).path.split('/').last;
                     }
                     if (captionController.text.isNotEmpty) {
                       showDialog(
