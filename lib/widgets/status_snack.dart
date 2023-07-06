@@ -15,7 +15,7 @@ class CustomSnackBar extends StatefulWidget {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         behavior: SnackBarBehavior.floating,
-        backgroundColor: cPri,
+        backgroundColor: cSec,
         dismissDirection: DismissDirection.down,
         // width: 60.vw,
         duration: const Duration(seconds: 3),

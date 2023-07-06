@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/models/user_info.dart' as user_info;
 
 FirebaseFirestore db = FirebaseFirestore.instance;
@@ -216,7 +217,7 @@ class Auth {
   }
 
 // get user info
-  Future getUserInfo({required user_info.User userInfo}) async {
+  Future getUserInfo() async {
     try {
       var res = await db
           .collection("user_infos")
@@ -224,19 +225,20 @@ class Auth {
           .get()
           .then((value) => {
                 // var data = value.docs[0].data();
-                userInfo.avatar = value.docs[0].data()["avatar"],
-                userInfo.classGroup = value.docs[0].data()["classGroup"],
-                userInfo.fullName = value.docs[0].data()["fullName"],
-                userInfo.userName = value.docs[0].data()["userName"],
-                userInfo.gender = value.docs[0].data()['gender'],
-                userInfo.indexNum = value.docs[0].data()['indexNum'],
-                userInfo.phoneNum = value.docs[0].data()['phoneNum'],
-                userInfo.userLevel = value.docs[0].data()['userLevel']
+                
+                curUser?.avatar = value.docs[0].data()["avatar"],
+                curUser?.classGroup = value.docs[0].data()["classGroup"],
+                curUser?.fullName = value.docs[0].data()["fullName"],
+                curUser?.userName = value.docs[0].data()["userName"],
+                curUser?.gender = value.docs[0].data()['gender'],
+                curUser?.indexNum = value.docs[0].data()['indexNum'],
+                curUser?.phoneNum = value.docs[0].data()['phoneNum'],
+                curUser?.userLevel = value.docs[0].data()['userLevel']
               });
       return res;
     } catch (e) {
       // print(e);
-      throw Exception(e);
+      // throw Exception(e);
     }
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -13,6 +14,7 @@ import 'package:infoctess_koneqt/controllers/user_provider.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/models/poster_model.dart';
 import 'package:infoctess_koneqt/models/user_info.dart';
+import 'package:infoctess_koneqt/widgets/status_snack.dart';
 import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 
@@ -127,8 +129,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   void getUser() async {
-    await Auth().getUserInfo(userInfo: user);
-    print(user.userName);
+    await Auth().getUserInfo().then(
+          (value) => setState(() {
+            _userNameController.text = curUser?.userName ?? "";
+            _phoneController.text = curUser?.phoneNum ?? "";
+            selectedGender = curUser?.gender ?? "";
+            selectedGroup = curUser?.classGroup ?? "";
+            selectedLevel = curUser?.userLevel ?? "";
+          }),
+        );
   }
 
   @override
@@ -142,142 +151,209 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       ),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 10.w, horizontal: 20.w),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "Choose Profile Image",
-                style: TextStyle(fontSize: 18.sp),
-              ),
-              SizedBox(height: 10.w),
-              Stack(
-                children: [
-                  selectedMedia != null
-                      ? ClipOval(
-                          child: Image.file(
-                            File(selectedMedia!.path),
-                            width: 35.vw,
-                            height: 35.vw,
-                            fit: BoxFit.cover,
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  "Choose Profile Image",
+                  style: TextStyle(fontSize: 18.sp),
+                ),
+                SizedBox(height: 10.w),
+                Stack(
+                  children: [
+                    selectedMedia != null
+                        ? ClipOval(
+                            child: Image.file(
+                              File(selectedMedia!.path),
+                              width: 35.vw,
+                              height: 35.vw,
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        : CircleAvatar(
+                            backgroundColor: cPri,
+                            radius: 50.r,
+                            backgroundImage: CachedNetworkImageProvider(
+                                auth.currentUser!.photoURL!),
                           ),
-                        )
-                      : CircleAvatar(
-                          backgroundColor: cPri,
-                          radius: 50.r,
-                          child: const Text(
-                            "User",
-                            textAlign: TextAlign.center,
-                          ),
+                    Positioned(
+                      bottom: -2,
+                      right: 2,
+                      child: IconButton(
+                        style: IconButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          shape: const CircleBorder(),
+                          padding: EdgeInsets.zero,
+                          elevation: 2,
                         ),
-                  Positioned(
-                    bottom: -2,
-                    right: 2,
-                    child: IconButton(
-                      style: IconButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        shape: const CircleBorder(),
-                        padding: EdgeInsets.zero,
-                        elevation: 2,
+                        onPressed: () async {
+                          showImageDialog();
+                        },
+                        icon: const Icon(Icons.camera_alt_outlined),
+                        color: Colors.black,
                       ),
-                      onPressed: () async {
-                        showImageDialog();
-                      },
-                      icon: const Icon(Icons.camera_alt_outlined),
-                      color: Colors.black,
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              InputControl(
-                hintText: "Fullname",
-                type: TextInputType.name,
-                controller: _fnameController,
-                leading: const Icon(Icons.person),
-              ),
-              InputControl(
-                hintText: "Username",
-                type: TextInputType.name,
-                controller: _userNameController,
-                leading: const Icon(Icons.alternate_email),
-              ),
-              InputControl(
-                hintText: "Phone Number",
-                type: TextInputType.phone,
-                controller: _phoneController,
-                leading: const Icon(Icons.phone),
-              ),
-              SelectControl(
-                onChanged: (value) {
-                  setState(() {
-                    selectedLevel = value!;
-                  });
-                },
-                hintText: "Level",
-                items: levels.map((e) {
-                  return DropdownMenuItem(
-                    value: e,
-                    child: Text(e),
-                  );
-                }).toList(),
-              ),
-              SelectControl(
-                onChanged: (value) {
-                  setState(() {
-                    selectedGroup = value!;
-                  });
-                },
-                hintText: "Class Group",
-                items: classgroup.map((e) {
-                  return DropdownMenuItem(
-                    value: e,
+                  ],
+                ),
+                const SizedBox(height: 10),
+                InputControl(
+                  hintText: "Fullname",
+                  type: TextInputType.name,
+                  controller: _fnameController,
+                  leading: const Icon(Icons.person),
+                ),
+                InputControl(
+                  hintText: "Username",
+                  type: TextInputType.name,
+                  controller: _userNameController,
+                  leading: const Icon(Icons.alternate_email),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Username cannot be empty";
+                    }
+                    return null;
+                  },
+                ),
+                InputControl(
+                  hintText: "Phone Number",
+                  type: TextInputType.phone,
+                  controller: _phoneController,
+                  leading: const Icon(Icons.phone),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Phone Number cannot be empty";
+                    }
+                    return null;
+                  },
+                ),
+                SelectControl(
+                  validator: (value) {
+                    if (value == null) {
+                      return "Please select a level";
+                    }
+                    return null;
+                  },
+                  onChanged: (value) {
+                    setState(() {
+                      selectedLevel = value!;
+                    });
+                  },
+                  hintText: "Level",
+                  items: levels.map((e) {
+                    return DropdownMenuItem(
+                      value: e,
+                      child: Text(e),
+                    );
+                  }).toList(),
+                ),
+                SelectControl(
+                  validator: (value) {
+                    if (value == null) {
+                      return "Please select a class group";
+                    }
+                    return null;
+                  },
+                  onChanged: (value) {
+                    setState(() {
+                      selectedGroup = value!;
+                    });
+                  },
+                  hintText: "Class Group",
+                  items: classgroup.map((e) {
+                    return DropdownMenuItem(
+                      value: e,
+                      child: Text(
+                        e,
+                        style: TextStyle(fontSize: 14.sp),
+                      ),
+                    );
+                  }).toList(),
+                ),
+                SelectControl(
+                  validator: (value) {
+                    if (value == null) {
+                      return "Please select a class group";
+                    }
+                    return null;
+                  },
+                  onChanged: (value) {
+                    setState(() {
+                      selectedGender = value!;
+                    });
+                  },
+                  hintText: "Gender",
+                  items: gender.map((e) {
+                    return DropdownMenuItem(
+                      value: e,
+                      child: Text(
+                        e,
+                        style: TextStyle(fontSize: 14.sp),
+                      ),
+                    );
+                  }).toList(),
+                ),
+                SizedBox(height: 20.w),
+                Container(
+                  margin: EdgeInsets.only(bottom: 20.w),
+                  width: 100.vw,
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      try {
+                        if (_formKey.currentState!.validate()) {
+                          showDialog(
+                            context: context,
+                            builder: (context) => Center(
+                              child: Image.asset(
+                                "assets/images/preload.gif",
+                                width: 30.w,
+                                height: 30.w,
+                              ),
+                            ),
+                          );
+                          await Auth()
+                              .updateUserInfo(
+                                fullName: _fnameController.text.trim(),
+                                userName: _userNameController.text.trim(),
+                                phoneNum: _phoneController.text.trim(),
+                                gender: selectedGender,
+                                classGroup: selectedGroup,
+                                level: selectedLevel,
+                              )
+                              .then((value) => {
+                                    Navigator.pop(context),
+                                    CustomSnackBar.show(
+                                      context,
+                                      message: "Profile Updated!",
+                                    ),
+                                  });
+                        }
+                      } catch (e) {
+                        CustomSnackBar.show(
+                          context,
+                          message: "Failed try again!",
+                        );
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: cPri,
+                      foregroundColor: Colors.white,
+                      padding: EdgeInsets.symmetric(vertical: 15.w),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.r),
+                      ),
+                    ),
                     child: Text(
-                      e,
-                      style: TextStyle(fontSize: 14.sp),
+                      "Save",
+                      style: TextStyle(fontSize: 16.sp),
                     ),
-                  );
-                }).toList(),
-              ),
-              SelectControl(
-                onChanged: (value) {
-                  setState(() {
-                    selectedGender = value!;
-                  });
-                },
-                hintText: "Gender",
-                items: gender.map((e) {
-                  return DropdownMenuItem(
-                    value: e,
-                    child: Text(
-                      e,
-                      style: TextStyle(fontSize: 14.sp),
-                    ),
-                  );
-                }).toList(),
-              ),
-              SizedBox(height: 20.w),
-              Container(
-                margin: EdgeInsets.only(bottom: 20.w),
-                width: 100.vw,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: cPri,
-                    foregroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(vertical: 15.w),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.r),
-                    ),
-                  ),
-                  child: Text(
-                    "Save",
-                    style: TextStyle(fontSize: 16.sp),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
