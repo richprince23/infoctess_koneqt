@@ -49,7 +49,7 @@ class _SelectControlState extends State<SelectControl> {
           ),
         if (widget.showLabel == true)
           SizedBox(
-            height: 10.sp + 1,
+            height: 1.w,
           ),
         DropdownButtonFormField(
           items: widget.items,
@@ -63,7 +63,7 @@ class _SelectControlState extends State<SelectControl> {
               fontSize: 16.sp + 1,
             ),
             contentPadding:
-                EdgeInsets.symmetric(horizontal: 30.h, vertical: 10.h),
+                EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.w),
             filled: true,
             fillColor: const Color.fromRGBO(217, 217, 217, 0.6),
             focusedBorder: OutlineInputBorder(
@@ -87,7 +87,7 @@ class _SelectControlState extends State<SelectControl> {
           ),
         ),
         SizedBox(
-          height: 5.h,
+          height: 5.w,
         ),
       ],
     );

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:infoctess_koneqt/models/user_info.dart' as user_info;
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 FirebaseStorage storage = FirebaseStorage.instance;
@@ -176,26 +177,66 @@ class Auth {
   Future<void> signOut() async {
     await _auth.signOut();
   }
-}
 
-// User? curUser = FirebaseAuth.instance.currentUser;
+//update user info
+  Future<void> updateUserInfo({
+    String? level,
+    String? gender,
+    String? phoneNum,
+    String? classGroup,
+    String? userName,
+    String? fullName,
+    String? avatar,
+  }) async {
+    try {
+      //check if avatar is null
 
-Future<void> buildChat() async {
-  // final user = Provider.of<User>(context);
-  // final userDoc = await FirebaseFirestore.instance
-  //     .collection('users')
-  //     .doc(user.uid)
-  //     .get();
-  // final userAvatar = userDoc.data()!['avatar'];
-  // final chat = Provider.of<Chat>(context);
-  // final chatDoc = await FirebaseFirestore.instance
-  //     .collection('chats')
-  //     .doc(chat.id)
-  //     .get();
-  // final chatMessages = chatDoc.data()!['messages'];
-  // final chatMessagesList = chatMessages as List;
-  // final chatMessagesListReversed = chatMessagesList.reversed.toList();
-  // final chatMessagesListReversedLength = chatMessagesListReversed.length;
-  // final chatMessagesListReversedLengthMinusOne =
-  //     chatMessagesListReversedLength - 1;
+      if (avatar != null) {
+        var imgUrl = Auth().saveUserImage(avatar);
+      }
+      await db
+          .collection('user_infos')
+          .where("userID", isEqualTo: _auth.currentUser!.uid)
+          .get()
+          .then(
+            (value) => value.docs[0].reference.update(
+              {
+                "userLevel": level,
+                'gender': gender,
+                'phoneNum': phoneNum,
+                'classGroup': classGroup,
+                'userName': userName,
+                'fullName': fullName,
+              },
+            ),
+          );
+    } catch (e) {
+      // print(e);
+    }
+  }
+
+// get user info
+  Future getUserInfo({required user_info.User userInfo}) async {
+    try {
+      var res = await db
+          .collection("user_infos")
+          .where("userID", isEqualTo: _auth.currentUser!.uid)
+          .get()
+          .then((value) => {
+                // var data = value.docs[0].data();
+                userInfo.avatar = value.docs[0].data()["avatar"],
+                userInfo.classGroup = value.docs[0].data()["classGroup"],
+                userInfo.fullName = value.docs[0].data()["fullName"],
+                userInfo.userName = value.docs[0].data()["userName"],
+                userInfo.gender = value.docs[0].data()['gender'],
+                userInfo.indexNum = value.docs[0].data()['indexNum'],
+                userInfo.phoneNum = value.docs[0].data()['phoneNum'],
+                userInfo.userLevel = value.docs[0].data()['userLevel']
+              });
+      return res;
+    } catch (e) {
+      // print(e);
+      throw Exception(e);
+    }
+  }
 }

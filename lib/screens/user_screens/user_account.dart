@@ -52,9 +52,11 @@ class UserAccountScreen extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                     ElevatedButton.icon(
-                      onPressed: () {},
-                      icon: Icon(Icons.edit),
-                      label: Text("Edit Profile"),
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/edit-profile');
+                      },
+                      icon: const Icon(Icons.edit),
+                      label: const Text("Edit Profile"),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: cPri,
                         foregroundColor: Colors.white,

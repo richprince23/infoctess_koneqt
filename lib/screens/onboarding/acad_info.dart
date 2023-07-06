@@ -80,7 +80,7 @@ class _AcademicInfoScreenState extends State<AcademicInfoScreen> {
                 title: Text(
                   "Academic Info",
                   style: GoogleFonts.sarabun(
-                      fontSize: 24.h,
+                      fontSize: 24.sp,
                       color: Colors.white,
                       fontWeight: FontWeight.normal,
                       decoration: TextDecoration.none),

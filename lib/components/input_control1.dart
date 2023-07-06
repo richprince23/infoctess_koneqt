@@ -68,7 +68,7 @@ class _InputControlState extends State<InputControl> {
       children: [
         if (widget.showLabel == true)
           SizedBox(
-            height: 5.h,
+            height: 5.w,
           ),
         if (widget.showLabel == true)
           Text(
@@ -82,7 +82,7 @@ class _InputControlState extends State<InputControl> {
           ),
         if (widget.showLabel == true)
           SizedBox(
-            height: 10.h,
+            height: 1.w,
           ),
         TextFormField(
           readOnly: widget.readOnly ?? false,
@@ -194,7 +194,7 @@ class _InputControlState extends State<InputControl> {
           ),
         ),
         SizedBox(
-          height: 5.h,
+          height: 5.w,
         ),
       ],
     );

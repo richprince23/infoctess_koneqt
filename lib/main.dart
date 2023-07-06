@@ -31,6 +31,7 @@ import 'package:infoctess_koneqt/screens/tools/studymate/aichat_screen.dart';
 import 'package:infoctess_koneqt/screens/user_screens/bookmarks.dart';
 import 'package:infoctess_koneqt/screens/user_screens/calendar.dart';
 import 'package:infoctess_koneqt/screens/user_screens/chat_background.dart';
+import 'package:infoctess_koneqt/screens/user_screens/edit_profile.dart';
 import 'package:infoctess_koneqt/screens/user_screens/my_activity.dart';
 import 'package:infoctess_koneqt/screens/user_screens/my_friends.dart';
 import 'package:infoctess_koneqt/screens/user_screens/starred_messages.dart';
@@ -109,6 +110,7 @@ class MyApp extends StatelessWidget {
           "/my-activity": (context) => const MyActivityScreen(),
           "/chat-background": (context) => const ChatBackgroundScreen(),
           "/starred-messages": (context) => const StarredMessagesScreen(),
+          "/edit-profile": (context) => const EditProfileScreen(),
         },
       ),
     );
