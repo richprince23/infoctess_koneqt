@@ -122,7 +122,7 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
                               try {
                                 await Auth()
                                     .checkUserExists(
-                                  (_controller.text),
+                                  (_controller.text.trim()),
                                 )
                                     .then(
                                   (value) {

@@ -323,13 +323,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 classGroup: selectedGroup,
                                 level: selectedLevel,
                               )
-                              .then((value) => {
-                                    Navigator.pop(context),
-                                    CustomSnackBar.show(
-                                      context,
-                                      message: "Profile Updated!",
-                                    ),
-                                  });
+                              .then(
+                                (value) => {
+                                  Navigator.pop(context),
+                                  CustomSnackBar.show(
+                                    context,
+                                    message: "Profile Updated!",
+                                  ),
+                                },
+                              );
                         }
                       } catch (e) {
                         CustomSnackBar.show(
