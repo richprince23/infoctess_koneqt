@@ -73,7 +73,7 @@ class ClosedEventItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 30.vh,
-      margin: EdgeInsets.all(12.w),
+      margin: EdgeInsets.symmetric(vertical: 6.w),
       // padding: EdgeInsets.all(0),
       child: Column(
         children: [
@@ -142,7 +142,7 @@ class ClosedEventItem extends StatelessWidget {
           ),
           Container(
             width: 100.vw,
-            padding: EdgeInsets.all(2.w),
+            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.w),
             color: Colors.white,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,7 +162,7 @@ class ClosedEventItem extends StatelessWidget {
                 Text(
                   event.venue!,
                   style: TextStyle(
-                    fontSize: 12.sp + 1,
+                    fontSize: 14.sp + 1,
                     color: Colors.black,
                   ),
                   overflow: TextOverflow.ellipsis,

@@ -448,8 +448,8 @@ class _OpenWidgetState extends State<OpenWidget> {
               progressIndicatorBuilder: (context, url, progress) => Center(
                 child: Image.asset(
                   "assets/images/preload.gif",
-                  height: 30.h,
-                  width: 30.h,
+                  height: 30.w,
+                  width: 30.w,
                 ),
               ),
             ),
@@ -471,7 +471,7 @@ class _OpenWidgetState extends State<OpenWidget> {
             ),
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10.h, vertical: 20.h),
+            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.w),
             height: 120,
             child: Row(
               children: [
@@ -536,14 +536,15 @@ class _OpenWidgetState extends State<OpenWidget> {
                           Align(
                             alignment: Alignment.topCenter,
                             child: SizedBox(
-                              height: 10.h,
-                              width: 60.w,
+                              height: 1.w,
+                              width: 50.w,
                               child: Divider(
                                 thickness: 5,
                                 color: Colors.grey.shade300,
                               ),
                             ),
                           ),
+                          SizedBox(height: 5.w),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -553,9 +554,8 @@ class _OpenWidgetState extends State<OpenWidget> {
                                   color: Colors.black,
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 5.0.w,
-                                    vertical: 5.w,
+                                  padding: EdgeInsets.only(
+                                    right: 5.w,
                                   ),
                                   child: Row(
                                     children: [
@@ -646,7 +646,7 @@ class _OpenWidgetState extends State<OpenWidget> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(height: 10.h),
+                          SizedBox(height: 10.w),
                           AnimatedContainer(
                             duration: const Duration(milliseconds: 200),
                             height: 70.vh,
@@ -657,7 +657,7 @@ class _OpenWidgetState extends State<OpenWidget> {
                               expands: true,
                               autoFocus: false,
                               focusNode: FocusNode(),
-                              padding: EdgeInsets.all(10.w),
+                              padding: EdgeInsets.symmetric(vertical: 10.w),
                               scrollController: controller,
                               controller: _controller,
                               readOnly: true,

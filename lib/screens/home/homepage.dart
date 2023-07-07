@@ -29,10 +29,10 @@ class _HomePageState extends State<HomePage>
   late TabController _tabController;
   var tabs = [
     Tab(
-      child: Text("Events", style: TextStyle(fontSize: 14.sp + 1)),
+      child: Text("News", style: TextStyle(fontSize: 14.sp + 1)),
     ),
     Tab(
-      child: Text("News", style: TextStyle(fontSize: 14.sp + 1)),
+      child: Text("Events", style: TextStyle(fontSize: 14.sp + 1)),
     ),
   ];
 
@@ -99,8 +99,8 @@ class _HomePageState extends State<HomePage>
             child: TabBarView(
               controller: _tabController,
               children: const [
-                EventsScreen(),
                 NewsScreen(),
+                EventsScreen(),
               ],
             ),
           ),

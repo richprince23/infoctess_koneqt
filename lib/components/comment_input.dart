@@ -7,9 +7,9 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/post_controller.dart';
+import 'package:infoctess_koneqt/widgets/status_snack.dart';
 import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
-import 'package:status_alert/status_alert.dart';
 
 class CommentInput extends StatefulWidget {
   final String postID;
@@ -52,7 +52,7 @@ class _CommentInputState extends State<CommentInput> {
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Colors.black45,
+            // color: Colors.black45,
           ),
           clipBehavior: Clip.antiAlias,
           child: Column(
@@ -138,21 +138,8 @@ class _CommentInputState extends State<CommentInput> {
                                             .getStats(widget.postID),
                                       )
                                       .then(
-                                        (value) => StatusAlert.show(
-                                          context,
-                                          backgroundColor: Colors.transparent,
-                                          title: "Sent",
-                                          configuration: IconConfiguration(
-                                            icon: Icons.check,
-                                            color: Colors.green,
-                                            size: 50.w,
-                                          ),
-                                          maxWidth: 50.vw,
-                                          duration: const Duration(seconds: 1),
-                                        ),
-                                      )
-                                      .then(
-                                        (value) => Navigator.pop(context),
+                                        (value) => CustomSnackBar.show(context,
+                                            message: "Comment sent!"),
                                       );
                             }),
                             style: ElevatedButton.styleFrom(
