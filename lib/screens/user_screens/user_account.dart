@@ -87,7 +87,6 @@ class UserAccountScreen extends StatelessWidget {
                   children: [
                     ListTile(
                       onTap: () => Navigator.pushNamed(context, '/my-friends'),
-                      iconColor: cSec,
                       leading: const Icon(Icons.people_outline),
                       title: Text(
                         "Friends",
@@ -101,7 +100,6 @@ class UserAccountScreen extends StatelessWidget {
                     ),
                     ListTile(
                       onTap: () => Navigator.pushNamed(context, '/my-activity'),
-                      iconColor: cSec,
                       leading: const Icon(Icons.show_chart_rounded),
                       title: Text(
                         "My Activity",
@@ -139,7 +137,6 @@ class UserAccountScreen extends StatelessWidget {
                     ListTile(
                       onTap: () =>
                           Navigator.pushNamed(context, '/starred-messages'),
-                      iconColor: cSec,
                       leading: const Icon(Icons.star_border),
                       title: Text(
                         "Starred Messages",
@@ -154,7 +151,6 @@ class UserAccountScreen extends StatelessWidget {
                     ListTile(
                       onTap: () =>
                           Navigator.pushNamed(context, '/chat-background'),
-                      iconColor: cSec,
                       leading: const Icon(Icons.show_chart_rounded),
                       title: Text(
                         "Chat Background",
@@ -167,7 +163,6 @@ class UserAccountScreen extends StatelessWidget {
                       trailing: const Icon(Icons.arrow_forward_ios),
                     ),
                     ListTile(
-                      iconColor: cSec,
                       leading: const Icon(Icons.photo_library_outlined),
                       title: Text(
                         "My Shared Media",
@@ -203,7 +198,6 @@ class UserAccountScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     ListTile(
-                      iconColor: cSec,
                       leading: const Icon(Icons.help_outline),
                       title: Text(
                         "Help and Support",
@@ -216,7 +210,6 @@ class UserAccountScreen extends StatelessWidget {
                       trailing: const Icon(Icons.arrow_forward_ios),
                     ),
                     ListTile(
-                      iconColor: cSec,
                       leading: const Icon(Icons.privacy_tip_outlined),
                       title: Text(
                         "Privacy Policy",
@@ -229,7 +222,6 @@ class UserAccountScreen extends StatelessWidget {
                       trailing: const Icon(Icons.arrow_forward_ios),
                     ),
                     ListTile(
-                      iconColor: cSec,
                       leading: const Icon(Icons.handshake_outlined),
                       title: Text(
                         "Terms and Conditions",
@@ -265,7 +257,6 @@ class UserAccountScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     ListTile(
-                      iconColor: cSec,
                       leading: const Icon(Icons.delete_forever_outlined),
                       title: Text(
                         "Clear All Chats",
@@ -278,7 +269,6 @@ class UserAccountScreen extends StatelessWidget {
                       trailing: const Icon(Icons.arrow_forward_ios),
                     ),
                     ListTile(
-                      iconColor: cSec,
                       leading: const Icon(Icons.sd_storage_outlined),
                       title: Text(
                         "Clear Cache",

@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/chat_controller.dart';
 import 'package:infoctess_koneqt/controllers/utils.dart';
@@ -230,91 +231,97 @@ class ChatBubble extends StatelessWidget {
   buildChatOptions(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Center(
-        child: IntrinsicHeight(
-          child: Padding(
-            padding: EdgeInsets.all(40.w),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Card(
-                  color: Colors.white,
-                  child: SizedBox(
-                    width: 100.vw,
-                    child: ChatBubble(
-                      isUser: isUser,
-                      message: message,
-                      showAvatar: false,
-                      hasOptions: false,
+      body: InkWell(
+        onTap: () {
+          Navigator.pop(context);
+        },
+        child: Center(
+          child: IntrinsicHeight(
+            child: Padding(
+              padding: EdgeInsets.all(40.w),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Card(
+                    color: Colors.white,
+                    child: SizedBox(
+                      width: 100.vw,
+                      child: ChatBubble(
+                        isUser: isUser,
+                        message: message,
+                        showAvatar: false,
+                        hasOptions: false,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 10.w,
-                ),
-                Expanded(
-                  child: Card(
-                    child: Column(
-                      children: [
-                        ListTile(
-                          title: const Text("Reply"),
-                          leading: const Icon(CupertinoIcons.reply),
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                        ListTile(
-                          title: const Text("Forward"),
-                          leading: const Icon(
-                              CupertinoIcons.arrowshape_turn_up_right),
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                        ListTile(
-                          title: const Text("Star"),
-                          leading: const Icon(CupertinoIcons.star),
-                          onTap: () {
-                            //TODO: add to starred messages
-                            Navigator.pop(context);
-                          },
-                        ),
-                        ListTile(
-                          title: const Text("Copy"),
-                          leading: const Icon(CupertinoIcons.doc_on_doc),
-                          onTap: () {
-                            //copy to clipboard
-                            Clipboard.setData(ClipboardData(text: message))
-                                .then(
-                              (value) => Navigator.pop(context),
-                            );
-                          },
-                        ),
-                        ListTile(
-                          title: const Text("Delete"),
-                          leading: const Icon(CupertinoIcons.delete),
-                          onTap: () async {
-                            await deleteMessage(
-                                    chatID: chatID, messageID: msgID)
-                                .then(
-                              (value) => Navigator.pop(context),
-                            );
-                          },
-                        ),
-                        const Divider(),
-                        ListTile(
-                          title: const Text("Cancel"),
-                          leading: const Icon(CupertinoIcons.xmark_circle_fill),
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ],
+                  SizedBox(
+                    height: 10.w,
+                  ),
+                  Expanded(
+                    child: Card(
+                      child: Column(
+                        children: [
+                          ListTile(
+                            title: const Text("Reply"),
+                            leading: const Icon(CupertinoIcons.reply),
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                          ListTile(
+                            title: const Text("Forward"),
+                            leading: const Icon(
+                                CupertinoIcons.arrowshape_turn_up_right),
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                          // ListTile(
+                          //   title: const Text("Star"),
+                          //   leading: const Icon(CupertinoIcons.star),
+                          //   onTap: () {
+                          //     //TODO: add to starred messages
+                          //     Navigator.pop(context);
+                          //   },
+                          // ),
+                          ListTile(
+                            title: const Text("Copy"),
+                            leading: const Icon(CupertinoIcons.doc_on_doc),
+                            onTap: () {
+                              //copy to clipboard
+                              Clipboard.setData(ClipboardData(text: message))
+                                  .then(
+                                (value) => Navigator.pop(context),
+                              );
+                            },
+                          ),
+                          ListTile(
+                            title: const Text("Delete"),
+                            leading: const Icon(CupertinoIcons.delete),
+                            onTap: () async {
+                              await deleteMessage(
+                                      chatID: chatID, messageID: msgID)
+                                  .then(
+                                (value) => Navigator.pop(context),
+                              );
+                            },
+                          ),
+                          const Divider(),
+                          ListTile(
+                            title: const Text("Cancel"),
+                            leading:
+                                const Icon(CupertinoIcons.xmark_circle_fill),
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

@@ -104,7 +104,7 @@ class _ConvoScreenState extends State<ConvoScreen> {
                     widget.sender.posterName ?? "User",
                     overflow: TextOverflow.ellipsis,
                   ),
-                  Text("online", style: TextStyle(fontSize: 12.sp)),
+                  // Text("online", style: TextStyle(fontSize: 12.sp)),
                 ],
               ),
             ],

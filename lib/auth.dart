@@ -181,11 +181,11 @@ class Auth {
 
 //update user info
   Future<void> updateUserInfo({
-    String? level,
+    // String? level,
     String? gender,
     String? phoneNum,
     String? classGroup,
-    String? userName,
+    // String? userName,
     String? fullName,
     String? avatar,
   }) async {
@@ -202,11 +202,11 @@ class Auth {
           .then(
             (value) => value.docs[0].reference.update(
               {
-                "userLevel": level,
+                // "userLevel": level,
                 'gender': gender,
                 'phoneNum': phoneNum,
                 'classGroup': classGroup,
-                'userName': userName,
+                // 'userName': userName,
                 'fullName': fullName,
               },
             ),
