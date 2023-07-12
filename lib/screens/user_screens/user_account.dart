@@ -162,18 +162,18 @@ class UserAccountScreen extends StatelessWidget {
                       ),
                       trailing: const Icon(Icons.arrow_forward_ios),
                     ),
-                    ListTile(
-                      leading: const Icon(Icons.photo_library_outlined),
-                      title: Text(
-                        "My Shared Media",
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
-                        ),
-                      ),
-                      trailing: const Icon(Icons.arrow_forward_ios),
-                    ),
+                    // ListTile(
+                    //   leading: const Icon(Icons.photo_library_outlined),
+                    //   title: Text(
+                    //     "My Shared Media",
+                    //     style: TextStyle(
+                    //       fontSize: 14.sp,
+                    //       fontWeight: FontWeight.w400,
+                    //       color: Colors.black,
+                    //     ),
+                    //   ),
+                    //   trailing: const Icon(Icons.arrow_forward_ios),
+                    // ),
                   ],
                 ),
               ),
