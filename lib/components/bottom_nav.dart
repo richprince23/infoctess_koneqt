@@ -45,11 +45,11 @@ class _BottomNavState extends State<BottomNav> {
               },
               child: pageIndex == 0
                   ? NavItem(
-                      label: "Home",
-                      icon: CupertinoIcons.house_fill,
+                      label: "Explore",
+                      icon: CupertinoIcons.globe,
                     )
                   : Icon(
-                      CupertinoIcons.house,
+                      CupertinoIcons.globe,
                       color: Colors.black,
                       size: 24.w,
                     ),
