@@ -44,7 +44,7 @@ Future getUserSharedMedia({required String userID}) async {
           if (doc.data()['mediaUrl'] != null) {
             media.add(doc.data()['mediaUrl']);
           }
-          print("print url ${doc.data()['mediaUrl']}");
+          // print("print url ${doc.data()['mediaUrl']}");
         }
       }
       // });

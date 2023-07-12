@@ -15,6 +15,8 @@ import 'package:infoctess_koneqt/screens/post_page.dart';
 import 'package:infoctess_koneqt/screens/tools/image_viewer.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
+import 'package:infoctess_koneqt/widgets/status_snack.dart';
+import 'package:mime/mime.dart';
 import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 
@@ -163,35 +165,42 @@ class _UserProfileState extends State<UserProfile>
                     //TODO: check if user is a follower and enable message button
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return FutureBuilder(
-                                future: Future.wait([
-                                  startChat(memberID: widget.userID),
-                                ]),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return Center(
-                                      child: Image.asset(
-                                        "assets/images/preload.gif",
-                                        width: 30.w,
-                                        height: 30.w,
-                                      ),
+                        if (Provider.of<ProfileProvider>(context, listen: false)
+                                .isFollowing ==
+                            true) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return FutureBuilder(
+                                  future: Future.wait([
+                                    startChat(memberID: widget.userID),
+                                  ]),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return Center(
+                                        child: Image.asset(
+                                          "assets/images/preload.gif",
+                                          width: 30.w,
+                                          height: 30.w,
+                                        ),
+                                      );
+                                    }
+                                    return ConvoScreen(
+                                      chatID: snapshot.data[0],
+                                      sender: user,
                                     );
-                                  }
-                                  return ConvoScreen(
-                                    chatID: snapshot.data[0],
-                                    sender: user,
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                        );
+                                  },
+                                );
+                              },
+                            ),
+                          );
+                        } else {
+                          CustomSnackBar.show(context,
+                              message: "You are not following this user");
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.symmetric(
@@ -255,30 +264,51 @@ class _UserProfileState extends State<UserProfile>
                                     mainAxisSpacing: 5.w,
                                   ),
                                   itemBuilder: (context, index) {
-                                    return InkWell(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) {
-                                              return ImageViewer(
-                                                image: snapshot.data![index],
-                                              );
-                                            },
+                                    final media =
+                                        snapshot.data![index].split("?")[0];
+                                    String mediaType = lookupMimeType(media)!;
+                                    // if (mediaType == null) {
+                                    //   print("null");
+                                    //   return const SizedBox.shrink();
+                                    // }
+                                    print(mediaType);
+                                    if (mediaType.contains("image")) {
+                                      return InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) {
+                                                return ImageViewer(
+                                                  image: snapshot.data![index],
+                                                );
+                                              },
+                                            ),
+                                          );
+                                        },
+                                        child: CachedNetworkImage(
+                                          imageUrl: snapshot.data![index],
+                                          fit: BoxFit.cover,
+                                          placeholder: (context, url) =>
+                                              const Center(
+                                            child: CircularProgressIndicator(),
                                           ),
-                                        );
-                                      },
-                                      child: CachedNetworkImage(
-                                        imageUrl: snapshot.data![index],
-                                        fit: BoxFit.cover,
-                                        placeholder: (context, url) =>
-                                            const Center(
-                                          child: CircularProgressIndicator(),
+                                          errorWidget: (context, url, error) =>
+                                              const Icon(Icons.error),
                                         ),
-                                        errorWidget: (context, url, error) =>
-                                            const Icon(Icons.error),
-                                      ),
-                                    );
+                                      );
+                                    } else {
+                                      return Container(
+                                        color: Colors.grey.shade300,
+                                        child: Center(
+                                          child: Icon(
+                                            Icons.file_present,
+                                            color: Colors.white,
+                                            size: 30.w,
+                                          ),
+                                        ),
+                                      );
+                                    }
                                   },
                                 );
                               }
