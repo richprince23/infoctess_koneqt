@@ -1,0 +1,59 @@
+Privacy Policy for INFOCTESS Koneqt Mobile Application
+
+Last updated: July 12, 2023
+
+This Privacy Policy outlines how ARKSoft Inc. ("we," "us," or "our") collects, uses, stores, and protects the personal information of members using the INFOCTESS Koneqt mobile application ("the App"). By using the App, you acknowledge and agree to the practices described in this Privacy Policy.
+
+1. Information We Collect
+1.1 Personal Information: To provide the App's functionalities, we collect the following personal information from our members:
+- Full name: We require your full name to create and maintain your account.
+- Phone number: We collect your phone number for account verification and communication purposes.
+- Index number: Your index number is necessary to authenticate your membership with INFOCTESS.
+- Email address: We use your email address for account-related communication and to provide updates and notifications.
+- Level: We collect your level information to personalize your experience within the App.
+- Class group: Your class group helps us tailor certain features, such as group chats and event notifications, to your specific needs.
+- Username: We collect a unique username to identify you within the App.
+
+1.2 Usage Data: We also collect certain usage data to enhance the App's functionality and improve user experience. This may include information about your interactions with the App, such as chat history, forum posts, event participation, and engagement with utilities like the GPA calculator and study resources.
+
+2. Use of Information
+2.1 Personal Information: We use the personal information collected to:
+- Create and maintain your account.
+- Enable communication features such as chat and forum posting.
+- Provide personalized content and features based on your level and class group.
+- Facilitate access to utilities, including past questions, schedules, notes, and resources.
+- Securely store your data on our private server.
+- Respond to your inquiries, feedback, or support requests.
+
+2.2 Usage Data: We analyze usage data to:
+- Improve the App's functionality and user experience.
+- Personalize and optimize content and features.
+- Understand and address user preferences and needs.
+- Monitor and detect fraudulent or unauthorized activities.
+
+3. Data Sharing and Security
+3.1 Data Sharing: We do not share your personal information with any third party, except in the following circumstances:
+- With your explicit consent.
+- To comply with legal obligations or enforceable governmental requests.
+- To protect our rights, privacy, safety, or property, or that of our users.
+
+3.2 Security: We take reasonable measures to ensure the security of your personal information. We implement industry-standard practices to protect against unauthorized access, disclosure, alteration, or destruction of your data stored on our servers.
+
+4. Third-Party Services
+4.1 AI Studymate and AI Imager: The App may include features powered by OpenAI's API, such as AI Studymate and AI Imager (based on DALL-E). While these services enhance your experience, please note that they operate under their own privacy policies and terms of use. We encourage you to review their respective policies when using these features.
+
+4.2 External Links: The App may provide links to external websites, such as PDFdrive.com, for additional resources. Please note that we are not responsible for the privacy practices or content of these third-party websites. We recommend reviewing their privacy policies before providing any personal information.
+
+5. Data Retention
+We retain your personal information for as long as necessary to fulfill the purposes outlined in this Privacy Policy, unless a longer retention period is required or permitted by law.
+
+6. Children's Privacy
+The App is intended for individuals who are at least 18 years old. We do not knowingly collect personal information from individuals under 18. If you become aware that a child has provided us with personal information without parental consent, please contact us, and we will promptly remove the information from our records.
+
+7. Updates to this Privacy Policy
+We may update this Privacy Policy from time to time. We will notify you of any significant changes by posting the updated Privacy Policy within the App or through other communication channels. Please review this Privacy Policy periodically for the latest information on our data practices.
+
+8. Contact Us
+If you have any questions, concerns, or requests regarding this Privacy Policy or the handling of your personal information, please contact us at [richardkns7@gmail.com]
+
+By using the INFOCTESS Koneqt mobile application, you confirm that you have read, understood, and agree to the terms of this Privacy Policy.

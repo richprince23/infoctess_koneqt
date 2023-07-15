@@ -134,24 +134,24 @@ class UserAccountScreen extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    ListTile(
-                      onTap: () =>
-                          Navigator.pushNamed(context, '/starred-messages'),
-                      leading: const Icon(Icons.star_border),
-                      title: Text(
-                        "Starred Messages",
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
-                        ),
-                      ),
-                      trailing: const Icon(Icons.arrow_forward_ios),
-                    ),
+                    // ListTile(
+                    //   onTap: () =>
+                    //       Navigator.pushNamed(context, '/starred-messages'),
+                    //   leading: const Icon(Icons.star_border),
+                    //   title: Text(
+                    //     "Starred Messages",
+                    //     style: TextStyle(
+                    //       fontSize: 14.sp,
+                    //       fontWeight: FontWeight.w400,
+                    //       color: Colors.black,
+                    //     ),
+                    //   ),
+                    //   trailing: const Icon(Icons.arrow_forward_ios),
+                    // ),
                     ListTile(
                       onTap: () =>
                           Navigator.pushNamed(context, '/chat-background'),
-                      leading: const Icon(Icons.show_chart_rounded),
+                      leading: const Icon(Icons.image_outlined),
                       title: Text(
                         "Chat Background",
                         style: TextStyle(
@@ -181,7 +181,7 @@ class UserAccountScreen extends StatelessWidget {
                 height: 10.w,
               ),
               Text(
-                "General, Privacy, Security",
+                "Privacy & Security",
                 style: TextStyle(
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w400,
@@ -210,6 +210,9 @@ class UserAccountScreen extends StatelessWidget {
                       trailing: const Icon(Icons.arrow_forward_ios),
                     ),
                     ListTile(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/privacy-policy');
+                      },
                       leading: const Icon(Icons.privacy_tip_outlined),
                       title: Text(
                         "Privacy Policy",
@@ -222,6 +225,9 @@ class UserAccountScreen extends StatelessWidget {
                       trailing: const Icon(Icons.arrow_forward_ios),
                     ),
                     ListTile(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/terms-and-conditions');
+                      },
                       leading: const Icon(Icons.handshake_outlined),
                       title: Text(
                         "Terms and Conditions",
@@ -240,7 +246,7 @@ class UserAccountScreen extends StatelessWidget {
                 height: 10.w,
               ),
               Text(
-                "Storage and Data",
+                "Storage & Data",
                 style: TextStyle(
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w400,

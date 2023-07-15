@@ -12,6 +12,8 @@ import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/messages.dart';
 import 'package:infoctess_koneqt/screens/admin/create_event.dart';
 import 'package:infoctess_koneqt/screens/main_screen.dart';
+import 'package:infoctess_koneqt/screens/misc/privacy.dart';
+import 'package:infoctess_koneqt/screens/misc/terms.dart';
 import 'package:infoctess_koneqt/screens/onboarding.dart';
 import 'package:infoctess_koneqt/screens/onboarding/check_index.dart';
 import 'package:infoctess_koneqt/screens/onboarding/profileinfo.dart';
@@ -111,6 +113,8 @@ class MyApp extends StatelessWidget {
           "/chat-background": (context) => const ChatBackgroundScreen(),
           "/starred-messages": (context) => const StarredMessagesScreen(),
           "/edit-profile": (context) => const EditProfileScreen(),
+          "/privacy-policy": (context) => const PrivacyPolicyScreen(),
+          "/terms-and-conditions": (context) => const TermsConditionsScreen(),
         },
       ),
     );
