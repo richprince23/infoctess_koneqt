@@ -163,6 +163,20 @@ Future<String> startChat({required String memberID}) async {
   return chatDocument.id;
 }
 
+/// clear all chats
+/// 
+Future clearAllChats() async {
+  final chatRef = db
+      .collection("chats")
+      .where('members', arrayContains: auth.currentUser!.uid);
+
+  final chatData = await chatRef.get();
+
+  for (final doc in chatData.docs) {
+    await doc.reference.delete();
+  }
+}
+
 ///Provider for chat related functions and data
 class ChatProvider extends ChangeNotifier {
   String chatBackground = "";

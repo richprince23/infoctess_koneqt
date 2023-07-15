@@ -44,6 +44,7 @@ class CustomDialog extends StatelessWidget {
       {String? title,
       required String message,
       required VoidCallback action,
+      AlertStyle? alertStyle,
       String? actionText = "Proceed"}) {
     showDialog(
       context: context,
@@ -52,6 +53,7 @@ class CustomDialog extends StatelessWidget {
         message: message,
         action: action,
         actionText: actionText,
+        alertStyle: alertStyle,
       ),
     );
   }

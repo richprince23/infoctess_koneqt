@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/constants.dart';
+import 'package:infoctess_koneqt/controllers/chat_controller.dart';
 import 'package:infoctess_koneqt/env.dart';
+import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 
@@ -263,6 +265,16 @@ class UserAccountScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     ListTile(
+                      onTap: () async {
+                        CustomDialog.showWithAction(context,
+                            actionText: "Clear All",
+                            title: "Clear all chats",
+                            message:
+                                "Are you sure you want to clear all your chats?",
+                            action: () async {
+                          await clearAllChats();
+                        });
+                      },
                       leading: const Icon(Icons.delete_forever_outlined),
                       title: Text(
                         "Clear All Chats",
