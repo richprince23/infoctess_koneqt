@@ -1,9 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/chat_controller.dart';
+import 'package:infoctess_koneqt/controllers/user_provider.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
+import 'package:infoctess_koneqt/widgets/status_snack.dart';
 import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 
@@ -287,6 +290,21 @@ class UserAccountScreen extends StatelessWidget {
                       trailing: const Icon(Icons.arrow_forward_ios),
                     ),
                     ListTile(
+                      onTap: () async {
+                        CustomDialog.showWithAction(context,
+                            actionText: "Clear Cache",
+                            title: "Clear Cache",
+                            message:
+                                "This action will clear all your cached media from your device.\nAre you sure you want to continue?",
+                            action: () async {
+                          try {
+                            await clearCache();
+                          } catch (e) {
+                            CustomSnackBar.show(context,
+                                message: "Error clearing cache");
+                          }
+                        });
+                      },
                       leading: const Icon(Icons.sd_storage_outlined),
                       title: Text(
                         "Clear Cache",
@@ -299,6 +317,17 @@ class UserAccountScreen extends StatelessWidget {
                       trailing: const Icon(Icons.arrow_forward_ios),
                     ),
                     ListTile(
+                      onTap: () async {
+                        CustomDialog.showWithAction(context,
+                            actionText: "Still Delete",
+                            title: "Delete Account",
+                            message:
+                                "Asay, why do you want to delete your account? ",
+                            action: () async {
+                          CustomSnackBar.show(context,
+                              message: "Will delete when you complete school!");
+                        });
+                      },
                       iconColor: Colors.red,
                       leading: const Icon(Icons.warning_amber_rounded),
                       title: Text(
@@ -325,6 +354,40 @@ class UserAccountScreen extends StatelessWidget {
                   color: cPri,
                 ),
                 child: ListTile(
+                  onTap: () async {
+                    CustomDialog.showWithAction(context,
+                        actionText: "Logout",
+                        title: "Logout",
+                        message: "Are you sure you want to logout?",
+                        alertStyle: AlertStyle.warning, action: () async {
+                      try {
+                        await auth.signOut().then(
+                              (value) => {
+                                Provider.of<UserProvider>(context,
+                                        listen: false)
+                                    .clearUserDetails()
+                                    .then(
+                                      (value) => Provider.of<UserProvider>(
+                                              context,
+                                              listen: false)
+                                          .setLoggedIn(false)
+                                          .then(
+                                            (value) => CustomSnackBar.show(
+                                              context,
+                                              message: "Logged out",
+                                            ),
+                                          ),
+                                    ),
+                                Navigator.pushNamedAndRemoveUntil(
+                                    context, "/login", (route) => false),
+                              },
+                            );
+                      } catch (e) {
+                        CustomSnackBar.show(context,
+                            message: "Error logging out");
+                      }
+                    });
+                  },
                   iconColor: Colors.white,
                   leading: const Icon(Icons.logout),
                   title: Text(

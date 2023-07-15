@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/models/user_info.dart' as user_info;
+import 'package:path_provider/path_provider.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
 FirebaseStorage storage = FirebaseStorage.instance;
@@ -225,7 +226,7 @@ class Auth {
           .get()
           .then((value) => {
                 // var data = value.docs[0].data();
-                
+
                 curUser?.avatar = value.docs[0].data()["avatar"],
                 curUser?.classGroup = value.docs[0].data()["classGroup"],
                 curUser?.fullName = value.docs[0].data()["fullName"],
@@ -241,4 +242,22 @@ class Auth {
       // throw Exception(e);
     }
   }
+}
+
+//clear all firebase snapshots
+Future clearCache() async {
+  try {
+    await db.clearPersistence().then((value) async => {
+          clearDeviceCahce(),
+          await auth.signOut(),
+        });
+  } catch (e) {
+    throw Exception(e);
+  }
+}
+
+Future clearDeviceCahce() async {
+  //get app temp directory
+  var tempDir = await getTemporaryDirectory();
+  await tempDir.delete(recursive: true);
 }
