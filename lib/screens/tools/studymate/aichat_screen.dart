@@ -36,11 +36,6 @@ class AIChatScreenState extends State<AIChatScreen> {
     ));
 
     super.initState();
-
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   // Scroll to the end of the list after the widgets are built
-    //   scrollController.jumpTo(scrollController.position.maxScrollExtent + 100);
-    // });
   }
 
   @override
