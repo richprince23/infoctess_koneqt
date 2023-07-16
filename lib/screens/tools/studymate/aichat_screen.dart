@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
+import 'package:infoctess_koneqt/components/select_control1.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/ai_controller.dart';
 import 'package:infoctess_koneqt/controllers/chat_controller.dart';
+import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/widgets/chat_bubble.dart';
 import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
@@ -23,15 +25,16 @@ class AIChatScreenState extends State<AIChatScreen> {
   final TextEditingController inputController = TextEditingController();
   ScrollController scrollController = ScrollController();
   String prompt = '';
-
+  String selectedSubject = "";
   @override
   void initState() {
     messages.add(ChatBubble(
       hasOptions: false,
       isUser: false,
       showAvatar: false,
-      message: "Hi! I'm AI StudyMate. Ask me anything! 😊",
+      message: "Hi! I'm AI StudyMate. Ask anything!😊",
     ));
+
     super.initState();
 
     // WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -81,13 +84,8 @@ class AIChatScreenState extends State<AIChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.grey[600],
-      // backgroundColor: Colors.white,
-
       appBar: AppBar(
-        // backgroundColor: Colors.grey[600],
         title: const Text('AI StudyMate'),
-        // foregroundColor: Colors.white,
         centerTitle: true,
         actions: [
           // optionButton(),
@@ -110,9 +108,29 @@ class AIChatScreenState extends State<AIChatScreen> {
         ],
       ),
       body: KeyboardDismissOnTap(
-        // controller: scrollController,
         child: Column(
           children: [
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 10.w),
+              child: SelectControl(
+                showLabel: false,
+                onChanged: (value) {
+                  setState(() {
+                    selectedSubject = value!;
+                  });
+                },
+                hintText: "Select subject",
+                items: subjects.map((e) {
+                  return DropdownMenuItem(
+                    value: e,
+                    child: Text(
+                      e,
+                      style: TextStyle(fontSize: 14.sp),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
             Expanded(
               flex: 9,
               child: Container(
@@ -174,7 +192,7 @@ class AIChatScreenState extends State<AIChatScreen> {
   }
 
   void sendMessage() async {
-    prompt = inputController.text.trim();
+    prompt = "Subject : $selectedSubject\n${inputController.text.trim()}";
     setState(() {
       messages.add(ChatBubble(
         hasOptions: false,

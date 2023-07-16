@@ -64,3 +64,20 @@ final profileFormKey = GlobalKey<FormState>();
 //onboarding controllers
 
 String? avatarPath;
+
+final List<String> subjects = [
+  'Data Structures and Algorithms',
+  'Data Communications and Networking',
+  'Intoduction to Programming with C++',
+  'Object-Oriented Programming with Java',
+  'Event-Driven Programming with VB.NET',
+  'ASP.NET Webforms with C#',
+  'Technology Project Management',
+  'System Analysis and Design',
+  'Multimedia Authoring',
+  'Visual Literacy',
+  'Technical Communication',
+  'Emerging Technologies',
+  'Educational',
+  'General'
+];
