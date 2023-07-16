@@ -96,6 +96,11 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                 title: 'Passco',
                 // route: '',
               ),
+              UtilItem(
+                icon: CupertinoIcons.money_dollar,
+                title: 'My Dues',
+                // route: '',
+              ),
               Card(
                 surfaceTintColor: Colors.white.withOpacity(0.5),
                 color: AppTheme.themeData(false, context)
@@ -137,11 +142,11 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                 title: 'Other Resources',
                 // route: '',
               ),
-              InkWell(
-                onTap: () => NotificationService().showNotification(
-                    title: "Test", body: "Testing instant notifications"),
-                child: const Icon(Icons.alarm),
-              ),
+              // InkWell(
+              //   onTap: () => NotificationService().showNotification(
+              //       title: "Test", body: "Testing instant notifications"),
+              //   child: const Icon(Icons.alarm),
+              // ),
             ],
           ),
         ),
