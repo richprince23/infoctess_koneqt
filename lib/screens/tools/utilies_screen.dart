@@ -92,8 +92,8 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                 route: 'ai-imager',
               ),
               UtilItem(
-                icon: CupertinoIcons.list_number,
-                title: 'Practice Quiz',
+                icon: CupertinoIcons.doc_text,
+                title: 'Passco',
                 // route: '',
               ),
               Card(
