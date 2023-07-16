@@ -1,14 +1,13 @@
 import 'dart:async';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/chat_controller.dart';
+import 'package:infoctess_koneqt/controllers/network_controller.dart';
 import 'package:infoctess_koneqt/controllers/network_controller.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/models/poster_model.dart';
@@ -17,18 +16,14 @@ import 'package:infoctess_koneqt/widgets/contact_item.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
 import 'package:infoctess_koneqt/widgets/message_item.dart';
+import 'package:infoctess_koneqt/widgets/no_network.dart';
+import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 import 'package:status_alert/status_alert.dart';
-import 'package:provider/provider.dart';
 
-class ChatlistScreen extends StatefulWidget {
-  const ChatlistScreen({Key? key}) : super(key: key);
+class ChatlistScreen extends StatelessWidget {
+   ChatlistScreen({super.key});
 
-  @override
-  State<ChatlistScreen> createState() => _ChatlistScreenState();
-}
-
-class _ChatlistScreenState extends State<ChatlistScreen> {
   List<Poster> followingList = [];
 
   List following = [];
@@ -81,96 +76,12 @@ class _ChatlistScreenState extends State<ChatlistScreen> {
     return userInfo;
   }
 
-  ConnectivityResult _connectionStatus = ConnectivityResult.none;
-  final Connectivity _connectivity = Connectivity();
-  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
-
-  @override
-  void initState() {
-    super.initState();
-    initConnectivity();
-
-    _connectivitySubscription =
-        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
-  }
-
-  @override
-  void dispose() {
-    _connectivitySubscription.cancel();
-    super.dispose();
-  }
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initConnectivity() async {
-    late ConnectivityResult result;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    try {
-      result = await _connectivity.checkConnectivity();
-    } on PlatformException {
-      print("error");
-      // return;
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) {
-      return Future.value(null);
-    }
-
-    return _updateConnectionStatus(result);
-  }
-
-  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
-    setState(() {
-      _connectionStatus = result;
-      if (_connectionStatus == ConnectivityResult.mobile ||
-          _connectionStatus == ConnectivityResult.wifi) {
-        Provider.of<NetworkProvider>(context, listen: false)
-            .setConnection(true);
-        print("connected");
-      } else {
-        Provider.of<NetworkProvider>(context, listen: false)
-            .setConnection(false);
-        print("not connected");
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Consumer<NetworkProvider>(builder: (context, value, child) {
         return value.isConnected != true
-            ? Container(
-                color: Colors.white,
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.wifi_off,
-                        size: 50.w,
-                        color: Colors.grey,
-                      ),
-                      Text(
-                        "No internet connection",
-                        style: TextStyle(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        "Please check your internet connection",
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              )
+            ? const NoNetwork()
             : Column(
                 children: [
                   Container(

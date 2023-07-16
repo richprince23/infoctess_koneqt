@@ -51,6 +51,8 @@ void main() async {
   await remoteConfig.setConfigSettings(configSettings);
   // await dotenv.load();
 
+  
+
   runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider(create: (_) => OnboardingController()),
@@ -63,6 +65,7 @@ void main() async {
     ], child: const MyApp()),
   );
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

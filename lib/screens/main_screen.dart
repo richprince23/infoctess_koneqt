@@ -1,9 +1,11 @@
 // import 'package:firebase_auth/firebase_auth.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/components/appbar.dart';
 import 'package:infoctess_koneqt/components/bottom_nav.dart';
 // import '../../components/drawer.dart';
 import 'package:infoctess_koneqt/components/drawer.dart';
+import 'package:infoctess_koneqt/controllers/network_controller.dart';
 import 'package:infoctess_koneqt/controllers/page_controller.dart';
 import 'package:infoctess_koneqt/controllers/user_provider.dart';
 import 'package:infoctess_koneqt/env.dart';
@@ -27,27 +29,32 @@ class _MainScreenState extends State<MainScreen> {
     WidgetsFlutterBinding.ensureInitialized();
     // getOfflineUser();
     setAll();
-    // print("Printing from mainscreen init  ${_user?.emailAddress}");
+
+    // initialize network listening stream
+    connectivitySubscription =
+        Provider.of<NetworkProvider>(context, listen: false)
+            .connectivity
+            .onConnectivityChanged
+            .listen((ConnectivityResult result) {
+      Provider.of<NetworkProvider>(context, listen: false)
+          .updateConnectionStatus(result);
+    });
   }
 
-  // void getOfflineUser() async {
-  //   Future.delayed(const Duration(seconds: 2), () {
-  //     Provider.of<UserProvider>(context, listen: false).setUserDetails();
-  //   });
-  // }
-  void setAll() {
+  void setAll() async {
     //set CurUser
     Provider.of<UserProvider>(context, listen: false).getUserInfo().then(
           (value) => setState(() {
             _user = value;
           }),
         );
-
-    // print("Printing from mainscreen set ALl 1  $curUser");
+    await Provider.of<NetworkProvider>(context, listen: false)
+        .initConnectivity();
   }
 
   @override
   void dispose() {
+    connectivitySubscription.cancel();
     super.dispose();
   }
 
