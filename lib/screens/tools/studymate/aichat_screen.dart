@@ -1,7 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
+import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/ai_controller.dart';
+import 'package:infoctess_koneqt/controllers/chat_controller.dart';
 import 'package:infoctess_koneqt/widgets/chat_bubble.dart';
+import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 
 class AIChatScreen extends StatefulWidget {
@@ -21,7 +27,9 @@ class AIChatScreenState extends State<AIChatScreen> {
   @override
   void initState() {
     messages.add(ChatBubble(
+      hasOptions: false,
       isUser: false,
+      showAvatar: false,
       message: "Hi! I'm AI StudyMate. Ask me anything! 😊",
     ));
     super.initState();
@@ -63,7 +71,7 @@ class AIChatScreenState extends State<AIChatScreen> {
           ),
           const PopupMenuItem<String>(
             value: 'clear',
-            child: Text('Clear Chat'),
+            child: Text('Clear'),
           ),
         ];
       },
@@ -75,6 +83,7 @@ class AIChatScreenState extends State<AIChatScreen> {
     return Scaffold(
       // backgroundColor: Colors.grey[600],
       // backgroundColor: Colors.white,
+
       appBar: AppBar(
         // backgroundColor: Colors.grey[600],
         title: const Text('AI StudyMate'),
@@ -82,12 +91,13 @@ class AIChatScreenState extends State<AIChatScreen> {
         centerTitle: true,
         actions: [
           // optionButton(),
-
           TextButton.icon(
             onPressed: () {
               setState(() {
                 messages.clear();
                 messages.add(ChatBubble(
+                  hasOptions: false,
+                  showAvatar: false,
                   isUser: false,
                   message: "Hi! I'm AI StudyMate. Ask me anything! 😊",
                 ));
@@ -99,53 +109,66 @@ class AIChatScreenState extends State<AIChatScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
+      body: KeyboardDismissOnTap(
         // controller: scrollController,
-        scrollDirection: Axis.vertical,
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height * 0.83,
-          // width: MediaQuery.of(context).size.width,
-          child: ListView.builder(
-            cacheExtent: 50.vh,
-            padding: EdgeInsets.symmetric(horizontal: 10.w),
-            controller: scrollController,
-            scrollDirection: Axis.vertical,
-            itemCount: messages.length,
-            itemBuilder: (context, index) {
-              return messages[index];
-            },
-          ),
-        ),
-      ),
-      bottomSheet: BottomSheet(
-        backgroundColor: Colors.black87,
-        enableDrag: false,
-        builder: (context) => SizedBox(
-          height: MediaQuery.of(context).size.height * 0.08,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: InputControl(
-                  hintText: "Type your prompt here...",
-                  showLabel: false,
-                  controller: inputController,
-                  focusNode: focusNode,
+        child: Column(
+          children: [
+            Expanded(
+              flex: 9,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: cSec.withOpacity(0.05),
+                  // ignore: unnecessary_null_comparison
+                  image: context.watch<ChatProvider>().chatBackground != ""
+                      ? DecorationImage(
+                          opacity: 0.8,
+                          image: Image.file(
+                            File(context.watch<ChatProvider>().chatBackground),
+                          ).image,
+                          fit: BoxFit.cover,
+                        )
+                      : null,
+                ),
+                child: ListView.builder(
+                  cacheExtent: 50.vh,
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
+                  controller: scrollController,
+                  scrollDirection: Axis.vertical,
+                  itemCount: messages.length,
+                  itemBuilder: (context, index) {
+                    return messages[index];
+                  },
                 ),
               ),
-              IconButton(
-                onPressed: () async {
-                  sendMessage();
-                },
-                icon: const Icon(Icons.send),
-                color: Colors.white,
-                // padding: const EdgeInsets.all(8),
-                iconSize: 28,
+            ),
+            Container(
+              padding: EdgeInsets.all(5.w),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: InputControl(
+                      hintText: "Type your prompt here...",
+                      showLabel: false,
+                      controller: inputController,
+                      isCollapsed: true,
+                      focusNode: focusNode,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () async {
+                      sendMessage();
+                    },
+                    icon: const Icon(Icons.send),
+                    color: cPri,
+                    // padding: const EdgeInsets.all(8),
+                    iconSize: 28,
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-        onClosing: () {},
       ),
     );
   }
@@ -154,6 +177,7 @@ class AIChatScreenState extends State<AIChatScreen> {
     prompt = inputController.text.trim();
     setState(() {
       messages.add(ChatBubble(
+        hasOptions: false,
         isUser: true,
         message: inputController.text,
       ));
@@ -177,6 +201,8 @@ class AIChatScreenState extends State<AIChatScreen> {
         messages.add(ChatBubble(
           isUser: false,
           message: value,
+          showAvatar: false,
+          hasOptions: false,
         ));
       });
     }).whenComplete(() {
