@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/controllers/chat_controller.dart';
+import 'package:infoctess_koneqt/controllers/network_controller.dart';
 import 'package:infoctess_koneqt/controllers/notification_service.dart';
 import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
 import 'package:infoctess_koneqt/controllers/page_controller.dart';
@@ -16,8 +17,6 @@ import 'package:infoctess_koneqt/screens/misc/privacy.dart';
 import 'package:infoctess_koneqt/screens/misc/terms.dart';
 import 'package:infoctess_koneqt/screens/onboarding.dart';
 import 'package:infoctess_koneqt/screens/onboarding/check_index.dart';
-import 'package:infoctess_koneqt/screens/onboarding/profileinfo.dart';
-import 'package:infoctess_koneqt/screens/post_page.dart';
 import 'package:infoctess_koneqt/screens/profile.dart';
 import 'package:infoctess_koneqt/screens/start.dart';
 import 'package:infoctess_koneqt/screens/tools/courses/add_course.dart';
@@ -60,6 +59,7 @@ void main() async {
       ChangeNotifierProvider(create: (_) => Stats()),
       ChangeNotifierProvider(create: (_) => ProfileProvider()),
       ChangeNotifierProvider(create: (_) => ChatProvider()),
+      ChangeNotifierProvider(create: (_) => NetworkProvider()),
     ], child: const MyApp()),
   );
 }
