@@ -99,7 +99,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
               UtilItem(
                 icon: CupertinoIcons.money_dollar,
                 title: 'My Dues',
-                // route: '',
+                route: 'my-dues',
               ),
               Card(
                 surfaceTintColor: Colors.white.withOpacity(0.5),

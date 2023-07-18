@@ -21,6 +21,8 @@ import 'package:infoctess_koneqt/screens/profile.dart';
 import 'package:infoctess_koneqt/screens/start.dart';
 import 'package:infoctess_koneqt/screens/tools/courses/add_course.dart';
 import 'package:infoctess_koneqt/screens/tools/courses/courses.dart';
+import 'package:infoctess_koneqt/screens/tools/dues/dues_main.dart';
+import 'package:infoctess_koneqt/screens/tools/dues/new_payment.dart';
 import 'package:infoctess_koneqt/screens/tools/gpa_calc/cgpa.dart';
 import 'package:infoctess_koneqt/screens/tools/gpa_calc/gpa_calculator.dart';
 import 'package:infoctess_koneqt/screens/tools/notes/add_note.dart';
@@ -51,8 +53,6 @@ void main() async {
   await remoteConfig.setConfigSettings(configSettings);
   // await dotenv.load();
 
-  
-
   runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider(create: (_) => OnboardingController()),
@@ -65,7 +65,6 @@ void main() async {
     ], child: const MyApp()),
   );
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -118,6 +117,8 @@ class MyApp extends StatelessWidget {
           "/edit-profile": (context) => const EditProfileScreen(),
           "/privacy-policy": (context) => const PrivacyPolicyScreen(),
           "/terms-and-conditions": (context) => const TermsConditionsScreen(),
+          "/my-dues": (context) => const MyDuesScreen(),
+          "/new-payment": (context) => const NewPayment(),
         },
       ),
     );

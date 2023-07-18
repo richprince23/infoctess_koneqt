@@ -5,7 +5,7 @@ import 'package:resize/resize.dart';
 
 // class C {
 Size btnLarge(BuildContext context) {
-  return Size((MediaQuery.of(context).size.width), 50.h);
+  return Size((MediaQuery.of(context).size.width), 48.w);
 }
 
 Size btnSmall(BuildContext context) {
