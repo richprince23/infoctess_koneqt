@@ -1,13 +1,15 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart' hide User;
-import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart' as path;
 import 'package:infoctess_koneqt/messages.dart';
-import 'package:infoctess_koneqt/models/user_info.dart';
+import "package:path_provider/path_provider.dart";
 import 'package:infoctess_koneqt/screens/forums.dart';
+import 'package:infoctess_koneqt/models/user_info.dart';
+import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:infoctess_koneqt/screens/home/homepage.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:infoctess_koneqt/screens/onboarding/acad_info.dart';
 import 'package:infoctess_koneqt/screens/onboarding/basic_info.dart';
 import 'package:infoctess_koneqt/screens/onboarding/profileinfo.dart';
@@ -81,3 +83,4 @@ final List<String> subjects = [
   'Educational',
   'General'
 ];
+

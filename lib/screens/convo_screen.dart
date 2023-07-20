@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +16,6 @@ import 'package:infoctess_koneqt/models/poster_model.dart';
 import 'package:infoctess_koneqt/screens/user_screens/profile_screen.dart';
 import 'package:infoctess_koneqt/widgets/chat_bubble.dart';
 import 'package:infoctess_koneqt/widgets/chat_preview.dart';
-import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
 import 'package:infoctess_koneqt/widgets/status_snack.dart';
 import 'package:provider/provider.dart';
