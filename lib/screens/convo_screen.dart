@@ -210,31 +210,32 @@ class _ConvoScreenState extends State<ConvoScreen> {
                   SizedBox(
                     width: 8.w,
                   ),
-                  isEmpty == true
-                      ? IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.mic),
-                          iconSize: 24.w,
-                          color: cPri,
-                        )
-                      : IconButton(
-                          style: IconButton.styleFrom(
-                            shape: const CircleBorder(),
-                            padding: EdgeInsets.all(10.w),
-                            backgroundColor: cPri,
-                            foregroundColor: Colors.white,
-                          ),
-                          onPressed: () async {
-                            if (msgController.text.isNotEmpty) {
-                              await sendMessage(
-                                chatID: widget.chatID,
-                                message: msgController.text.trim(),
-                              );
-                              msgController.clear();
-                            }
-                          },
-                          icon: const Icon(Icons.send),
-                        ),
+                  // isEmpty == true
+                  //     ? IconButton(
+                  //         onPressed: () {},
+                  //         icon: const Icon(Icons.mic),
+                  //         iconSize: 24.w,
+                  //         color: cPri,
+                  //       )
+                  //     :
+                  IconButton(
+                    style: IconButton.styleFrom(
+                      shape: const CircleBorder(),
+                      padding: EdgeInsets.all(10.w),
+                      backgroundColor: cPri,
+                      foregroundColor: Colors.white,
+                    ),
+                    onPressed: () async {
+                      if (msgController.text.isNotEmpty) {
+                        await sendMessage(
+                          chatID: widget.chatID,
+                          message: msgController.text.trim(),
+                        );
+                        msgController.clear();
+                      }
+                    },
+                    icon: const Icon(Icons.send),
+                  ),
                 ],
               ),
             ),
@@ -424,43 +425,43 @@ class _ConvoScreenState extends State<ConvoScreen> {
                     // Navigator.pop(context);
                   },
                 ),
-                CupertinoActionSheetAction(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(CupertinoIcons.doc, color: cPri),
-                      SizedBox(
-                        width: 10.w,
-                      ),
-                      const Text('File'),
-                    ],
-                  ),
-                  onPressed: () async {
-                    await uploadFile().then(
-                      (value) {
-                        if (selectedFile != null) {
-                          Navigator.pop(context);
-                          showModalBottomSheet(
-                            // isDismissible: true,
-                            isScrollControlled: true,
-                            enableDrag: true,
-                            context: context,
-                            builder: ((context) {
-                              return MediaPreview(
-                                chatID: widget.chatID,
-                                filePath: selectedMedia!.path,
-                              );
-                            }),
-                          );
-                        } else {
-                          Navigator.pop(context);
-                          CustomSnackBar.show(context,
-                              message: "File is bigger than 5mb");
-                        }
-                      },
-                    );
-                  },
-                ),
+                // CupertinoActionSheetAction(
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       Icon(CupertinoIcons.doc, color: cPri),
+                //       SizedBox(
+                //         width: 10.w,
+                //       ),
+                //       const Text('File'),
+                //     ],
+                //   ),
+                //   onPressed: () async {
+                //     await uploadFile().then(
+                //       (value) {
+                //         if (selectedFile != null) {
+                //           Navigator.pop(context);
+                //           showModalBottomSheet(
+                //             // isDismissible: true,
+                //             isScrollControlled: true,
+                //             enableDrag: true,
+                //             context: context,
+                //             builder: ((context) {
+                //               return MediaPreview(
+                //                 chatID: widget.chatID,
+                //                 filePath: selectedMedia!.path,
+                //               );
+                //             }),
+                //           );
+                //         } else {
+                //           Navigator.pop(context);
+                //           CustomSnackBar.show(context,
+                //               message: "File is bigger than 5mb");
+                //         }
+                //       },
+                //     );
+                //   },
+                // ),
               ],
             ),
           )
@@ -523,35 +524,35 @@ class _ConvoScreenState extends State<ConvoScreen> {
                       // Navigator.pop(context);
                     },
                   ),
-                  ListTile(
-                    leading: const Icon(Icons.insert_drive_file),
-                    title: const Text('File'),
-                    onTap: () async {
-                      await uploadFile().then(
-                        (value) {
-                          if (selectedFile != null) {
-                            Navigator.pop(context);
-                            showModalBottomSheet(
-                              // isDismissible: true,
-                              isScrollControlled: true,
-                              enableDrag: true,
-                              context: context,
-                              builder: ((context) {
-                                return MediaPreview(
-                                  chatID: widget.chatID,
-                                  filePath: selectedFile!.path,
-                                );
-                              }),
-                            );
-                          } else {
-                            Navigator.pop(context);
-                            CustomSnackBar.show(context,
-                                message: "File is bigger than 5mb");
-                          }
-                        },
-                      );
-                    },
-                  ),
+                  // ListTile(
+                  //   leading: const Icon(Icons.insert_drive_file),
+                  //   title: const Text('File'),
+                  //   onTap: () async {
+                  //     await uploadFile().then(
+                  //       (value) {
+                  //         if (selectedFile != null) {
+                  //           Navigator.pop(context);
+                  //           showModalBottomSheet(
+                  //             // isDismissible: true,
+                  //             isScrollControlled: true,
+                  //             enableDrag: true,
+                  //             context: context,
+                  //             builder: ((context) {
+                  //               return MediaPreview(
+                  //                 chatID: widget.chatID,
+                  //                 filePath: selectedFile!.path,
+                  //               );
+                  //             }),
+                  //           );
+                  //         } else {
+                  //           Navigator.pop(context);
+                  //           CustomSnackBar.show(context,
+                  //               message: "File is bigger than 5mb");
+                  //         }
+                  //       },
+                  //     );
+                  //   },
+                  // ),
                 ],
               );
             },
