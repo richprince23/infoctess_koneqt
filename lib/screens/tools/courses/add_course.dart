@@ -4,6 +4,7 @@ import 'package:infoctess_koneqt/app_db.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/components/select_control1.dart';
 import 'package:infoctess_koneqt/models/courses_db.dart';
+import 'package:resize/resize.dart';
 
 class AddCoursePage extends StatefulWidget {
   const AddCoursePage({Key? key}) : super(key: key);
@@ -111,63 +112,6 @@ class _AddCoursePageState extends State<AddCoursePage> {
                     return null;
                   },
                 ),
-                // CustomField(
-                //   title: "Course Title",
-                //   controller: _cTitle,
-                // ),
-                // Text(
-                //   "Level",
-                //   style: GoogleFonts.sarabun(
-                //     // fontWeight: FontWeight.normal,
-                //     color: Colors.black87,
-                //     fontSize: 18,
-                //   ),
-                // ),
-                // const SizedBox(
-                //   height: 5,
-                // ),
-                // DropdownButtonFormField<String>(
-                //     style: const TextStyle(
-                //         color: Colors.black,
-                //         fontSize: 14,
-                //         fontFamily: "Raleway"),
-                //     menuMaxHeight: 200,
-                //     decoration: InputDecoration(
-                //         fillColor: const Color.fromRGBO(209, 209, 209, 0.35),
-                //         filled: true,
-                //         contentPadding: const EdgeInsets.symmetric(
-                //             horizontal: 20, vertical: 20),
-                //         // labelText: "Semester",
-                //         hintText: "Level",
-                //         hintStyle: const TextStyle(
-                //             color: Colors.grey,
-                //             fontSize: 14,
-                //             fontFamily: "Raleway"),
-                //         focusedBorder: OutlineInputBorder(
-                //             borderRadius: BorderRadius.circular(25),
-                //             borderSide: const BorderSide(
-                //               color: Colors.pinkAccent,
-                //               width: 3,
-                //             )),
-                //         border: OutlineInputBorder(
-                //             borderSide: BorderSide.none,
-                //             borderRadius: BorderRadius.circular(25))),
-                //     items: levels.map((String value) {
-                //       return DropdownMenuItem<String>(
-                //           value: value, child: Text(value));
-                //     }).toList(),
-                //     onChanged: (newValue) {
-                //       setState(() {
-                //         levelValue = newValue;
-                //       });
-                //     },
-                //     validator: (e) {
-                //       if (e == null) {
-                //         return "Please fill this field";
-                //       } else {
-                //         return null;
-                //       }
-                //     }),
 
                 SelectControl(
                   hintText: "Level",
@@ -188,58 +132,7 @@ class _AddCoursePageState extends State<AddCoursePage> {
                     }
                   },
                 ),
-                // Text(
-                //   "Semester",
-                //   style: GoogleFonts.sarabun(
-                //     // fontWeight: FontWeight.normal,
-                //     color: Colors.black87,
-                //     fontSize: 18,
-                //   ),
-                // ),
-                // const SizedBox(
-                //   height: 5,
-                // ),
-                // // DropdownButtonFormField<String>(
-                // //   style: const TextStyle(
-                // //       color: Colors.black, fontSize: 14, fontFamily: "Raleway"),
-                // //   decoration: InputDecoration(
-                // //       fillColor: const Color.fromRGBO(209, 209, 209, 0.35),
-                // //       filled: true,
-                // //       contentPadding: const EdgeInsets.symmetric(
-                // //           horizontal: 20, vertical: 20),
-                // //       // labelText: "Semester",
-                // //       hintText: "Semester",
-                // //       hintStyle: const TextStyle(
-                // //           color: Colors.grey,
-                // //           fontSize: 14,
-                // //           fontFamily: "Raleway"),
-                // //       focusedBorder: OutlineInputBorder(
-                // //           borderRadius: BorderRadius.circular(25),
-                // //           borderSide: const BorderSide(
-                // //             color: Colors.pinkAccent,
-                // //             width: 3,
-                // //           )),
-                // //       border: OutlineInputBorder(
-                // //           borderSide: BorderSide.none,
-                // //           borderRadius: BorderRadius.circular(25))),
-                // //   items: sems.map((String value) {
-                // //     return DropdownMenuItem<String>(
-                // //         value: value, child: Text(value));
-                // //   }).toList(),
-                // //   onChanged: (newValue) {
-                // //     setState(() {
-                // //       semValue = newValue;
-                // //     });
-                // //   },
-                // //   validator: (e) {
-                // //     if (e == null) {
-                // //       return "Please fill this field";
-                // //     } else {
-                // //       return null;
-                // //     }
-                // //   },
-                // // ),
-
+                
                 SelectControl(
                   hintText: "Semester",
                   items: sems.map((String value) {
@@ -284,7 +177,7 @@ class _AddCoursePageState extends State<AddCoursePage> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50),
                     ),
-                    minimumSize: Size(size.width, 50),
+                    minimumSize: Size(size.width, 56),
                   ),
                   onPressed: () async {
                     if (keys.currentState!.validate()) {
@@ -294,12 +187,12 @@ class _AddCoursePageState extends State<AddCoursePage> {
                       });
                     }
                   },
-                  child: const Text(
+                  child: Text(
                     "Save",
                     style: TextStyle(
-                        color: Colors.white,
-                        fontFamily: "Raleway",
-                        fontSize: 18),
+                      color: Colors.white,
+                      fontSize: 18.sp,
+                    ),
                   ),
                 ),
               ],

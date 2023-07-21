@@ -1,7 +1,3 @@
-import 'dart:developer';
-import 'dart:io';
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -143,11 +139,12 @@ class _MyNotesState extends State<MyNotes> with RouteAware {
               return Slidable(
                 direction: Axis.horizontal,
                 endActionPane: ActionPane(
+                  // extentRatio: 0.2,
                   motion: const ScrollMotion(),
                   children: [
                     SlidableAction(
                       // An action can be bigger than the others.
-                      flex: 1,
+                      // flex: 1,
                       borderRadius: BorderRadius.circular(10),
                       onPressed: (context) async {
                         CustomDialog.showWithAction(context,
@@ -202,13 +199,11 @@ class _MyNotesState extends State<MyNotes> with RouteAware {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  surfaceTintColor: Colors.white.withOpacity(0.5),
-                  color: AppTheme.themeData(false, context)
-                      .cardColor
-                      .withOpacity(0.5),
+                  elevation: 0,
+                  surfaceTintColor: Colors.white,
+                  color: Colors.white,
                   child: ListTile(
-                    textColor:
-                        AppTheme.themeData(false, context).primaryColorLight,
+                    textColor: Colors.black,
                     contentPadding: const EdgeInsets.all(5),
                     leading: const Icon(
                       CupertinoIcons.pencil_outline,
@@ -216,8 +211,7 @@ class _MyNotesState extends State<MyNotes> with RouteAware {
                     // tileColor: Colors.white.withOpacity(0.5),
                     title: Text(
                       snapshot.data[index].title,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w600, fontSize: 18),
+                      style: TextStyle(fontSize: 18.sp),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),

@@ -6,8 +6,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:infoctess_koneqt/app_db.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/models/courses_db.dart';
-import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
+import 'package:infoctess_koneqt/widgets/status_snack.dart';
 import 'package:resize/resize.dart';
 
 class ManageCourses extends StatefulWidget {
@@ -23,7 +23,7 @@ class _ManageCoursesState extends State<ManageCourses> {
   bool isLoading = false;
 
   readCourse() {
-    var res = AppDatabase.instance.getCourse(0);
+    AppDatabase.instance.getCourse(0);
     setState(() {
       // courses.add(res);
     });
@@ -54,18 +54,19 @@ class _ManageCoursesState extends State<ManageCourses> {
   }
 
   Widget buildCourses() => ListView.builder(
-    cacheExtent: 50.vh,
+      cacheExtent: 50.vh,
       itemCount: courses.length,
       itemBuilder: (context, int index) {
         var course = courses[index];
         return Slidable(
           direction: Axis.horizontal,
           endActionPane: ActionPane(
+            extentRatio: 0.2,
             motion: const ScrollMotion(),
             children: [
               SlidableAction(
                 // An action can be bigger than the others.
-                flex: 1,
+                // flex: 1,
                 onPressed: (context) async {
                   Platform.isIOS
                       ? showCupertinoDialog(
@@ -87,13 +88,10 @@ class _ManageCoursesState extends State<ManageCourses> {
                                           .deleteCourse(course.id!)
                                           .then(
                                             (value) => readCourses().then(
-                                              (value) =>
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                SnackBar(
-                                                  content: Text(
-                                                      "${course.courseTitle} deleted"),
-                                                ),
+                                              (value) => CustomSnackBar.show(
+                                                context,
+                                                message:
+                                                    "${course.courseTitle} deleted",
                                               ),
                                             ),
                                           );
@@ -129,13 +127,10 @@ class _ManageCoursesState extends State<ManageCourses> {
                                           .deleteCourse(course.id!)
                                           .then(
                                             (value) => readCourses().then(
-                                              (value) =>
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                const SnackBar(
-                                                  content:
-                                                      Text("Course deleted"),
-                                                ),
+                                              (value) => CustomSnackBar.show(
+                                                context,
+                                                message:
+                                                    "${course.courseTitle} deleted",
                                               ),
                                             ),
                                           );
@@ -152,34 +147,39 @@ class _ManageCoursesState extends State<ManageCourses> {
                 icon: Icons.delete,
                 label: 'Delete',
               ),
-              SlidableAction(
-                onPressed: (context) {},
-                borderRadius: BorderRadius.circular(10),
-                backgroundColor: Colors.blue.shade300,
-                foregroundColor: Colors.white,
-                icon: Icons.edit,
-                label: 'Edit',
-              ),
+              // SlidableAction(
+              //   onPressed: (context) {},
+              //   borderRadius: BorderRadius.circular(10),
+              //   backgroundColor: Colors.blue.shade300,
+              //   foregroundColor: Colors.white,
+              //   icon: Icons.edit,
+              //   label: 'Edit',
+              // ),
             ],
           ),
           child: Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            surfaceTintColor: Colors.white.withOpacity(0.5),
-            color:
-                AppTheme.themeData(false, context).cardColor.withOpacity(0.5),
+            elevation: 0,
+            surfaceTintColor: Colors.white,
+            color: Colors.white,
             child: ListTile(
               // tileColor: ThemeData.light().secondaryHeaderColor,
-              contentPadding: const EdgeInsets.all(5),
-              leading: const Icon(CupertinoIcons.book),
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
+              // leading: const Icon(CupertinoIcons.book),
               subtitle: Text(
-                  "Level:  ${course.level.toString()} ${course.semester} Credit Hours: ${course.creditHours} "),
+                "Level:  ${course.level.toString()} ${course.semester} Credit Hours: ${course.creditHours} ",
+                style: TextStyle(fontSize: 14.sp),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              ),
               // subtitle: Text(course.courseCode.toString()),
               // title: course.courseTitle, // replace with course code and semester
               title: Text(
                 course.courseTitle.toString(),
-                style: const TextStyle(fontSize: 18),
+                style: TextStyle(fontSize: 18.sp),
               ),
 
               onTap: () {},
@@ -212,15 +212,17 @@ class _ManageCoursesState extends State<ManageCourses> {
           )
         ],
       ),
-      body: Padding(
+      body: Container(
+        color: cSec.withOpacity(0.1),
         padding: EdgeInsets.all(12.w),
         child: isLoading
             ? Center(
                 child: Image.asset(
-                "assets/images/preload.gif",
-                height: 20.h,
-                width: 20.h,
-              ))
+                  "assets/images/preload.gif",
+                  height: 30.w,
+                  width: 30.w,
+                ),
+              )
             : courses.isEmpty
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,

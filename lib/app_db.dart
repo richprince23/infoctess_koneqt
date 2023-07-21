@@ -20,7 +20,7 @@ class AppDatabase {
     if (_database != null) {
       return _database!;
     } else {
-      _database = await _initDB('test4.db');
+      _database = await _initDB('test0.db');
       return _database!;
     }
   }
@@ -39,7 +39,7 @@ class AppDatabase {
   Future createDB(Database db, int version) async {
     const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     const textType = "STRING NOT NULL";
-    const intType = "INTEGER NOT NULL";
+    // const intType = "INTEGER NOT NULL";
 
     await db.execute('''
   CREATE TABLE $coursesTable(
@@ -50,7 +50,7 @@ class AppDatabase {
   
 ''');
     await db.execute('''CREATE TABLE $notesTable(
-      ${NoteFields.id} $textType, ${NoteFields.title} $textType,
+      ${NoteFields.id} $idType, ${NoteFields.title} $textType,
       ${NoteFields.content} $textType, ${NoteFields.createdAt} $textType
     )''');
 

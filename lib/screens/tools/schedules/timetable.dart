@@ -7,6 +7,7 @@ import 'package:infoctess_koneqt/app_db.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/models/timetable_db.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
+import 'package:infoctess_koneqt/widgets/status_snack.dart';
 import 'package:intl/intl.dart';
 import 'package:resize/resize.dart';
 
@@ -122,6 +123,7 @@ class AllSchedulesState extends State<AllSchedules> {
     for (String weekday in weekdays) {
       expansionTiles.add(
         ExpansionTile(
+          childrenPadding: EdgeInsets.zero,
           textColor: Colors.black,
           // collapsedBackgroundColor: Colors.grey.shade300,
           // collapsedTextColor: Colors.white,
@@ -140,7 +142,7 @@ class AllSchedulesState extends State<AllSchedules> {
                       .where((element) => element.day == weekday)
                       .toList()
                       .length *
-                  80,
+                  90,
               child: ListView.builder(
                 cacheExtent: 50.vh,
                 itemCount: allScehdules
@@ -154,11 +156,13 @@ class AllSchedulesState extends State<AllSchedules> {
                   return Slidable(
                     direction: Axis.horizontal,
                     endActionPane: ActionPane(
+                      extentRatio: 0.2,
                       motion: const ScrollMotion(),
                       children: [
                         SlidableAction(
                           // An action can be bigger than the others.
-                          flex: 1,
+                          // flex: 1,
+
                           onPressed: (context) async {
                             Platform.isIOS
                                 ? showCupertinoDialog(
@@ -185,13 +189,10 @@ class AllSchedulesState extends State<AllSchedules> {
                                                           getAllSchedules()
                                                               .then(
                                                         (value) =>
-                                                            ScaffoldMessenger
-                                                                    .of(context)
-                                                                .showSnackBar(
-                                                          SnackBar(
-                                                            content: Text(
-                                                                "${schedules[index].courseTitle} deleted from timetable"),
-                                                          ),
+                                                            CustomSnackBar.show(
+                                                          context,
+                                                          message:
+                                                              "${schedules[index].courseTitle} deleted from timetable",
                                                         ),
                                                       ),
                                                     );
@@ -215,15 +216,15 @@ class AllSchedulesState extends State<AllSchedules> {
                                             ),
                                             ElevatedButton(
                                               style: ElevatedButton.styleFrom(
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                  ),
-                                                  elevation: 0,
-                                                  foregroundColor: Colors.white,
-                                                  backgroundColor:
-                                                      Colors.red.shade600),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                elevation: 0,
+                                                foregroundColor: Colors.white,
+                                                backgroundColor:
+                                                    Colors.red.shade600,
+                                              ),
                                               onPressed: () async {
                                                 Navigator.pop(context);
                                                 await AppDatabase.instance
@@ -234,13 +235,10 @@ class AllSchedulesState extends State<AllSchedules> {
                                                           getAllSchedules()
                                                               .then(
                                                         (value) =>
-                                                            ScaffoldMessenger
-                                                                    .of(context)
-                                                                .showSnackBar(
-                                                          SnackBar(
-                                                            content: Text(
-                                                                "${schedules[index].courseTitle} deleted from timetable"),
-                                                          ),
+                                                            CustomSnackBar.show(
+                                                          context,
+                                                          message:
+                                                              "${schedules[index].courseTitle} deleted from timetable",
                                                         ),
                                                       ),
                                                     );
@@ -257,31 +255,37 @@ class AllSchedulesState extends State<AllSchedules> {
                           icon: Icons.delete,
                           label: 'Delete',
                         ),
-                        SlidableAction(
-                          onPressed: (context) {},
-                          borderRadius: BorderRadius.circular(10),
-                          backgroundColor: Colors.blue.shade300,
-                          foregroundColor: Colors.white,
-                          icon: Icons.edit,
-                          label: 'Edit',
-                        ),
+                        // SlidableAction(
+                        //   onPressed: (context) {},
+                        //   borderRadius: BorderRadius.circular(10),
+                        //   backgroundColor: Colors.blue.shade300,
+                        //   foregroundColor: Colors.white,
+                        //   icon: Icons.edit,
+                        //   label: 'Edit',
+                        // ),
                       ],
                     ),
                     child: Card(
+                      // margin: EdgeInsets.only(bottom: 10.w),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      surfaceTintColor: Colors.white.withOpacity(0.5),
-                      color: AppTheme.themeData(false, context)
-                          .cardColor
-                          .withOpacity(0.5),
+                      elevation: 0,
+                      surfaceTintColor: Colors.white,
+                      color: Colors.white,
                       child: ListTile(
                         title: Text(
                           schedules[index].courseTitle ?? '',
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 18),
+                          style: TextStyle(fontSize: 18.sp),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
                         ),
-                        subtitle: Text(schedules[index].startTime ?? ''),
+                        subtitle: Text(
+                          "${todaySchedules[index].startTime} - ${todaySchedules[index].endTime} at ${todaySchedules[index].venue}",
+                          style: TextStyle(fontSize: 14.sp),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
                       ),
                     ),
                   );
@@ -312,9 +316,9 @@ class AllSchedulesState extends State<AllSchedules> {
             ),
             color: Colors.white,
           ),
-          child: const Text(
+          child: Text(
             "Hurray! Your day is free! 🎉🥳",
-            style: TextStyle(fontSize: 20, color: Colors.black),
+            style: TextStyle(fontSize: 20.sp, color: Colors.black),
           ),
         ),
       ),
@@ -327,11 +331,12 @@ class AllSchedulesState extends State<AllSchedules> {
       today.add(Slidable(
         direction: Axis.horizontal,
         endActionPane: ActionPane(
+          extentRatio: 0.2,
           motion: const ScrollMotion(),
           children: [
             SlidableAction(
               // An action can be bigger than the others.
-              flex: 1,
+              // flex: 1,
               onPressed: (context) async {
                 Platform.isIOS
                     ? showCupertinoDialog(
@@ -354,13 +359,10 @@ class AllSchedulesState extends State<AllSchedules> {
                                             todaySchedules[index].id!)
                                         .then(
                                           (value) => getAllSchedules().then(
-                                            (value) =>
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                    "${todaySchedules[index].courseTitle} deleted from timetable"),
-                                              ),
+                                            (value) => CustomSnackBar.show(
+                                              context,
+                                              message:
+                                                  "${todaySchedules[index].courseTitle} deleted from timetable",
                                             ),
                                           ),
                                         );
@@ -396,13 +398,10 @@ class AllSchedulesState extends State<AllSchedules> {
                                             todaySchedules[index].id!)
                                         .then(
                                           (value) => getAllSchedules().then(
-                                            (value) =>
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                    "${todaySchedules[index].courseTitle} deleted from timetable"),
-                                              ),
+                                            (value) => CustomSnackBar.show(
+                                              context,
+                                              message:
+                                                  "${todaySchedules[index].courseTitle} deleted from timetable",
                                             ),
                                           ),
                                         );
@@ -419,29 +418,34 @@ class AllSchedulesState extends State<AllSchedules> {
               icon: Icons.delete,
               label: 'Delete',
             ),
-            SlidableAction(
-              onPressed: (context) {},
-              borderRadius: BorderRadius.circular(10),
-              backgroundColor: Colors.blue.shade300,
-              foregroundColor: Colors.white,
-              icon: Icons.edit,
-              label: 'Edit',
-            ),
+            // SlidableAction(
+            //   onPressed: (context) {},
+            //   borderRadius: BorderRadius.circular(10),
+            //   backgroundColor: Colors.blue.shade300,
+            //   foregroundColor: Colors.white,
+            //   icon: Icons.edit,
+            //   label: 'Edit',
+            // ),
           ],
         ),
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          surfaceTintColor: Colors.white.withOpacity(0.5),
-          color: AppTheme.themeData(false, context).cardColor.withOpacity(0.5),
+          elevation: 0,
+          surfaceTintColor: Colors.white,
+          color: Colors.white,
           child: ListTile(
             title: Text(
               todaySchedules[index].courseTitle ?? '',
-              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+              style: TextStyle(fontSize: 18.sp),
             ),
             subtitle: Text(
-                "${todaySchedules[index].venue}   ||   ${todaySchedules[index].startTime} - ${todaySchedules[index].endTime}\n${todaySchedules[index].lecturer}"),
+              "${todaySchedules[index].startTime} - ${todaySchedules[index].endTime} at ${todaySchedules[index].venue}",
+              style: TextStyle(fontSize: 14.sp),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            ),
           ),
         ),
       ));
