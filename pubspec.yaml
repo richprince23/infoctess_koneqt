@@ -49,9 +49,9 @@ dependencies:
   calendar_timeline: ^1.1.2
   mime: ^1.0.4
   file_picker:
-  flutter_download_manager:
+  # flutter_download_manager:
   connectivity_plus: ^4.0.1
-  open_file: ^3.3.2
+  # open_file: ^3.3.2
 
 dev_dependencies:
   flutter_test:

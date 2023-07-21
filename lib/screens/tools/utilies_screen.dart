@@ -91,16 +91,16 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                 title: 'AI Imager',
                 route: 'ai-imager',
               ),
-              UtilItem(
-                icon: CupertinoIcons.doc_text,
-                title: 'Passco',
-                // route: '',
-              ),
-              UtilItem(
-                icon: CupertinoIcons.money_dollar,
-                title: 'My Dues',
-                route: 'my-dues',
-              ),
+              // UtilItem(
+              //   icon: CupertinoIcons.doc_text,
+              //   title: 'Passco',
+              //   // route: '',
+              // ),
+              // UtilItem(
+              //   icon: CupertinoIcons.money_dollar,
+              //   title: 'My Dues',
+              //   route: 'my-dues',
+              // ),
               Card(
                 surfaceTintColor: Colors.white.withOpacity(0.5),
                 color: AppTheme.themeData(false, context)
@@ -137,10 +137,15 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                   ),
                 ),
               ),
+              // UtilItem(
+              //   icon: CupertinoIcons.hammer,
+              //   title: 'Other Resources',
+              //   // route: '',
+              // ),
               UtilItem(
-                icon: CupertinoIcons.hammer,
-                title: 'Other Resources',
-                // route: '',
+                icon: CupertinoIcons.bell,
+                title: 'Updates',
+                route: '',
               ),
               // InkWell(
               //   onTap: () => NotificationService().showNotification(
