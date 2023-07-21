@@ -268,7 +268,11 @@ class ChatlistScreen extends StatelessWidget {
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
-                      child: Image.asset("assets/images/preload.gif"),
+                      child: Image.asset(
+                        "assets/images/preload.gif",
+                        width: 30.w,
+                        height: 30.w,
+                      ),
                     );
                   }
                   if (snapshot.hasError) {
@@ -290,22 +294,29 @@ class ChatlistScreen extends StatelessWidget {
                       cacheExtent: 100.vh,
                       itemCount: following.length,
                       itemBuilder: (context, int index) {
+                        if (following[index] == auth.currentUser!.uid) {
+                          return const SizedBox.shrink();
+                        }
                         return ListTile(
                           onTap: () async {
                             getPosterDetails(userID: following[index]);
                             await startChat(memberID: following[index])
-                                .then((value) => {
-                                      Navigator.pop(context),
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => ConvoScreen(
-                                            chatID: value,
-                                            sender: sender,
-                                          ),
-                                        ),
-                                      ),
-                                    });
+                                .then((value) {
+                              if (value == null) {
+                                return;
+                              }
+
+                              Navigator.pop(context);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ConvoScreen(
+                                    chatID: value,
+                                    sender: sender,
+                                  ),
+                                ),
+                              );
+                            });
                           },
                           title: ContactItem(
                             userID: following[index],

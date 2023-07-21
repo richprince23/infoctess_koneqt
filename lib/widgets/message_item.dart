@@ -62,13 +62,18 @@ class ChatItemState extends State<ChatItem> {
         future: getPosterDetails(userID: widget.senderID),
         builder: (context, snapshot) {
           return InkWell(
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    ConvoScreen(sender: sender, chatID: widget.chatID),
-              ),
-            ),
+            onTap: () {
+              if (sender.posterID == null) {
+                return;
+              }
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      ConvoScreen(sender: sender, chatID: widget.chatID),
+                ),
+              );
+            },
             child: Container(
               padding: EdgeInsets.all(10.w),
               margin: EdgeInsets.symmetric(vertical: 1.w, horizontal: 10.w),
@@ -141,21 +146,19 @@ class ChatItemState extends State<ChatItem> {
                       ),
                       Align(
                         alignment: Alignment.bottomRight,
-                        child: Builder(
-                          builder: (context) {
-                            return Text(
-                              convertToElapsedString(
-                                  lastMessageTime ?? DateTime.now().toString()),
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w300,
-                                fontSize: 12.sp,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                            );
-                          }
-                        ),
+                        child: Builder(builder: (context) {
+                          return Text(
+                            convertToElapsedString(
+                                lastMessageTime ?? DateTime.now().toString()),
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w300,
+                              fontSize: 12.sp,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          );
+                        }),
                       ),
                     ],
                   ),
