@@ -68,8 +68,10 @@ class _MyFriendsScreenState extends State<MyFriendsScreen>
                     // initialData,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
+                        return  Center(
+                          child:    Image.asset(
+                              "assets/images/preload.gif", width: 30.w, height: 30.w,
+                            ),
                         );
                       }
                       if (snapshot.hasError) {
@@ -136,8 +138,10 @@ class _MyFriendsScreenState extends State<MyFriendsScreen>
                     // initialData,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(),
+                        return  Center(
+                          child:    Image.asset(
+                              "assets/images/preload.gif", width: 30.w, height: 30.w,
+                            ),
                         );
                       }
                       if (snapshot.hasError) {

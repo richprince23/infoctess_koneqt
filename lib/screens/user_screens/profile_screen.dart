@@ -289,9 +289,12 @@ class _UserProfileState extends State<UserProfile>
                                         child: CachedNetworkImage(
                                           imageUrl: snapshot.data![index],
                                           fit: BoxFit.cover,
-                                          placeholder: (context, url) =>
-                                              const Center(
-                                            child: CircularProgressIndicator(),
+                                          placeholder: (context, url) => Center(
+                                            child: Image.asset(
+                                              "assets/images/preload.gif",
+                                              width: 30.w,
+                                              height: 30.w,
+                                            ),
                                           ),
                                           errorWidget: (context, url, error) =>
                                               const Icon(Icons.error),

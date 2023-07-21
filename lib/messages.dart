@@ -22,7 +22,7 @@ import 'package:resize/resize.dart';
 import 'package:status_alert/status_alert.dart';
 
 class ChatlistScreen extends StatelessWidget {
-   ChatlistScreen({super.key});
+  ChatlistScreen({super.key});
 
   List<Poster> followingList = [];
 
@@ -112,19 +112,21 @@ class ChatlistScreen extends StatelessWidget {
                             ),
                           );
                         }
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
+                            child: Image.asset(
+                              "assets/images/preload.gif",
+                              width: 30.w,
+                              height: 30.w,
+                            ),
+                          );
+                        }
                         if (!snapshot.hasData) {
                           return Center(
                             child: EmptyList(
                               text:
                                   "You don't have any messages yet\nStart a conversation with someone to see them here",
-                            ),
-                          );
-                        }
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Center(
-                            child: CircularProgressIndicator(
-                              color: cSec,
                             ),
                           );
                         }
@@ -265,8 +267,8 @@ class ChatlistScreen extends StatelessWidget {
                 // initialData,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
+                    return Center(
+                      child: Image.asset("assets/images/preload.gif"),
                     );
                   }
                   if (snapshot.hasError) {

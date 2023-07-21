@@ -93,7 +93,13 @@ class AllSchedulesState extends State<AllSchedules> {
         strokeWidth: 3,
         displacement: 10,
         child: isLoading
-            ? Center(child: CircularProgressIndicator(color: cSec))
+            ? Center(
+                child: Image.asset(
+                  "assets/images/preload.gif",
+                  width: 30.w,
+                  height: 30.w,
+                ),
+              )
             : Container(
                 padding: const EdgeInsets.all(10),
                 color: cSec.withOpacity(0.1),

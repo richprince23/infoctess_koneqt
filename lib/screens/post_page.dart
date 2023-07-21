@@ -447,8 +447,12 @@ class _PostDetailsState extends State<PostDetails> {
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
+                      return Center(
+                        child: Image.asset(
+                          "assets/images/preload.gif",
+                          width: 30.w,
+                          height: 30.w,
+                        ),
                       );
                     }
                     if (snapshot.data?.docs.isEmpty ?? true) {

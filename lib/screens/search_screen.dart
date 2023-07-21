@@ -103,7 +103,9 @@ class _SearchScreenState extends State<SearchScreen> {
             showDialog(
               context: context,
               builder: (context) => Center(
-                child: CircularProgressIndicator(),
+            child:    Image.asset(
+                              "assets/images/preload.gif", width: 30.w, height: 30.w,
+                            ),
               ),
             );
             await search(value).then((value) {
