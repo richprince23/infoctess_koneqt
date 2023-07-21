@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:infoctess_koneqt/widgets/status_snack.dart';
-import 'package:provider/provider.dart';
 
 late StreamSubscription<ConnectivityResult> connectivitySubscription;
 

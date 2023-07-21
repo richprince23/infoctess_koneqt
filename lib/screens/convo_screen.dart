@@ -17,7 +17,6 @@ import 'package:infoctess_koneqt/screens/user_screens/profile_screen.dart';
 import 'package:infoctess_koneqt/widgets/chat_bubble.dart';
 import 'package:infoctess_koneqt/widgets/chat_preview.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
-import 'package:infoctess_koneqt/widgets/status_snack.dart';
 import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 
