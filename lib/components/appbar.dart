@@ -34,26 +34,26 @@ class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
       automaticallyImplyLeading: false,
       elevation: 0,
       scrolledUnderElevation: 0,
-      actions: [
-        IconButton(
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => SearchScreen()));
-          },
-          iconSize: 20.w,
-          icon: const Icon(CupertinoIcons.search),
-        ),
-        IconButton(
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const NotificationsSceen()));
-          },
-          iconSize: 20.w,
-          icon: const Icon(CupertinoIcons.bell),
-        )
-      ],
+      // actions: [
+      //   IconButton(
+      //     onPressed: () {
+      //       Navigator.push(context,
+      //           MaterialPageRoute(builder: (context) => SearchScreen()));
+      //     },
+      //     iconSize: 20.w,
+      //     icon: const Icon(CupertinoIcons.search),
+      //   ),
+      //   IconButton(
+      //     onPressed: () {
+      //       Navigator.push(
+      //           context,
+      //           MaterialPageRoute(
+      //               builder: (context) => const NotificationsSceen()));
+      //     },
+      //     iconSize: 20.w,
+      //     icon: const Icon(CupertinoIcons.bell),
+      //   )
+      // ],
     );
   }
 }
