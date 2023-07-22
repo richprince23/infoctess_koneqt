@@ -4,7 +4,7 @@ List searchResults = [];
 Future search(String query) async {
   searchResults.clear();
   //search for posts from firebase firestore
-  final posts = await FirebaseFirestore.instance
+   await FirebaseFirestore.instance
       .collection('news')
       .where('body'.toLowerCase(), isGreaterThanOrEqualTo: query.toLowerCase())
       .get()
@@ -13,7 +13,7 @@ Future search(String query) async {
     if (value.docs.isNotEmpty) {
       for (var post in value.docs) {
         searchResults.add(post);
-        print(searchResults[0].data());
+        // print(searchResults[0].data());
       }
     }
   });

@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -25,7 +24,7 @@ class ProfileInfoScreen extends StatefulWidget {
 }
 
 class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
-  final ScrollController _scrollController = ScrollController();
+  // final ScrollController _scrollController = ScrollController();
   // GlobalKey formKey = GlobalKey<FormState>();
   ImagePicker imagePicker = ImagePicker();
   final userNameCon = TextEditingController();
@@ -144,9 +143,7 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                                 ),
                               )
                             : CircleAvatar(
-                                backgroundColor:
-                                    AppTheme.themeData(false, context)
-                                        .backgroundColor,
+                                backgroundColor:cPri,
                                 radius: (size.width * 0.35) / 2,
                                 child: const Text(
                                   "User",
@@ -213,8 +210,7 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                         TextButton(
                           style: TextButton.styleFrom(
                             minimumSize: btnLarge(context),
-                            backgroundColor: AppTheme.themeData(false, context)
-                                .backgroundColor,
+                            backgroundColor: cPri,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
                             ),

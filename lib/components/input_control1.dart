@@ -1,14 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/constants.dart';
-import 'package:infoctess_koneqt/env.dart';
-import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:resize/resize.dart';
 
 class InputControl extends StatefulWidget {
-  TextEditingController? controller;
+  final TextEditingController? controller;
 
   final String? hintText;
 
@@ -25,13 +23,13 @@ class InputControl extends StatefulWidget {
   final void Function()? onTap;
   final void Function(String)? onChanged;
 
-  Icon? leading;
-  bool? isSearch;
-  double radius;
-  bool isCollapsed;
-  bool? showFilter;
+  final Icon? leading;
+  final bool? isSearch;
+  final double radius;
+  final bool isCollapsed;
+  final bool? showFilter;
 
-  InputControl({
+  const InputControl({
     Key? inputkey,
     this.type,
     this.hintText,
@@ -147,7 +145,7 @@ class _InputControlState extends State<InputControl> {
                     ? GestureDetector(
                         onTap: () => {
                           // if (widget.trailing == null)
-                          print("Filter")
+                          
                         },
                         child: Icon(
                           Icons.tune_sharp,

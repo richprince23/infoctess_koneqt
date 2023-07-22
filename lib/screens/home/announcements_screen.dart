@@ -35,7 +35,7 @@ class NewsScreen extends StatelessWidget {
                 );
               }
               if (snapshot.data!.docs.isEmpty) {
-                return Center(
+                return const Center(
                   child: EmptyList(
                     text:
                         "There isn't any News available \nKeeping checking here for updates",

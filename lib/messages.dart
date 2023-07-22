@@ -8,7 +8,6 @@ import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/chat_controller.dart';
 import 'package:infoctess_koneqt/controllers/network_controller.dart';
-import 'package:infoctess_koneqt/controllers/network_controller.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/models/poster_model.dart';
 import 'package:infoctess_koneqt/screens/convo_screen.dart';
@@ -24,9 +23,9 @@ import 'package:status_alert/status_alert.dart';
 class ChatlistScreen extends StatelessWidget {
   ChatlistScreen({super.key});
 
-  List<Poster> followingList = [];
+  final List<Poster> followingList = [];
 
-  List following = [];
+  final List following = [];
 
   //get following list of current user
   Future<List> getFollowingList() async {
@@ -123,7 +122,7 @@ class ChatlistScreen extends StatelessWidget {
                           );
                         }
                         if (!snapshot.hasData) {
-                          return Center(
+                          return const Center(
                             child: EmptyList(
                               text:
                                   "You don't have any messages yet\nStart a conversation with someone to see them here",
@@ -253,12 +252,12 @@ class ChatlistScreen extends StatelessWidget {
           ),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: InputControl(
+            child: const InputControl(
               // isSearch: true,
               hintText: "Search friends",
               showLabel: false,
               isCollapsed: true,
-              leading: const Icon(Icons.search),
+              leading: Icon(Icons.search),
             ),
           ),
           Expanded(
@@ -302,7 +301,7 @@ class ChatlistScreen extends StatelessWidget {
                             getPosterDetails(userID: following[index]);
                             await startChat(memberID: following[index])
                                 .then((value) {
-                              if (value == null) {
+                              if (value == "" || value == null) {
                                 return;
                               }
 
@@ -325,7 +324,7 @@ class ChatlistScreen extends StatelessWidget {
                       },
                     );
                   }
-                  return Center(
+                  return const Center(
                     child: EmptyList(
                       text:
                           "You don't have any friends yet\nFollow someone to see them here",

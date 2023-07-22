@@ -1,14 +1,9 @@
-import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:infoctess_koneqt/app_db.dart';
 import 'package:infoctess_koneqt/components/news_item.dart';
 import 'package:infoctess_koneqt/constants.dart';
-import 'package:infoctess_koneqt/controllers/utils.dart';
 import 'package:infoctess_koneqt/models/bookmarks_model.dart';
-import 'package:infoctess_koneqt/models/news_model.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
 import 'package:resize/resize.dart';
@@ -40,12 +35,12 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                 child: Image.asset("assets/images/preload.gif"),
               );
             } else if (snapshot.hasError) {
-              print(snapshot.error);
+              
               return Center(
                 child: Text('Error: ${snapshot.error}'),
               );
             } else if (snapshot.data == null || snapshot.data!.isEmpty) {
-              return Center(
+              return const Center(
                 child: EmptyList(
                   text:
                       'You have not saved any item yet.\nTap the bookmark icon on any item to see it here.',

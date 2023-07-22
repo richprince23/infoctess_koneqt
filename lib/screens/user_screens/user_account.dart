@@ -11,6 +11,8 @@ import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 
 class UserAccountScreen extends StatelessWidget {
+  const UserAccountScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:detectable_text_field/detectable_text_field.dart';
 import 'package:detectable_text_field/detector/sample_regular_expressions.dart';
@@ -7,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:infoctess_koneqt/components/comment_input.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/post_controller.dart';
 import 'package:infoctess_koneqt/controllers/utils.dart';
@@ -16,6 +13,7 @@ import 'package:infoctess_koneqt/models/posts_model.dart';
 import 'package:infoctess_koneqt/screens/post_page.dart';
 import 'package:infoctess_koneqt/screens/user_screens/profile_screen.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
+import 'package:infoctess_koneqt/widgets/status_snack.dart';
 import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 import 'package:status_alert/status_alert.dart';
@@ -101,7 +99,7 @@ class _PostItemState extends State<PostItem> {
         }
       }
     } catch (e) {
-      print(e);
+      CustomSnackBar.show(context, message: "An error occured");
     }
     return isLiked;
   }
@@ -404,12 +402,12 @@ class _PostItemState extends State<PostItem> {
                                   },
                                   onTap: (tappedText) async {
                                     if (tappedText.startsWith('#')) {
-                                      debugPrint('DetectableText >>>>>>> #');
-                                      //TODO: go to hashtag page
+                                      // debugPrint('DetectableText >>>>>>> #');
+                                      // TODO: go to hashtag page
                                       //LATER : add hashtag page/feature
                                     } else if (tappedText.startsWith('@')) {
                                       // TODO: go to user profile
-                                      debugPrint('DetectableText >>>>>>> @');
+                                      // debugPrint('DetectableText >>>>>>> @');
                                     } else if (tappedText.startsWith('http')) {
                                       // open url
                                       Uri url = Uri.parse(tappedText);

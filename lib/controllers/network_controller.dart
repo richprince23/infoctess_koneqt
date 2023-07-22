@@ -22,8 +22,8 @@ class NetworkProvider extends ChangeNotifier {
     late ConnectivityResult result;
     try {
       result = await connectivity.checkConnectivity();
-    } on PlatformException catch (e) {
-      throw e;
+    } on PlatformException  {
+      rethrow ;
     }
     // // if (!mounted) {
     //   return Future.value(null);

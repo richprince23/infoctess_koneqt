@@ -11,21 +11,19 @@ class StarredItem extends StatefulWidget {
 class _StarredItemState extends State<StarredItem> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text("User name"),
-          ChatBubble(
-            hasOptions: false,
-            isUser: false,
-            message: "Hello this is a message",
-            avatar: "https://picsum.photos/200/300",
-            
-          ),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: const [
+        Text("User name"),
+        ChatBubble(
+          hasOptions: false,
+          isUser: false,
+          message: "Hello this is a message",
+          avatar: "https://picsum.photos/200/300",
+          
+        ),
+      ],
     );
   }
 }

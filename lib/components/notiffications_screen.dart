@@ -18,8 +18,8 @@ class _NotificationsSceenState extends State<NotificationsSceen> {
       ),
       body: Container(
         color: Colors.white,
-        child: Center(
-          child: const Text("Notifications"),
+        child: const Center(
+          child: Text("Notifications"),
         ),
       ),
     );

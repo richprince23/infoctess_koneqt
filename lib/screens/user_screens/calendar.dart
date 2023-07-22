@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/components/event_item.dart';
 import 'package:infoctess_koneqt/constants.dart';
@@ -21,6 +18,7 @@ class CalendarScreen extends StatefulWidget {
 
 class CalendarScreenState extends State<CalendarScreen> {
   List<Event> userEvents = []; // List of user's events
+  // ignore: prefer_typing_uninitialized_variables
   late var selectedDate;
 
   @override
@@ -90,7 +88,7 @@ class CalendarScreenState extends State<CalendarScreen> {
                       );
                     }
                     if (snapshot.data == null || snapshot.data?.docs.isEmpty) {
-                      return Center(
+                      return const Center(
                         child: EmptyList(
                           text:
                               "You haven't booked any events for today\nBook an event to see it here",

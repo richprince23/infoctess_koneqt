@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
-import 'package:infoctess_koneqt/controllers/search_controller.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
 import 'package:resize/resize.dart';
 
 class SearchScreen extends StatefulWidget {
-  SearchScreen({Key? key}) : super(key: key);
+  const SearchScreen({Key? key}) : super(key: key);
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -92,7 +91,6 @@ class _SearchScreenState extends State<SearchScreen> {
               searchResults.clear();
             });
             if (value.isEmpty ||
-                value == null ||
                 value == "" ||
                 value.length < 3) {
               return;
@@ -113,15 +111,13 @@ class _SearchScreenState extends State<SearchScreen> {
             }).then(
               (value) => Navigator.pop(context),
             );
-            print(searchResults.length);
+            // print(searchResults.length);
           },
         ),
         toolbarHeight: kToolbarHeight + 40.w,
       ),
-      body: Container(
-        child: Center(
-          child: buildSearchList(),
-        ),
+      body: Center(
+        child: buildSearchList(),
       ),
     );
   }
@@ -151,13 +147,13 @@ class _SearchScreenState extends State<SearchScreen> {
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
             ),
-            leading: Icon(Icons.textsms),
+            leading: const Icon(Icons.textsms),
           );
         },
         // },
       );
     }
-    return Center(
+    return const Center(
       child: EmptyList(text: "No results found"),
     );
   }

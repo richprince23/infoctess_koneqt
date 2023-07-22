@@ -22,12 +22,12 @@ class MyActivityScreen extends StatelessWidget {
         children: [
           Container(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: InputControl(
+            child: const InputControl(
               isSearch: true,
               hintText: "Search posts, comments, etc",
               showLabel: false,
               isCollapsed: true,
-              leading: const Icon(Icons.search),
+              leading: Icon(Icons.search),
             ),
           ),
           Expanded(
@@ -56,7 +56,7 @@ class MyActivityScreen extends StatelessWidget {
                     },
                   );
                 }
-                return EmptyList(
+                return const EmptyList(
                   text: "No activity yet",
                 );
               },

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/constants.dart';
-import 'package:infoctess_koneqt/env.dart';
-import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:resize/resize.dart';
 
 class SelectControl extends StatefulWidget {

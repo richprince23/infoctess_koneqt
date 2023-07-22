@@ -105,7 +105,7 @@ class MyApp extends StatelessWidget {
           "/ai-studymate": (context) => const AIChatScreen(),
           "/ai-imager": (context) => const Imager(),
           "/checker": (context) => const CheckAccessPage(),
-          "/new-event": (context) => CreateEvent(),
+          "/new-event": (context) => const CreateEvent(),
           "/calendar": (context) => const CalendarScreen(),
           "/bookmarks": (context) => const BookmarksScreen(),
           "/profile": (context) => const ProfileScreen(),

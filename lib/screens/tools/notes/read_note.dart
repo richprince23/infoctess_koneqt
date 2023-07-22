@@ -1,15 +1,13 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:infoctess_koneqt/models/notes_db.dart';
-import 'package:infoctess_koneqt/theme/mytheme.dart';
 
 class ReadNoteScreen extends StatefulWidget {
   final int noteID;
-  final content;
-  final title;
+  final String content;
+  final String title;
 
   const ReadNoteScreen(
       {Key? key,
@@ -23,6 +21,7 @@ class ReadNoteScreen extends StatefulWidget {
 
 class ReadNoteScreenState extends State<ReadNoteScreen> {
   // final QuillController _quill = QuillController.basic();
+  // ignore: prefer_typing_uninitialized_variables
   late var myJSON;
   late QuillController _controller;
   late Note? note;
@@ -32,15 +31,16 @@ class ReadNoteScreenState extends State<ReadNoteScreen> {
   @override
   void initState() {
     super.initState();
-    myJSON = jsonDecode(widget.content!.toString());
+    myJSON = jsonDecode(widget.content.toString());
 
     // _controller.document.insert(0, myJSON);
     _controller = QuillController(
         document: Document.fromJson(myJSON),
-        selection: TextSelection.collapsed(offset: 0));
+        selection: const TextSelection.collapsed(offset: 0));
     // _quill.document.insert(0, myJSON);
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

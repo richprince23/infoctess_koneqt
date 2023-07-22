@@ -123,7 +123,7 @@ Future countViews(String postID) async {
 class Stats extends ChangeNotifier {
   int? _likes = 0;
   int? _comments = 0;
-  int? _views = 0;
+  final int _views = 0;
   bool? _isLiked = false;
 
   get likes => _likes;

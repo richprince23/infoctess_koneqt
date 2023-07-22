@@ -14,10 +14,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: AppBar(
         title: const Text('Profile'),
       ),
-      body: Container(
-        child: Center(
-          child: Text("Profile"),
-        ),
+      body: const Center(
+        child: Text("Profile"),
       ),
     );
   }

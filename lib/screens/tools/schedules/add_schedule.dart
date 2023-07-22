@@ -1,16 +1,13 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/app_db.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/components/select_control1.dart';
+import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/notification_service.dart';
 import 'package:infoctess_koneqt/models/courses_db.dart';
 import 'package:infoctess_koneqt/models/timetable_db.dart';
-import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:resize/resize.dart';
 import 'package:status_alert/status_alert.dart';
-import 'package:timezone/timezone.dart' as tz;
 
 class AddScheduleScreen extends StatefulWidget {
   const AddScheduleScreen({super.key});
@@ -226,11 +223,9 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          AppTheme.themeData(false, context).backgroundColor,
-                      foregroundColor:
-                          AppTheme.themeData(false, context).primaryColorDark,
-                      fixedSize: Size(size.width * 0.8, 50)),
+                      backgroundColor: cPri,
+                      foregroundColor: Colors.white,
+                      fixedSize: Size(size.width * 0.8, 56)),
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       Timetable schedule = Timetable(

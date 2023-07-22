@@ -49,12 +49,12 @@ class _MyFriendsScreenState extends State<MyFriendsScreen>
           ),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: InputControl(
+            child: const InputControl(
               // isSearch: true,
               hintText: "Search friends",
               showLabel: false,
               isCollapsed: true,
-              leading: const Icon(Icons.search),
+              leading: Icon(Icons.search),
             ),
           ),
           Expanded(
@@ -75,7 +75,7 @@ class _MyFriendsScreenState extends State<MyFriendsScreen>
                         );
                       }
                       if (snapshot.hasError) {
-                        print(snapshot.error);
+                        
                         return Center(
                           child: Text(
                             "Something went wrong",
@@ -122,7 +122,7 @@ class _MyFriendsScreenState extends State<MyFriendsScreen>
                           },
                         );
                       }
-                      return Center(
+                      return const Center(
                         child: EmptyList(
                           text:
                               "You don't have any followers yet\nFollow someone to see them here",
@@ -191,7 +191,7 @@ class _MyFriendsScreenState extends State<MyFriendsScreen>
                           },
                         );
                       }
-                      return Center(
+                      return const Center(
                         child: EmptyList(
                           text:
                               "You don't have any followers yet\nFollow someone to see them here",

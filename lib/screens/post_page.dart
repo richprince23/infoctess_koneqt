@@ -17,8 +17,8 @@ import 'package:infoctess_koneqt/models/comments_model.dart';
 import 'package:infoctess_koneqt/models/poster_model.dart';
 import 'package:infoctess_koneqt/models/posts_model.dart';
 import 'package:infoctess_koneqt/screens/tools/image_viewer.dart';
-import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
+import 'package:infoctess_koneqt/widgets/status_snack.dart';
 import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 import 'package:status_alert/status_alert.dart';
@@ -64,7 +64,8 @@ class _PostDetailsState extends State<PostDetails> {
         }
       }
     } catch (e) {
-      print(e);
+      // ignore: use_build_context_synchronously
+      CustomSnackBar.show(context, message: "An error occured");
     }
     return isSaved;
   }
@@ -95,11 +96,11 @@ class _PostDetailsState extends State<PostDetails> {
 
 // check if already liked
   bool isLikedPost() {
-    final _isLiked =
-        Provider.of<Stats>(context, listen: false).checkLike(widget.post.id);
-    try {
+    Provider.of<Stats>(context, listen: false)
+        .checkLike(widget.post.id)
+        .then((value) {
       if (mounted) {
-        if (_isLiked == true) {
+        if (value == true) {
           setState(() {
             isLiked = true;
           });
@@ -109,9 +110,7 @@ class _PostDetailsState extends State<PostDetails> {
           });
         }
       }
-    } catch (e) {
-      print(e);
-    }
+    });
     return isLiked;
   }
 
@@ -292,11 +291,11 @@ class _PostDetailsState extends State<PostDetails> {
                                 },
                                 onTap: (tappedText) async {
                                   if (tappedText.startsWith('#')) {
-                                    print('DetectableText >>>>>>> #');
+                                    // print('DetectableText >>>>>>> #');
                                   } else if (tappedText.startsWith('@')) {
-                                    print('DetectableText >>>>>>> @');
+                                    // print('DetectableText >>>>>>> @');
                                   } else if (tappedText.startsWith('http')) {
-                                    print('DetectableText >>>>>>> http');
+                                    // print('DetectableText >>>>>>> http');
                                     Uri url = Uri.parse(tappedText);
                                     if (await canLaunchUrl(url)) {
                                       await launchUrl(url);
@@ -304,7 +303,7 @@ class _PostDetailsState extends State<PostDetails> {
                                       throw 'Could not launch $tappedText';
                                     }
                                   } else {
-                                    print("Post Details");
+                                    // print("Post Details");
                                   }
                                 },
                                 alwaysDetectTap: true,
@@ -461,7 +460,7 @@ class _PostDetailsState extends State<PostDetails> {
                           color: Colors.white,
                           child: Column(
                             children: [
-                              EmptyList(
+                              const EmptyList(
                                 text: "No comments yet",
                               ),
                               FilledButton.icon(
@@ -506,6 +505,8 @@ class _PostDetailsState extends State<PostDetails> {
                                 // user: commenter,
                               ),
                             );
+                          } else {
+                            return const SizedBox.shrink();
                           }
                         }),
                       );

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/app_db.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/components/select_control1.dart';
@@ -35,7 +34,7 @@ class _AddCoursePageState extends State<AddCoursePage> {
   List<Course> courseList = [];
   bool isLoading = false;
 
-  late var semValue, levelValue;
+  late String semValue, levelValue;
 
   Future newCourse() async {
     // if (keys.currentState!.validate()) {
@@ -121,7 +120,7 @@ class _AddCoursePageState extends State<AddCoursePage> {
                   }).toList(),
                   onChanged: (newValue) {
                     setState(() {
-                      levelValue = newValue;
+                      levelValue = newValue!;
                     });
                   },
                   validator: (e) {
@@ -132,7 +131,7 @@ class _AddCoursePageState extends State<AddCoursePage> {
                     }
                   },
                 ),
-                
+
                 SelectControl(
                   hintText: "Semester",
                   items: sems.map((String value) {
@@ -141,7 +140,7 @@ class _AddCoursePageState extends State<AddCoursePage> {
                   }).toList(),
                   onChanged: (newValue) {
                     setState(() {
-                      semValue = newValue;
+                      semValue = newValue!;
                     });
                   },
                   validator: (e) {

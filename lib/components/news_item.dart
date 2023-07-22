@@ -18,6 +18,7 @@ import 'package:infoctess_koneqt/models/poster_model.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
+import 'package:infoctess_koneqt/widgets/status_snack.dart';
 import 'package:resize/resize.dart';
 import 'package:status_alert/status_alert.dart';
 
@@ -379,7 +380,8 @@ class _OpenWidgetState extends State<OpenWidget> {
         }
       }
     } catch (e) {
-      print(e);
+      // ignore: use_build_context_synchronously
+      CustomSnackBar.show(context, message: "An error occurred");
     }
     return isSaved;
   }
@@ -768,7 +770,7 @@ class _FindNewsItemState extends State<FindNewsItem> {
       future: db.collection("news").doc(widget.newsID).get(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasError) {
-          return Center(
+          return const Center(
             child: EmptyList(
               text: "Error loading news",
             ),
@@ -776,7 +778,7 @@ class _FindNewsItemState extends State<FindNewsItem> {
         }
 
         if (snapshot.hasData && !snapshot.data!.exists) {
-          return Center(
+          return const Center(
             child: EmptyList(
               text: "News not found",
             ),

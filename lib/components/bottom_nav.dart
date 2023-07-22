@@ -44,7 +44,7 @@ class _BottomNavState extends State<BottomNav> {
                 });
               },
               child: pageIndex == 0
-                  ? NavItem(
+                  ? const NavItem(
                       label: "Explore",
                       icon: CupertinoIcons.globe,
                     )
@@ -67,7 +67,7 @@ class _BottomNavState extends State<BottomNav> {
                 });
               },
               child: pageIndex == 1
-                  ? NavItem(
+                  ? const NavItem(
                       label: "Social",
                       icon: CupertinoIcons.person_3_fill,
                     )
@@ -90,7 +90,7 @@ class _BottomNavState extends State<BottomNav> {
                 });
               },
               child: pageIndex == 2
-                  ? NavItem(
+                  ? const NavItem(
                       label: "Utilities", icon: CupertinoIcons.briefcase_fill)
                   : Icon(
                       CupertinoIcons.briefcase,
@@ -112,7 +112,7 @@ class _BottomNavState extends State<BottomNav> {
                 });
               },
               child: pageIndex == 3
-                  ? NavItem(
+                  ? const NavItem(
                       label: "Chats",
                       icon: CupertinoIcons.chat_bubble_2_fill,
                     )
@@ -136,7 +136,7 @@ class _BottomNavState extends State<BottomNav> {
                 });
               },
               child: pageIndex == 4
-                  ? NavItem(
+                  ? const NavItem(
                       label: "Profle",
                       icon: CupertinoIcons.person_alt_circle_fill,
                     )

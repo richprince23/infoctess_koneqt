@@ -44,7 +44,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     ),
                   ),
                 ),
-                child: EmptyList(
+                child: const EmptyList(
                   text:
                       "Please enter your email address below to recieve a link to reset your password",
                 ),

@@ -92,9 +92,7 @@ class CommentItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         InkWell(
-                          onTap: () async {
-                            print("profile tapped");
-                          },
+                          onTap: () async {},
                           child: Container(
                             padding: EdgeInsets.symmetric(
                               horizontal: 10.w,
@@ -155,11 +153,11 @@ class CommentItem extends StatelessWidget {
                                 ),
                                 onTap: (tappedText) async {
                                   if (tappedText.startsWith('#')) {
-                                    print('DetectableText >>>>>>> #');
+                                    // print('DetectableText >>>>>>> #');
                                   } else if (tappedText.startsWith('@')) {
-                                    print('DetectableText >>>>>>> @');
+                                    // print('DetectableText >>>>>>> @');
                                   } else if (tappedText.startsWith('http')) {
-                                    print('DetectableText >>>>>>> http');
+                                    // print('DetectableText >>>>>>> http');
                                     Uri url = Uri.parse(tappedText);
                                     if (await canLaunchUrl(url)) {
                                       await launchUrl(url);
@@ -167,7 +165,7 @@ class CommentItem extends StatelessWidget {
                                       throw 'Could not launch $tappedText';
                                     }
                                   } else {
-                                    print("Post Details");
+                                    // print("Post Details");
                                   }
                                 },
                                 alwaysDetectTap: true,

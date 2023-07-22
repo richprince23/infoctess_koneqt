@@ -28,7 +28,7 @@ class AIChatScreenState extends State<AIChatScreen> {
   String selectedSubject = "";
   @override
   void initState() {
-    messages.add(ChatBubble(
+    messages.add(const ChatBubble(
       hasOptions: false,
       isUser: false,
       showAvatar: false,
@@ -88,7 +88,7 @@ class AIChatScreenState extends State<AIChatScreen> {
             onPressed: () {
               setState(() {
                 messages.clear();
-                messages.add(ChatBubble(
+                messages.add(const ChatBubble(
                   hasOptions: false,
                   showAvatar: false,
                   isUser: false,

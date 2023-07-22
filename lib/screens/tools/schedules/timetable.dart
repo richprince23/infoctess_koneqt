@@ -6,7 +6,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:infoctess_koneqt/app_db.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/models/timetable_db.dart';
-import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/status_snack.dart';
 import 'package:intl/intl.dart';
 import 'package:resize/resize.dart';
@@ -51,9 +50,7 @@ class AllSchedulesState extends State<AllSchedules> {
       isLoading = true;
     });
     todaySchedules = await AppDatabase.instance.getTodaySchedule(day);
-    for (Timetable timetable in todaySchedules) {
-      print(timetable.courseTitle!);
-    }
+    
     setState(() {
       isLoading = false;
     });

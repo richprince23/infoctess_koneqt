@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/constants.dart';
-import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:resize/resize.dart';
 
 class NavItem extends StatelessWidget {
-  String label;
-  IconData icon;
+  final String label;
+  final IconData icon;
 
-  NavItem({Key? key, required this.label, required this.icon})
+  const NavItem({Key? key, required this.label, required this.icon})
       : super(
           key: key,
         );

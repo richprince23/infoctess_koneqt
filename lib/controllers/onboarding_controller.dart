@@ -14,7 +14,7 @@ class OnboardingController extends ChangeNotifier {
   String _userName = "";
   String _phoneNum = "";
   String _indexNum = "";
-  String _password = "";
+  final String _password = "";
 
   int _curPageIndex = 0;
   int get curPageIndex => _curPageIndex;

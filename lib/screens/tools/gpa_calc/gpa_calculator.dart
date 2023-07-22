@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 
 class GPAScreen extends StatefulWidget {
@@ -214,17 +215,15 @@ class GPAScreenState extends State<GPAScreen> {
                         onPressed: _addCourse,
                         label: const Text("Add"),
                         style: TextButton.styleFrom(
-                          foregroundColor:
-                              AppTheme.themeData(false, context).primaryColor,
-                          backgroundColor: AppTheme.themeData(false, context)
-                              .backgroundColor,
+                          foregroundColor: Colors.white,
+                          backgroundColor: cPri,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                             side: BorderSide(
-                                color: AppTheme.themeData(false, context)
-                                    .backgroundColor),
+                              color: cPri,
+                            ),
                           ),
-                          fixedSize: const Size(140, 40),
+                          fixedSize: const Size(140, 50),
                         ),
                       ),
                       const SizedBox(
@@ -235,17 +234,15 @@ class GPAScreenState extends State<GPAScreen> {
                         onPressed: _removeCourse,
                         label: const Text("Remove"),
                         style: TextButton.styleFrom(
-                          foregroundColor: AppTheme.themeData(false, context)
-                              .backgroundColor,
-                          backgroundColor:
-                              AppTheme.themeData(false, context).primaryColor,
+                          foregroundColor: Colors.white,
+                          backgroundColor: cPri,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                             side: BorderSide(
-                                color: AppTheme.themeData(false, context)
-                                    .backgroundColor),
+                              color: cPri,
+                            ),
                           ),
-                          fixedSize: const Size(140, 40),
+                          fixedSize: const Size(140, 50),
                         ),
                       ),
                     ],
@@ -276,9 +273,7 @@ class GPAScreenState extends State<GPAScreen> {
                                     },
                                     style: OutlinedButton.styleFrom(
                                         fixedSize: const Size(100, 50),
-                                        backgroundColor:
-                                            AppTheme.themeData(false, context)
-                                                .backgroundColor,
+                                        backgroundColor: cPri,
                                         foregroundColor: Colors.white,
                                         elevation: 0),
                                     child: const Text('Close'),

@@ -3,21 +3,22 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 
 class CGPAScreen extends StatefulWidget {
   const CGPAScreen({Key? key}) : super(key: key);
 
   @override
-  _CGPAScreenState createState() => _CGPAScreenState();
+  CGPAScreenState createState() => CGPAScreenState();
 }
 
-class _CGPAScreenState extends State<CGPAScreen> {
+class CGPAScreenState extends State<CGPAScreen> {
   int _completedSemesters = 0;
   List<double> _gpas = [];
   double _cgpa = 0.0;
-  TextEditingController _completedSemestersController = TextEditingController();
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _completedSemestersController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String getRemark(double gpa) {
     if (gpa >= 3.5) {
@@ -161,8 +162,7 @@ class _CGPAScreenState extends State<CGPAScreen> {
                 ElevatedButton(
                   style: OutlinedButton.styleFrom(
                       fixedSize: const Size(160, 50),
-                      backgroundColor:
-                          AppTheme.themeData(false, context).backgroundColor,
+                      backgroundColor: cPri,
                       foregroundColor: Colors.white,
                       elevation: 0),
                   onPressed: () {
@@ -209,9 +209,7 @@ class _CGPAScreenState extends State<CGPAScreen> {
                                     },
                                     style: OutlinedButton.styleFrom(
                                         fixedSize: const Size(100, 50),
-                                        backgroundColor:
-                                            AppTheme.themeData(false, context)
-                                                .backgroundColor,
+                                        backgroundColor: cPri,
                                         foregroundColor: Colors.white,
                                         elevation: 0),
                                     child: const Text('Close'),

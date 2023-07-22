@@ -13,7 +13,6 @@ class UserProvider extends ChangeNotifier {
   late bool _isLoggedIn;
   late String _userID;
 
-  cUser.User? _userInfo;
 
   /// gets user's index number
   get indexNum async => _indexNum;
@@ -54,7 +53,6 @@ class UserProvider extends ChangeNotifier {
 
   /// gets user's info from UserInfo model
   Future<cUser.User?> getUserInfo() async {
-    _userInfo = curUser;
     return curUser;
   }
 
@@ -141,7 +139,6 @@ Future<void> getOfflineUser(BuildContext context) async {
       isAdmin: userDb["isAdmin"],
     );
     // print(curUser!.toJson());
-    _userInfo = curUser;
 
     await setUser(curUser!);
     // notifyListeners();

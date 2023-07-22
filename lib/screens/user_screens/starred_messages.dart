@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:infoctess_koneqt/components/starred_item.dart';
-import 'package:infoctess_koneqt/widgets/chat_bubble.dart';
 
 class StarredMessagesScreen extends StatefulWidget {
   const StarredMessagesScreen({Key? key}) : super(key: key);
@@ -33,7 +32,7 @@ class StarredMessagesScreenState extends State<StarredMessagesScreen> {
               direction: Axis.horizontal,
               endActionPane: ActionPane(
                   // extentRatio: 0.2,
-                  motion: ScrollMotion(),
+                  motion: const ScrollMotion(),
                   children: [
                     SlidableAction(
                       autoClose: true,
@@ -50,7 +49,7 @@ class StarredMessagesScreenState extends State<StarredMessagesScreen> {
                       onPressed: (context) {},
                     ),
                   ]),
-              child: ListTile(
+              child: const ListTile(
                 title: StarredItem(),
               ),
             );

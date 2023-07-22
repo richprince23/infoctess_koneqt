@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
 import 'package:infoctess_koneqt/env.dart';
@@ -25,7 +24,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     // int curPageIndex = pageController.initialPage
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       body: PageView.builder(
         padEnds: true,

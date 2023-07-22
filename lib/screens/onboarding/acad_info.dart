@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,13 +6,12 @@ import 'package:infoctess_koneqt/components/select_control1.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
 import 'package:infoctess_koneqt/env.dart';
-import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 
 class AcademicInfoScreen extends StatefulWidget {
-  AcademicInfoScreen({super.key});
+  const AcademicInfoScreen({super.key});
 
   @override
   State<AcademicInfoScreen> createState() => _AcademicInfoScreenState();
@@ -42,7 +38,7 @@ class _AcademicInfoScreenState extends State<AcademicInfoScreen> {
     'Group 10',
   ];
   final List<String> gender = ['Male', 'Female'];
-  final ScrollController _scrollController = ScrollController();
+  // final ScrollController _scrollController = ScrollController();
   // GlobalKey formKey = GlobalKey<FormState>();
   final indexNumCon = TextEditingController();
 
@@ -54,7 +50,6 @@ class _AcademicInfoScreenState extends State<AcademicInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
 
     return KeyboardDismissOnTap(
       child: Scaffold(
@@ -191,9 +186,7 @@ class _AcademicInfoScreenState extends State<AcademicInfoScreen> {
                             child: TextButton(
                               style: TextButton.styleFrom(
                                 minimumSize: btnLarge(context),
-                                backgroundColor:
-                                    AppTheme.themeData(false, context)
-                                        .backgroundColor,
+                                backgroundColor:cPri,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30),
                                 ),

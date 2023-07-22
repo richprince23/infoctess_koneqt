@@ -1,7 +1,4 @@
-import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,7 +8,6 @@ import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
 import 'package:infoctess_koneqt/controllers/user_provider.dart';
 import 'package:infoctess_koneqt/env.dart';
-import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
@@ -53,7 +49,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    // var size = MediaQuery.of(context).size;
     return KeyboardDismissOnTap(
       dismissOnCapturedTaps: false,
       child: Scaffold(
@@ -158,9 +154,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                             child: TextButton(
                               style: TextButton.styleFrom(
                                 minimumSize: btnLarge(context),
-                                backgroundColor:
-                                    AppTheme.themeData(false, context)
-                                        .backgroundColor,
+                                backgroundColor:cPri,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30),
                                 ),

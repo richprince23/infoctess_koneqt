@@ -9,17 +9,18 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/events_controller.dart';
-import 'package:infoctess_koneqt/env.dart';
 import 'package:intl/intl.dart';
 import 'package:resize/resize.dart';
 import 'package:status_alert/status_alert.dart';
 
 class CreateEvent extends StatefulWidget {
+  const CreateEvent({super.key});
+
   @override
-  _CreateEventState createState() => _CreateEventState();
+  CreateEventState createState() => CreateEventState();
 }
 
-class _CreateEventState extends State<CreateEvent> {
+class CreateEventState extends State<CreateEvent> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
@@ -31,7 +32,9 @@ class _CreateEventState extends State<CreateEvent> {
   final qFocusNode = FocusNode();
 
   String? _selectedMode;
+  // ignore: unused_field
   bool _isOnline = false;
+  // ignore: unused_field
   bool _isHybrid = false;
   bool _isLoading = false;
   late TimeOfDay _startTime;
@@ -569,7 +572,7 @@ Future<TimeRange?> showTimeRangePicker({
         }
       }));
 
-  if (startTime != null && endTime != null) {
+  if (startTime.toString() !="" && endTime.toString() != "") {
     return TimeRange(startTime: startTime, endTime: endTime);
   } else {
     return null;

@@ -40,8 +40,8 @@ class Note {
 }
 
 class NoteFields {
-  static final String id = 'id';
-  static final String title = 'title';
-  static final String content = 'content';
-  static final String createdAt = 'created_at';
+  static const String id = 'id';
+  static const String title = 'title';
+  static const String content = 'content';
+  static const String createdAt = 'created_at';
 }

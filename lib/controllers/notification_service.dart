@@ -1,15 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:infoctess_koneqt/controllers/utils.dart';
-import 'package:intl/intl.dart';
-import 'package:timezone/timezone.dart' as tz;
-import 'package:timezone/data/latest.dart' as tz;
 import 'dart:io' show Platform;
 
-import 'package:timezone/timezone.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:intl/intl.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 class NotificationService {
   FlutterLocalNotificationsPlugin flnp = FlutterLocalNotificationsPlugin();
+  // ignore: unused_field
   bool _notificationsEnabled = false;
   Future<void> init() async {
     // flnp
@@ -76,7 +74,7 @@ class NotificationService {
   }
 
   Future<void> scheduleNotification({String? day, String? time}) async {
-    var dayOfWeek = _getDayOfWeek(day!);
+    // var dayOfWeek = _getDayOfWeek(day!);
     var scheduledNotificationDateTime = tz.TZDateTime(
       tz.local,
 

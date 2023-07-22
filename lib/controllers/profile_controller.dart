@@ -57,7 +57,7 @@ Future getUserSharedMedia({required String userID}) async {
 //Follow user
 Future followUser({required String userID}) async {
   try {
-    var result;
+    String? result;
     await db
         .collection("user_infos")
         .where('userID', isEqualTo: userID)
@@ -93,8 +93,8 @@ class ProfileProvider extends ChangeNotifier {
 
   String get followText => _followText;
 
-  List _followingList = [];
-  List _followersList = [];
+  final List _followingList = [];
+  final List _followersList = [];
 
   //get following list of current user
 
@@ -143,7 +143,7 @@ class ProfileProvider extends ChangeNotifier {
 
 //check if user is following
   Future<void> checkIfFollowing({required String userID}) async {
-    final result = await db
+  await db
         .collection("user_infos")
         .where('userID', isEqualTo: userID)
         .get()
@@ -163,7 +163,7 @@ class ProfileProvider extends ChangeNotifier {
   //Follow user
   Future followUser({required String userID}) async {
     try {
-      var result;
+      String? result;
       await db
           .collection("user_infos")
           .where('userID', isEqualTo: userID)
@@ -186,7 +186,7 @@ class ProfileProvider extends ChangeNotifier {
           result = "Unfollow";
         }
       });
-      _followText = result;
+      _followText = result!;
       notifyListeners();
       return result;
     } catch (e) {

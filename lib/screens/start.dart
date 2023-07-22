@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/controllers/user_provider.dart';
-import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/screens/login_screen.dart';
 import 'package:infoctess_koneqt/screens/main_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
-
-import '../models/user_info.dart';
 
 class StartScreen extends StatefulWidget {
   const StartScreen({super.key});
@@ -26,11 +23,12 @@ class _StartScreenState extends State<StartScreen> {
     final userProvider = context.read<UserProvider>();
 
     final isLoggedIn = await userProvider.isLoggedIn;
-    print("check login: $isLoggedIn");
+    // print("check login: $isLoggedIn");
 
     if (isLoggedIn) {
       await userProvider.getUserID();
-      User? curUser = await userProvider
+      // User? curUser = 
+      await userProvider
           .getUserInfo()
           .then((value) async => {
                 if (value == null)

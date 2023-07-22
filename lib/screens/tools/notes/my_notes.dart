@@ -5,7 +5,6 @@ import 'package:infoctess_koneqt/app_db.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/models/notes_db.dart';
 import 'package:infoctess_koneqt/screens/tools/notes/read_note.dart';
-import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
 import 'package:resize/resize.dart';
@@ -125,7 +124,7 @@ class _MyNotesState extends State<MyNotes> with RouteAware {
             snapshot.data.length == 0 ||
             snapshot.data == [] ||
             snapshot.data!.isEmpty) {
-          return EmptyList(
+          return const EmptyList(
             text:
                 "You don't seem to have any notes yet🤔\n Click the + button to add a new note",
           );

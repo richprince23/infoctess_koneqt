@@ -262,7 +262,6 @@ class _OpenEventItemState extends State<OpenEventItem> {
             ),
       );
     } catch (e) {
-      print(e.toString());
       Navigator.pop(context);
       CustomDialog.show(context,
           message:
@@ -305,7 +304,7 @@ class _OpenEventItemState extends State<OpenEventItem> {
         ),
       );
     } catch (e) {
-      print(e);
+
       CustomDialog.show(context,
           message:
               "An error occured while cancelling booking. Please try again later");

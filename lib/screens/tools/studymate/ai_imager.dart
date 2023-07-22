@@ -1,11 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
+import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/ai_controller.dart';
 import 'package:infoctess_koneqt/screens/tools/image_viewer.dart';
-import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/chat_bubble.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 
@@ -77,10 +75,9 @@ class ImagerState extends State<Imager> {
           // const SizedBox(height: 10),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor:
-                  AppTheme.themeData(false, context).backgroundColor,
-              foregroundColor: AppTheme.themeData(false, context).primaryColor,
-              fixedSize: const Size(200, 50),
+              backgroundColor: cPri,
+              foregroundColor: Colors.white,
+              fixedSize: const Size(200, 56),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),

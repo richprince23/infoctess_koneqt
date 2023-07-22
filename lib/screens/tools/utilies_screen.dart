@@ -1,14 +1,13 @@
 import 'dart:ui';
 
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:infoctess_koneqt/controllers/notification_service.dart';
+import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:resize/resize.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:firebase_remote_config/firebase_remote_config.dart';
-import 'package:infoctess_koneqt/env.dart';
 
 class UtilitiesScreen extends StatefulWidget {
   const UtilitiesScreen({super.key});
@@ -61,32 +60,32 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
             crossAxisSpacing: 10.h,
             mainAxisSpacing: 10.h,
             children: [
-              UtilItem(
+              const UtilItem(
                 icon: CupertinoIcons.divide,
                 title: 'GPA Calculator',
                 route: 'gpa-calculator',
               ),
-              UtilItem(
+              const UtilItem(
                 icon: CupertinoIcons.book,
                 title: 'My Courses',
                 route: 'my-courses',
               ),
-              UtilItem(
+              const UtilItem(
                 icon: CupertinoIcons.calendar,
                 title: 'My Schedules',
                 route: 'my-schedules',
               ),
-              UtilItem(
+              const UtilItem(
                 icon: CupertinoIcons.pencil_outline,
                 title: 'My Notes',
                 route: 'my-notes',
               ),
-              UtilItem(
+              const UtilItem(
                 icon: CupertinoIcons.person_2,
                 title: 'AI StudyMate',
                 route: 'ai-studymate',
               ),
-              UtilItem(
+              const UtilItem(
                 icon: CupertinoIcons.photo,
                 title: 'AI Imager',
                 route: 'ai-imager',
@@ -142,7 +141,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
               //   title: 'Other Resources',
               //   // route: '',
               // ),
-              UtilItem(
+              const UtilItem(
                 icon: CupertinoIcons.bell,
                 title: 'Updates',
                 route: '',
@@ -161,10 +160,10 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
 }
 
 class UtilItem extends StatelessWidget {
-  IconData icon;
-  String title;
-  String? route;
-  UtilItem({
+  final IconData icon;
+  final String title;
+  final String? route;
+  const UtilItem({
     Key? key,
     required this.icon,
     required this.title,

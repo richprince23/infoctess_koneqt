@@ -95,7 +95,7 @@ class _ChatBackgroundScreenState extends State<ChatBackgroundScreen> {
                   ),
                 Column(
                   children: [
-                    Align(
+                    const Align(
                       alignment: Alignment.centerLeft,
                       child: ChatBubble(
                         message: "Hello",
@@ -108,7 +108,7 @@ class _ChatBackgroundScreenState extends State<ChatBackgroundScreen> {
                     SizedBox(
                       height: 10.w,
                     ),
-                    Align(
+                    const Align(
                       alignment: Alignment.centerRight,
                       child: ChatBubble(
                         hasOptions: false,

@@ -1,12 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
-import 'package:infoctess_koneqt/components/input_control1.dart';
-import 'package:infoctess_koneqt/components/new_post.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/user_provider.dart';
 import 'package:infoctess_koneqt/env.dart';
-import 'package:infoctess_koneqt/screens/admin/create_event.dart';
 import 'package:infoctess_koneqt/screens/admin/create_news.dart';
 import 'package:infoctess_koneqt/screens/home/announcements_screen.dart';
 import 'package:infoctess_koneqt/screens/home/events_screen.dart';

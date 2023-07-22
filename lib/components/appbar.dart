@@ -1,13 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:infoctess_koneqt/components/notiffications_screen.dart';
 import 'package:infoctess_koneqt/constants.dart';
-import 'package:infoctess_koneqt/controllers/user_provider.dart';
-import 'package:infoctess_koneqt/env.dart';
-import 'package:infoctess_koneqt/screens/search_screen.dart';
-import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 
 class AppBarScreen extends StatelessWidget with PreferredSizeWidget {

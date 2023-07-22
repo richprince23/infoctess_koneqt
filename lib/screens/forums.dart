@@ -4,10 +4,8 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:infoctess_koneqt/components/new_post.dart';
 import 'package:infoctess_koneqt/components/post_item.dart';
 import 'package:infoctess_koneqt/constants.dart';
-import 'package:infoctess_koneqt/controllers/post_controller.dart';
 import 'package:infoctess_koneqt/models/posts_model.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
-import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 
 class ForumsScreen extends StatefulWidget {
@@ -52,7 +50,7 @@ class _ForumsScreenState extends State<ForumsScreen> {
                     );
                   }
                   if (snapshot.hasData == false || snapshot.hasError == true) {
-                    return EmptyList(
+                    return const EmptyList(
                       text:
                           "It seems there isn't any post to view🤔\n Click on 'Create Post' button to post an update",
                     );

@@ -1,9 +1,9 @@
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:infoctess_koneqt/env.dart';
-import 'package:infoctess_koneqt/models/user_info.dart' as user_info;
 import 'package:path_provider/path_provider.dart';
 
 FirebaseFirestore db = FirebaseFirestore.instance;
@@ -194,7 +194,7 @@ class Auth {
       //check if avatar is null
 
       if (avatar != null) {
-        var imgUrl = Auth().saveUserImage(avatar);
+        Auth().saveUserImage(avatar);
       }
       await db
           .collection('user_infos')

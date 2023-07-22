@@ -1,6 +1,4 @@
 // import 'package:flutter/material.dart';
-import 'dart:convert';
-
 import 'package:infoctess_koneqt/models/bookmarks_model.dart';
 import 'package:infoctess_koneqt/models/courses_db.dart';
 import 'package:infoctess_koneqt/models/notes_db.dart';

@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/chat_controller.dart';
 import 'package:infoctess_koneqt/controllers/profile_controller.dart';
@@ -162,7 +159,7 @@ class _UserProfileState extends State<UserProfile>
                       );
                     }),
                     SizedBox(width: 20.w),
-                    //TODO: check if user is a follower and enable message button
+                    // check if user is a follower and enable message button
                     ElevatedButton(
                       onPressed: () {
                         if (Provider.of<ProfileProvider>(context, listen: false)
@@ -271,7 +268,7 @@ class _UserProfileState extends State<UserProfile>
                                     //   print("null");
                                     //   return const SizedBox.shrink();
                                     // }
-                                    print(mediaType);
+                                    
                                     if (mediaType.contains("image")) {
                                       return InkWell(
                                         onTap: () {

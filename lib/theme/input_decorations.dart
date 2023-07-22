@@ -7,7 +7,7 @@ InputDecoration textInputDecoration = InputDecoration(
   filled: true,
   fillColor: const Color.fromRGBO(217, 217, 217, 0.6),
   focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(width: 1, style: BorderStyle.solid),
+    borderSide: const BorderSide(width: 1, style: BorderStyle.solid),
     borderRadius: BorderRadius.circular(50),
   ),
   border: OutlineInputBorder(

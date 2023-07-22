@@ -216,7 +216,7 @@ class DrawerScreen extends StatelessWidget {
     //   ),
     // );
 
-    // TODO: implement routing and on tap events
+    //  implement routing and on tap events
     return Drawer(
       backgroundColor: Colors.white,
       child: ListView(
@@ -310,9 +310,7 @@ class DrawerScreen extends StatelessWidget {
           ListItem(
             icon: CupertinoIcons.globe,
             title: "OSIS Portal",
-            onTap: () {
-              print("OSIS Portal");
-            },
+            onTap: () {},
           ),
           ListItem(
             icon: CupertinoIcons.globe,

@@ -227,7 +227,7 @@ class _ManageCoursesState extends State<ManageCourses> {
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      EmptyList(
+                      const EmptyList(
                         text: "No courses added\nAdd courses to view them here",
                       ),
                       FilledButton.icon(

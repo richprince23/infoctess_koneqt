@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:resize/resize.dart';
 
 class EmptyList extends StatelessWidget {
-  String text;
+  final String text;
 
-  EmptyList({
+  const EmptyList({
     Key? key,
     this.text = "No data found!",
   }) : super(key: key);

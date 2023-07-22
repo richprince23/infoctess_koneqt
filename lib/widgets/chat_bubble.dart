@@ -1,33 +1,29 @@
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/chat_controller.dart';
 import 'package:infoctess_koneqt/controllers/utils.dart';
 import 'package:infoctess_koneqt/screens/tools/image_viewer.dart';
-import 'package:path/path.dart' as path;
 import 'package:mime/mime.dart';
+import 'package:path/path.dart' as path;
 import 'package:resize/resize.dart';
-import 'package:status_alert/status_alert.dart';
 
 class ChatBubble extends StatelessWidget {
-  bool isUser;
-  String message;
-  String? avatar;
-  bool showAvatar;
-  bool hasTime;
-  String time;
-  String? mediaUrl;
-  bool hasOptions;
-  String msgID;
-  String chatID;
-  Color fontColor;
+  final bool isUser;
+  final String message;
+  final String? avatar;
+  final bool showAvatar;
+  final bool hasTime;
+  final String time;
+  final String? mediaUrl;
+  final bool hasOptions;
+  final String msgID;
+  final String chatID;
+  final Color fontColor;
 
-  ChatBubble(
+  const ChatBubble(
       {required this.isUser,
       required this.message,
       this.msgID = "",
