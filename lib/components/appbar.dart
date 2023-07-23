@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/constants.dart';
+import 'package:infoctess_koneqt/env.dart';
 import 'package:resize/resize.dart';
 
 class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
@@ -15,11 +17,28 @@ class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      leadingWidth: 40.w,
+      leadingWidth: 30.w,
       surfaceTintColor: cSec.withOpacity(0.3),
-      leading: IconButton(
-        icon: const Icon(Icons.menu),
-        onPressed: () {
+      leading: InkWell(
+        child: CachedNetworkImage(
+          width: 30.w,
+          height: 30.w,
+          fit: BoxFit.contain,
+          imageUrl: curUser!.avatar!,
+          imageBuilder: (context, imageProvider) => Container(
+            padding: EdgeInsets.all(15.w),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                image: imageProvider,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          placeholder: (context, url) => const CircularProgressIndicator(),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
+        ),
+        onTap: () {
           Scaffold.of(context).openDrawer();
         },
       ),
