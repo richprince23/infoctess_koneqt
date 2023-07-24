@@ -202,8 +202,8 @@ class AIChatScreenState extends State<AIChatScreen> {
       builder: (context) => Center(
         child: Image.asset(
           "assets/images/preload.gif",
-          height: 40.w,
-          width: 40.w,
+          height: 30.w,
+          width: 30.w,
         ),
       ),
     );
@@ -224,7 +224,7 @@ class AIChatScreenState extends State<AIChatScreen> {
         scrollController.position.maxScrollExtent + 500,
         // double.infinity,
         curve: Curves.easeOut,
-        duration: const Duration(milliseconds: 1000),
+        duration: const Duration(milliseconds: 200),
       );
     });
   }

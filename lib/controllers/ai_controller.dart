@@ -31,7 +31,7 @@ Future<String> getCompletions(String prompt) async {
   if (response.statusCode == 200) {
     var responseData = jsonDecode(response.body);
     var completions = responseData['choices'][0]['text'];
-    return completions;
+    return completions.toString().trim();
   }
   if (response.statusCode == 400) {
     return "Please enter an accurate prompt.";
