@@ -128,19 +128,23 @@ class _CommentInputState extends State<CommentInput> {
                           ),
                           TextButton(
                             onPressed: (() async {
-                              isEmtpyText
-                                  ? null
-                                  : await sendComment(
-                                          commentText.text, widget.postID)
-                                      .then(
-                                        (value) => Provider.of<Stats>(context,
-                                                listen: false)
-                                            .getStats(widget.postID),
-                                      )
-                                      .then(
-                                        (value) => CustomSnackBar.show(context,
-                                            message: "Comment sent!"),
-                                      );
+                              try {
+                                await sendComment(
+                                        commentText.text, widget.postID)
+                                    .then(
+                                      (value) => Provider.of<Stats>(context,
+                                              listen: false)
+                                          .getStats(widget.postID),
+                                    )
+                                    .then(
+                                      (value) => CustomSnackBar.show(context,
+                                          message: "Comment sent!"),
+                                    )
+                                    .then((value) => Navigator.pop(context));
+                              } catch (e) {
+                                CustomSnackBar.show(context,
+                                    message: "Error sending comment!");
+                              }
                             }),
                             style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.all(0),
