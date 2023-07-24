@@ -159,7 +159,7 @@ class ClosedEventItem extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
                 ),
-                SizedBox(height: 5.h),
+                SizedBox(height: 5.w),
                 Text(
                   event.venue!,
                   style: TextStyle(
@@ -294,61 +294,62 @@ class _OpenEventItemState extends State<OpenEventItem> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      backgroundColor: Colors.white,
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
+        scrolledUnderElevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: const DecoratedBox(
+          decoration:
+              ShapeDecoration(shape: CircleBorder(), color: Colors.white),
+          child: BackButton(
+            color: Colors.black,
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         controller: pageScroller,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                // padding: EdgeInsets.all(10.w),
-                height: 30.vh,
-                width: 100.vw,
-                child: InkWell(
-                  onTap: () => widget.event.imgUrl != null
-                      ? Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ImageViewer(
-                              image: widget.event.imgUrl!,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              // padding: EdgeInsets.all(10.w),
+              height: 30.vh,
+              width: 100.vw,
+              child: InkWell(
+                onTap: () => widget.event.imgUrl != null
+                    ? Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ImageViewer(
+                            image: widget.event.imgUrl!,
+                          ),
+                        ),
+                      )
+                    : null,
+                child: widget.event.imgUrl != null
+                    ? CachedNetworkImage(
+                        imageUrl: widget.event.imgUrl ??
+                            "https://picsum.photos/250?image=5",
+                        imageBuilder: (context, imageProvider) => Container(
+                          decoration: BoxDecoration(
+                            // borderRadius: BorderRadius.only(
+                            //     bottomLeft: Radius.circular(8.r),
+                            //     bottomRight: Radius.circular(8.r)),
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
                             ),
                           ),
-                        )
-                      : null,
-                  child: widget.event.imgUrl != null
-                      ? CachedNetworkImage(
-                          imageUrl: widget.event.imgUrl ??
-                              "https://picsum.photos/250?image=5",
-                          imageBuilder: (context, imageProvider) => Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.r),
-                              image: DecorationImage(
-                                image: imageProvider,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                        ),
+                        placeholder: (context, url) => Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.r),
+                            color: Colors.grey[300],
                           ),
-                          placeholder: (context, url) => Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.r),
-                              color: Colors.grey[300],
-                            ),
-                          ),
-                          errorWidget: (context, url, error) => Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.r),
-                              color: Colors.grey[300],
-                            ),
-                            child: Icon(
-                              Icons.calendar_month,
-                              color: Colors.grey[600],
-                              size: 50.w,
-                            ),
-                          ),
-                        )
-                      : Container(
+                        ),
+                        errorWidget: (context, url, error) => Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8.r),
                             color: Colors.grey[300],
@@ -359,170 +360,192 @@ class _OpenEventItemState extends State<OpenEventItem> {
                             size: 50.w,
                           ),
                         ),
+                      )
+                    : Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.r),
+                          color: Colors.grey[300],
+                        ),
+                        child: Icon(
+                          Icons.calendar_month,
+                          color: Colors.grey[600],
+                          size: 50.w,
+                        ),
+                      ),
+              ),
+            ),
+            SizedBox(height: 10.w),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 2.w),
+              child: IntrinsicHeight(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      decoration: ShapeDecoration(
+                        shape: const StadiumBorder(),
+                        color: cSec.withOpacity(0.1),
+                      ),
+                      // margin: EdgeInsets.only(left: 10.w),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20.w, vertical: 2.w),
+                      child: Text(
+                        "Mode: ${widget.event.mode!}",
+                        style: TextStyle(
+                          fontSize: 12.sp + 1,
+                          color: Colors.black,
+                          // fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
+
+                    Flexible(
+                      child: Text(
+                        widget.event.title,
+                        style: GoogleFonts.sarabun(
+                          fontSize: 20.sp + 1,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black,
+                        ),
+                        maxLines: 6,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                    // Spacer(),
+                  ],
                 ),
               ),
-              SizedBox(height: 10.h),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            ),
+            SizedBox(height: 10.w),
+            Container(
+              // margin: EdgeInsets.symmetric(horizontal: 100.w),
+              // padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.w),
+              width: 100.vw,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.r),
+                color: cSec.withOpacity(0.06),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisSize: MainAxisSize.max,
                 children: [
-                  Flexible(
-                    child: Text(
-                      widget.event.title,
-                      style: GoogleFonts.sarabun(
-                        fontSize: 20.sp + 1,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black,
-                      ),
-                      maxLines: 6,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.left,
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.w),
+                    child: Column(
+                      children: [
+                        Text(
+                          convertToDayString(widget.event.date!),
+                          style: TextStyle(
+                            fontSize: 12.sp + 1,
+                            // color: cPri,
+                          ),
+                        ),
+                        Text(
+                          "${convertToMonthDayString(widget.event.date!).split(" ")[0].substring(0, 3)} ${convertToMonthDayString(widget.event.date!).split(" ")[1]}",
+                          style: TextStyle(
+                            fontSize: 12.sp + 1,
+                            // color: cPri,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Container(
-                    decoration: ShapeDecoration(
-                      shape: const StadiumBorder(),
-                      color: cSec.withOpacity(0.1),
-                    ),
-                    margin: EdgeInsets.only(left: 10.w),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+                    height: 50.w,
+                    width: 0.5.w,
+                    // color: cPri,
+                    margin: EdgeInsets.symmetric(horizontal: 1.w),
+                  ),
+                  Flexible(
                     child: Text(
-                      widget.event.mode!,
+                      widget.event.venue!,
+                      // "${widget.event.venue!}, liberations hall edumfa",
                       style: TextStyle(
                         fontSize: 12.sp + 1,
                         color: Colors.black,
-                        fontStyle: FontStyle.italic,
                       ),
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      maxLines: 3,
+                    ),
+                  ),
+                  Container(
+                    height: 50.w,
+                    width: 0.5.w,
+                    color: cPri,
+                    margin: EdgeInsets.symmetric(horizontal: 1.w),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.w),
+                    child: Column(
+                      children: [
+                        Text(
+                          widget.event.time!.split("-").first.trim(),
+                          style: TextStyle(
+                            fontSize: 12.sp + 1,
+                            // color: cPri,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Text(
+                          widget.event.time!.split("-").last.trim(),
+                          style: TextStyle(
+                            fontSize: 12.sp + 1,
+                            // color: cPri,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 10.h),
-              Container(
-                // margin: EdgeInsets.symmetric(horizontal: 100.w),
-                width: 100.vw,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.r),
-                  color: cSec.withOpacity(0.06),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8.w),
-                      child: Column(
-                        children: [
-                          Text(
-                            convertToDayString(widget.event.date!),
-                            style: TextStyle(
-                              fontSize: 12.sp + 1,
-                              // color: cPri,
-                            ),
-                          ),
-                          Text(
-                            "${convertToMonthDayString(widget.event.date!).split(" ")[0].substring(0, 3)} ${convertToMonthDayString(widget.event.date!).split(" ")[1]}",
-                            style: TextStyle(
-                              fontSize: 12.sp + 1,
-                              // color: cPri,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: 50.h,
-                      width: 0.5.w,
-                      // color: cPri,
-                      margin: EdgeInsets.symmetric(horizontal: 1.h),
-                    ),
-                    Flexible(
-                      child: Text(
-                        widget.event.venue!,
-                        // "${widget.event.venue!}, liberations hall edumfa",
-                        style: TextStyle(
-                          fontSize: 12.sp + 1,
-                          color: Colors.black,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
-                        maxLines: 3,
-                      ),
-                    ),
-                    Container(
-                      height: 50.h,
-                      width: 0.5.w,
-                      color: cPri,
-                      margin: EdgeInsets.symmetric(horizontal: 1.h),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8.w),
-                      child: Column(
-                        children: [
-                          Text(
-                            widget.event.time!.split("-").first.trim(),
-                            style: TextStyle(
-                              fontSize: 12.sp + 1,
-                              // color: cPri,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          Text(
-                            widget.event.time!.split("-").last.trim(),
-                            style: TextStyle(
-                              fontSize: 12.sp + 1,
-                              // color: cPri,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 10.h),
-              Text(
-                "Event Details",
+            ),
+            SizedBox(height: 10.w),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Text(
+                "Event Information",
                 style: TextStyle(
                   fontSize: 14.sp + 1,
                   color: Colors.black,
                 ),
               ),
-              SizedBox(height: 10.h),
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                padding: EdgeInsets.only(bottom: 80.h),
-                height: 70.vh,
-                child: QuillEditor(
-                  // maxHeight: 100.vh,
-                  textCapitalization: TextCapitalization.sentences,
-                  scrollable: true,
-                  expands: true,
-                  autoFocus: false,
-                  focusNode: FocusNode(),
-                  padding: EdgeInsets.all(10.w),
-                  scrollController: scroller,
-                  controller: _controller,
-                  readOnly: true,
-                  placeholder:
-                      "lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet orem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet orem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet orem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet orem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet orem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet orem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet orem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet orem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet",
-                  customStyles: DefaultStyles(
-                    paragraph: DefaultTextBlockStyle(
-                      TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.normal,
-                        fontSize: 16.sp + 1,
-                      ),
-                      const VerticalSpacing(8, 0),
-                      const VerticalSpacing(0, 0),
-                      null,
+            ),
+            SizedBox(height: 10.w),
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              padding: EdgeInsets.only(bottom: 80.w, left: 10.w, right: 10.w),
+              height: 70.vh,
+              child: QuillEditor(
+                // maxHeight: 100.vh,
+                textCapitalization: TextCapitalization.sentences,
+                scrollable: true,
+                expands: true,
+                autoFocus: false,
+                focusNode: FocusNode(),
+                padding: EdgeInsets.all(10.w),
+                scrollController: scroller,
+                controller: _controller,
+                readOnly: true,
+                placeholder:
+                    "lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet orem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet orem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet orem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet orem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet orem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet orem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet orem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet orem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet",
+                customStyles: DefaultStyles(
+                  paragraph: DefaultTextBlockStyle(
+                    TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.normal,
+                      fontSize: 16.sp + 1,
                     ),
+                    const VerticalSpacing(8, 0),
+                    const VerticalSpacing(0, 0),
+                    null,
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
       bottomSheet: BottomSheet(
@@ -551,7 +574,7 @@ class _OpenEventItemState extends State<OpenEventItem> {
                   Expanded(
                     flex: 5,
                     child: SizedBox(
-                      height: 60.h,
+                      height: 60.w,
                       width: 100.vw,
                       child: Center(
                         child: Column(
@@ -577,14 +600,14 @@ class _OpenEventItemState extends State<OpenEventItem> {
                   Expanded(
                     flex: 5,
                     child: SizedBox(
-                      height: 50.h,
+                      height: 50.w,
                       width: 100.vw,
                       child: TextButton(
                         style: TextButton.styleFrom(
                           elevation: 0,
                           backgroundColor: hasBooked == true ? cSec : cPri,
                           padding: EdgeInsets.symmetric(
-                              horizontal: 20.w, vertical: 10.h),
+                              horizontal: 20.w, vertical: 10.w),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5.r),
                           ),
