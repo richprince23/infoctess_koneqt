@@ -164,7 +164,7 @@ Future<String> startChat({required String memberID}) async {
 }
 
 /// clear all chats
-/// 
+///
 Future clearAllChats() async {
   final chatRef = db
       .collection("chats")
@@ -175,6 +175,26 @@ Future clearAllChats() async {
   for (final doc in chatData.docs) {
     await doc.reference.delete();
   }
+}
+
+/// Delete chat
+///
+Future deleteChat({required String chatID}) async {
+  final chatRef = db.collection("chats").doc(chatID);
+  // delete chat media
+  final chatMediaRef = storage.ref("chat_media");
+  // final chatMediaData = await chatMediaRef.listAll();
+  final ch = chatRef.collection("messages");
+  // loop through messages and check if media url is present
+  final chatData = await ch.get();
+  for (final doc in chatData.docs) {
+    if (doc.data()['mediaUrl'] != null) {
+      // delete media
+      await chatMediaRef.storage.refFromURL(doc.data()['mediaUrl']).delete();
+    }
+  }
+  // delete message
+  await chatRef.delete();
 }
 
 ///Provider for chat related functions and data

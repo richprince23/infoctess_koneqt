@@ -16,6 +16,7 @@ import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
 import 'package:infoctess_koneqt/widgets/message_item.dart';
 import 'package:infoctess_koneqt/widgets/no_network.dart';
+import 'package:infoctess_koneqt/widgets/status_snack.dart';
 import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 import 'package:status_alert/status_alert.dart';
@@ -146,22 +147,22 @@ class ChatlistScreen extends StatelessWidget {
                                       CustomDialog.showWithAction(context,
                                           message: "Delete Chat",
                                           action: () async {
-                                        await db
-                                            .collection("chats")
-                                            .doc(snapshot.data!.docs[index].id)
-                                            .delete()
-                                            .then(
-                                              (value) => StatusAlert.show(
-                                                context,
-                                                duration:
-                                                    const Duration(seconds: 2),
-                                                title: 'Chat deleted',
-                                                configuration:
-                                                    const IconConfiguration(
-                                                  icon: Icons.check,
-                                                ),
-                                              ),
-                                            );
+                                        try {
+                                          await deleteChat(
+                                                  chatID: snapshot
+                                                      .data!.docs[index].id)
+                                              .then(
+                                            (value) => CustomSnackBar.show(
+                                              context,
+                                              message: 'Chat deleted',
+                                            ),
+                                          );
+                                        } catch (e) {
+                                          CustomSnackBar.show(
+                                            context,
+                                            message: 'An error occured',
+                                          );
+                                        }
                                       });
                                     },
                                     label: 'Delete',
