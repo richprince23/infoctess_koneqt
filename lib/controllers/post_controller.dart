@@ -41,6 +41,14 @@ Future sendPost(String postText, {String? imagePath}) async {
 
 Future deletePost(String postID) async {
   try {
+    // await db.collection("posts").doc(postID).delete();
+    final post = await db.collection("posts").doc(postID).get();
+    final postMediaRef = storage.ref("posts");
+    final imgUrl = post.data()!['image'];
+    //check if post has image
+    if (imgUrl != null) {
+      await postMediaRef.storage.refFromURL(imgUrl).delete();
+    }
     await db.collection("posts").doc(postID).delete();
   } on FirebaseException catch (e) {
     throw Exception(e);

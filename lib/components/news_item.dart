@@ -117,7 +117,8 @@ class _ClosedWidgetState extends State<ClosedWidget> {
     return PopupMenuButton<String>(
       iconSize: 24,
       tooltip: "Options",
-      color: Colors.white,
+      color: Colors.white.withOpacity(0.9),
+      surfaceTintColor: cSec.withOpacity(0.03),
       padding: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.r),
@@ -131,7 +132,6 @@ class _ClosedWidgetState extends State<ClosedWidget> {
             break;
           case 'delete':
             // Do something
-            debugPrint("Delete");
             CustomDialog.showWithAction(
               context,
               title: "Delete Post",
@@ -139,27 +139,13 @@ class _ClosedWidgetState extends State<ClosedWidget> {
               actionText: "Delete",
               action: () async {
                 deleteNews(widget.news.id).then(
-                  (value) => StatusAlert.show(
+                  (value) => CustomSnackBar.show(
                     context,
-                    title: "Deleted",
-                    titleOptions: StatusAlertTextConfiguration(
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.sp + 1,
-                        // fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    maxWidth: 50.vw,
-                    configuration: IconConfiguration(
-                      icon: Icons.check,
-                      color: Colors.green,
-                      size: 50.w,
-                    ),
+                    message: "Post deleted",
                   ),
                 );
               },
             );
-
             break;
         }
       },
@@ -167,39 +153,42 @@ class _ClosedWidgetState extends State<ClosedWidget> {
         // Define menu items
         return [
           PopupMenuItem<String>(
+            enabled: false,
             value: 'edit',
-            height: 30.h,
+            height: 30.w,
             padding: EdgeInsets.all(12.w),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(
-                  'Edit News',
-                  style: TextStyle(fontSize: 14.sp + 1),
-                ),
                 Icon(
                   CupertinoIcons.pencil,
                   size: 18.w,
                   color: cPri,
+                ),
+                const SizedBox(width: 5),
+                Text(
+                  'Edit News',
+                  style: TextStyle(fontSize: 14.sp + 1),
                 ),
               ],
             ),
           ),
           PopupMenuItem<String>(
             value: 'delete',
-            height: 30.h,
+            height: 30.w,
             padding: EdgeInsets.all(12.w),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(
-                  'Delete News',
-                  style: TextStyle(fontSize: 14.sp + 1),
-                ),
                 Icon(
                   CupertinoIcons.delete,
                   size: 18.w,
                   color: Colors.red,
+                ),
+                const SizedBox(width: 5),
+                Text(
+                  'Delete News',
+                  style: TextStyle(fontSize: 14.sp + 1),
                 ),
               ],
             ),
@@ -698,22 +687,9 @@ class _OpenWidgetState extends State<OpenWidget> {
           category: BookmarkType.news,
           data: widget.news.toJson().toString(),
         )
-        .then((value) => StatusAlert.show(
+        .then((value) => CustomSnackBar.show(
               context,
-              title: "Saved",
-              titleOptions: StatusAlertTextConfiguration(
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.sp + 1,
-                  // fontWeight: FontWeight.bold,
-                ),
-              ),
-              maxWidth: 50.vw,
-              configuration: IconConfiguration(
-                icon: Icons.check,
-                color: Colors.green,
-                size: 50.w,
-              ),
+              message: "Bookmark added",
             ))
         .then(
           (value) => setState(() {
@@ -722,28 +698,17 @@ class _OpenWidgetState extends State<OpenWidget> {
         );
   }
 
-  deleteBookmark(BuildContext context) async {
+  Future deleteBookmark(BuildContext context) async {
     await AppDatabase.instance
         .deleteBookmark(
           widget.news.id,
         )
-        .then((value) => StatusAlert.show(
-              context,
-              title: "Removed",
-              titleOptions: StatusAlertTextConfiguration(
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.sp + 1,
-                  // fontWeight: FontWeight.bold,
-                ),
-              ),
-              maxWidth: 50.vw,
-              configuration: IconConfiguration(
-                icon: Icons.check,
-                color: Colors.green,
-                size: 50.w,
-              ),
-            ))
+        .then(
+          (value) => CustomSnackBar.show(
+            context,
+            message: "Bookmark removed",
+          ),
+        )
         .then(
           (value) => setState(() {
             isSaved = !isSaved;

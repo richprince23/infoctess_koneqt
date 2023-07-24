@@ -36,9 +36,18 @@ Future postNews(String title, String body, {String? imagePath}) async {
   }
 }
 
-//delete news
+/// Delete news and associated media
+///
 Future deleteNews(String postID) async {
   try {
+    // await db.collection("news").doc(postID).delete();
+    final news = await db.collection("news").doc(postID).get();
+    //check if news has image
+    final newsMediaRef = storage.ref("news");
+    final imgUrl = news.data()!['imgUrl'];
+    if (imgUrl != null) {
+      await newsMediaRef.storage.refFromURL(imgUrl).delete();
+    }
     await db.collection("news").doc(postID).delete();
   } on FirebaseException catch (e) {
     throw Exception(e);
@@ -74,4 +83,3 @@ Future sendLike(String postID) async {
     throw Exception(e);
   }
 }
-

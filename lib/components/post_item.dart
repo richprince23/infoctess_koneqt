@@ -127,12 +127,14 @@ class _PostItemState extends State<PostItem> {
   Widget optionButton() {
     return PopupMenuButton<String>(
       tooltip: "Options",
-      color: Colors.white,
+      color: Colors.white.withOpacity(0.9),
+      surfaceTintColor: cSec.withOpacity(0.03),
       padding: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.r),
       ),
       onSelected: (String choice) {
+        BuildContext ctx = context;
         // Handle menu item selection
         switch (choice) {
           case 'edit':
@@ -141,30 +143,16 @@ class _PostItemState extends State<PostItem> {
             break;
           case 'delete':
             // Do something
-            debugPrint("Delete");
             CustomDialog.showWithAction(
-              context,
+              ctx,
               title: "Delete Post",
               message: "Are you sure you want to delete this post?",
               actionText: "Delete",
               action: () async {
                 deletePost(widget.post.id).then(
-                  (value) => StatusAlert.show(
-                    context,
-                    title: "Deleted",
-                    titleOptions: StatusAlertTextConfiguration(
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.sp + 1,
-                        // fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    maxWidth: 50.vw,
-                    configuration: IconConfiguration(
-                      icon: Icons.check,
-                      color: Colors.green,
-                      size: 50.w,
-                    ),
+                  (value) => CustomSnackBar.show(
+                    ctx,
+                    message: "Post deleted",
                   ),
                 );
               },
@@ -178,38 +166,41 @@ class _PostItemState extends State<PostItem> {
         return [
           PopupMenuItem<String>(
             value: 'edit',
-            height: 30.h,
+            height: 30.w,
+            enabled: false,
             padding: EdgeInsets.all(12.w),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(
-                  'Edit Post',
-                  style: TextStyle(fontSize: 14.sp + 1),
-                ),
                 Icon(
                   CupertinoIcons.pencil,
                   size: 18.w,
                   color: cPri,
+                ),
+                const SizedBox(width: 5),
+                Text(
+                  'Edit Post',
+                  style: TextStyle(fontSize: 14.sp + 1),
                 ),
               ],
             ),
           ),
           PopupMenuItem<String>(
             value: 'delete',
-            height: 30.h,
+            height: 30.w,
             padding: EdgeInsets.all(12.w),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(
-                  'Delete Post',
-                  style: TextStyle(fontSize: 14.sp + 1),
-                ),
                 Icon(
                   CupertinoIcons.delete,
                   size: 18.w,
                   color: Colors.red,
+                ),
+                const SizedBox(width: 5),
+                Text(
+                  'Delete Post',
+                  style: TextStyle(fontSize: 14.sp + 1),
                 ),
               ],
             ),
@@ -471,7 +462,7 @@ class _PostItemState extends State<PostItem> {
                         //   thickness: 1,
                         // ),
                         // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   mainAxisAlignment: MainAxisAlignment.start,
                         //   children: [
                         //     TextButton.icon(
                         //       onPressed: () async {

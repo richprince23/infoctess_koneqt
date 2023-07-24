@@ -103,6 +103,14 @@ Future<bool> hasUserRsvp(String eventID) async {
 //delete events
 Future deleteEvent(String postID) async {
   try {
+    // await db.collection("events").doc(postID).delete();
+    final event = await db.collection("events").doc(postID).get();
+    //check if event has image
+    final eventMediaRef = storage.ref("events");
+    final imgUrl = event.data()!['imgUrl'];
+    if (imgUrl != null) {
+      await eventMediaRef.storage.refFromURL(imgUrl).delete();
+    }
     await db.collection("events").doc(postID).delete();
   } on FirebaseException catch (e) {
     throw Exception(e);

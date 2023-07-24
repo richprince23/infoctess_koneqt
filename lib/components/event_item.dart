@@ -12,6 +12,7 @@ import 'package:infoctess_koneqt/controllers/utils.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/screens/tools/image_viewer.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
+import 'package:infoctess_koneqt/widgets/status_snack.dart';
 import 'package:intl/intl.dart';
 import 'package:resize/resize.dart';
 import 'package:status_alert/status_alert.dart';
@@ -220,6 +221,7 @@ class _OpenEventItemState extends State<OpenEventItem> {
 //function to book event
   Future bookEvent() async {
     showDialog(
+        barrierDismissible: false,
         context: context,
         builder: (context) {
           return Center(
@@ -238,23 +240,9 @@ class _OpenEventItemState extends State<OpenEventItem> {
               time: widget.event.time!.split("-").first.trim(),
             )
             .then(
-              (value) => StatusAlert.show(
+              (value) => CustomSnackBar.show(
                 context,
-                duration: const Duration(seconds: 2),
-                title: "RSVPed Successfully",
-                titleOptions: StatusAlertTextConfiguration(
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16.sp + 1,
-                    // fontWeight: FontWeight.bold,
-                  ),
-                ),
-                maxWidth: 50.vw,
-                configuration: IconConfiguration(
-                  icon: Icons.check,
-                  color: Colors.green,
-                  size: 50.w,
-                ),
+                message: "Event booked successfully",
               ),
             )
             .then(
@@ -263,9 +251,10 @@ class _OpenEventItemState extends State<OpenEventItem> {
       );
     } catch (e) {
       Navigator.pop(context);
-      CustomDialog.show(context,
-          message:
-              "An error occured while booking event. Please try again later");
+      (value) => CustomSnackBar.show(
+            context,
+            message: "An error occured",
+          );
     }
   }
 
@@ -273,6 +262,7 @@ class _OpenEventItemState extends State<OpenEventItem> {
   Future cancelBooking() async {
     showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (context) {
           return Center(
             child: Image.asset(
@@ -283,31 +273,21 @@ class _OpenEventItemState extends State<OpenEventItem> {
           );
         });
     try {
-      await unrsvpToEvent(widget.event.id!).then(
-        (value) => StatusAlert.show(
-          context,
-          duration: const Duration(seconds: 2),
-          title: "RSVP Cancelled",
-          titleOptions: StatusAlertTextConfiguration(
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 16.sp + 1,
-              // fontWeight: FontWeight.bold,
+      await unrsvpToEvent(widget.event.id!)
+          .then(
+            (value) => CustomSnackBar.show(
+              context,
+              message: "Booking cancelled successfully",
             ),
-          ),
-          maxWidth: 50.vw,
-          configuration: IconConfiguration(
-            icon: Icons.check,
-            color: Colors.green,
-            size: 50.w,
-          ),
-        ),
-      );
+          )
+          .then(
+            (value) => Navigator.pop(context),
+          );
     } catch (e) {
-
-      CustomDialog.show(context,
-          message:
-              "An error occured while cancelling booking. Please try again later");
+      (value) => CustomSnackBar.show(
+            context,
+            message: "An error occured",
+          );
     }
   }
 
