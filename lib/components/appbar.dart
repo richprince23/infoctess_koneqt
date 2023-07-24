@@ -1,8 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:infoctess_koneqt/constants.dart';
-import 'package:infoctess_koneqt/env.dart';
 import 'package:resize/resize.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:infoctess_koneqt/env.dart';
+import 'package:infoctess_koneqt/constants.dart';
+import 'package:infoctess_koneqt/screens/search_screen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
   @override
@@ -19,7 +21,6 @@ class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
     return AppBar(
       leadingWidth: 30.w,
       surfaceTintColor: cSec.withOpacity(0.3),
-
       leading: InkWell(
         child: CachedNetworkImage(
           width: 30.w,
@@ -52,26 +53,26 @@ class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
           fontSize: 16.sp + 1,
         ),
       ),
-      // actions: [
-      //   IconButton(
-      //     onPressed: () {
-      //       Navigator.push(context,
-      //           MaterialPageRoute(builder: (context) => SearchScreen()));
-      //     },
-      //     iconSize: 20.w,
-      //     icon: const Icon(CupertinoIcons.search),
-      //   ),
-      //   IconButton(
-      //     onPressed: () {
-      //       Navigator.push(
-      //           context,
-      //           MaterialPageRoute(
-      //               builder: (context) => const NotificationsSceen()));
-      //     },
-      //     iconSize: 20.w,
-      //     icon: const Icon(CupertinoIcons.bell),
-      //   )
-      // ],
+      actions: [
+        IconButton(
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const SearchScreen()));
+          },
+          iconSize: 20.w,
+          icon: const Icon(CupertinoIcons.search),
+        ),
+        // IconButton(
+        //   onPressed: () {
+        //     Navigator.push(
+        //         context,
+        //         MaterialPageRoute(
+        //             builder: (context) => const NotificationsSceen()));
+        //   },
+        //   iconSize: 20.w,
+        //   icon: const Icon(CupertinoIcons.bell),
+        // )
+      ],
     );
   }
 }

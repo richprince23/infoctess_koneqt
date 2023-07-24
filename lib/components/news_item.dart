@@ -20,7 +20,6 @@ import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
 import 'package:infoctess_koneqt/widgets/status_snack.dart';
 import 'package:resize/resize.dart';
-import 'package:status_alert/status_alert.dart';
 
 class NewsItem extends StatefulWidget {
   // late Poster poster;

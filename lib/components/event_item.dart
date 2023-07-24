@@ -11,11 +11,9 @@ import 'package:infoctess_koneqt/controllers/notification_service.dart';
 import 'package:infoctess_koneqt/controllers/utils.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/screens/tools/image_viewer.dart';
-import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:infoctess_koneqt/widgets/status_snack.dart';
 import 'package:intl/intl.dart';
 import 'package:resize/resize.dart';
-import 'package:status_alert/status_alert.dart';
 
 import '../models/event_model.dart';
 

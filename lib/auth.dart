@@ -226,7 +226,6 @@ class Auth {
           .get()
           .then((value) => {
                 // var data = value.docs[0].data();
-
                 curUser?.avatar = value.docs[0].data()["avatar"],
                 curUser?.classGroup = value.docs[0].data()["classGroup"],
                 curUser?.fullName = value.docs[0].data()["fullName"],
