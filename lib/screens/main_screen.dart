@@ -61,7 +61,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarScreen(),
+      appBar: AppBarScreen(title: "Hi, ${curUser!.fullName?.split(" ")[0]}"),
       drawer: const DrawerScreen(),
       body: Consumer<PageControl>(
         builder: ((context, value, child) {

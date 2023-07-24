@@ -45,6 +45,12 @@ class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
       automaticallyImplyLeading: false,
       elevation: 0,
       scrolledUnderElevation: 0,
+      title: Text(
+        title ?? "",
+        style: TextStyle(
+          fontSize: 16.sp + 1,
+        ),
+      ),
       // actions: [
       //   IconButton(
       //     onPressed: () {
