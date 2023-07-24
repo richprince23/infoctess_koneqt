@@ -19,6 +19,7 @@ class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
     return AppBar(
       leadingWidth: 30.w,
       surfaceTintColor: cSec.withOpacity(0.3),
+
       leading: InkWell(
         child: CachedNetworkImage(
           width: 30.w,
@@ -44,7 +45,7 @@ class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
       ),
       automaticallyImplyLeading: false,
       elevation: 0,
-      scrolledUnderElevation: 0,
+      scrolledUnderElevation: 0.05,
       title: Text(
         title ?? "",
         style: TextStyle(
