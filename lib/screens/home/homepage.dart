@@ -36,7 +36,6 @@ class _HomePageState extends State<HomePage>
   @override
   void initState() {
     _tabController = TabController(length: tabs.length, vsync: this);
-
     super.initState();
   }
 
@@ -45,36 +44,6 @@ class _HomePageState extends State<HomePage>
     _tabController.dispose();
     // searchController.dispose();
     super.dispose();
-  }
-
-// TODO: implement search functionality and search history
-  void _showModalSheet() {
-    showBottomSheet(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10.r),
-            topRight: Radius.circular(10.r),
-          ),
-        ),
-        // isScrollControlled: true,
-        context: context,
-        builder: (context) {
-          return Card(
-            child: SizedBox(
-              height: 40.vh,
-              child: Center(
-                child: ListView.builder(
-                  cacheExtent: 100.vh,
-                  itemBuilder: ((context, index) {
-                    return ListTile(
-                      title: Text("search item $index"),
-                    );
-                  }),
-                ),
-              ),
-            ),
-          );
-        });
   }
 
   @override
@@ -112,7 +81,7 @@ class _HomePageState extends State<HomePage>
           if (curUser?.isAdmin == true) {
             return ExpandableFab(
               type: ExpandableFabType.up,
-              distance: 50.h,
+              distance: 50.w,
               children: [
                 FloatingActionButton(
                   backgroundColor: cSec,

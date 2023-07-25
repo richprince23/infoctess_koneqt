@@ -55,10 +55,6 @@ Future<void> addToHistory({required String searchText}) async {
   List<String>? searchedList = prefs.getStringList("searchHistory") ?? [];
   searchedList.insert(0, searchText);
   prefs.setStringList("searchHistory", searchedList);
-
-  for (var element in searchedList) {
-    print(element);
-  }
 }
 
 /// Returns the search history from a list of Strings in Shared Prefs
@@ -67,4 +63,11 @@ Future<List<String>?> getSearchHistory() async {
   final prefs = await mainPrefs;
   List<String>? searchedList = prefs.getStringList("searchHistory");
   return searchedList;
+}
+
+/// Clear search history
+///
+Future<void> clearHistory() async {
+  final prefs = await mainPrefs;
+  await prefs.setStringList("searchHistory", []);
 }
