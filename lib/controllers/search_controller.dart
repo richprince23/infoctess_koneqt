@@ -1,34 +1,51 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:infoctess_koneqt/env.dart';
+import 'package:infoctess_koneqt/models/model_type_enum.dart';
 
-List searchResults = [];
-Future search(String query) async {
-  searchResults.clear();
-  //search for posts from firebase firestore
-  await FirebaseFirestore.instance
-      .collection('news')
-      .where('body'.toLowerCase(), isGreaterThanOrEqualTo: query.toLowerCase())
-      .get()
-      .then((value) {
-    // print("typing");
-    if (value.docs.isNotEmpty) {
-      for (var post in value.docs) {
-        searchResults.add(post);
-        // print(searchResults[0].data());
-      }
-    }
-  });
-
-  //search for events from firebase firestore
-
-  //search for news from firebase firestore
-
-  //search for people from firebase firestore
-
-  //search for hashtags from firebase firestore
-
-  return searchResults;
+/// return a list of search results from firebase firestore based on the filter
+Stream<QuerySnapshot<Map<String, dynamic>>>? setStream(ModelType type) {
+  Stream<QuerySnapshot<Map<String, dynamic>>>? stream;
+  switch (type) {
+    case ModelType.post:
+      stream = FirebaseFirestore.instance
+          .collection('posts')
+          .orderBy('timestamp', descending: true)
+          .snapshots()
+          .asBroadcastStream();
+      return stream;
+    case ModelType.news:
+      stream = FirebaseFirestore.instance
+          .collection('news')
+          .orderBy('timestamp', descending: true)
+          .snapshots()
+          .asBroadcastStream();
+      return stream;
+    case ModelType.event:
+      stream = FirebaseFirestore.instance
+          .collection('events')
+          .orderBy('timestamp', descending: true)
+          .snapshots()
+          .asBroadcastStream();
+      return stream;
+    case ModelType.people:
+      stream = FirebaseFirestore.instance
+          .collection('users')
+          .orderBy('timestamp', descending: true)
+          .snapshots()
+          .asBroadcastStream();
+      return stream;
+    default:
+      return null;
+  }
 }
+
+//search for events from firebase firestore
+
+//search for news from firebase firestore
+
+//search for people from firebase firestore
+
+//search for hashtags from firebase firestore
 
 /// Add a search term to search history.
 ///
