@@ -40,7 +40,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                 ),
                 TextSpan(
                   text:
-                      'This Privacy Policy outlines how ARKSoft Inc. ("we," "us," or "our") collects, uses, stores, and protects the personal information of members using the INFOCTESS Koneqt mobile application ("the App"). By using the App, you acknowledge and agree to the practices described in this Privacy Policy.\n\n',
+                      'This Privacy Policy outlines how ARK Softwarez. ("we," "us," or "our") collects, uses, stores, and protects the personal information of members using the INFOCTESS Koneqt mobile application ("the App"). By using the App, you acknowledge and agree to the practices described in this Privacy Policy.\n\n',
                   style: TextStyle(fontSize: 18.sp),
                 ),
                 TextSpan(

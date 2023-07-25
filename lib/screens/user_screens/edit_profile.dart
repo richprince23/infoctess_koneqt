@@ -321,13 +321,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: cPri,
                         foregroundColor: Colors.white,
-                        padding: EdgeInsets.symmetric(vertical: 15.w),
+                        fixedSize: btnLarge(context),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.r),
                         ),
                       ),
                       child: Text(
-                        "Save",
+                        "Update Profile",
                         style: TextStyle(fontSize: 16.sp),
                       ),
                     ),

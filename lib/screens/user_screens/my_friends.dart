@@ -47,16 +47,16 @@ class _MyFriendsScreenState extends State<MyFriendsScreen>
               indicatorSize: TabBarIndicatorSize.tab,
             ),
           ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: const InputControl(
-              // isSearch: true,
-              hintText: "Search friends",
-              showLabel: false,
-              isCollapsed: true,
-              leading: Icon(Icons.search),
-            ),
-          ),
+          // Container(
+          //   padding: EdgeInsets.symmetric(horizontal: 20.w),
+          //   child: const InputControl(
+          //     // isSearch: true,
+          //     hintText: "Search friends",
+          //     showLabel: false,
+          //     isCollapsed: true,
+          //     leading: Icon(Icons.search),
+          //   ),
+          // ),
           Expanded(
             child: TabBarView(
               controller: tabController,
@@ -68,14 +68,15 @@ class _MyFriendsScreenState extends State<MyFriendsScreen>
                     // initialData,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return  Center(
-                          child:    Image.asset(
-                              "assets/images/preload.gif", width: 30.w, height: 30.w,
-                            ),
+                        return Center(
+                          child: Image.asset(
+                            "assets/images/preload.gif",
+                            width: 30.w,
+                            height: 30.w,
+                          ),
                         );
                       }
                       if (snapshot.hasError) {
-                        
                         return Center(
                           child: Text(
                             "Something went wrong",
@@ -138,10 +139,12 @@ class _MyFriendsScreenState extends State<MyFriendsScreen>
                     // initialData,
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return  Center(
-                          child:    Image.asset(
-                              "assets/images/preload.gif", width: 30.w, height: 30.w,
-                            ),
+                        return Center(
+                          child: Image.asset(
+                            "assets/images/preload.gif",
+                            width: 30.w,
+                            height: 30.w,
+                          ),
                         );
                       }
                       if (snapshot.hasError) {

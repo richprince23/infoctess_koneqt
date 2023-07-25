@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -303,7 +305,7 @@ class DrawerScreen extends StatelessWidget {
             ),
           if (curUser?.isAdmin == true)
             const ListItem(icon: Icons.event, title: "Manage Events"),
-          const ListItem(icon: Icons.settings, title: "Settings"),
+          // const ListItem(icon: Icons.settings, title: "Settings"),
           Divider(
             color: cPri,
           ),
@@ -324,7 +326,21 @@ class DrawerScreen extends StatelessWidget {
           Divider(
             color: cPri,
           ),
-          const ListItem(icon: Icons.info, title: "About"),
+          ListItem(
+            icon: Icons.info,
+            title: "About",
+            onTap: () {
+              showAboutDialog(
+                context: context,
+                applicationIcon: Image.asset(
+                  "assets/images/infoctess_logo_bg.png",
+                  width: 30.w,
+                ),
+                applicationLegalese: "Copyright 2023 ARK Softwarez",
+                applicationVersion: "1.0.1",
+              );
+            },
+          ),
           ListItem(
             icon: Icons.exit_to_app,
             title: "Logout",

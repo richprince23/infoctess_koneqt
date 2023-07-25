@@ -40,7 +40,7 @@ class TermsConditionsScreen extends StatelessWidget {
                 ),
                 TextSpan(
                   text:
-                      'Please read these Terms and Conditions ("Terms") carefully before using the INFOCTESS Koneqt mobile application ("the App") developed by ARKSoft Inc. ("we," "us," or "our"). These Terms govern your access to and use of the App. By using the App, you agree to be bound by these Terms. If you do not agree with any provision of these Terms, you may not use the App.\n\n',
+                      'Please read these Terms and Conditions ("Terms") carefully before using the INFOCTESS Koneqt mobile application ("the App") developed by ARK Softwarez. ("we," "us," or "our"). These Terms govern your access to and use of the App. By using the App, you agree to be bound by these Terms. If you do not agree with any provision of these Terms, you may not use the App.\n\n',
                   style: TextStyle(fontSize: 18.sp),
                 ),
                 TextSpan(
