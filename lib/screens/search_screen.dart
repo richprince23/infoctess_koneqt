@@ -89,42 +89,44 @@ class _SearchScreenState extends State<SearchScreen> {
         toolbarHeight: kToolbarHeight + 40.w,
       ),
       body: Container(
-          child: StreamBuilder(
-        stream: setStream(filter),
-        // initialData: searchResults,
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Center(
-              child: Image.asset(
-                "assets/images/preload.gif",
-                width: 30.w,
-                height: 30.w,
-              ),
-            );
-          }
-          if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data?.size,
-              itemBuilder: (context, index) {
-                if (snapshot.data?.docs[index]['body']
-                    .contains(searchText.toLowerCase().trim())) {
-                  return ListTile(
-                    title: Text(snapshot.data?.docs[index]['title']),
-                    // onTap: () {
-                    //   _searchController.text = snapshot.data![index];
-                    // },
-                  );
-                } else {
-                  return const SizedBox.shrink();
-                }
-              },
-            );
-          }
-          return const Center(
-            child: EmptyList(),
-          );
-        },
-      )),
+          child: searchText.isEmpty
+              ? buildSearchHistory()
+              : StreamBuilder(
+                  stream: setStream(filter),
+                  // initialData: searchResults,
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: Image.asset(
+                          "assets/images/preload.gif",
+                          width: 30.w,
+                          height: 30.w,
+                        ),
+                      );
+                    }
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                        itemCount: snapshot.data?.size,
+                        itemBuilder: (context, index) {
+                          if (snapshot.data?.docs[index]['body']
+                              .contains(searchText.toLowerCase().trim())) {
+                            return ListTile(
+                              title: Text(snapshot.data?.docs[index]['title']),
+                              onTap: () {
+                                addToHistory(searchText: searchText);
+                              },
+                            );
+                          } else {
+                            return const SizedBox.shrink();
+                          }
+                        },
+                      );
+                    }
+                    return const Center(
+                      child: EmptyList(),
+                    );
+                  },
+                )),
     );
   }
 
@@ -144,6 +146,7 @@ class _SearchScreenState extends State<SearchScreen> {
             itemBuilder: (context, index) {
               return ListTile(
                 title: Text(snapshot.data![index]),
+                leading: const Icon(Icons.history),
                 onTap: () {
                   _searchController.text = snapshot.data![index];
                 },
@@ -158,14 +161,3 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 }
-
-/// This enum returns the various types of models that a search can be performed against
-///
-/// [all] - All models
-///
-/// [post] - Post items only
-///
-/// [event] - Event items only
-///
-/// [news] - News items only
-///

@@ -52,9 +52,9 @@ Stream<QuerySnapshot<Map<String, dynamic>>>? setStream(ModelType type) {
 /// Uses shared Preferences
 Future<void> addToHistory({required String searchText}) async {
   final prefs = await mainPrefs;
-  List<String>? searchedList = prefs.getStringList("searchHistory");
-  searchedList?.insert(0, searchText);
-  prefs.setStringList("searchHistory", searchedList!);
+  List<String>? searchedList = prefs.getStringList("searchHistory") ?? [];
+  searchedList.insert(0, searchText);
+  prefs.setStringList("searchHistory", searchedList);
 
   for (var element in searchedList) {
     print(element);
