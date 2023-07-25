@@ -287,7 +287,9 @@ class DrawerScreen extends StatelessWidget {
           // const ListItem(
           //     icon: Icons.person, title: "Profile", route: "/profile"),
           const ListItem(
-              icon: Icons.show_chart, title: "My Activity", route: "/my-posts"),
+              icon: Icons.show_chart,
+              title: "My Activity",
+              route: "/my-activity"),
           const ListItem(
               icon: Icons.calendar_month,
               title: "Calendar",
