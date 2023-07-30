@@ -82,29 +82,27 @@ class _PostItemState extends State<PostItem> {
         );
   }
 
-// check if already liked
+  /// check if already liked
   bool isLikedPost() {
-    final _isLiked =
-        Provider.of<Stats>(context, listen: false).checkLike(widget.post.id);
-    try {
-      if (mounted) {
-        if (_isLiked == true) {
-          setState(() {
-            isLiked = true;
-          });
-        } else {
-          setState(() {
-            isLiked = false;
-          });
-        }
-      }
-    } catch (e) {
-      CustomSnackBar.show(context, message: "An error occured");
-    }
+    // bool liked = false;
+    Provider.of<Stats>(context, listen: false)
+        .checkLike(widget.post.id)
+        .then((value) => {
+              // try {
+              if (mounted)
+                {
+                  setState(() {
+                    isLiked = value;
+                  }),
+                }
+              // } catch (e) {
+              //   CustomSnackBar.show(context, message: "An error occured");
+              // }
+            });
     return isLiked;
   }
 
-  //get all post stats
+  ///get all post stats
   Future getStat() async {
     // await getCommentsCount(widget.post.id);
     // await getLikesCount(widget.post.id);
@@ -122,6 +120,11 @@ class _PostItemState extends State<PostItem> {
       // getStat();
     });
     // getStat();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   Widget optionButton() {
@@ -237,7 +240,6 @@ class _PostItemState extends State<PostItem> {
                 children: [
                   InkWell(
                     onTap: () async {
-                      debugPrint("Go to user profle");
                       await Navigator.push(
                         context,
                         MaterialPageRoute(
