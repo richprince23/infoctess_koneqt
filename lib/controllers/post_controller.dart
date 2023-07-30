@@ -139,12 +139,6 @@ class Stats extends ChangeNotifier {
   get views => _views;
   get isLiked => _isLiked;
 
-  Future getComments(String postID) async {
-    getCommentsCount(postID);
-    notifyListeners();
-    // return _comments!;
-  }
-
   Future setLikes(String postID) async {
     getLikesCount(postID);
     notifyListeners();
@@ -157,16 +151,13 @@ class Stats extends ChangeNotifier {
 
   Future<int> commentsCount(String docID) async {
     int totalDocuments = 0;
-    try {
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection("posts")
-          .doc(docID)
-          .collection('comments')
-          .get();
-      totalDocuments = querySnapshot.size;
-    } catch (e) {
-      debugPrint(e.toString());
-    }
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("posts")
+        .doc(docID)
+        .collection('comments')
+        .get();
+    totalDocuments = querySnapshot.size;
+    notifyListeners();
     return totalDocuments;
   }
 

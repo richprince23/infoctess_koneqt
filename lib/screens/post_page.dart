@@ -100,24 +100,32 @@ class _PostDetailsState extends State<PostDetails> {
         .checkLike(widget.post.id)
         .then((value) {
       if (mounted) {
-        if (value == true) {
-          setState(() {
-            isLiked = true;
-          });
-        } else {
-          setState(() {
-            isLiked = false;
-          });
-        }
+        setState(() {
+          isLiked = value;
+        });
       }
     });
     return isLiked;
   }
 
+  int getComments() {
+    Provider.of<Stats>(context, listen: false)
+        .commentsCount(widget.post.id)
+        .then((value) {
+      if (mounted) {
+        setState(() {
+          commentsCount = value;
+        });
+      }
+    });
+    return commentsCount;
+  }
+
   Future getStat() async {
-    // await getCommentsCount(widget.post.id);
+    // getCommentsCount(widget.post.id);
     // await getLikesCount(widget.post.id);
     // await isBookmarked();
+    getComments();
     await Provider.of<Stats>(context, listen: false).getStats(widget.post.id);
   }
 
@@ -128,6 +136,7 @@ class _PostDetailsState extends State<PostDetails> {
 
     //check if already liked
     isLiked = isLikedPost();
+    getComments();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       getStat();
     });
@@ -335,7 +344,7 @@ class _PostDetailsState extends State<PostDetails> {
                             ),
                             Consumer<Stats>(
                               builder: (context, value, child) => Text(
-                                "${value.comments} comments",
+                                "${commentsCount ?? value.comments} comments",
                                 style: TextStyle(
                                   fontSize: 12.sp + 1,
                                   color: Colors.black54,
