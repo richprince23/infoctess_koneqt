@@ -63,8 +63,15 @@ Future sendComment(String commentText, String postID) async {
     timestamp: DateTime.now(),
   );
   try {
-    await db.collection("posts").doc(postID).collection("comments").add(
+    await db
+        .collection("posts")
+        .doc(postID)
+        .collection("comments")
+        .add(
           comment.toJson(),
+        )
+        .then(
+          (value) => getCommentsCount(postID),
         );
   } on FirebaseException catch (e) {
     throw Exception(e);
@@ -157,6 +164,7 @@ class Stats extends ChangeNotifier {
         .collection('comments')
         .get();
     totalDocuments = querySnapshot.size;
+    _comments = totalDocuments;
     notifyListeners();
     return totalDocuments;
   }

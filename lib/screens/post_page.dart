@@ -344,7 +344,7 @@ class _PostDetailsState extends State<PostDetails> {
                             ),
                             Consumer<Stats>(
                               builder: (context, value, child) => Text(
-                                "${commentsCount ?? value.comments} comments",
+                                "${value.comments ?? commentsCount} comments",
                                 style: TextStyle(
                                   fontSize: 12.sp + 1,
                                   color: Colors.black54,

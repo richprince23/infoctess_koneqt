@@ -134,7 +134,7 @@ class _CommentInputState extends State<CommentInput> {
                                     .then(
                                       (value) => Provider.of<Stats>(context,
                                               listen: false)
-                                          .getStats(widget.postID),
+                                          .commentsCount(widget.postID),
                                     )
                                     .then(
                                       (value) => CustomSnackBar.show(context,
