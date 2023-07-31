@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/models/user_info.dart';
 import 'package:http/http.dart' as http;
@@ -97,29 +98,47 @@ class OnboardingController extends ChangeNotifier {
   }
 }
 
-Future<User?> checkUserAccess(String indexNum) async {
+Future<int?> checkUserAccess(String indexNum) async {
   var url = Uri.parse('http://api.infoctess-uew.org/members/$indexNum');
+
+  int? res;
 
   var response = await http.get(url);
   if (response.statusCode == 200) {
     var data = jsonDecode(response.body);
     if (response.body.isEmpty || response.body == "[]") {
       // print("Response body is null or empty.");
-      return null;
+      res = 0;
+      return res;
     }
-
+    //check user here
+    await Auth().checkUserExists(indexNum).then((value) {
+      if (value == false) {
+        onboardUser = User(
+            indexNum: data[0]['index_num'] as int,
+            fullName: "${data[0]['othernames']} ${data[0]['surname']}",
+            emailAddress: data[0]['email'] ?? "",
+            userLevel: "Level ${data[0]['level']}",
+            classGroup: data[0]['groupings'] ?? "",
+            gender: data[0]['gender'] ?? "",
+            phoneNum: data[0]['contact1'] ?? "");
+        //set curUser to onboard
+        curUser = onboardUser;
+        // return onboardUser;
+        // print("User does not exist. Please register.");
+        res = 1;
+        return res;
+      } else {
+        // print("User exists. Please login.");
+        res = 2;
+        return res;
+      }
+    });
     // onboardUser = User.fromJson(data[0]);
-    onboardUser = User(
-        indexNum: data[0]['index_num'] as int,
-        fullName: "${data[0]['othernames']} ${data[0]['surname']}",
-        emailAddress: data[0]['email'] ?? "",
-        userLevel: "Level ${data[0]['level']}",
-        classGroup: data[0]['groupings'] ?? "",
-        gender: data[0]['gender'] ?? "",
-        phoneNum: data[0]['contact1'] ?? "");
-
-    return onboardUser;
   } else {
-    throw Exception();
+    // print("Request failed with status: ${response.statusCode}.");
+    res = 500;
+    return res;
   }
+  return res;
 }

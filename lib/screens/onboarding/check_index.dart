@@ -29,7 +29,6 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
   @override
   Widget build(BuildContext context) {
     return KeyboardDismissOnTap(
-      dismissOnCapturedTaps: true,
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -45,173 +44,168 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
             onPressed: () => Navigator.pushReplacementNamed(context, "/login"),
           ),
         ),
-        body: Center(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(40.0.w),
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                // mainAxisSize: MainAxisSize.max,
-                children: [
-                  Icon(Icons.lock, size: 24.sp, color: cSec),
-                  SizedBox(height: 10.w),
-                  Text(
-                    "Please verify that you are a member of INFOCTESS-UEW",
-                    softWrap: true,
-                    style: TextStyle(
-                      fontSize: 16.sp + 1,
+        body: Container(
+          color: cSec.withOpacity(0.1),
+          child: Center(
+            child: SingleChildScrollView(
+              child: Container(
+                margin: EdgeInsets.all(20.w),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20.r),
+                ),
+                padding: EdgeInsets.all(30.0.w),
+                child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  // mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Icon(Icons.lock, size: 24.sp, color: cSec),
+                    SizedBox(height: 20.w),
+                    Text(
+                      "Please verify that you are a member of INFOCTESS-UEW",
+                      softWrap: true,
+                      style: TextStyle(
+                        fontSize: 16.sp + 1,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 10.w),
-                  Form(
-                    key: _formKey,
-                    child: InputControl(
-                      hintText: "Enter your Index Number",
-                      controller: _controller,
-                      type: TextInputType.number,
-                      validator: (value) {
-                        if (value!.length < 9) {
-                          return "Please enter a valid index number";
+                    SizedBox(height: 40.w),
+                    Form(
+                      key: _formKey,
+                      child: InputControl(
+                        hintText: "Index Number",
+                        controller: _controller,
+                        type: TextInputType.number,
+                        validator: (value) {
+                          if (value!.length < 9) {
+                            return "Please enter a valid index number";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    // response.isEmpty
+                    //     ? SizedBox(height: 10.h)
+                    //     : const SizedBox.shrink(),
+                    // response != ""
+                    //     ? Text(
+                    //         "$response ",
+                    //         style:
+                    //             TextStyle(color: Colors.red, fontSize: 12.sp + 1),
+                    //       )
+                    //     : const SizedBox.shrink(),
+                    SizedBox(height: 40.w),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          fixedSize: btnLarge(context),
+                          backgroundColor: cPri,
+                          foregroundColor: Colors.white,
+                          textStyle: TextStyle(fontSize: 18.sp)),
+                      onPressed: () async {
+                        if (!_formKey.currentState!.validate()) {
+                          return;
                         }
-                        return null;
-                      },
-                    ),
-                  ),
-                  // response.isEmpty
-                  //     ? SizedBox(height: 10.h)
-                  //     : const SizedBox.shrink(),
-                  // response != ""
-                  //     ? Text(
-                  //         "$response ",
-                  //         style:
-                  //             TextStyle(color: Colors.red, fontSize: 12.sp + 1),
-                  //       )
-                  //     : const SizedBox.shrink(),
-                  SizedBox(height: sh1(context)),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        elevation: 0,
-                        fixedSize: btnLarge(context),
-                        backgroundColor: cPri,
-                        foregroundColor: Colors.white,
-                        textStyle: TextStyle(fontSize: 18.sp)),
-                    onPressed: () async {
-                      if (!_formKey.currentState!.validate()) {
-                        return;
-                      }
-                      setState(() {
-                        response = "";
-                      });
-                      showDialog(
-                        barrierDismissible: false,
-                        context: context,
-                        builder: (context) => Center(
-                          // title: const Text("Verification"),
-                          child: Image.asset(
-                            "assets/images/preload.gif",
-                            height: 30.w,
-                            width: 30.w,
-                          ),
-                        ),
-                      );
-                      try {
-                        await checkUserAccess(_controller.text).then(
-                          (value) async {
-                            if (value != null) {
-                              try {
-                                await Auth()
-                                    .checkUserExists(
-                                  (_controller.text.trim()),
-                                )
-                                    .then(
-                                  (value) {
-                                    Navigator.of(context, rootNavigator: true)
-                                        .pop();
-                                    if (value == false) {
-                                      StatusAlert.show(
-                                        context,
-                                        title: "Verified",
-                                        titleOptions:
-                                            StatusAlertTextConfiguration(
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 16.sp + 1,
-                                            // fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        maxWidth: 50.vw,
-                                        configuration: IconConfiguration(
-                                          icon: Icons.check,
-                                          color: Colors.green,
-                                          size: 50.w,
-                                        ),
-                                      );
-                                      // Navigator.pop(context);
-                                      Navigator.popAndPushNamed(
-                                        context,
-                                        "/onboarding",
-                                      );
-                                    } else {
-                                      CustomDialog.show(context,
-                                          message:
-                                              "You already have an account with us. Please login",
-                                          alertStyle: AlertStyle.error);
-                                      setState(() {
-                                        response = "User already exists";
-                                      });
-                                    }
-                                  },
-                                );
-                              } catch (e) {
-                                Navigator.of(context, rootNavigator: true)
-                                    .pop();
-
-                                CustomDialog.show(context,
-                                    message:
-                                        "An error occured while performing your request",
-                                    alertStyle: AlertStyle.error);
-                                setState(() {
-                                  response =
-                                      "An error occured. Please try again";
-                                });
-                                // Navigator.pop(context);
-                              }
-                            } else {
-                              Navigator.of(context, rootNavigator: true).pop();
-                              CustomDialog.show(context,
-                                  message:
-                                      "Sorry, we couldn't verify your identity",
-                                  alertStyle: AlertStyle.error);
-                              setState(() {
-                                response =
-                                    "Sorry, we couldn't verify your identity";
-                              });
-                              // Navigator.pop(context);
-                            }
-                          },
-                        );
-                      } catch (e) {
-                        Navigator.of(context, rootNavigator: true).pop();
-
-                        CustomDialog.show(context,
-                            message:
-                                "An error occured while performing your request",
-                            alertStyle: AlertStyle.error);
                         setState(() {
-                          response = "An error occured. Please try again";
+                          response = "";
                         });
-                      }
-                    },
-                    child: Text(
-                      "verify",
-                      style: TextStyle(fontSize: 16.sp + 1),
+                        showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (context) => Center(
+                            // title: const Text("Verification"),
+                            child: Image.asset(
+                              "assets/images/preload.gif",
+                              height: 30.w,
+                              width: 30.w,
+                            ),
+                          ),
+                        );
+                        try {
+                          await checkUserAccess(_controller.text).then(
+                            (value) async {
+                              print(value);
+                              switch (value) {
+                                case 1:
+                                  StatusAlert.show(
+                                    context,
+                                    title: "Verified",
+                                    titleOptions: StatusAlertTextConfiguration(
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16.sp + 1,
+                                        // fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    maxWidth: 50.vw,
+                                    configuration: IconConfiguration(
+                                      icon: Icons.check,
+                                      color: Colors.green,
+                                      size: 50.w,
+                                    ),
+                                  );
+                                  // Navigator.pop(context);
+                                  Navigator.popAndPushNamed(
+                                    context,
+                                    "/onboarding",
+                                  );
+
+                                  break;
+
+                                case 2:
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pop();
+                                  CustomDialog.show(context,
+                                      message:
+                                          "You have already registered. Please login",
+                                      alertStyle: AlertStyle.error);
+
+                                  break;
+
+                                case 0:
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pop();
+                                  CustomDialog.show(context,
+                                      message:
+                                          "We couldn't find your details. Please try again",
+                                      alertStyle: AlertStyle.error);
+
+                                  break;
+
+                                default:
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pop();
+
+                                  CustomDialog.show(context,
+                                      message:
+                                          "An error occured while performing your request",
+                                      alertStyle: AlertStyle.error);
+                                  break;
+                              }
+                            },
+                          );
+                        } catch (e) {
+                          Navigator.of(context, rootNavigator: true).pop();
+
+                          CustomDialog.show(context,
+                              message:
+                                  "An error occured while performing your request",
+                              alertStyle: AlertStyle.error);
+                          // setState(() {
+                          //   response = "An error occured. Please try again";
+                          // });
+                        }
+                      },
+                      child: Text(
+                        "verify",
+                        style: TextStyle(fontSize: 16.sp + 1),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 10.w,
-                  ),
-                ],
+                    SizedBox(
+                      height: 10.w,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
