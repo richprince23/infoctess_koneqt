@@ -144,7 +144,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
               const UtilItem(
                 icon: CupertinoIcons.bell,
                 title: 'Updates',
-                route: '',
+                route: 'check-updates',
               ),
               // InkWell(
               //   onTap: () => NotificationService().showNotification(

@@ -31,6 +31,7 @@ import 'package:infoctess_koneqt/screens/tools/schedules/add_schedule.dart';
 import 'package:infoctess_koneqt/screens/tools/schedules/timetable.dart';
 import 'package:infoctess_koneqt/screens/tools/studymate/ai_imager.dart';
 import 'package:infoctess_koneqt/screens/tools/studymate/aichat_screen.dart';
+import 'package:infoctess_koneqt/screens/tools/updates_screen.dart';
 import 'package:infoctess_koneqt/screens/user_screens/bookmarks.dart';
 import 'package:infoctess_koneqt/screens/user_screens/calendar.dart';
 import 'package:infoctess_koneqt/screens/user_screens/chat_background.dart';
@@ -119,6 +120,7 @@ class MyApp extends StatelessWidget {
           "/terms-and-conditions": (context) => const TermsConditionsScreen(),
           "/my-dues": (context) => const MyDuesScreen(),
           "/new-payment": (context) => const NewPayment(),
+          "/check-updates": (context) => const UpdatesScreen(),
         },
       ),
     );
