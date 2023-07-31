@@ -1,3 +1,5 @@
+import 'package:infoctess_koneqt/controllers/user_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,7 +29,8 @@ class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
           height: 30.w,
           useOldImageOnUrlChange: true,
           fit: BoxFit.contain,
-          imageUrl: curUser!.avatar!,
+          imageUrl: auth.currentUser!.photoURL!,
+          // imageUrl: Provider.of<UserProvider>(context, listen: false).avatar,
           imageBuilder: (context, imageProvider) => Container(
             padding: EdgeInsets.all(15.w),
             decoration: BoxDecoration(

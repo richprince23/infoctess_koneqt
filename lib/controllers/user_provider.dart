@@ -10,11 +10,22 @@ import 'package:provider/provider.dart';
 class UserProvider extends ChangeNotifier {
   int? _indexNum;
   String? _firstName;
+  // String _avatar = "";
   late bool _isLoggedIn;
   late String _userID;
 
   /// gets user's index number
   get indexNum async => _indexNum;
+
+  set avatar(String avatar) {
+    curUser!.avatar = avatar;
+    // setUser(curUser!);
+    notifyListeners();
+  }
+
+  String get avatar {
+    return curUser!.avatar!;
+  }
 
   /// sets user's index number
   setPhoneNum(int? indexNum) async {

@@ -234,85 +234,98 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                               borderRadius: BorderRadius.circular(30),
                             ),
                           ),
-                          onPressed: () async {
-                            // try {
-                            if (!profileFormKey.currentState!.validate()) {
-                              return;
-                            }
-                            setState(() {
-                              onboardUser!.userName =
-                                  userNameCon.text.trim().toLowerCase();
-                              onboardUser!.phoneNum = phoneNumCon.text.trim();
-                            });
-                            if (croppedMedia != null) {
-                              showDialog(
-                                barrierDismissible: false,
-                                context: context,
-                                builder: (context) => Center(
-                                  // title: const Text("Verification"),
-                                  child: Image.asset(
-                                    "assets/images/preload.gif",
-                                    height: 30.w,
-                                    width: 30.w,
-                                  ),
-                                ),
-                              );
-                              await Auth()
-                                  .saveUserInfo(
-                                    indexNum: onboardUser!.indexNum.toString(),
-                                    userName: onboardUser!.userName,
-                                    phoneNum: onboardUser!.phoneNum,
-                                    gender: onboardUser!.gender,
-                                    level: onboardUser!.userLevel,
-                                    classGroup: onboardUser!.classGroup,
-                                    fullName: onboardUser!.fullName,
-                                  )
-                                  .then((value) async => await Auth()
-                                      .saveUserImage(croppedMedia!.path))
-                                  .then((value) async => {
-                                        StatusAlert.show(
-                                          context,
-                                          title: "Success",
-                                          subtitle:
-                                              "Your profile has been updated",
-                                          maxWidth: 50.vw,
-                                          titleOptions:
-                                              StatusAlertTextConfiguration(
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 16.sp + 1,
-                                              // fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          configuration: IconConfiguration(
-                                            icon: Icons.check,
-                                            color: Colors.green,
-                                            size: 50.w,
+                          onPressed: ((croppedMedia != null ||
+                                          selectedMedia != null) &&
+                                      onboardUser!.userName != null &&
+                                      onboardUser!.phoneNum != null) ==
+                                  true
+                              ? () async {
+                                  try {
+                                    if (!profileFormKey.currentState!
+                                        .validate()) {
+                                      return;
+                                    }
+                                    setState(() {
+                                      onboardUser!.userName =
+                                          userNameCon.text.trim().toLowerCase();
+                                      onboardUser!.phoneNum =
+                                          phoneNumCon.text.trim();
+                                    });
+                                    if ((croppedMedia != null ||
+                                            selectedMedia != null) &&
+                                        onboardUser!.userName != null &&
+                                        onboardUser!.phoneNum != null) {
+                                      showDialog(
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (context) => Center(
+                                          // title: const Text("Verification"),
+                                          child: Image.asset(
+                                            "assets/images/preload.gif",
+                                            height: 30.w,
+                                            width: 30.w,
                                           ),
                                         ),
-                                        await Provider.of<UserProvider>(context,
-                                                listen: false)
-                                            .setUserDetails()
-                                            .then(
-                                              (value) => Navigator
-                                                  .pushReplacementNamed(
-                                                      context, "/"),
-                                            ),
-                                      });
-                            }
-                            // } catch (e) {
-                            //   CustomDialog.show(
-                            //     context,
-                            //     message: e.toString(),
-                            //     // "An error occurred while performing you request"
-                            //   );
-                            // }
-                            setState(() {
-                              Provider.of<OnboardingController>(context,
-                                      listen: false)
-                                  .nextPage();
-                            });
-                          },
+                                      );
+                                      await Auth()
+                                          .saveUserInfo(
+                                            indexNum: onboardUser!.indexNum
+                                                .toString(),
+                                            userName: onboardUser!.userName,
+                                            phoneNum: onboardUser!.phoneNum,
+                                            gender: onboardUser!.gender,
+                                            level: onboardUser!.userLevel,
+                                            classGroup: onboardUser!.classGroup,
+                                            fullName: onboardUser!.fullName,
+                                          )
+                                          .then((value) async => await Auth()
+                                              .saveUserImage(
+                                                  croppedMedia!.path))
+                                          .then((value) async => {
+                                                StatusAlert.show(
+                                                  context,
+                                                  title: "Success",
+                                                  subtitle:
+                                                      "Your profile has been updated",
+                                                  maxWidth: 50.vw,
+                                                  titleOptions:
+                                                      StatusAlertTextConfiguration(
+                                                    style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 16.sp + 1,
+                                                      // fontWeight: FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  configuration:
+                                                      IconConfiguration(
+                                                    icon: Icons.check,
+                                                    color: Colors.green,
+                                                    size: 50.w,
+                                                  ),
+                                                ),
+                                                await Provider.of<UserProvider>(
+                                                        context,
+                                                        listen: false)
+                                                    .setUserDetails()
+                                                    .then(
+                                                      (value) => Navigator
+                                                          .pushReplacementNamed(
+                                                              context, "/"),
+                                                    ),
+                                              });
+                                    }
+                                  } catch (e) {
+                                    CustomDialog.show(context,
+                                        message:
+                                            "An error occurred while performing you request");
+                                  }
+                                  setState(() {
+                                    Provider.of<OnboardingController>(context,
+                                            listen: false)
+                                        .nextPage();
+                                  });
+                                }
+                              : null,
                           child: Text(
                             "finish",
                             style: GoogleFonts.sarabun(

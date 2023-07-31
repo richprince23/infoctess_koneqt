@@ -9,9 +9,11 @@ import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/components/select_control1.dart';
 import 'package:infoctess_koneqt/constants.dart';
+import 'package:infoctess_koneqt/controllers/user_provider.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/models/user_info.dart';
 import 'package:infoctess_koneqt/widgets/status_snack.dart';
+import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -200,6 +202,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   InputControl(
                     hintText: "Fullname",
                     type: TextInputType.name,
+                    readOnly: true,
                     controller: _fnameController,
                     leading: const Icon(Icons.person),
                   ),
@@ -251,29 +254,29 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       );
                     }).toList(),
                   ),
-                  // SelectControl(
-                  //   validator: (value) {
-                  //     if (value == null) {
-                  //       return "Please select a class group";
-                  //     }
-                  //     return null;
-                  //   },
-                  //   onChanged: (value) {
-                  //     setState(() {
-                  //       selectedGender = value!;
-                  //     });
-                  //   },
-                  //   hintText: "Gender",
-                  //   items: gender.map((e) {
-                  //     return DropdownMenuItem(
-                  //       value: e,
-                  //       child: Text(
-                  //         e,
-                  //         style: TextStyle(fontSize: 14.sp),
-                  //       ),
-                  //     );
-                  //   }).toList(),
-                  // ),
+                  SelectControl(
+                    validator: (value) {
+                      if (value == null) {
+                        return "Please select a class group";
+                      }
+                      return null;
+                    },
+                    onChanged: (value) {
+                      setState(() {
+                        selectedGender = value!;
+                      });
+                    },
+                    hintText: "Gender",
+                    items: gender.map((e) {
+                      return DropdownMenuItem(
+                        value: e,
+                        child: Text(
+                          e,
+                          style: TextStyle(fontSize: 14.sp),
+                        ),
+                      );
+                    }).toList(),
+                  ),
                   SizedBox(height: 20.w),
                   Container(
                     margin: EdgeInsets.only(bottom: 20.w),
@@ -297,12 +300,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   fullName: _fnameController.text.trim(),
                                   // userName: _userNameController.text.trim(),
                                   phoneNum: _phoneController.text.trim(),
-                                  // gender: selectedGender,
+                                  gender: selectedGender,
                                   classGroup: selectedGroup,
                                   // level: selectedLevel,
+                                  avatar: croppedMedia?.path,
                                 )
                                 .then(
                                   (value) => {
+                                    Provider.of<UserProvider>(context,
+                                            listen: false)
+                                        .avatar = croppedMedia?.path ?? "",
                                     Navigator.pop(context),
                                     CustomSnackBar.show(
                                       context,

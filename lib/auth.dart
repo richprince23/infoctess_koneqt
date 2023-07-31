@@ -104,7 +104,6 @@ class Auth {
       }).then((value) => docID = value.id);
       return docID;
     } on FirebaseException catch (e) {
-      print(e);
       throw FirebaseException(
         code: e.code,
         message: e.message,
@@ -145,7 +144,6 @@ class Auth {
         },
       );
     } on FirebaseException catch (e) {
-      print(e);
       throw FirebaseException(
         code: e.code,
         message: e.message,
@@ -189,7 +187,8 @@ class Auth {
       //check if avatar is null
 
       if (avatar != null) {
-        Auth().saveUserImage(avatar);
+        await Auth().saveUserImage(avatar);
+        
       }
       await db
           .collection('user_infos')

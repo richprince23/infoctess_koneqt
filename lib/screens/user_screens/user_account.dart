@@ -28,7 +28,7 @@ class UserAccountScreen extends StatelessWidget {
                 child: CircleAvatar(
                   radius: 40.r,
                   backgroundImage: CachedNetworkImageProvider(
-                    curUser!.avatar!,
+                    auth.currentUser!.photoURL!,
                     errorListener: () => const Icon(Icons.person),
                   ),
                 ),
