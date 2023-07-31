@@ -29,8 +29,8 @@ class NewsScreen extends StatelessWidget {
                 return Center(
                   child: Image.asset(
                     "assets/images/preload.gif",
-                    width: 50.h,
-                    height: 50.h,
+                    width: 50.w,
+                    height: 50.w,
                   ),
                 );
               }
@@ -54,7 +54,7 @@ class NewsScreen extends StatelessWidget {
                     // print("newssssss id ${newsData.data()}");
                     return Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: 8.0.w, vertical: 2.0.h),
+                          horizontal: 8.0.w, vertical: 2.0.w),
                       child: NewsItem(
                         news: News(
                           id: newsData.id,

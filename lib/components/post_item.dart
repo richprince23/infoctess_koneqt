@@ -233,7 +233,7 @@ class _PostItemState extends State<PostItem> {
             // shadowColor: Colors.grey,
             color: Colors.white,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.0.w, vertical: 6.h),
+              padding: EdgeInsets.symmetric(horizontal: 12.0.w, vertical: 6.w),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -252,7 +252,7 @@ class _PostItemState extends State<PostItem> {
                     child: Container(
                       padding: EdgeInsets.all(10.w),
                       // height: 50,
-                      margin: EdgeInsets.only(bottom: 5.h),
+                      margin: EdgeInsets.only(bottom: 5.w),
                       decoration: BoxDecoration(
                         color: cPri.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(10.r),
@@ -260,7 +260,7 @@ class _PostItemState extends State<PostItem> {
                       child: Row(
                         children: [
                           Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4.0.h),
+                            padding: EdgeInsets.symmetric(horizontal: 4.0.w),
                             child: CircleAvatar(
                               // radius: 25,
                               foregroundImage: CachedNetworkImageProvider(
@@ -296,7 +296,7 @@ class _PostItemState extends State<PostItem> {
                                     poster.isPosterAdmin?.toString() == "true"
                                         ? Container(
                                             padding: EdgeInsets.symmetric(
-                                                horizontal: 5.w, vertical: 2.h),
+                                                horizontal: 5.w, vertical: 2.w),
                                             // decoration: BoxDecoration(
                                             //   color: cPri.withOpacity(0.1),
                                             //   borderRadius:
@@ -360,8 +360,8 @@ class _PostItemState extends State<PostItem> {
                                       (context, url, progress) => Center(
                                     child: Image.asset(
                                       "assets/images/preload.gif",
-                                      width: 30.h,
-                                      height: 30.h,
+                                      width: 30.w,
+                                      height: 30.w,
                                     ),
                                   ),
                                   fit: BoxFit.cover,
@@ -371,7 +371,7 @@ class _PostItemState extends State<PostItem> {
                               : const SizedBox.shrink(),
                         ),
                         Container(
-                          padding: EdgeInsets.only(top: 10.h),
+                          padding: EdgeInsets.only(top: 10.w),
                           child: Align(
                             alignment: Alignment.topLeft,
                             child: RichText(
@@ -422,7 +422,7 @@ class _PostItemState extends State<PostItem> {
                           ),
                         ),
                         SizedBox(
-                          height: 10.h,
+                          height: 10.w,
                         ),
                         // Row(
                         //   mainAxisAlignment: MainAxisAlignment.end,

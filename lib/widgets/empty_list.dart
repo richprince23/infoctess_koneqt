@@ -32,7 +32,7 @@ class EmptyList extends StatelessWidget {
               height: 50.w,
             ),
             SizedBox(
-              height: 10.h,
+              height: 10.w,
             ),
             Text(
               text,

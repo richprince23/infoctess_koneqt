@@ -29,11 +29,11 @@ class _BottomNavState extends State<BottomNav> {
         surfaceTintColor: cSec.withOpacity(0.8),
         elevation: 3,
         selectedIndex: context.watch<PageControl>().pageIndex,
-        height: 50.h,
+        height: 50.w,
         labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
         destinations: [
           SizedBox(
-            height: 50.h,
+            height: 50.w,
             child: InkWell(
               // iconSize: 16,
               onTap: () {
@@ -56,7 +56,7 @@ class _BottomNavState extends State<BottomNav> {
             ),
           ),
           SizedBox(
-            height: 50.h,
+            height: 50.w,
             child: InkWell(
               // iconSize: 16,
               onTap: () {
@@ -79,7 +79,7 @@ class _BottomNavState extends State<BottomNav> {
             ),
           ),
           SizedBox(
-            height: 50.h,
+            height: 50.w,
             child: InkWell(
               // iconSize: 16,
               onTap: () {
@@ -100,7 +100,7 @@ class _BottomNavState extends State<BottomNav> {
             ),
           ),
           SizedBox(
-            height: 50.h,
+            height: 50.w,
             // width: size.height * 0.06,
             child: InkWell(
               // iconSize: 16,
@@ -124,7 +124,7 @@ class _BottomNavState extends State<BottomNav> {
             ),
           ),
           SizedBox(
-            height: 50.h,
+            height: 50.w,
             // width: size.height * 0.06,
             child: InkWell(
               // iconSize: 16,

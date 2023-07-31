@@ -107,7 +107,7 @@ class CreatePostState extends State<CreatePost> {
   Widget build(BuildContext context) {
     return Container(
       // height: 80,
-      margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
+      margin: EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.w),
       padding:
           EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       color: Colors.white.withOpacity(0.8),
@@ -118,10 +118,10 @@ class CreatePostState extends State<CreatePost> {
           Align(
             alignment: Alignment.topRight,
             child: SizedBox(
-              height: 20.h,
+              height: 20.w,
               child: IconButton(
                 style: IconButton.styleFrom(
-                    fixedSize: Size(20.h, 20.h), padding: EdgeInsets.all(5.w)),
+                    fixedSize: Size(20.w, 20.w), padding: EdgeInsets.all(5.w)),
                 onPressed: () => Navigator.pop(context),
                 icon: const Icon(CupertinoIcons.clear),
                 iconSize: 16.w,
@@ -172,7 +172,7 @@ class CreatePostState extends State<CreatePost> {
                 : const SizedBox.shrink(),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 1.0.h, horizontal: 2.w),
+            padding: EdgeInsets.symmetric(vertical: 1.0.w, horizontal: 2.w),
             child: Row(
               // mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -342,10 +342,10 @@ class CreatePostState extends State<CreatePost> {
             child: _image(),
           ),
           Positioned(
-            top: 4.h,
+            top: 4.w,
             right: 4.w,
             width: 20.w,
-            height: 20.h,
+            height: 20.w,
             child: IconButton(
               style: IconButton.styleFrom(
                 padding: EdgeInsets.all(5.r),

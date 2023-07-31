@@ -50,15 +50,15 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
             stops: [0.2, 1],
           ),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.w),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 2, sigmaY: 0),
           child: GridView.count(
             cacheExtent: 40,
             crossAxisCount: 2,
             scrollDirection: Axis.vertical,
-            crossAxisSpacing: 10.h,
-            mainAxisSpacing: 10.h,
+            crossAxisSpacing: 10.w,
+            mainAxisSpacing: 10.w,
             children: [
               const UtilItem(
                 icon: CupertinoIcons.divide,
@@ -122,7 +122,7 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Icon(CupertinoIcons.link,
-                          size: 50.h,
+                          size: 50.w,
                           color: AppTheme.themeData(false, context)
                               .primaryColorLight),
                       Text(
@@ -181,7 +181,7 @@ class UtilItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Icon(icon,
-                size: 50.h,
+                size: 50.w,
                 color: AppTheme.themeData(false, context).primaryColorLight),
             Text(
               title,

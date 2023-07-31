@@ -27,8 +27,8 @@ class EventsScreen extends StatelessWidget {
                 return Center(
                   child: Image.asset(
                     "assets/images/preload.gif",
-                    width: 50.h,
-                    height: 50.h,
+                    width: 50.w,
+                    height: 50.w,
                   ),
                 );
               }
@@ -54,7 +54,7 @@ class EventsScreen extends StatelessWidget {
                     // print(rawEvent.timestamp);
                     return Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: 8.0.w, vertical: 2.0.h),
+                          horizontal: 8.0.w, vertical: 2.0.w),
                       child: EventItem(
                         // event: Event(
                         //   id: newsData.id,

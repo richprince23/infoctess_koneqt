@@ -80,7 +80,7 @@ class _ForumsScreenState extends State<ForumsScreen> {
           backgroundColor: cSec,
           foregroundColor: Colors.white,
           elevation: 5,
-          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.w),
         ),
         onPressed: () {
           showModalBottomSheet(

@@ -267,7 +267,7 @@ class _PostDetailsState extends State<PostDetails> {
                             : const SizedBox.shrink(),
                       ),
                       Container(
-                        padding: EdgeInsets.only(top: 10.h),
+                        padding: EdgeInsets.only(top: 10.w),
                         child: Align(
                           alignment: Alignment.topLeft,
                           child: RichText(
@@ -322,7 +322,7 @@ class _PostDetailsState extends State<PostDetails> {
                         ),
                       ),
                       SizedBox(
-                        height: 10.h,
+                        height: 10.w,
                       ),
                       FutureBuilder(
                           // future: getStat(),

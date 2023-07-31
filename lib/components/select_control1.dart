@@ -34,7 +34,7 @@ class _SelectControlState extends State<SelectControl> {
       children: [
         if (widget.showLabel == true)
           SizedBox(
-            height: 5.h,
+            height: 5.w,
           ),
         if (widget.showLabel == true)
           Text(

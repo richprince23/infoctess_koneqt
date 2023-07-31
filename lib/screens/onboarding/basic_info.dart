@@ -59,23 +59,23 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
               backgroundColor: cPri,
               elevation: 0,
               pinned: true,
-              toolbarHeight: 48.h,
+              toolbarHeight: 48.w,
               leading: IconButton(
                 onPressed: () {
                   Navigator.popAndPushNamed(context, "/login");
                 },
                 icon: const BackButtonIcon(),
-                iconSize: 24.h,
+                iconSize: 24.w,
                 color: Colors.white,
               ),
-              expandedHeight: 160.h,
+              expandedHeight: 160.w,
               flexibleSpace: FlexibleSpaceBar(
                 expandedTitleScale: 1,
                 centerTitle: true,
                 title: Text(
                   "Basic Info",
                   style: GoogleFonts.sarabun(
-                      fontSize: 24.h,
+                      fontSize: 24.w,
                       color: Colors.white,
                       fontWeight: FontWeight.normal,
                       decoration: TextDecoration.none),
@@ -84,7 +84,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                   color: cPri,
                   child: Icon(
                     Icons.account_circle,
-                    size: 80.h,
+                    size: 80.w,
                     color: Colors.white,
                   ),
                 ),
@@ -96,7 +96,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                 width: 100.vw,
                 child: Padding(
                   padding:
-                      EdgeInsets.symmetric(horizontal: 30.h, vertical: 20.h),
+                      EdgeInsets.symmetric(horizontal: 30.w, vertical: 20.w),
                   child: Form(
                     key: basicFormKey,
                     child: SingleChildScrollView(
@@ -147,14 +147,14 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                             },
                           ),
                           SizedBox(
-                            height: 10.h,
+                            height: 10.w,
                           ),
                           Align(
                             alignment: Alignment.bottomCenter,
                             child: TextButton(
                               style: TextButton.styleFrom(
                                 minimumSize: btnLarge(context),
-                                backgroundColor:cPri,
+                                backgroundColor: cPri,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30),
                                 ),
@@ -174,8 +174,8 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                                       // title: const Text("Verification"),
                                       child: Image.asset(
                                         "assets/images/preload.gif",
-                                        height: 50.h,
-                                        width: 50.h,
+                                        height: 50.w,
+                                        width: 50.w,
                                       ),
                                     ),
                                   );
@@ -215,7 +215,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
                                   textStyle: TextStyle(
                                     fontWeight: FontWeight.w400,
                                     decoration: TextDecoration.none,
-                                    fontSize: 18.h,
+                                    fontSize: 18.w,
                                     color: Colors.white,
                                   ),
                                 ),

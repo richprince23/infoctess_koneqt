@@ -128,7 +128,7 @@ class _CreateNewsState extends State<CreateNews> {
         ),
         body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
+            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.w),
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               controller: ScrollController(),
@@ -141,7 +141,7 @@ class _CreateNewsState extends State<CreateNews> {
                       children: [
                         SizedBox(
                           child: AnimatedContainer(
-                            margin: EdgeInsets.only(bottom: 10.h),
+                            margin: EdgeInsets.only(bottom: 10.w),
                             duration: const Duration(milliseconds: 200),
                             height: 30.vh,
                             width: 80.vw,
@@ -174,7 +174,7 @@ class _CreateNewsState extends State<CreateNews> {
                       ],
                     ),
                     SizedBox(
-                      height: 10.h,
+                      height: 10.w,
                     ),
                     TextField(
                       style: TextStyle(fontSize: 16.sp + 1),
@@ -200,7 +200,7 @@ class _CreateNewsState extends State<CreateNews> {
                       ),
                     ),
                     SizedBox(
-                      height: 5.h,
+                      height: 5.w,
                     ),
                     SizedBox(
                       child: QuillToolbar.basic(
@@ -270,8 +270,8 @@ class _CreateNewsState extends State<CreateNews> {
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(top: 10.h),
-                            height: 50.h,
+                            margin: EdgeInsets.only(top: 10.w),
+                            height: 50.w,
                             child: TextButton(
                               onPressed: () {
                                 if (titleController.text.isNotEmpty &&
@@ -400,10 +400,10 @@ class _CreateNewsState extends State<CreateNews> {
             child: _image(),
           ),
           Positioned(
-            top: 4.h,
+            top: 4.w,
             right: 4.w,
             width: 20.w,
-            height: 20.h,
+            height: 20.w,
             child: IconButton(
               style: IconButton.styleFrom(
                 padding: EdgeInsets.all(5.r),

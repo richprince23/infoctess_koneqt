@@ -16,21 +16,21 @@ class DrawerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // return Drawer(
     //   child: Padding(
-    //     padding: EdgeInsets.all(12.0.h),
+    //     padding: EdgeInsets.all(12.0.w),
     //     child: ListView(
     //       children: [
     //         Card(
-    //           margin: EdgeInsets.all(8.h),
+    //           margin: EdgeInsets.all(8.w),
     //           elevation: 1,
     //           child: Padding(
-    //             padding: EdgeInsets.symmetric(horizontal: 10.h, vertical: 5.h),
+    //             padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.w),
     //             child: Column(
     //               children: [
     //                 CircleAvatar(
-    //                   radius: 50.h,
+    //                   radius: 50.w,
     //                   foregroundImage: CachedNetworkImageProvider(
     //                     // fit: BoxFit.fill,
-    //                     maxWidth: 100.h.ceil(),
+    //                     maxWidth: 100.w.ceil(),
     //                     curUser?.avatar?.isNotEmpty == true
     //                         ? curUser!.avatar!
     //                         : "https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle.png",
@@ -63,7 +63,7 @@ class DrawerScreen extends StatelessWidget {
     //                     fontWeight: FontWeight.w400,
     //                   ),
     //                 ),
-    //                 SizedBox(height: 20.h),
+    //                 SizedBox(height: 20.w),
     //                 ElevatedButton.icon(
     //                   style: ElevatedButton.styleFrom(
     //                     shadowColor:
@@ -73,7 +73,7 @@ class DrawerScreen extends StatelessWidget {
     //                     foregroundColor: Colors.white,
     //                     maximumSize: Size(
     //                       100.w < 140 ? 140 : 100.w,
-    //                       40.h < 40 ? 40 : 40.h,
+    //                       40.w < 40 ? 40 : 40.w,
     //                     ),
     //                   ),
     //                   onPressed: () {},
@@ -221,7 +221,7 @@ class DrawerScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       child: ListView(
         padding:
-            EdgeInsets.only(left: 20.w, top: 40.h, bottom: 20.h, right: 20.w),
+            EdgeInsets.only(left: 20.w, top: 40.w, bottom: 20.w, right: 20.w),
         children: [
           InkWell(
             onTap: () {
@@ -281,7 +281,7 @@ class DrawerScreen extends StatelessWidget {
           // Divider(
           //   color: cPri,
           // ),
-          SizedBox(height: 10.h),
+          SizedBox(height: 10.w),
           // const ListItem(
           //     icon: Icons.person, title: "Profile", route: "/profile"),
           const ListItem(

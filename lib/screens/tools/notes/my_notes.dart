@@ -89,8 +89,8 @@ class _MyNotesState extends State<MyNotes> with RouteAware {
             ? Center(
                 child: Image.asset(
                   'assets/images/preload.gif',
-                  height: 20.h,
-                  width: 20.h,
+                  height: 20.w,
+                  width: 20.w,
                 ),
               )
             : Container(

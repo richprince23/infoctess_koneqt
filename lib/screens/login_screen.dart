@@ -64,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             "assets/images/infoctess_logo_bg.png"),
                       ),
                       SizedBox(
-                        height: 10.h,
+                        height: 10.w,
                       ),
                       Text(
                         "INFOCTESS KONEQT",
@@ -75,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             decoration: TextDecoration.none),
                       ),
                       SizedBox(
-                        height: 5.h,
+                        height: 5.w,
                       ),
                       Text(
                         "Welcome Back",
@@ -103,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Container(
                     alignment: Alignment.topCenter,
                     padding:
-                        EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.h),
+                        EdgeInsets.symmetric(horizontal: 30.w, vertical: 10.w),
                     width: MediaQuery.of(context).size.width,
                     decoration: const BoxDecoration(
                       color: Colors.white,
@@ -141,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                           ),
                           SizedBox(
-                            height: 10.h,
+                            height: 10.w,
                           ),
                           GestureDetector(
                             //TODO: Implement Forgot Password
@@ -169,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           SizedBox(
-                            height: 10.h,
+                            height: 10.w,
                           ),
                           TextButton(
                             onPressed: () async {
@@ -268,7 +268,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           SizedBox(
-                            height: 10.h,
+                            height: 10.w,
                           ),
                           GestureDetector(
                             onTap: () => Navigator.pushReplacementNamed(

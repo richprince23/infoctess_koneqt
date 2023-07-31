@@ -61,7 +61,7 @@ class ImageViewer extends StatelessWidget {
                       context: context,
                       builder: (context) => Center(
                         child: Image.asset("assets/images/preload.gif",
-                            height: 50.h),
+                            height: 50.w),
                       ),
                     );
                     await saveImage().then((value) {

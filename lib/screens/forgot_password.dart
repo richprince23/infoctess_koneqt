@@ -50,7 +50,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 ),
               ),
               SizedBox(
-                height: 10.h,
+                height: 10.w,
               ),
               InputControl(
                 controller: textController,
@@ -59,7 +59,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 type: TextInputType.emailAddress,
               ),
               SizedBox(
-                height: response == "" ? 0 : 10.h,
+                height: response == "" ? 0 : 10.w,
               ),
               response != ""
                   ? Text(
@@ -68,7 +68,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     )
                   : const SizedBox.shrink(),
               SizedBox(
-                height: 5.h,
+                height: 5.w,
               ),
               ElevatedButton(
                 onPressed: () async {

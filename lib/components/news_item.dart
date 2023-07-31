@@ -288,7 +288,7 @@ class _ClosedWidgetState extends State<ClosedWidget> {
                 //   ),
                 //   textAlign: TextAlign.left,
                 // ),
-                SizedBox(height: 10.h),
+                SizedBox(height: 10.w),
                 Align(
                   alignment: Alignment.bottomRight,
                   child: Text(
@@ -433,7 +433,7 @@ class _OpenWidgetState extends State<OpenWidget> {
                 height: 30.vh,
                 // width: 100.vw,
                 fit: BoxFit.cover,
-                // width: 30.h,
+                // width: 30.w,
               ),
               progressIndicatorBuilder: (context, url, progress) => Center(
                 child: Image.asset(

@@ -85,24 +85,24 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
           SliverAppBar(
             backgroundColor: cPri,
             pinned: true,
-            toolbarHeight: 48.h,
+            toolbarHeight: 48.w,
             leading: IconButton(
               onPressed: () {
                 Provider.of<OnboardingController>(context, listen: false)
                     .goBack();
               },
               icon: const BackButtonIcon(),
-              iconSize: 24.h,
+              iconSize: 24.w,
               color: Colors.white,
             ),
-            expandedHeight: 160.h,
+            expandedHeight: 160.w,
             flexibleSpace: FlexibleSpaceBar(
               expandedTitleScale: 1,
               centerTitle: true,
               title: Text(
                 "Profile Info",
                 style: GoogleFonts.sarabun(
-                    fontSize: 24.h,
+                    fontSize: 24.w,
                     color: Colors.white,
                     fontWeight: FontWeight.normal,
                     decoration: TextDecoration.none),
@@ -112,7 +112,7 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                 child: Icon(
                   Icons.person_pin,
                   color: Colors.white,
-                  size: 80.h,
+                  size: 80.w,
                 ),
               ),
             ),
@@ -122,7 +122,7 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
               height: 100.vh,
               width: size.width,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30.h, vertical: 20.h),
+                padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 20.w),
                 child: Form(
                   key: profileFormKey,
                   child: SingleChildScrollView(
@@ -143,7 +143,7 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                                 ),
                               )
                             : CircleAvatar(
-                                backgroundColor:cPri,
+                                backgroundColor: cPri,
                                 radius: (size.width * 0.35) / 2,
                                 child: const Text(
                                   "User",

@@ -246,7 +246,7 @@ class CreateEventState extends State<CreateEvent> {
                           children: [
                             SizedBox(
                               child: AnimatedContainer(
-                                margin: EdgeInsets.only(bottom: 10.h),
+                                margin: EdgeInsets.only(bottom: 10.w),
                                 duration: const Duration(milliseconds: 200),
                                 height: 30.vh,
                                 width: 80.vw,
@@ -292,7 +292,7 @@ class CreateEventState extends State<CreateEvent> {
                             return null;
                           },
                         ),
-                        SizedBox(height: 10.0.h),
+                        SizedBox(height: 10.0.w),
                         TextFormField(
                           controller: _dateController,
                           decoration: inputDecoration.copyWith(
@@ -319,7 +319,7 @@ class CreateEventState extends State<CreateEvent> {
                             return null;
                           },
                         ),
-                        SizedBox(height: 10.h),
+                        SizedBox(height: 10.w),
                         TextFormField(
                           controller: _timeRangeController,
                           decoration: inputDecoration.copyWith(
@@ -338,7 +338,7 @@ class CreateEventState extends State<CreateEvent> {
                             return null;
                           },
                         ),
-                        SizedBox(height: 10.h),
+                        SizedBox(height: 10.w),
                         TextFormField(
                           controller: _venueController,
                           decoration: inputDecoration.copyWith(
@@ -352,7 +352,7 @@ class CreateEventState extends State<CreateEvent> {
                             return null;
                           },
                         ),
-                        SizedBox(height: 10.h),
+                        SizedBox(height: 10.w),
                         DropdownButtonFormField<String>(
                           value: _selectedMode,
                           items: const [
@@ -382,7 +382,7 @@ class CreateEventState extends State<CreateEvent> {
                             prefixIcon: const Icon(Icons.co_present),
                           ),
                         ),
-                        SizedBox(height: 10.h),
+                        SizedBox(height: 10.w),
                         TextFormField(
                           controller: _feeController,
                           decoration: inputDecoration.copyWith(
@@ -397,7 +397,7 @@ class CreateEventState extends State<CreateEvent> {
                             return null;
                           },
                         ),
-                        SizedBox(height: 10.h),
+                        SizedBox(height: 10.w),
                         SizedBox(
                           child: QuillToolbar.basic(
                             multiRowsDisplay: false,
@@ -419,7 +419,7 @@ class CreateEventState extends State<CreateEvent> {
                             showInlineCode: false,
                           ),
                         ),
-                        SizedBox(height: 10.h),
+                        SizedBox(height: 10.w),
                         AnimatedContainer(
                           duration: const Duration(seconds: 0),
                           // height: 30.vh,
@@ -455,14 +455,14 @@ class CreateEventState extends State<CreateEvent> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10.h),
+                        SizedBox(height: 10.w),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: cPri,
                             foregroundColor: Colors.white,
                             padding: EdgeInsets.symmetric(
                               horizontal: 20.w,
-                              vertical: 10.h,
+                              vertical: 10.w,
                             ),
                             fixedSize: btnLarge(context),
                           ),
@@ -509,10 +509,10 @@ class CreateEventState extends State<CreateEvent> {
             child: _image(),
           ),
           Positioned(
-            top: 4.h,
+            top: 4.w,
             right: 4.w,
             width: 20.w,
-            height: 20.h,
+            height: 20.w,
             child: IconButton(
               style: IconButton.styleFrom(
                 padding: EdgeInsets.all(5.r),
@@ -572,7 +572,7 @@ Future<TimeRange?> showTimeRangePicker({
         }
       }));
 
-  if (startTime.toString() !="" && endTime.toString() != "") {
+  if (startTime.toString() != "" && endTime.toString() != "") {
     return TimeRange(startTime: startTime, endTime: endTime);
   } else {
     return null;

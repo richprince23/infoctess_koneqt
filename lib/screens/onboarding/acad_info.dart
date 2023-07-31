@@ -50,7 +50,6 @@ class _AcademicInfoScreenState extends State<AcademicInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return KeyboardDismissOnTap(
       child: Scaffold(
         body: CustomScrollView(
@@ -58,7 +57,7 @@ class _AcademicInfoScreenState extends State<AcademicInfoScreen> {
             SliverAppBar(
               backgroundColor: cPri,
               pinned: true,
-              toolbarHeight: 48.h,
+              toolbarHeight: 48.w,
               leading: IconButton(
                 onPressed: () {
                   Provider.of<OnboardingController>(context, listen: false)
@@ -66,9 +65,9 @@ class _AcademicInfoScreenState extends State<AcademicInfoScreen> {
                 },
                 icon: const BackButtonIcon(),
                 color: Colors.white,
-                iconSize: 24.h,
+                iconSize: 24.w,
               ),
-              expandedHeight: 160.h,
+              expandedHeight: 160.w,
               flexibleSpace: FlexibleSpaceBar(
                 expandedTitleScale: 1,
                 centerTitle: true,
@@ -85,7 +84,7 @@ class _AcademicInfoScreenState extends State<AcademicInfoScreen> {
                   child: Icon(
                     Icons.school,
                     color: Colors.white,
-                    size: 80.h,
+                    size: 80.w,
                   ),
                 ),
               ),
@@ -96,7 +95,7 @@ class _AcademicInfoScreenState extends State<AcademicInfoScreen> {
                 width: 100.vw,
                 child: Padding(
                   padding:
-                      EdgeInsets.symmetric(horizontal: 30.h, vertical: 20.h),
+                      EdgeInsets.symmetric(horizontal: 30.w, vertical: 20.w),
                   child: Form(
                     key: acadFormKey,
                     child: SingleChildScrollView(
@@ -179,14 +178,14 @@ class _AcademicInfoScreenState extends State<AcademicInfoScreen> {
                             },
                           ),
                           SizedBox(
-                            height: 10.h,
+                            height: 10.w,
                           ),
                           Align(
                             alignment: Alignment.bottomCenter,
                             child: TextButton(
                               style: TextButton.styleFrom(
                                 minimumSize: btnLarge(context),
-                                backgroundColor:cPri,
+                                backgroundColor: cPri,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30),
                                 ),
