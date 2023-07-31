@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -99,12 +100,17 @@ class ChatlistScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: StreamBuilder(
-                      stream: db.collection("chats").snapshots(),
+                      stream: db
+                          .collection("chats")
+                          .where("members",
+                              arrayContains: auth.currentUser!.uid)
+                          .snapshots(),
                       builder: (context, snapshot) {
                         if (snapshot.hasError) {
                           return Center(
                             child: Text(
                               "Something went wrong",
+                              // snapshot.error.toString(),
                               style: TextStyle(
                                 color: Colors.red,
                                 fontSize: 18.sp,
@@ -123,6 +129,14 @@ class ChatlistScreen extends StatelessWidget {
                           );
                         }
                         if (!snapshot.hasData) {
+                          return const Center(
+                            child: EmptyList(
+                              text:
+                                  "You don't have any messages yet\nStart a conversation with someone to see them here",
+                            ),
+                          );
+                        }
+                        if (snapshot.data!.docs.isEmpty) {
                           return const Center(
                             child: EmptyList(
                               text:
@@ -151,17 +165,19 @@ class ChatlistScreen extends StatelessWidget {
                                           await deleteChat(
                                                   chatID: snapshot
                                                       .data!.docs[index].id)
-                                              .then(
-                                            (value) => CustomSnackBar.show(
-                                              context,
-                                              message: 'Chat deleted',
-                                            ),
-                                          );
+                                              .then((value) {
+                                            WidgetsBinding.instance
+                                                .addPostFrameCallback((_) {
+                                              CustomSnackBar.show(context,
+                                                  message: 'Chat deleted');
+                                            });
+                                          });
                                         } catch (e) {
-                                          CustomSnackBar.show(
-                                            context,
-                                            message: 'An error occured',
-                                          );
+                                          WidgetsBinding.instance
+                                              .addPostFrameCallback((_) {
+                                            CustomSnackBar.show(context,
+                                                message: 'An error occurred');
+                                          });
                                         }
                                       });
                                     },
@@ -213,9 +229,9 @@ class ChatlistScreen extends StatelessWidget {
   Widget buildContacts(BuildContext context) {
     return Container(
       height: 90.vh,
-      padding: EdgeInsets.symmetric(vertical: 10.w),
+      padding: EdgeInsets.symmetric(vertical: 1.w),
       decoration: ShapeDecoration(
-        color: Colors.white,
+        color: cSec.withOpacity(0.02),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20.r),
@@ -257,7 +273,7 @@ class ChatlistScreen extends StatelessWidget {
               // isSearch: true,
               hintText: "Search friends",
               showLabel: false,
-              isCollapsed: true,
+              // isCollapsed: true,
               leading: Icon(Icons.search),
             ),
           ),
@@ -299,7 +315,7 @@ class ChatlistScreen extends StatelessWidget {
                         }
                         return ListTile(
                           onTap: () async {
-                            getPosterDetails(userID: following[index]);
+                            // await getPosterDetails(userID: following[index]).then((value) => null);
                             await startChat(memberID: following[index])
                                 .then((value) {
                               if (value == "" || value == null) {
@@ -307,15 +323,21 @@ class ChatlistScreen extends StatelessWidget {
                               }
 
                               Navigator.pop(context);
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ConvoScreen(
-                                    chatID: value,
-                                    sender: sender,
-                                  ),
-                                ),
-                              );
+                              Future.delayed(const Duration(milliseconds: 500),
+                                  () {
+                                WidgetsBinding.instance
+                                    .addPostFrameCallback((_) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ConvoScreen(
+                                        chatID: value,
+                                        sender: sender,
+                                      ),
+                                    ),
+                                  );
+                                });
+                              });
                             });
                           },
                           title: ContactItem(

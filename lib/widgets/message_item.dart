@@ -113,16 +113,16 @@ class ChatItemState extends State<ChatItem> {
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                         ),
-                        Text(
-                          lastMessage ?? "No message yet",
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.w300,
-                            fontSize: 14.sp,
-                          ),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        ),
+                        // Text(
+                        //   lastMessage ?? "No message yet",
+                        //   style: TextStyle(
+                        //     color: Colors.grey,
+                        //     fontWeight: FontWeight.w300,
+                        //     fontSize: 14.sp,
+                        //   ),
+                        //   overflow: TextOverflow.ellipsis,
+                        //   maxLines: 1,
+                        // ),
                       ],
                     ),
                   ),
@@ -141,25 +141,25 @@ class ChatItemState extends State<ChatItem> {
                           : const SizedBox(
                               height: 3,
                             ),
-                      SizedBox(
-                        height: 5.w,
-                      ),
-                      Align(
-                        alignment: Alignment.bottomRight,
-                        child: Builder(builder: (context) {
-                          return Text(
-                            convertToElapsedString(
-                                lastMessageTime ?? DateTime.now().toString()),
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w300,
-                              fontSize: 12.sp,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                          );
-                        }),
-                      ),
+                      // SizedBox(
+                      //   height: 5.w,
+                      // ),
+                      // Align(
+                      //   alignment: Alignment.bottomRight,
+                      //   child: Builder(builder: (context) {
+                      //     return Text(
+                      //       convertToElapsedString(
+                      //           lastMessageTime ?? DateTime.now().toString()),
+                      //       style: TextStyle(
+                      //         color: Colors.grey,
+                      //         fontWeight: FontWeight.w300,
+                      //         fontSize: 12.sp,
+                      //       ),
+                      //       overflow: TextOverflow.ellipsis,
+                      //       maxLines: 1,
+                      //     );
+                      //   }),
+                      // ),
                     ],
                   ),
                 ],

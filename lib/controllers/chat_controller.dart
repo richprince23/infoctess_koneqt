@@ -138,29 +138,36 @@ Future deleteMessage(
 }
 
 Future<String> startChat({required String memberID}) async {
-  // Check if chat already exists
-  final chatRef = db
-      .collection("chats")
-      .where('members', arrayContains: auth.currentUser!.uid);
+  try {
+    // Check if chat already exists
+    final chatRef = db
+        .collection("chats")
+        .where('members', arrayContains: auth.currentUser!.uid);
 
-  final chatData = await chatRef.get();
+    final chatData = await chatRef.get();
 
-  for (final doc in chatData.docs) {
-    final members = doc.data()['members'] as List<dynamic>;
-    if (members.contains(memberID) && members.contains(auth.currentUser!.uid)) {
-      // Chat already exists
-      return doc.id;
+    for (final doc in chatData.docs) {
+      final members = doc.data()['members'] as List<dynamic>;
+      if (members.contains(memberID) &&
+          members.contains(auth.currentUser!.uid)) {
+        // Chat already exists
+        return doc.id;
+      }
     }
+
+    // Chat does not exist, create a new one
+    final chatDocument = db.collection("chats").doc();
+    chatDocument.set({
+      'members': [auth.currentUser!.uid, memberID],
+      'timestamp': DateTime.now(),
+    });
+
+    return chatDocument.id;
+  } catch (e) {
+    // Handle any potential errors here
+    // print("Error starting chat: $e");
+    rethrow; // Rethrow the error to propagate it to the caller
   }
-
-  // Chat does not exist, create a new one
-  final chatDocument = db.collection("chats").doc();
-  chatDocument.set({
-    'members': [auth.currentUser!.uid, memberID],
-    'timestamp': DateTime.now(),
-  });
-
-  return chatDocument.id;
 }
 
 /// clear all chats

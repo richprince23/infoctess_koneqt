@@ -187,6 +187,7 @@ class _ConvoScreenState extends State<ConvoScreen> {
               // height: 60,
               padding: EdgeInsets.all(5.w),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   IconButton(
                     onPressed: () {
@@ -202,7 +203,7 @@ class _ConvoScreenState extends State<ConvoScreen> {
                       hintText: "Type a message",
                       type: TextInputType.multiline,
                       controller: msgController,
-                      isCollapsed: true,
+                      // isCollapsed: true,
                       radius: 8.r,
                     ),
                   ),
