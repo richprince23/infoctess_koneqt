@@ -15,6 +15,7 @@ import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/models/bookmarks_model.dart';
 import 'package:infoctess_koneqt/models/news_model.dart';
 import 'package:infoctess_koneqt/models/poster_model.dart';
+import 'package:infoctess_koneqt/screens/tools/image_viewer.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
@@ -425,21 +426,32 @@ class _OpenWidgetState extends State<OpenWidget> {
           Positioned(
             width: 100.vw,
             height: 40.vh,
-            child: CachedNetworkImage(
-              imageUrl: widget.news.imgUrl ?? "",
-              fit: BoxFit.cover,
-              errorWidget: (context, url, error) => Image.asset(
-                "assets/images/infoctess.png",
-                height: 30.vh,
-                // width: 100.vw,
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        ImageViewer(image: widget.news.imgUrl!),
+                  ),
+                );
+              },
+              child: CachedNetworkImage(
+                imageUrl: widget.news.imgUrl ?? "",
                 fit: BoxFit.cover,
-                // width: 30.w,
-              ),
-              progressIndicatorBuilder: (context, url, progress) => Center(
-                child: Image.asset(
-                  "assets/images/preload.gif",
-                  height: 30.w,
-                  width: 30.w,
+                errorWidget: (context, url, error) => Image.asset(
+                  "assets/images/infoctess.png",
+                  height: 30.vh,
+                  // width: 100.vw,
+                  fit: BoxFit.cover,
+                  // width: 30.w,
+                ),
+                progressIndicatorBuilder: (context, url, progress) => Center(
+                  child: Image.asset(
+                    "assets/images/preload.gif",
+                    height: 30.w,
+                    width: 30.w,
+                  ),
                 ),
               ),
             ),
