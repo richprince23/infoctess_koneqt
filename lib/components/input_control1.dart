@@ -139,13 +139,12 @@ class _InputControlState extends State<InputControl> {
                             color: cSec,
                             size: 18.sp + 1,
                           )
-                        : const Icon(null),
+                        : const SizedBox.shrink(),
                   )
                 : (widget.showFilter == true
                     ? GestureDetector(
                         onTap: () => {
                           // if (widget.trailing == null)
-                          
                         },
                         child: Icon(
                           Icons.tune_sharp,
@@ -153,7 +152,7 @@ class _InputControlState extends State<InputControl> {
                           size: 18.sp + 1,
                         ),
                       )
-                    : null),
+                    : const SizedBox.shrink()),
             // isDense: true,
             hintText: widget.hintText!.toString(),
             hintStyle: TextStyle(

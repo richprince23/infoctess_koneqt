@@ -25,6 +25,7 @@ class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
         child: CachedNetworkImage(
           width: 30.w,
           height: 30.w,
+          useOldImageOnUrlChange: true,
           fit: BoxFit.contain,
           imageUrl: curUser!.avatar!,
           imageBuilder: (context, imageProvider) => Container(

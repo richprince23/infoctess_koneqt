@@ -100,15 +100,16 @@ class Auth {
         "fullName": fullName,
         "followers": [],
         "following": [],
+        "isAdmin": false,
       }).then((value) => docID = value.id);
       return docID;
     } on FirebaseException catch (e) {
+      print(e);
       throw FirebaseException(
         code: e.code,
         message: e.message,
         plugin: e.plugin,
       );
-      // print(e);
     }
   }
 
@@ -123,19 +124,28 @@ class Auth {
           await e.ref.getDownloadURL().then(
             // store image in db
             (url) async {
-              await _auth.currentUser!.updatePhotoURL(url).then((value) => db
-                  .collection("user_infos")
-                  .where("userID", isEqualTo: _auth.currentUser!.uid)
-                  .get()
-                  .then((value) =>
-                      value.docs[0].reference.update({"avatar": url})));
+              await _auth.currentUser!.updatePhotoURL(url).then(
+                    (value) => db
+                        .collection("user_infos")
+                        .where("userID", isEqualTo: _auth.currentUser!.uid)
+                        .get()
+                        .then(
+                          (value) =>
+                              value.docs[0].reference.update({"avatar": url}),
+                        )
+                        .then(
+                          (value) => curUser?.avatar = url,
+                        ),
+                  );
               //       .update({"avatar": url}),
+
               // );
             },
           );
         },
       );
     } on FirebaseException catch (e) {
+      print(e);
       throw FirebaseException(
         code: e.code,
         message: e.message,
@@ -144,21 +154,6 @@ class Auth {
     }
     return imageRef.name;
   }
-
-// Future getAccess(int indexNum) async {
-//   // final url = 'https://api.infoctess-uew.org/members/$indexNum';
-//   final url = 'http://10.0.2.2:3000/members/$indexNum';
-//   final response = await http.get(Uri.parse(url));
-//   if (response.statusCode == 200) {
-//     if (response.body == 'null') {
-//       return null;
-//     }
-//     print(response.body);
-//     return response.body;
-//   } else {
-//     print('Request failed with status: ${response.statusCode}.');
-//   }
-// }
 
   Future<User?> signUp(String email, String password) async {
     try {
@@ -209,6 +204,7 @@ class Auth {
                 'classGroup': classGroup,
                 // 'userName': userName,
                 'fullName': fullName,
+                // "isAdmin": false,
               },
             ),
           );
@@ -233,7 +229,8 @@ class Auth {
                 curUser?.gender = value.docs[0].data()['gender'],
                 curUser?.indexNum = value.docs[0].data()['indexNum'],
                 curUser?.phoneNum = value.docs[0].data()['phoneNum'],
-                curUser?.userLevel = value.docs[0].data()['userLevel']
+                curUser?.userLevel = value.docs[0].data()['userLevel'],
+                curUser?.isAdmin = value.docs[0].data()['isAdmin'] ?? false,
               });
       return res;
     } catch (e) {
@@ -243,7 +240,7 @@ class Auth {
   }
 }
 
-//clear all firebase snapshots
+///clear all firebase snapshots
 Future clearCache() async {
   try {
     await db.clearPersistence().then((value) async => {
