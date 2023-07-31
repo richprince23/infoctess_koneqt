@@ -245,75 +245,97 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                                         .validate()) {
                                       return;
                                     }
+                                    bool? isUserExist;
                                     setState(() {
                                       onboardUser!.userName =
                                           userNameCon.text.trim().toLowerCase();
                                       onboardUser!.phoneNum =
                                           phoneNumCon.text.trim();
                                     });
-                                    if ((croppedMedia != null ||
-                                            selectedMedia != null) &&
-                                        onboardUser!.userName != null &&
-                                        onboardUser!.phoneNum != null) {
-                                      showDialog(
-                                        barrierDismissible: false,
-                                        context: context,
-                                        builder: (context) => Center(
-                                          // title: const Text("Verification"),
-                                          child: Image.asset(
-                                            "assets/images/preload.gif",
-                                            height: 30.w,
-                                            width: 30.w,
-                                          ),
-                                        ),
-                                      );
-                                      await Auth()
-                                          .saveUserInfo(
-                                            indexNum: onboardUser!.indexNum
-                                                .toString(),
-                                            userName: onboardUser!.userName,
-                                            phoneNum: onboardUser!.phoneNum,
-                                            gender: onboardUser!.gender,
-                                            level: onboardUser!.userLevel,
-                                            classGroup: onboardUser!.classGroup,
-                                            fullName: onboardUser!.fullName,
-                                          )
-                                          .then((value) async => await Auth()
-                                              .saveUserImage(
-                                                  croppedMedia!.path))
-                                          .then((value) async => {
-                                                StatusAlert.show(
-                                                  context,
-                                                  title: "Success",
-                                                  subtitle:
-                                                      "Your profile has been updated",
-                                                  maxWidth: 50.vw,
-                                                  titleOptions:
-                                                      StatusAlertTextConfiguration(
-                                                    style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 16.sp + 1,
-                                                      // fontWeight: FontWeight.bold,
+                                    await Auth()
+                                        .checkUserExists(
+                                            onboardUser!.indexNum!.toString())
+                                        .then((value) async => {
+                                              if (isUserExist == false)
+                                                {
+                                                  // ignore: use_build_context_synchronously
+                                                  showDialog(
+                                                    barrierDismissible: false,
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        Center(
+                                                      // title: const Text("Verification"),
+                                                      child: Image.asset(
+                                                        "assets/images/preload.gif",
+                                                        height: 30.w,
+                                                        width: 30.w,
+                                                      ),
                                                     ),
                                                   ),
-                                                  configuration:
-                                                      IconConfiguration(
-                                                    icon: Icons.check,
-                                                    color: Colors.green,
-                                                    size: 50.w,
-                                                  ),
-                                                ),
-                                                await Provider.of<UserProvider>(
-                                                        context,
-                                                        listen: false)
-                                                    .setUserDetails()
-                                                    .then(
-                                                      (value) => Navigator
-                                                          .pushReplacementNamed(
-                                                              context, "/"),
-                                                    ),
-                                              });
-                                    }
+                                                  await Auth()
+                                                      .saveUserInfo(
+                                                        indexNum: onboardUser!
+                                                            .indexNum
+                                                            .toString(),
+                                                        userName: onboardUser!
+                                                            .userName,
+                                                        phoneNum: onboardUser!
+                                                            .phoneNum,
+                                                        gender:
+                                                            onboardUser!.gender,
+                                                        level: onboardUser!
+                                                            .userLevel,
+                                                        classGroup: onboardUser!
+                                                            .classGroup,
+                                                        fullName: onboardUser!
+                                                            .fullName,
+                                                      )
+                                                      .then((value) async =>
+                                                          await Auth()
+                                                              .saveUserImage(
+                                                                  croppedMedia!
+                                                                      .path))
+                                                      .then(
+                                                        (value) async => {
+                                                          StatusAlert.show(
+                                                            context,
+                                                            title: "Success",
+                                                            subtitle:
+                                                                "Your profile has been updated",
+                                                            maxWidth: 50.vw,
+                                                            titleOptions:
+                                                                StatusAlertTextConfiguration(
+                                                              style: TextStyle(
+                                                                color: Colors
+                                                                    .black,
+                                                                fontSize:
+                                                                    16.sp + 1,
+                                                                // fontWeight: FontWeight.bold,
+                                                              ),
+                                                            ),
+                                                            configuration:
+                                                                IconConfiguration(
+                                                              icon: Icons.check,
+                                                              color:
+                                                                  Colors.green,
+                                                              size: 50.w,
+                                                            ),
+                                                          ),
+                                                          await Provider.of<
+                                                                      UserProvider>(
+                                                                  context,
+                                                                  listen: false)
+                                                              .setUserDetails()
+                                                              .then(
+                                                                (value) => Navigator
+                                                                    .pushReplacementNamed(
+                                                                        context,
+                                                                        "/"),
+                                                              ),
+                                                        },
+                                                      ),
+                                                }
+                                            });
                                   } catch (e) {
                                     CustomDialog.show(context,
                                         message:
