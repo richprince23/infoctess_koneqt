@@ -13,6 +13,7 @@ import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/messages.dart';
 import 'package:infoctess_koneqt/screens/admin/create_event.dart';
 import 'package:infoctess_koneqt/screens/main_screen.dart';
+import 'package:infoctess_koneqt/screens/misc/help_screen.dart';
 import 'package:infoctess_koneqt/screens/misc/privacy.dart';
 import 'package:infoctess_koneqt/screens/misc/terms.dart';
 import 'package:infoctess_koneqt/screens/onboarding.dart';
@@ -121,6 +122,7 @@ class MyApp extends StatelessWidget {
           "/my-dues": (context) => const MyDuesScreen(),
           "/new-payment": (context) => const NewPayment(),
           "/check-updates": (context) => const UpdatesScreen(),
+          "/help-support": (context) => const HelpSupportScreen(),
         },
       ),
     );

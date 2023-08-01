@@ -17,6 +17,7 @@ class UserAccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        color: cSec.withOpacity(0.05),
         padding: EdgeInsets.all(16.w),
         child: SingleChildScrollView(
           child: Column(
@@ -205,6 +206,9 @@ class UserAccountScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     ListTile(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/help-support');
+                      },
                       leading: const Icon(Icons.help_outline),
                       title: Text(
                         "Help and Support",
