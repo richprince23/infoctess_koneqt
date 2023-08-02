@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:infoctess_koneqt/constants.dart';
 import 'package:resize/resize.dart';
 
 class HelpSupportScreen extends StatefulWidget {
@@ -15,6 +16,8 @@ class HelpSupportScreen extends StatefulWidget {
 
 class _HelpSupportScreenState extends State<HelpSupportScreen> {
   List<XFile?>? selectedFiles;
+  final pageScroller = ScrollController();
+  final imagesScroller = ScrollController();
 
   @override
   void initState() {
@@ -24,6 +27,8 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
   @override
   void dispose() {
     selectedFiles = null;
+    pageScroller.dispose();
+    imagesScroller.dispose();
     super.dispose();
   }
 
@@ -36,6 +41,8 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
       ),
       body: KeyboardDismissOnTap(
         child: SingleChildScrollView(
+          controller: pageScroller,
+          scrollDirection: Axis.vertical,
           child: Container(
             height: 100.vh,
             padding: EdgeInsets.all(20.w),
@@ -78,35 +85,33 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                         ),
                         maxLines: 8,
                       ),
+                      // SizedBox(
+                      //   height: 20.w,
+                      // ),
                       SizedBox(
-                        height: 20.w,
-                      ),
-                      selectedFiles != null
-                          ? Row(
-                              children: [
-                                SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Row(
-                                    children:
-                                        // Image.file(File(selectedFiles![0]!.path)),
-                                        List.generate(selectedFiles!.length,
-                                            (index) {
-                                      return Container(
-                                        margin: EdgeInsets.all(6.w),
-                                        child: Image.file(
-                                          File(selectedFiles![index]!.path),
-                                          width: 48.w,
-                                          height: 48.w,
-                                        ),
-                                      );
-                                    }),
-                                  ),
-                                )
-                              ],
-                            )
-                          : const SizedBox.shrink(),
-                      SizedBox(
-                        height: 20.w,
+                        width: 100.vw,
+                        height: 60.w,
+                        child: selectedFiles != null
+                            ? SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                controller: imagesScroller,
+                                child: Row(
+                                  children:
+                                      // Image.file(File(selectedFiles![0]!.path)),
+                                      List.generate(selectedFiles!.length,
+                                          (index) {
+                                    return Container(
+                                      margin: EdgeInsets.all(6.w),
+                                      child: Image.file(
+                                        File(selectedFiles![index]!.path),
+                                        width: 48.w,
+                                        height: 48.w,
+                                      ),
+                                    );
+                                  }),
+                                ),
+                              )
+                            : const SizedBox.shrink(),
                       ),
                       Row(
                         children: [
@@ -114,7 +119,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                             onPressed: () async {
                               await uploadImageFromGallery();
                             },
-                            child: const Text("Add screenshot"),
+                            child: const Text("Add screenshots"),
                           ),
                           SizedBox(
                             width: 10.w,
@@ -138,6 +143,10 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                         width: 100.vw,
                         height: 48.w,
                         child: FilledButton(
+                          style: FilledButton.styleFrom(
+                            backgroundColor: cPri,
+                            textStyle: TextStyle(fontSize: 16.sp),
+                          ),
                           onPressed: () {},
                           child: const Text("Send message"),
                         ),
