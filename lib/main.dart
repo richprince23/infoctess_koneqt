@@ -12,6 +12,7 @@ import 'package:infoctess_koneqt/controllers/user_provider.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/messages.dart';
 import 'package:infoctess_koneqt/screens/admin/create_event.dart';
+import 'package:infoctess_koneqt/screens/admin/manage_event_attendees.dart';
 import 'package:infoctess_koneqt/screens/admin/manage_events.dart';
 import 'package:infoctess_koneqt/screens/main_screen.dart';
 import 'package:infoctess_koneqt/screens/misc/help_screen.dart';
@@ -125,6 +126,7 @@ class MyApp extends StatelessWidget {
           "/check-updates": (context) => const UpdatesScreen(),
           "/help-support": (context) => const HelpSupportScreen(),
           "/manage-events": (context) => const ManageEventsScreen(),
+          
         },
       ),
     );

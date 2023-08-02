@@ -89,7 +89,7 @@ Future unrsvpToEvent(String eventID) async {
   }
 }
 
-// check if user has rsvp to event
+/// check if user has rsvp to event
 Future<bool> hasUserRsvp(String eventID) async {
   try {
     final event = await db.collection("events").doc(eventID).get();
@@ -100,7 +100,7 @@ Future<bool> hasUserRsvp(String eventID) async {
   }
 }
 
-//delete events
+/// delete events
 Future deleteEvent(String postID) async {
   try {
     // await db.collection("events").doc(postID).delete();
@@ -112,6 +112,21 @@ Future deleteEvent(String postID) async {
       await eventMediaRef.storage.refFromURL(imgUrl).delete();
     }
     await db.collection("events").doc(postID).delete();
+  } on FirebaseException catch (e) {
+    throw Exception(e);
+  }
+}
+
+///Get Event Attendees
+///
+///[eventID] is the id of the event
+///
+///Returns a list of user ids
+Future getEventAttendees(String eventID) async {
+  try {
+    final event = await db.collection("events").doc(eventID).get();
+    final attendees = event.data()!["attendees"];
+    return attendees;
   } on FirebaseException catch (e) {
     throw Exception(e);
   }

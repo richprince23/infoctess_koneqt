@@ -188,7 +188,6 @@ class Auth {
 
       if (avatar != null) {
         await Auth().saveUserImage(avatar);
-        
       }
       await db
           .collection('user_infos')
@@ -255,4 +254,18 @@ Future clearDeviceCahce() async {
   //get app temp directory
   var tempDir = await getTemporaryDirectory();
   await tempDir.delete(recursive: true);
+}
+
+/// Gets user details from firestore
+Future<Map<String, dynamic>> getUserDetails(String userID) async {
+  Map<String, dynamic>? user;
+  await db
+      .collection("user_infos")
+      .where("userID", isEqualTo: userID.trim())
+      .get()
+      .then((value) {
+    user = value.docs[0].data();
+  });
+  return user!;
+  // return userInfo;
 }

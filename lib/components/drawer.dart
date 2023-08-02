@@ -305,7 +305,10 @@ class DrawerScreen extends StatelessWidget {
               route: "/manage-users",
             ),
           if (curUser?.isAdmin == true)
-            const ListItem(icon: Icons.event, title: "Manage Events"),
+            const ListItem(
+                icon: Icons.event,
+                title: "Manage Events",
+                route: "/manage-events"),
           // const ListItem(icon: Icons.settings, title: "Settings"),
           Divider(
             color: cPri,
