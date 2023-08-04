@@ -295,15 +295,15 @@ class DrawerScreen extends StatelessWidget {
               route: "/calendar"),
           const ListItem(
               icon: Icons.bookmark, title: "Saved Items", route: "/bookmarks"),
-          Divider(
-            color: cPri,
-          ),
-          if (curUser?.isAdmin == true)
-            const ListItem(
-              icon: Icons.manage_accounts,
-              title: "Manage Users",
-              route: "/manage-users",
-            ),
+          // Divider(
+          //   color: cPri,
+          // ),
+          // if (curUser?.isAdmin == true)
+          //   const ListItem(
+          //     icon: Icons.manage_accounts,
+          //     title: "Manage Users",
+          //     route: "/manage-users",
+          //   ),
           if (curUser?.isAdmin == true)
             const ListItem(
                 icon: Icons.event,
@@ -362,7 +362,7 @@ class DrawerScreen extends StatelessWidget {
                       },
                     );
               } catch (e) {
-                debugPrint(e.toString());
+                // debugPrint(e.toString());
               }
             },
           ),
