@@ -157,25 +157,29 @@ class AIChatScreenState extends State<AIChatScreen> {
             Container(
               padding: EdgeInsets.all(5.w),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Expanded(
                     child: InputControl(
                       hintText: "Type your prompt here...",
                       showLabel: false,
                       controller: inputController,
-                      isCollapsed: true,
+                      // isCollapsed: true,
+                      radius: 10.r,
                       focusNode: focusNode,
                     ),
                   ),
-                  IconButton(
-                    onPressed: () async {
-                      sendMessage();
-                    },
-                    icon: const Icon(Icons.send),
-                    color: cPri,
-                    // padding: const EdgeInsets.all(8),
-                    iconSize: 28,
+                  Padding(
+                    padding: EdgeInsets.all(8.w),
+                    child: IconButton(
+                      onPressed: () async {
+                        sendMessage();
+                      },
+                      icon: const Icon(Icons.send),
+                      color: cPri,
+                      // padding: const EdgeInsets.all(8),
+                      iconSize: 28,
+                    ),
                   ),
                 ],
               ),

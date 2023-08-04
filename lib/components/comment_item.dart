@@ -8,6 +8,7 @@ import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/utils.dart';
 import 'package:infoctess_koneqt/models/comments_model.dart';
 import 'package:infoctess_koneqt/models/poster_model.dart';
+import 'package:infoctess_koneqt/screens/user_screens/profile_screen.dart';
 import 'package:resize/resize.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -92,7 +93,15 @@ class CommentItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         InkWell(
-                          onTap: () async {},
+                          onTap: () async {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    UserProfile(userID: commenter.posterID!),
+                              ),
+                            );
+                          },
                           child: Container(
                             padding: EdgeInsets.symmetric(
                               horizontal: 10.w,

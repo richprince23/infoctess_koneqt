@@ -3,7 +3,6 @@ import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/events_controller.dart';
 import 'package:infoctess_koneqt/screens/user_screens/profile_screen.dart';
-import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
 import 'package:resize/resize.dart';
 
