@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/events_controller.dart';
+import 'package:infoctess_koneqt/screens/user_screens/profile_screen.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
 import 'package:resize/resize.dart';
@@ -73,7 +74,7 @@ class _ManageEventAttendeesScreenState
                         child: ListView.builder(
                           itemCount: snapshot.data?.length,
                           itemBuilder: (context, index) {
-                            final data = snapshot.data?[index];
+                            // final data = snapshot.data?[index];
                             Map<String, dynamic>? user;
 
                             // if (user != null) {
@@ -109,29 +110,18 @@ class _ManageEventAttendeesScreenState
                                   return ListTile(
                                     onTap: () {},
                                     title: Text(user?["fullName"]),
-                                    subtitle: Text(user?["level"]),
+                                    subtitle: Text(user?["userLevel"]),
                                     trailing: IconButton(
-                                      icon: const Icon(Icons.delete),
-                                      onPressed: () async {
-                                        CustomDialog.showWithAction(context,
-                                            message:
-                                                "Are you sure you want to delete this event?",
-                                            alertStyle: AlertStyle.warning,
-                                            actionText: "Delete",
-                                            action: () async {
-                                          await deleteEvent(
-                                            data?.id,
-                                          ).then((value) {
-                                            setState(() {});
-                                            CustomDialog.show(
-                                              context,
-                                              message:
-                                                  "Event deleted successfully",
-                                              alertStyle: AlertStyle.success,
-                                            );
-                                          });
-                                        });
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => UserProfile(
+                                                userID: user?["userID"]),
+                                          ),
+                                        );
                                       },
+                                      icon: const Icon(Icons.info_outline),
                                     ),
                                   );
                                 });
