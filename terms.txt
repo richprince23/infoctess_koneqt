@@ -2,7 +2,7 @@ Terms and Conditions for INFOCTESS Koneqt Mobile Application
 
 Last updated: July 12, 2023
 
-Please read these Terms and Conditions ("Terms") carefully before using the INFOCTESS Koneqt mobile application ("the App") developed by ARKSoft Inc. ("we," "us," or "our"). These Terms govern your access to and use of the App. By using the App, you agree to be bound by these Terms. If you do not agree with any provision of these Terms, you may not use the App.
+Please read these Terms and Conditions ("Terms") carefully before using the INFOCTESS Koneqt mobile application ("the App") developed by Ark Softwarez. ("we," "us," or "our"). These Terms govern your access to and use of the App. By using the App, you agree to be bound by these Terms. If you do not agree with any provision of these Terms, you may not use the App.
 
 1. App Usage and Eligibility
 1.1 Eligibility: The App is intended for use by members of the INFOCTESS student society. By using the App, you represent that you are a member of INFOCTESS or have obtained proper authorization to access and use the App on behalf of INFOCTESS.
@@ -23,7 +23,7 @@ f. Engage in any activity that disrupts or interferes with the proper functionin
 2.2 Account Termination: We reserve the right to suspend or terminate your account at our sole discretion, without prior notice or liability, if we believe you have violated these Terms or engaged in any fraudulent, abusive, or unlawful activities.
 
 3. Intellectual Property Rights
-3.1 Ownership: The App, including its design, content, features, and functionality, is owned by ARKSoft Inc. and protected by intellectual property laws. You acknowledge and agree that we retain all rights, title, and interest in the App and its content.
+3.1 Ownership: The App, including its design, content, features, and functionality, is owned by Ark Softwarez. and protected by intellectual property laws. You acknowledge and agree that we retain all rights, title, and interest in the App and its content.
 
 3.2 Limited License: We grant you a limited, non-exclusive, non-transferable license to access and use the App solely for its intended purpose, in accordance with these Terms. You agree not to reproduce, distribute, modify, or create derivative works based on the App or its content without our prior written consent.
 
@@ -39,7 +39,7 @@ The collection and use of personal information through the App are governed by o
 The App is provided on an "as is" and "as available" basis, without warranties of any kind, whether express or implied. We do not warrant that the App will be error-free, uninterrupted, secure, or free from viruses or other harmful components. Your use of the App is at your sole risk.
 
 7. Limitation of Liability
-To the maximum extent permitted by law, ARKSoft Inc. and its affiliates, directors, officers, employees, agents, and licensors shall not be liable for any direct, indirect, incidental, special, consequential, or exemplary damages, including but not limited to damages for loss of profits, goodwill, data, or other intangible losses arising out of or in connection with your use or inability to use the App.
+To the maximum extent permitted by law, Ark Softwarez. and its affiliates, directors, officers, employees, agents, and licensors shall not be liable for any direct, indirect, incidental, special, consequential, or exemplary damages, including but not limited to damages for loss of profits, goodwill, data, or other intangible losses arising out of or in connection with your use or inability to use the App.
 
 8. Modification and Termination
 8.1 Modification: We reserve the right to modify, suspend, or discontinue the App or any part thereof, temporarily or permanently, without prior notice or liability. We may also modify these Terms from time to time by posting the updated Terms within the App. Your continued use of the App after such modifications constitutes your acceptance of the modified Terms.
@@ -53,7 +53,7 @@ These Terms shall be governed by and construed in accordance with the laws of [J
 If any provision of these Terms is found to be invalid or unenforceable, that provision shall be deemed severable and shall not affect the validity or enforceability of the remaining provisions. The failure to enforce any right or provision of these Terms shall not constitute a waiver of such right or provision.
 
 11. Entire Agreement
-These Terms constitute the entire agreement between you and ARKSoft Inc. regarding the use of the App and supersede any prior or contemporaneous agreements, communications, and proposals, whether oral or written.
+These Terms constitute the entire agreement between you and Ark Softwarez. regarding the use of the App and supersede any prior or contemporaneous agreements, communications, and proposals, whether oral or written.
 
 12. Contact Us
 If you have any questions or concerns regarding these Terms or the App, please contact us at [richardkns7@gmail.com]

@@ -3,7 +3,7 @@ description: Infoctess UEW informative and social platform.
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1
+version: 1.0.2+2
 
 environment:
   sdk: ">=2.18.4 <3.0.0"
@@ -53,6 +53,7 @@ dependencies:
   connectivity_plus: ^4.0.1
   # open_file: ^3.3.2
   http:
+  package_info_plus: ^4.1.0
 
 dev_dependencies:
   flutter_test:

@@ -264,7 +264,7 @@ class DrawerScreen extends StatelessWidget {
                         Container(
                           margin: EdgeInsets.only(left: 10.w),
                           child: Text(
-                            curUser?.emailAddress ?? "email",
+                            "@${curUser?.userName}",
                             style: GoogleFonts.sarabun().copyWith(
                               fontSize: 12.sp + 1,
                               color: Colors.black87,
@@ -340,7 +340,7 @@ class DrawerScreen extends StatelessWidget {
                   "assets/images/infoctess_logo_bg.png",
                   width: 30.w,
                 ),
-                applicationLegalese: "Copyright 2023 ARK Softwarez",
+                applicationLegalese: " Copyright 2023 ARK Softwarez",
                 applicationVersion: "1.0.1",
               );
             },
