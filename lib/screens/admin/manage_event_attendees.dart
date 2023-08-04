@@ -1,9 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/events_controller.dart';
-import 'package:infoctess_koneqt/models/poster_model.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
 import 'package:resize/resize.dart';
@@ -87,8 +85,12 @@ class _ManageEventAttendeesScreenState
                                   // }
                                   if (userDetails.connectionState ==
                                       ConnectionState.waiting) {
-                                    return const Center(
-                                      child: CircularProgressIndicator(),
+                                    return Center(
+                                      child: Image.asset(
+                                        "assets/images/preload.gif",
+                                        width: 30.w,
+                                        height: 30.w,
+                                      ),
                                     );
                                   }
 
@@ -107,7 +109,7 @@ class _ManageEventAttendeesScreenState
                                   return ListTile(
                                     onTap: () {},
                                     title: Text(user?["fullName"]),
-                                    subtitle: Text(""),
+                                    subtitle: Text(user?["level"]),
                                     trailing: IconButton(
                                       icon: const Icon(Icons.delete),
                                       onPressed: () async {

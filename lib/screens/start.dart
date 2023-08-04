@@ -24,7 +24,7 @@ class _StartScreenState extends State<StartScreen> {
 
     bool? isLoggedIn;
     await userProvider.isLoggedIn.then((value) => isLoggedIn = value);
-    print("check login: $isLoggedIn");
+    // print("check login: $isLoggedIn");
 
     if (isLoggedIn!) {
       await userProvider.getUserID();

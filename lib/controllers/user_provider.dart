@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:infoctess_koneqt/models/user_info.dart' as cUser;
+import 'package:infoctess_koneqt/models/user_info.dart' as myuser;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/env.dart';
@@ -62,12 +62,12 @@ class UserProvider extends ChangeNotifier {
   }
 
   /// gets user's info from UserInfo model
-  Future<cUser.User?> getUserInfo() async {
+  Future<myuser.User?> getUserInfo() async {
     return curUser;
   }
 
   /// sets a userinfo from a UserInfo model
-  setUser(cUser.User user) async {
+  setUser(myuser.User user) async {
     final userPrefs = await mainPrefs;
     userPrefs.setString('curUser', user.toJson().toString());
     setLoggedIn(true);
@@ -78,8 +78,8 @@ class UserProvider extends ChangeNotifier {
     final userPrefs = await mainPrefs;
     final res = userPrefs.getString("curUser");
     if (res != null) {
-      curUser = cUser.User.fromJson(json.decode(res) as Map<String, dynamic>);
-      // curUser = cUser.User.fromJson((res));
+      curUser = myuser.User.fromJson(json.decode(res) as Map<String, dynamic>);
+      // curUser = myuser.User.fromJson((res));
     }
     notifyListeners();
   }
@@ -110,7 +110,7 @@ class UserProvider extends ChangeNotifier {
 
     if (userDoc.exists) {
       final userData = userDoc.data();
-      final curUser = cUser.User(
+      final curUser = myuser.User(
         avatar: userData!['avatar'],
         emailAddress: userData['emailAddress'],
         classGroup: userData['classGroup'],
@@ -136,7 +136,7 @@ class UserProvider extends ChangeNotifier {
         .get()
         .then((value) => value.docs[0].data());
 
-    curUser = cUser.User(
+    curUser = myuser.User(
       avatar: user.photoURL,
       fullName: user.displayName,
       emailAddress: user.email,

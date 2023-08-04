@@ -28,7 +28,7 @@ RemoteConfigSettings configSettings = RemoteConfigSettings(
 User? curUser;
 FirebaseAuth auth = FirebaseAuth.instance;
 
-String? OPEN_AI_KEY = remoteConfig.getString("apiKeys");
+String? openAiKey = remoteConfig.getString("apiKeys");
 // onboarding screen
 final PageController pageController = PageController(initialPage: 0);
 var kPages = [
@@ -81,4 +81,3 @@ final List<String> subjects = [
   'Educational',
   'General'
 ];
-

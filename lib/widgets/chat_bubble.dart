@@ -258,26 +258,26 @@ class ChatBubble extends StatelessWidget {
                     child: Card(
                       child: Column(
                         children: [
-                          ListTile(
-                            title: const Text("Reply"),
-                            leading: const Icon(CupertinoIcons.reply),
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                          ListTile(
-                            title: const Text("Forward"),
-                            leading: const Icon(
-                                CupertinoIcons.arrowshape_turn_up_right),
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                          ),
+                          // ListTile(
+                          //   title: const Text("Reply"),
+                          //   leading: const Icon(CupertinoIcons.reply),
+                          //   onTap: () {
+                          //     Navigator.pop(context);
+                          //   },
+                          // ),
+                          // ListTile(
+                          //   title: const Text("Forward"),
+                          //   leading: const Icon(
+                          //       CupertinoIcons.arrowshape_turn_up_right),
+                          //   onTap: () {
+                          //     Navigator.pop(context);
+                          //   },
+                          // ),
                           // ListTile(
                           //   title: const Text("Star"),
                           //   leading: const Icon(CupertinoIcons.star),
                           //   onTap: () {
-                          //     //TODO: add to starred messages
+                          //     //TOD: add to starred messages
                           //     Navigator.pop(context);
                           //   },
                           // ),

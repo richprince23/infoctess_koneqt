@@ -396,10 +396,10 @@ class _PostItemState extends State<PostItem> {
                                   onTap: (tappedText) async {
                                     if (tappedText.startsWith('#')) {
                                       // debugPrint('DetectableText >>>>>>> #');
-                                      // TODO: go to hashtag page
+                                      // TOD: go to hashtag page
                                       //LATER : add hashtag page/feature
                                     } else if (tappedText.startsWith('@')) {
-                                      // TODO: go to user profile
+                                      // TOD: go to user profile
                                       // debugPrint('DetectableText >>>>>>> @');
                                     } else if (tappedText.startsWith('http')) {
                                       // open url

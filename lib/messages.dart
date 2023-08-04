@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +19,6 @@ import 'package:infoctess_koneqt/widgets/no_network.dart';
 import 'package:infoctess_koneqt/widgets/status_snack.dart';
 import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
-import 'package:status_alert/status_alert.dart';
 
 class ChatlistScreen extends StatelessWidget {
   ChatlistScreen({super.key});
@@ -318,6 +316,7 @@ class ChatlistScreen extends StatelessWidget {
                             // await getPosterDetails(userID: following[index]).then((value) => null);
                             await startChat(memberID: following[index])
                                 .then((value) {
+                              // ignore: unnecessary_null_comparison
                               if (value == "" || value == null) {
                                 return;
                               }

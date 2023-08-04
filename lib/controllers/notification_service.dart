@@ -1,5 +1,6 @@
 import 'dart:io' show Platform;
 
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -47,7 +48,7 @@ class NotificationService {
       //       "Notification Received background ${details.id}, ${details.payload}");
       // },
       onDidReceiveNotificationResponse: (details) {
-        print(
+        debugPrint(
             "Notification Received foreground ${details.id}, ${details.payload}");
       },
     );
@@ -170,26 +171,26 @@ class NotificationService {
     );
   }
 
-  int _getDayOfWeek(String day) {
-    switch (day.toLowerCase()) {
-      case 'Monday':
-        return DateTime.monday;
-      case 'Tuesday':
-        return DateTime.tuesday;
-      case 'Wednesday':
-        return DateTime.wednesday;
-      case 'Thursday':
-        return DateTime.thursday;
-      case 'Friday':
-        return DateTime.friday;
-      case 'Saturday':
-        return DateTime.saturday;
-      case 'Sunday':
-        return DateTime.sunday;
-      default:
-        return DateTime.monday;
-    }
-  }
+  // int _getDayOfWeek(String day) {
+  //   switch (day.toLowerCase()) {
+  //     case 'Monday':
+  //       return DateTime.monday;
+  //     case 'Tuesday':
+  //       return DateTime.tuesday;
+  //     case 'Wednesday':
+  //       return DateTime.wednesday;
+  //     case 'Thursday':
+  //       return DateTime.thursday;
+  //     case 'Friday':
+  //       return DateTime.friday;
+  //     case 'Saturday':
+  //       return DateTime.saturday;
+  //     case 'Sunday':
+  //       return DateTime.sunday;
+  //     default:
+  //       return DateTime.monday;
+  //   }
+  // }
 
   Time _getTimeOfDay(String time) {
     var components = time.split(':');
@@ -207,15 +208,15 @@ class NotificationService {
   }
 
   tz.TZDateTime scheduleWeekly(String time, Day day) {
-    Time _time = _getTimeOfDay(time);
+    Time cTime = _getTimeOfDay(time);
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
     tz.TZDateTime scheduledDate = tz.TZDateTime(
       tz.local,
       now.year,
       now.month,
       now.day,
-      _time.hour,
-      _time.minute,
+      cTime.hour,
+      cTime.minute,
     );
     while (scheduledDate.weekday != day.value) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));

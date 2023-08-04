@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
@@ -124,7 +123,6 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
                         try {
                           await checkUserAccess(_controller.text).then(
                             (value) async {
-                              print(value);
                               switch (value) {
                                 case 1:
                                   StatusAlert.show(

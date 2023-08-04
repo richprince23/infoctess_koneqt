@@ -8,7 +8,7 @@ Future<String> getCompletions(String prompt) async {
   var url = Uri.parse('https://api.openai.com/v1/completions');
   var headers = {
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer $OPEN_AI_KEY',
+    'Authorization': 'Bearer $openAiKey',
   };
   var body = jsonEncode({
     'prompt': prompt,
@@ -43,7 +43,7 @@ Future<List<String>> getGenerations(String prompt) async {
   var url = Uri.parse('https://api.openai.com/v1/images/generations');
   var headers = {
     'Content-Type': 'application/json',
-    'Authorization': 'Bearer $OPEN_AI_KEY',
+    'Authorization': 'Bearer $openAiKey',
   };
   var body = jsonEncode({"prompt": prompt, "n": 4, "size": "256x256"});
 

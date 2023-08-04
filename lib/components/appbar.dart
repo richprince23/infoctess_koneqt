@@ -1,12 +1,10 @@
-import 'package:infoctess_koneqt/controllers/user_provider.dart';
-import 'package:provider/provider.dart';
-import 'package:resize/resize.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:infoctess_koneqt/env.dart';
-import 'package:infoctess_koneqt/constants.dart';
-import 'package:infoctess_koneqt/screens/search_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:infoctess_koneqt/constants.dart';
+import 'package:infoctess_koneqt/env.dart';
+import 'package:infoctess_koneqt/screens/search_screen.dart';
+import 'package:resize/resize.dart';
 
 class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
   @override
@@ -41,7 +39,11 @@ class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
               ),
             ),
           ),
-          placeholder: (context, url) => const CircularProgressIndicator(),
+          placeholder: (context, url) => Image.asset(
+            "assets/images/preload.gif",
+            width: 10.w,
+            height: 10.w,
+          ),
           errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
         onTap: () {

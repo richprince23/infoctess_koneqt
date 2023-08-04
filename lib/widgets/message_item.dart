@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/chat_controller.dart';
-import 'package:infoctess_koneqt/controllers/utils.dart';
 import 'package:infoctess_koneqt/models/poster_model.dart';
 import 'package:infoctess_koneqt/screens/convo_screen.dart';
 import 'package:resize/resize.dart';

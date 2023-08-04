@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/controllers/chat_controller.dart';
 import 'package:infoctess_koneqt/controllers/profile_controller.dart';
 import 'package:infoctess_koneqt/models/poster_model.dart';
