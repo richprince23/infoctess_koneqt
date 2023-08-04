@@ -21,6 +21,7 @@ class _SearchScreenState extends State<SearchScreen> {
   List<Map<String, dynamic>> searchResults = [];
   late ModelType filter;
   String searchText = "";
+  final tabLabels = ["Posts", "News", "Events", "People"];
 
   @override
   void initState() {
@@ -60,27 +61,14 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          children: [
-            Expanded(
-              child: InputControl(
-                controller: _searchController,
-                showLabel: false,
-                isSearch: true,
-                radius: 20,
-                // showFilter: true,
-                hintText:
-                    "Search for Posts, Events, News, People, Hashtags, etc..",
-                onChanged: (value) async {},
-              ),
-            ),
-            IconButton(
-              onPressed: () {
-                showFilter();
-              },
-              icon: const Icon(Icons.filter_list),
-            )
-          ],
+        title: InputControl(
+          controller: _searchController,
+          showLabel: false,
+          isSearch: true,
+          radius: 20,
+          // showFilter: true,
+          hintText: "Search for Posts, Events, News, People, Hashtags, etc..",
+          onChanged: (value) async {},
         ),
         toolbarHeight: kToolbarHeight + 40.w,
       ),

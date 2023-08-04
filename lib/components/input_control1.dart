@@ -152,7 +152,7 @@ class _InputControlState extends State<InputControl> {
                           size: 18.sp + 1,
                         ),
                       )
-                    : const SizedBox.shrink()),
+                    : const Icon(Icons.search)),
             // isDense: true,
             hintText: widget.hintText!.toString(),
             hintStyle: TextStyle(
