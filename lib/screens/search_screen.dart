@@ -1,13 +1,21 @@
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:infoctess_koneqt/components/event_item.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
+import 'package:infoctess_koneqt/components/news_item.dart';
 import 'package:infoctess_koneqt/constants.dart';
+import 'package:infoctess_koneqt/controllers/profile_controller.dart';
 import 'package:infoctess_koneqt/controllers/search_controller.dart';
+import 'package:infoctess_koneqt/models/event_model.dart';
 import 'package:infoctess_koneqt/models/model_type_enum.dart';
+import 'package:infoctess_koneqt/models/news_model.dart';
+import 'package:infoctess_koneqt/models/poster_model.dart';
+import 'package:infoctess_koneqt/models/posts_model.dart';
+import 'package:infoctess_koneqt/screens/post_page.dart';
+import 'package:infoctess_koneqt/screens/user_screens/profile_screen.dart';
 import 'package:infoctess_koneqt/widgets/empty_list.dart';
+import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -102,7 +110,6 @@ class _SearchScreenState extends State<SearchScreen>
                             break;
                         }
                       });
-                      print(filter.name);
                     },
                     tabs: tabLabels
                         .map((e) => Tab(
@@ -197,9 +204,18 @@ class _SearchScreenState extends State<SearchScreen>
     return StreamBuilder(
         stream: setStream(filter),
         builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: Image.asset(
+                "assets/images/preload.gif",
+                width: 30.w,
+                height: 30.w,
+              ),
+            );
+          }
           if (snapshot.hasError) {
-            return const EmptyList(
-              text: "Something went wrong",
+            return const Text(
+              "Something went wrong",
             );
           }
           if (!snapshot.hasData) {
@@ -212,13 +228,13 @@ class _SearchScreenState extends State<SearchScreen>
             );
           }
           if (snapshot.data!.docs.isEmpty) {
-            return const EmptyList(
-              text: "No search results",
+            return EmptyList(
+              text: "No results found for '$searchText'",
             );
           }
           if (!snapshot.hasData) {
-            return const EmptyList(
-              text: "No search results",
+            return EmptyList(
+              text: "No results found for '$searchText'",
             );
           }
 
@@ -254,7 +270,6 @@ class _SearchScreenState extends State<SearchScreen>
           return ListView.builder(
             itemCount: searchResults.length,
             itemBuilder: (context, index) {
-              print(searchResults[index]);
               if (filter == ModelType.post) {
                 return ListTile(
                   leading: searchResults[index]['image'] != null
@@ -269,8 +284,39 @@ class _SearchScreenState extends State<SearchScreen>
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  onTap: () {
-                    addToHistory(searchText: searchText);
+                  onTap: () async {
+                    var postId = snapshot.data?.docs.where((element) =>
+                        element['body'] == searchResults[index]['body']);
+                    // print(searchResults[index]);
+                    Poster poster = Poster();
+                    Provider.of<ProfileProvider>(context, listen: false)
+                        .getPosterDetails(
+                          userID: searchResults[index]['posterID'],
+                          user: poster,
+                        )
+                        .then(
+                          (value) => addToHistory(searchText: searchText).then(
+                            (value) => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PostDetails(
+                                  post: Post(
+                                    id: postId!.first.id,
+                                    body: searchResults[index]['body'],
+                                    timestamp: searchResults[index]['timestamp']
+                                        .toDate(),
+                                    posterID: searchResults[index]['posterID'],
+                                    imgUrl: searchResults[index]['image'],
+                                  ),
+                                ),
+                                settings: RouteSettings(
+                                  name: '/post-details',
+                                  arguments: poster,
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
                   },
                   trailing: const Icon(Icons.keyboard_arrow_right),
                 );
@@ -289,27 +335,65 @@ class _SearchScreenState extends State<SearchScreen>
                           ),
                         )
                       : const Icon(Icons.person),
+                  trailing: const Icon(Icons.keyboard_arrow_right),
                   onTap: () {
-                    addToHistory(searchText: searchText);
+                    addToHistory(searchText: searchText).then(
+                      (value) => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UserProfile(
+                              userID: searchResults[index]['userID']),
+                        ),
+                      ),
+                    );
                   },
                 );
               } else {
+                var postId = snapshot.data?.docs
+                    .where((element) =>
+                        element['body'] == searchResults[index]['body'])
+                    .first
+                    .id;
+                // print(postId);
+
+                final event = Event.fromJson(searchResults[index]);
+                event.copy(id: postId!);
+
                 return ListTile(
-                  leading: searchResults[index]['imgUrl'] != null
-                      ? CachedNetworkImage(
-                          height: 50.w,
-                          width: 50.w,
-                          imageUrl: searchResults[index]['imgUrl'],
-                        )
-                      : null,
-                  title: Text(
-                    searchResults[index]['title'],
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
                   onTap: () {
                     addToHistory(searchText: searchText);
                   },
+                  title: filter == ModelType.news
+                      ? NewsItem(
+                          news: News(
+                            id: postId,
+                            title: searchResults[index]['title'],
+                            body: searchResults[index]['body'],
+                            imgUrl: searchResults[index]['imgUrl'],
+                            timestamp:
+                                searchResults[index]['timestamp'].toDate(),
+                            posterID: searchResults[index]['posterID'],
+                          ),
+                        )
+                      : EventItem(
+                          // event: Event(
+                          //   id: postId,
+                          //   title: searchResults[index]['title'],
+                          //   body: searchResults[index]['body'],
+                          //   imgUrl: searchResults[index]['imgUrl'],
+                          //   timestamp:
+                          //       searchResults[index]['timestamp'].toDate(),
+                          //   posterID: searchResults[index]['posterID'],
+                          //   attendees: searchResults[index]['attendees']
+                          //       as List<String>?,
+                          //   date: searchResults[index]['date'],
+                          //   time: searchResults[index]['time'],
+                          //   fee: searchResults[index]['fee'],
+                          //   venue: searchResults[index]['venue'],
+                          //   mode: searchResults[index]['mode'],
+                          // ),
+                          event: event,
+                        ),
                 );
               }
             },

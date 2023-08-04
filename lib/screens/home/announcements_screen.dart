@@ -29,8 +29,8 @@ class NewsScreen extends StatelessWidget {
                 return Center(
                   child: Image.asset(
                     "assets/images/preload.gif",
-                    width: 50.w,
-                    height: 50.w,
+                    width: 30.w,
+                    height: 30.w,
                   ),
                 );
               }
