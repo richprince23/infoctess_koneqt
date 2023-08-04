@@ -10,9 +10,9 @@
 ///
 
 enum ModelType {
-  all,
+  // all,
   post,
-  event,
   news,
+  event,
   people,
 }

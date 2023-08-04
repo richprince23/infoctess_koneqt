@@ -9,34 +9,45 @@ Stream<QuerySnapshot<Map<String, dynamic>>>? setStream(ModelType type) {
     case ModelType.post:
       stream = FirebaseFirestore.instance
           .collection('posts')
-          .orderBy('timestamp', descending: true)
+          // .where('body', isGreaterThanOrEqualTo: query)
+          .orderBy('body', descending: true)
           .snapshots()
           .asBroadcastStream();
-      return stream;
+      break;
     case ModelType.news:
       stream = FirebaseFirestore.instance
           .collection('news')
-          .orderBy('timestamp', descending: true)
+          // .where('title', isGreaterThanOrEqualTo: query)
+          .orderBy('title', descending: true)
           .snapshots()
           .asBroadcastStream();
-      return stream;
+      break;
     case ModelType.event:
       stream = FirebaseFirestore.instance
           .collection('events')
-          .orderBy('timestamp', descending: true)
+          // .where('title', isGreaterThanOrEqualTo: query)
+          .orderBy('title', descending: true)
           .snapshots()
           .asBroadcastStream();
-      return stream;
+      break;
     case ModelType.people:
       stream = FirebaseFirestore.instance
-          .collection('users')
-          .orderBy('timestamp', descending: true)
+          .collection('user_infos')
+          // .where('fullName', isGreaterThanOrEqualTo: query)
+          .orderBy('fullName', descending: true)
           .snapshots()
           .asBroadcastStream();
-      return stream;
+      break;
     default:
-      return null;
+      stream = FirebaseFirestore.instance
+          .collection('posts')
+          // .where('body', isGreaterThanOrEqualTo: query)
+          .orderBy('body', descending: true)
+          .snapshots()
+          .asBroadcastStream();
+      break;
   }
+  return stream;
 }
 
 //search for events from firebase firestore
@@ -50,9 +61,18 @@ Stream<QuerySnapshot<Map<String, dynamic>>>? setStream(ModelType type) {
 /// Add a search term to search history.
 ///
 /// Uses shared Preferences
+/// If the search term already exists, it is moved to the top of the list
+/// if the list is longer than 10 items, the last item is removed
+/// [searchText] is the search term to add to the history
 Future<void> addToHistory({required String searchText}) async {
   final prefs = await mainPrefs;
   List<String>? searchedList = prefs.getStringList("searchHistory") ?? [];
+  if (searchedList.contains(searchText)) {
+    searchedList.remove(searchText);
+  }
+  if (searchedList.length > 10) {
+    searchedList.removeLast();
+  }
   searchedList.insert(0, searchText);
   prefs.setStringList("searchHistory", searchedList);
 }

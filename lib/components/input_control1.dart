@@ -93,7 +93,9 @@ class _InputControlState extends State<InputControl> {
               textLength = value.length;
             }),
             Future.delayed(const Duration(milliseconds: 1000), () {
-              if (widget.onChanged != null) widget.onChanged!(value);
+              if (widget.onChanged != null && textLength >= 3) {
+                widget.onChanged!(value);
+              }
             }
                 // widget.onChanged(value),
                 )
