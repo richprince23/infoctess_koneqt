@@ -70,7 +70,8 @@ class UserProvider extends ChangeNotifier {
   setUser(cUser.User user) async {
     final userPrefs = await mainPrefs;
     userPrefs.setString('curUser', user.toJson().toString());
-    // notifyListeners();
+    setLoggedIn(true);
+    notifyListeners();
   }
 
   Future getUser() async {

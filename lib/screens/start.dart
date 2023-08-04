@@ -22,12 +22,13 @@ class _StartScreenState extends State<StartScreen> {
   Future<void> checkLoginStatus() async {
     final userProvider = context.read<UserProvider>();
 
-    final isLoggedIn = await userProvider.isLoggedIn;
-    // print("check login: $isLoggedIn");
+    bool? isLoggedIn;
+    await userProvider.isLoggedIn.then((value) => isLoggedIn = value);
+    print("check login: $isLoggedIn");
 
-    if (isLoggedIn) {
+    if (isLoggedIn!) {
       await userProvider.getUserID();
-      // User? curUser = 
+      // User? curUser =
       await userProvider
           .getUserInfo()
           .then((value) async => {

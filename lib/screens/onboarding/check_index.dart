@@ -18,7 +18,7 @@ class CheckAccessPage extends StatefulWidget {
 class _CheckAccessPageState extends State<CheckAccessPage> {
   final TextEditingController _controller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  String response = "";
+  // String response = "";
 
   @override
   void dispose() {
@@ -106,9 +106,9 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
                         if (!_formKey.currentState!.validate()) {
                           return;
                         }
-                        setState(() {
-                          response = "";
-                        });
+                        // setState(() {
+                        //   response = "";
+                        // });
                         showDialog(
                           barrierDismissible: false,
                           context: context,

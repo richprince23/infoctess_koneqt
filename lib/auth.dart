@@ -86,6 +86,7 @@ class Auth {
     String? classGroup,
     String? userName,
     String? fullName,
+    String? avatar,
   }) async {
     try {
       String? docID;
@@ -101,7 +102,12 @@ class Auth {
         "followers": [],
         "following": [],
         "isAdmin": false,
-      }).then((value) => docID = value.id);
+      }).then((value) async => {
+            docID = value.id,
+            await saveUserImage(avatar!),
+            
+          });
+
       return docID;
     } on FirebaseException catch (e) {
       throw FirebaseException(

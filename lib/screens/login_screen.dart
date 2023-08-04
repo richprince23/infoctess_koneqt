@@ -141,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                           ),
                           SizedBox(
-                            height: 10.w,
+                            height: 20.w,
                           ),
                           GestureDetector(
                             //TODO: Implement Forgot Password
@@ -156,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Align(
                               alignment: Alignment.bottomRight,
                               child: Text(
-                                "forgot password",
+                                "Reset password",
                                 style: GoogleFonts.sarabun(
                                   textStyle: TextStyle(
                                     decoration: TextDecoration.underline,
@@ -169,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           SizedBox(
-                            height: 10.w,
+                            height: 20.w,
                           ),
                           TextButton(
                             onPressed: () async {

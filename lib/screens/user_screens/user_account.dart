@@ -373,16 +373,10 @@ class UserAccountScreen extends StatelessWidget {
                                         listen: false)
                                     .clearUserDetails()
                                     .then(
-                                      (value) => Provider.of<UserProvider>(
-                                              context,
-                                              listen: false)
-                                          .setLoggedIn(false)
-                                          .then(
-                                            (value) => CustomSnackBar.show(
-                                              context,
-                                              message: "Logged out",
-                                            ),
-                                          ),
+                                      (value) => CustomSnackBar.show(
+                                        context,
+                                        message: "Logged out",
+                                      ),
                                     ),
                                 Navigator.pushNamedAndRemoveUntil(
                                     context, "/login", (route) => false),

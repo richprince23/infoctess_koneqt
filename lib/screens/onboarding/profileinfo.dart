@@ -97,6 +97,7 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -139,7 +140,7 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
               height: 100.vh,
               width: size.width,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 20.w),
+                padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 0.w),
                 child: Form(
                   key: profileFormKey,
                   child: SingleChildScrollView(
@@ -150,10 +151,10 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                           style: GoogleFonts.sarabun(fontSize: 18),
                         ),
                         const SizedBox(height: 10),
-                        selectedMedia != null
+                        croppedMedia != null
                             ? ClipOval(
                                 child: Image.file(
-                                  File(selectedMedia!.path),
+                                  File(croppedMedia!.path),
                                   width: size.width * 0.35,
                                   height: size.width * 0.35,
                                   fit: BoxFit.cover,
@@ -226,6 +227,9 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                             return null;
                           },
                         ),
+                        SizedBox(
+                          height: 20.w,
+                        ),
                         TextButton(
                           style: TextButton.styleFrom(
                             minimumSize: btnLarge(context),
@@ -234,10 +238,9 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                               borderRadius: BorderRadius.circular(30),
                             ),
                           ),
-                          onPressed: ((croppedMedia != null ||
-                                          selectedMedia != null) &&
-                                      onboardUser!.userName != null &&
-                                      onboardUser!.phoneNum != null) ==
+                          onPressed: ((croppedMedia != null) &&
+                                      onboardUser!.userName != "" &&
+                                      onboardUser!.phoneNum != "") ==
                                   true
                               ? () async {
                                   try {
@@ -245,58 +248,60 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                                         .validate()) {
                                       return;
                                     }
-                                    bool? isUserExist;
+
                                     setState(() {
                                       onboardUser!.userName =
                                           userNameCon.text.trim().toLowerCase();
                                       onboardUser!.phoneNum =
                                           phoneNumCon.text.trim();
                                     });
+                                    showDialog(
+                                      barrierDismissible: false,
+                                      context: context,
+                                      builder: (context) => Center(
+                                        // title: const Text("Verification"),
+                                        child: Image.asset(
+                                          "assets/images/preload.gif",
+                                          height: 30.w,
+                                          width: 30.w,
+                                        ),
+                                      ),
+                                    );
                                     await Auth()
                                         .checkUserExists(
                                             onboardUser!.indexNum!.toString())
                                         .then((value) async => {
-                                              if (isUserExist == false)
+                                              if (value! == false)
                                                 {
-                                                  // ignore: use_build_context_synchronously
-                                                  showDialog(
-                                                    barrierDismissible: false,
-                                                    context: context,
-                                                    builder: (context) =>
-                                                        Center(
-                                                      // title: const Text("Verification"),
-                                                      child: Image.asset(
-                                                        "assets/images/preload.gif",
-                                                        height: 30.w,
-                                                        width: 30.w,
-                                                      ),
-                                                    ),
-                                                  ),
                                                   await Auth()
                                                       .saveUserInfo(
-                                                        indexNum: onboardUser!
-                                                            .indexNum
-                                                            .toString(),
-                                                        userName: onboardUser!
-                                                            .userName,
-                                                        phoneNum: onboardUser!
-                                                            .phoneNum,
-                                                        gender:
-                                                            onboardUser!.gender,
-                                                        level: onboardUser!
-                                                            .userLevel,
-                                                        classGroup: onboardUser!
-                                                            .classGroup,
-                                                        fullName: onboardUser!
-                                                            .fullName,
-                                                      )
-                                                      .then((value) async =>
-                                                          await Auth()
-                                                              .saveUserImage(
-                                                                  croppedMedia!
-                                                                      .path))
+                                                          indexNum: onboardUser!
+                                                              .indexNum
+                                                              .toString(),
+                                                          userName: onboardUser!
+                                                              .userName,
+                                                          phoneNum: onboardUser!
+                                                              .phoneNum,
+                                                          gender: onboardUser!
+                                                              .gender,
+                                                          level: onboardUser!
+                                                              .userLevel,
+                                                          classGroup:
+                                                              onboardUser!
+                                                                  .classGroup,
+                                                          fullName: onboardUser!
+                                                              .fullName,
+                                                          avatar: croppedMedia!
+                                                              .path)
                                                       .then(
                                                         (value) async => {
+                                                          await Provider.of<
+                                                                      UserProvider>(
+                                                                  context,
+                                                                  listen: false)
+                                                              .setUserDetails(),
+                                                          Navigator.pop(
+                                                              context),
                                                           StatusAlert.show(
                                                             context,
                                                             title: "Success",
@@ -321,17 +326,12 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                                                               size: 50.w,
                                                             ),
                                                           ),
-                                                          await Provider.of<
-                                                                      UserProvider>(
-                                                                  context,
-                                                                  listen: false)
-                                                              .setUserDetails()
-                                                              .then(
-                                                                (value) => Navigator
-                                                                    .pushReplacementNamed(
-                                                                        context,
-                                                                        "/"),
-                                                              ),
+                                                          await Navigator
+                                                              .pushNamedAndRemoveUntil(
+                                                            context,
+                                                            "/",
+                                                            (route) => false,
+                                                          ),
                                                         },
                                                       ),
                                                 }
@@ -347,7 +347,12 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                                         .nextPage();
                                   });
                                 }
-                              : null,
+                              : () {
+                                  CustomDialog.show(
+                                    context,
+                                    message: "Please choose a Profile picture!",
+                                  );
+                                },
                           child: Text(
                             "finish",
                             style: GoogleFonts.sarabun(
