@@ -166,7 +166,7 @@ class DrawerScreen extends StatelessWidget {
                   width: 30.w,
                 ),
                 applicationLegalese: " Copyright (c) 2023 ARK Softwarez",
-                applicationVersion: "1.0.2",
+                applicationVersion: "1.0.3",
               );
             },
           ),
