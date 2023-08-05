@@ -18,7 +18,7 @@ class AppDatabase {
     if (_database != null) {
       return _database!;
     } else {
-      _database = await _initDB('test0.db');
+      _database = await _initDB('inf_kon_prod.db');
       return _database!;
     }
   }
