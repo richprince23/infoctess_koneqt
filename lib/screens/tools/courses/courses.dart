@@ -110,7 +110,7 @@ class _ManageCoursesState extends State<ManageCourses> {
                                     onPressed: () {
                                       Navigator.pop(context);
                                     },
-                                    child: const Text("Cancel"),
+                                    child: const Text("cancel"),
                                   ),
                                   ElevatedButton(
                                     style: ElevatedButton.styleFrom(
@@ -135,7 +135,7 @@ class _ManageCoursesState extends State<ManageCourses> {
                                             ),
                                           );
                                     },
-                                    child: const Text("Delete"),
+                                    child: const Text("delete"),
                                   ),
                                 ],
                               )),
@@ -235,7 +235,7 @@ class _ManageCoursesState extends State<ManageCourses> {
                           Navigator.pushNamed(context, '/add-course');
                         },
                         icon: const Icon(Icons.add),
-                        label: const Text("Add Course"),
+                        label: const Text("add course"),
                       ),
                     ],
                   )

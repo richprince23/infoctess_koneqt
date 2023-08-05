@@ -97,7 +97,7 @@ class AIChatScreenState extends State<AIChatScreen> {
               });
             },
             icon: const Icon(Icons.delete),
-            label: const Text('Clear Chat'),
+            label: const Text('clear chat'),
             style: TextButton.styleFrom(foregroundColor: Colors.black),
           ),
         ],

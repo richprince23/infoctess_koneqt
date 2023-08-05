@@ -265,7 +265,7 @@ class _AddScheduleScreenState extends State<AddScheduleScreen> {
                     }
                   },
                   child: const Text(
-                    "Save",
+                    "save",
                     style: TextStyle(fontSize: 20),
                   ),
                 ),

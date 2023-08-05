@@ -89,7 +89,7 @@ class CustomDialog extends StatelessWidget {
             ),
             actions: <Widget>[
               TextButton(
-                child: Text('OK',
+                child: Text('ok',
                     style: TextStyle(
                         fontSize: 16.sp + 1, fontWeight: FontWeight.bold)),
                 onPressed: () {
@@ -192,7 +192,7 @@ class CustomActionDialog extends StatelessWidget {
                 },
               ),
               TextButton(
-                child: Text('Cancel', style: TextStyle(fontSize: 16.sp + 1)),
+                child: Text('cancel', style: TextStyle(fontSize: 16.sp + 1)),
                 onPressed: () {
                   Navigator.of(context, rootNavigator: true).pop(false);
                 },

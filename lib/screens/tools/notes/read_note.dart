@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:infoctess_koneqt/models/notes_db.dart';
+import 'package:resize/resize.dart';
 
 class ReadNoteScreen extends StatefulWidget {
   final int noteID;
@@ -58,9 +59,9 @@ class ReadNoteScreenState extends State<ReadNoteScreen> {
                 })
           ]),
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.all(10.w),
         child: isLoading
-            ? const Center(child: Text("no note found"))
+            ? const Center(child: Text("No note found"))
             : Container(
                 constraints: const BoxConstraints.expand(),
                 decoration: BoxDecoration(color: Colors.grey[200]),

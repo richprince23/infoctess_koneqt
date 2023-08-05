@@ -476,7 +476,7 @@ class CreateEventState extends State<CreateEvent> {
                             }
                           },
                           child: Text(
-                            'Create Event',
+                            'create event',
                             style: TextStyle(fontSize: 16.sp + 1),
                           ),
                         ),

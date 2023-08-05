@@ -20,7 +20,7 @@ class StarredMessagesScreenState extends State<StarredMessagesScreen> {
         actions: [
           TextButton(
             onPressed: () {},
-            child: const Text("Clear all"),
+            child: const Text("clear all"),
           ),
         ],
       ),

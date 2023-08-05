@@ -37,11 +37,12 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
           elevation: 0,
           title: Text("Verify", style: TextStyle(fontSize: 18.sp + 1)),
           toolbarHeight: 48.w,
-          leading: IconButton(
-            icon: const BackButtonIcon(),
-            iconSize: 24.sp,
-            onPressed: () => Navigator.pushReplacementNamed(context, "/login"),
-          ),
+          automaticallyImplyLeading:  true,
+          // leading: IconButton(
+          //   icon: const BackButtonIcon(),
+          //   iconSize: 24.sp,
+          //   onPressed: () => Navigator.pushReplacementNamed(context, "/login"),
+          // ),
         ),
         body: Container(
           color: cSec.withOpacity(0.1),

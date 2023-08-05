@@ -125,7 +125,7 @@ class _MyFriendsScreenState extends State<MyFriendsScreen>
                       return const Center(
                         child: EmptyList(
                           text:
-                              "You don't have any followers yet\nFollow someone to see them here",
+                              "You are not following anyone yet\nFollow someone to see them here",
                         ),
                       );
                     }),
@@ -196,7 +196,7 @@ class _MyFriendsScreenState extends State<MyFriendsScreen>
                       return const Center(
                         child: EmptyList(
                           text:
-                              "You don't have any followers yet\nFollow someone to see them here",
+                              "You don't have any followers yet\nYour followers will appear here",
                         ),
                       );
                     }),

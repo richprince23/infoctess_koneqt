@@ -187,7 +187,7 @@ class _AddCoursePageState extends State<AddCoursePage> {
                     }
                   },
                   child: Text(
-                    "Save",
+                    "save",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18.sp,

@@ -102,8 +102,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     builder: (context) => Center(
                       child: Image.asset(
                         "assets/images/preload.gif",
-                        width: 50.w,
-                        height: 50.w,
+                        width: 30.w,
+                        height: 30.w,
                       ),
                     ),
                   );
@@ -128,7 +128,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     fontSize: 16.sp,
                   ),
                 ),
-                child: const Text("Reset Password"),
+                child: const Text("reset password"),
               ),
             ],
           ),

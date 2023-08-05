@@ -130,7 +130,7 @@ class _ManageEventsScreenState extends State<ManageEventsScreen> {
                   Navigator.pushNamed(context, '/new-event');
                 },
                 child:
-                    Text('Create New Event', style: TextStyle(fontSize: 16.sp)),
+                    Text('create new event', style: TextStyle(fontSize: 16.sp)),
               ),
             ),
           ],

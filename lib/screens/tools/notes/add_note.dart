@@ -8,6 +8,7 @@ import 'package:infoctess_koneqt/constants.dart';
 // import 'package:infoctess_koneqt/db_helper.dart';
 import 'package:infoctess_koneqt/models/notes_db.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
+import 'package:infoctess_koneqt/widgets/status_snack.dart';
 import 'package:intl/intl.dart';
 
 class AddNoteScreen extends StatefulWidget {
@@ -22,7 +23,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
   late final _content = _quillController.document.toDelta();
 
   final QuillController _quillController = QuillController.basic();
-
+  bool showSave = false;
   //save note to db
   Future addNote(BuildContext context) async {
     var json = jsonEncode(_content.toJson());
@@ -43,7 +44,20 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
         // Navigator.popAndPushNamed(context, '/notes');
         Navigator.pop(context);
       });
+    } else {
+      CustomSnackBar.show(context,
+          message: "Note title and content cannot be empty!");
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _title.addListener(() {
+      setState(() {
+        _title.text.isNotEmpty ? showSave = true : showSave = false;
+      });
+    });
   }
 
   @override
@@ -76,17 +90,19 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
             tooltip: "Rotate Screen",
             icon: const Icon(Icons.rotate_left),
           ),
-          IconButton(
-            icon: const Icon(Icons.check),
-            onPressed: () async {
-              addNote(context).then(
-                (value) => AppDatabase.instance.getNotes().then(
-                      (value) =>
-                          Navigator.popAndPushNamed(context, '/my-notes'),
-                    ),
-              );
-            },
-          ),
+          showSave
+              ? IconButton(
+                  icon: const Icon(Icons.check),
+                  onPressed: () async {
+                    addNote(context).then(
+                      (value) => AppDatabase.instance.getNotes().then(
+                            (value) =>
+                                Navigator.popAndPushNamed(context, '/my-notes'),
+                          ),
+                    );
+                  },
+                )
+              : const SizedBox.shrink(),
         ],
       ),
       body: Padding(
@@ -158,7 +174,9 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                     ),
                   ),
                   child: QuillEditor.basic(
-                      controller: _quillController, readOnly: false),
+                    controller: _quillController,
+                    readOnly: false,
+                  ),
                 ),
               ),
             ]),

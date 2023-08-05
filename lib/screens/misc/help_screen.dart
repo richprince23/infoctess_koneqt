@@ -118,7 +118,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                             onPressed: () async {
                               await uploadImageFromGallery();
                             },
-                            child: const Text("Add screenshots"),
+                            child: const Text("add screenshots"),
                           ),
                           SizedBox(
                             width: 10.w,
@@ -130,7 +130,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                                       selectedFiles = null;
                                     });
                                   },
-                                  child: const Text("Clear images"),
+                                  child: const Text("clear images"),
                                 )
                               : const SizedBox.shrink(),
                         ],
@@ -147,7 +147,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
                             textStyle: TextStyle(fontSize: 16.sp),
                           ),
                           onPressed: () {},
-                          child: const Text("Send message"),
+                          child: const Text("send message"),
                         ),
                       )
                     ],

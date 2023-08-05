@@ -115,7 +115,7 @@ class _NewPaymentState extends State<NewPayment> {
                   ),
                   onPressed: () {},
                   child: Text(
-                    'Submit',
+                    'submit',
                     style: TextStyle(fontSize: 16.sp),
                   ),
                 ),

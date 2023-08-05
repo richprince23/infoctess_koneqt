@@ -334,7 +334,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                       ),
                       child: Text(
-                        "Update Profile",
+                        "update profile",
                         style: TextStyle(fontSize: 16.sp),
                       ),
                     ),

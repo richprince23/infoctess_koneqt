@@ -28,7 +28,7 @@ class MyDuesScreen extends StatelessWidget {
                   Navigator.pushNamed(context, "/new-payment");
                 },
                 child: Text(
-                  "New Payment",
+                  "new payment",
                   style: TextStyle(fontSize: 16.sp),
                 ),
               ),

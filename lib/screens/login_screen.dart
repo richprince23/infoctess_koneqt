@@ -144,7 +144,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 20.w,
                           ),
                           GestureDetector(
-                            //TODO: Implement Forgot Password
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -152,7 +151,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                     const ForgotPasswordScreen(),
                               ),
                             ),
-
                             child: Align(
                               alignment: Alignment.bottomRight,
                               child: Text(
@@ -212,9 +210,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                                           .setLoggedIn(true),
                                                     },
                                                   )
-                                                  .then((value) => Navigator
-                                                      .pushReplacementNamed(
-                                                          context, "/"))
+                                                  .then(
+                                                    (value) => Navigator
+                                                        .pushNamedAndRemoveUntil(
+                                                            context,
+                                                            "/",
+                                                            (route) => false),
+                                                  ),
                                             }
                                         });
                               } on FirebaseAuthException catch (e) {
@@ -271,8 +273,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 10.w,
                           ),
                           GestureDetector(
-                            onTap: () => Navigator.pushReplacementNamed(
-                                context, "/checker"),
+                            onTap: () =>
+                                Navigator.pushNamed(context, "/checker"),
                             child: Align(
                               alignment: Alignment.center,
                               child: Text(

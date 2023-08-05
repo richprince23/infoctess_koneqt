@@ -342,7 +342,7 @@ class _CreateNewsState extends State<CreateNews> {
                                   backgroundColor: cPri,
                                   foregroundColor: Colors.white),
                               child: Text(
-                                "Post News",
+                                "post news",
                                 style: TextStyle(fontSize: 16.sp + 1),
                               ),
                             ),

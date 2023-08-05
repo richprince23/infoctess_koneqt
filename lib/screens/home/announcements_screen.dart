@@ -38,7 +38,7 @@ class NewsScreen extends StatelessWidget {
                 return const Center(
                   child: EmptyList(
                     text:
-                        "There isn't any News available \nKeeping checking here for updates",
+                        "There aren't any News available \nKeeping checking here for updates",
                   ),
                 );
               } else {

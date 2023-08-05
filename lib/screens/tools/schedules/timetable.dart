@@ -209,7 +209,7 @@ class AllSchedulesState extends State<AllSchedules> {
                                               onPressed: () {
                                                 Navigator.pop(context);
                                               },
-                                              child: const Text("Cancel"),
+                                              child: const Text("cancel"),
                                             ),
                                             ElevatedButton(
                                               style: ElevatedButton.styleFrom(
@@ -240,7 +240,7 @@ class AllSchedulesState extends State<AllSchedules> {
                                                       ),
                                                     );
                                               },
-                                              child: const Text("Delete"),
+                                              child: const Text("delete"),
                                             ),
                                           ],
                                         )),
@@ -378,7 +378,7 @@ class AllSchedulesState extends State<AllSchedules> {
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  child: const Text("Cancel"),
+                                  child: const Text("cancel"),
                                 ),
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
@@ -403,7 +403,7 @@ class AllSchedulesState extends State<AllSchedules> {
                                           ),
                                         );
                                   },
-                                  child: const Text("Delete"),
+                                  child: const Text("delete"),
                                 ),
                               ],
                             )),

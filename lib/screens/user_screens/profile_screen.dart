@@ -155,7 +155,7 @@ class _UserProfileState extends State<UserProfile>
                           ),
                         ),
                         child: Text(
-                            value.isFollowing == true ? "Following" : "Follow"),
+                            value.isFollowing == true ? "following" : "follow"),
                       );
                     }),
                     SizedBox(width: 20.w),
@@ -213,7 +213,7 @@ class _UserProfileState extends State<UserProfile>
                           ),
                         ),
                       ),
-                      child: const Text("Message"),
+                      child: const Text("message"),
                     ),
                   ],
                 ),
@@ -268,7 +268,7 @@ class _UserProfileState extends State<UserProfile>
                                     //   print("null");
                                     //   return const SizedBox.shrink();
                                     // }
-                                    
+
                                     if (mediaType.contains("image")) {
                                       return InkWell(
                                         onTap: () {

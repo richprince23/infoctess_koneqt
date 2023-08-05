@@ -620,7 +620,7 @@ class _OpenEventItemState extends State<OpenEventItem> {
                           // Navigator.pop(context);
                         },
                         child: Text(
-                          hasBooked == false ? "Book A Seat" : "Cancel Booking",
+                          hasBooked == false ? "book a seat" : "cancel booking",
                           style: TextStyle(
                               color: Colors.white, fontSize: 14.sp + 1),
                         ),

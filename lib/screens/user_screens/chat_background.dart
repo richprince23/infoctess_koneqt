@@ -36,7 +36,7 @@ class _ChatBackgroundScreenState extends State<ChatBackgroundScreen> {
                     ),
                   );
             },
-            child: const Text("Reset"),
+            child: const Text("reset"),
           )
         ],
       ),
@@ -142,7 +142,7 @@ class _ChatBackgroundScreenState extends State<ChatBackgroundScreen> {
                           );
                     },
                     child: Text(
-                      "Save",
+                      "save",
                       style: TextStyle(fontSize: 18.sp),
                     ),
                   )

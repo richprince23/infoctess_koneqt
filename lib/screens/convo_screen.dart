@@ -136,6 +136,15 @@ class _ConvoScreenState extends State<ConvoScreen> {
                       .orderBy("timestamp", descending: false)
                       .snapshots(),
                   builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: Image.asset(
+                          "assets/images/preload.gif",
+                          width: 30.w,
+                          height: 30.w,
+                        ),
+                      );
+                    }
                     if (snapshot.hasError) {
                       return const Center(
                         child: Text(

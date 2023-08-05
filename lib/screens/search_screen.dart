@@ -149,7 +149,7 @@ class _SearchScreenState extends State<SearchScreen>
                 onPressed: () async {
                   await clearHistory().then((value) => setState(() => {}));
                 },
-                child: const Text("Clear"),
+                child: const Text("clear"),
               ),
             ],
           ),

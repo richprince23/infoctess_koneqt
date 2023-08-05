@@ -17,7 +17,8 @@ class CGPAScreenState extends State<CGPAScreen> {
   int _completedSemesters = 0;
   List<double> _gpas = [];
   double _cgpa = 0.0;
-  final TextEditingController _completedSemestersController = TextEditingController();
+  final TextEditingController _completedSemestersController =
+      TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String getRemark(double gpa) {
@@ -212,7 +213,7 @@ class CGPAScreenState extends State<CGPAScreen> {
                                         backgroundColor: cPri,
                                         foregroundColor: Colors.white,
                                         elevation: 0),
-                                    child: const Text('Close'),
+                                    child: const Text('close'),
                                   )
                                 ],
                               ),
@@ -220,7 +221,7 @@ class CGPAScreenState extends State<CGPAScreen> {
                       );
                     }
                   },
-                  child: const Text('Calculate CGPA'),
+                  child: const Text('calculate CGPA'),
                 ),
               ],
             ),

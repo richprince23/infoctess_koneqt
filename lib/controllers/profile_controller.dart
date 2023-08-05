@@ -143,7 +143,7 @@ class ProfileProvider extends ChangeNotifier {
 
 //check if user is following
   Future<void> checkIfFollowing({required String userID}) async {
-  await db
+    await db
         .collection("user_infos")
         .where('userID', isEqualTo: userID)
         .get()

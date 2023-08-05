@@ -474,7 +474,7 @@ class _PostDetailsState extends State<PostDetails> {
                               ),
                               FilledButton.icon(
                                   icon: const Icon(Icons.add),
-                                  label: const Text("Add Comment"),
+                                  label: const Text("add comment"),
                                   onPressed: () {
                                     showModalBottomSheet(
                                       shape: RoundedRectangleBorder(

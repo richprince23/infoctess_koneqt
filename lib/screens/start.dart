@@ -39,20 +39,22 @@ class _StartScreenState extends State<StartScreen> {
                   }
               })
           .then(
-            (value) => Navigator.pushReplacement(
+            (value) => Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
                 builder: (context) => const MainScreen(),
               ),
+              (route) => false,
             ),
           );
     } else {
       // ignore: use_build_context_synchronously
-      await Navigator.pushReplacement(
+      await Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
           builder: (context) => const LoginScreen(),
         ),
+        (route) => false,
       );
     }
   }
@@ -63,11 +65,14 @@ class _StartScreenState extends State<StartScreen> {
       checkLoginStatus();
     });
 
-    return Center(
-      child: Image.asset(
-        "assets/images/preload.gif",
-        width: 50.w,
-        height: 50.w,
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: Image.asset(
+          "assets/images/preload.gif",
+          width: 50.w,
+          height: 50.w,
+        ),
       ),
     );
   }

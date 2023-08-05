@@ -171,12 +171,14 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                         const SizedBox(height: 10),
                         TextButton(
                           style: ButtonStyle(
-                              padding: MaterialStateProperty.all(
-                                  const EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 5)),
-                              backgroundColor: MaterialStateProperty.all(
-                                  AppTheme.themeData(false, context)
-                                      .indicatorColor)),
+                            padding: MaterialStateProperty.all(
+                              const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 5),
+                            ),
+                            backgroundColor: MaterialStateProperty.all(
+                                AppTheme.themeData(false, context)
+                                    .indicatorColor),
+                          ),
                           onPressed: () async {
                             await uploadImage().then((value) => cropImage());
                           },
@@ -197,7 +199,9 @@ class _ProfileInfoScreenState extends State<ProfileInfoScreen> {
                                 TextSpan(
                                   text: "browse",
                                   style: TextStyle(
-                                      fontSize: 16, color: Colors.white),
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ],
                             ),

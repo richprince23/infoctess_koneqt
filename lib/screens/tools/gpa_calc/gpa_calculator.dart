@@ -213,7 +213,7 @@ class GPAScreenState extends State<GPAScreen> {
                       TextButton.icon(
                         icon: const Icon(Icons.add),
                         onPressed: _addCourse,
-                        label: const Text("Add"),
+                        label: const Text("add"),
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.white,
                           backgroundColor: cPri,
@@ -232,7 +232,7 @@ class GPAScreenState extends State<GPAScreen> {
                       TextButton.icon(
                         icon: const Icon(Icons.remove),
                         onPressed: _removeCourse,
-                        label: const Text("Remove"),
+                        label: const Text("remove"),
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.white,
                           backgroundColor: cPri,
@@ -276,7 +276,7 @@ class GPAScreenState extends State<GPAScreen> {
                                         backgroundColor: cPri,
                                         foregroundColor: Colors.white,
                                         elevation: 0),
-                                    child: const Text('Close'),
+                                    child: const Text('close'),
                                   )
                                 ],
                               ),
@@ -294,7 +294,7 @@ class GPAScreenState extends State<GPAScreen> {
                       foregroundColor:
                           AppTheme.themeData(false, context).primaryColor,
                     ),
-                    child: const Text('Calculate GPA'),
+                    child: const Text('calculate GPA'),
                   ),
                 ],
               ),
