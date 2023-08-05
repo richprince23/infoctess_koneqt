@@ -36,6 +36,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
+                padding: EdgeInsets.all(20.w),
                 decoration: ShapeDecoration(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
@@ -44,13 +45,21 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     ),
                   ),
                 ),
-                child: const EmptyList(
-                  text:
+                child: Column(
+                  children: [
+                    Image.asset(
+                      "assets/images/no_access.png",
+                      width: 100.w,
+                    ),
+                    Text(
                       "Please enter your email address below to recieve a link to reset your password",
+                      style: TextStyle(fontSize: 16.sp),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(
-                height: 10.w,
+                height: 20.w,
               ),
               InputControl(
                 controller: textController,
@@ -59,16 +68,20 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 type: TextInputType.emailAddress,
               ),
               SizedBox(
-                height: response == "" ? 0 : 10.w,
+                height: response == "" ? 0 : 20.w,
               ),
               response != ""
                   ? Text(
                       "$response ",
-                      style: TextStyle(color: Colors.red, fontSize: 14.sp + 1),
+                      style: TextStyle(
+                          color: response.contains("sent")
+                              ? Colors.green
+                              : Colors.red,
+                          fontSize: 16.sp + 1),
                     )
                   : const SizedBox.shrink(),
               SizedBox(
-                height: 5.w,
+                height: 10.w,
               ),
               ElevatedButton(
                 onPressed: () async {
@@ -96,20 +109,24 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   );
                   try {
                     await auth.sendPasswordResetEmail(
-                        email: textController.text);
+                        email: textController.text.trim());
                     setState(() {
                       response =
                           "Password reset email has been sent to your email!";
                     });
                   } catch (e) {
+                    response = e.toString().split("]")[1];
+                  } finally {
                     Navigator.pop(context);
-                    response = "An error occured. Try again";
                   }
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: btnLarge(context),
                   backgroundColor: cPri,
                   foregroundColor: Colors.white,
+                  textStyle: TextStyle(
+                    fontSize: 16.sp,
+                  ),
                 ),
                 child: const Text("Reset Password"),
               ),
