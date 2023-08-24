@@ -127,7 +127,7 @@ Future deleteMessage(
       await db
           .collection("chats")
           .doc(chatID)
-          .collection("messages")
+          .collection("meussages")
           .doc(messageID)
           .delete();
       if ((await docRef).data()!['mediaUrl'] != null) {
