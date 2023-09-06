@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/env.dart';
-import 'package:infoctess_koneqt/widgets/empty_list.dart';
 import 'package:resize/resize.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {

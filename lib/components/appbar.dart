@@ -6,12 +6,13 @@ import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/screens/search_screen.dart';
 import 'package:resize/resize.dart';
 
-class AppBarScreen extends StatelessWidget with PreferredSizeWidget {
+class AppBarScreen extends StatelessWidget implements PreferredSizeWidget {
   @override
   final Size preferredSize;
+
   final String? title;
 
-  AppBarScreen({Key? key, this.title})
+  const AppBarScreen({Key? key, this.title})
       : preferredSize = const Size.fromHeight(kToolbarHeight),
         super(key: key);
 
