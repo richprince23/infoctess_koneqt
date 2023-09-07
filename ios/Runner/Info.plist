@@ -57,15 +57,14 @@
 		<string>$(PRODUCT_NAME) would like to save photos to your photo library</string>
 		<!-- notifications -->
 		<key>UIBackgroundModes</key>
-			<array>
-				<string>fetch</string>
-				<string>remote-notification</string>
-			</array>
-			<key>NSCalendarsUsageDescription</key>
-			<string>Used to schedule reminders</string>
-			<key>NSNotificationsUsageDescription</key>
-			<string>Used to send notifications</string>
- 
+		<array>
+			<string>fetch</string>
+			<string>remote-notification</string>
+		</array>
+		<key>NSCalendarsUsageDescription</key>
+		<string>Used to schedule reminders</string>
+		<key>NSNotificationsUsageDescription</key>
+		<string>Used to send notifications</string>
 		<key>UIStatusBarHidden</key>
 		<false/>
 	</dict>
