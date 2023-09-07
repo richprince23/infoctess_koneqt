@@ -315,7 +315,7 @@ class _PostDetailsState extends State<PostDetails> {
                                     // print("Post Details");
                                   }
                                 },
-                                alwaysDetectTap: true,
+                                // alwaysDetectTap: true,
                               ),
                             ),
                           ),

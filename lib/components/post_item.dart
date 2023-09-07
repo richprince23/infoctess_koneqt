@@ -415,7 +415,7 @@ class _PostItemState extends State<PostItem> {
                                       debugPrint("Post Details");
                                     }
                                   },
-                                  alwaysDetectTap: true,
+                                  // alwaysDetectTap: true,
                                 ),
                               ),
                             ),

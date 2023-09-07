@@ -177,7 +177,7 @@ class CommentItem extends StatelessWidget {
                                     // print("Post Details");
                                   }
                                 },
-                                alwaysDetectTap: true,
+                                // alwaysDetectTap: true,
                               ),
                               Align(
                                 alignment: Alignment.centerRight,

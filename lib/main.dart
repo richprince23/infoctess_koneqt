@@ -13,6 +13,7 @@ import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/messages.dart';
 import 'package:infoctess_koneqt/screens/admin/create_event.dart';
 import 'package:infoctess_koneqt/screens/admin/manage_events.dart';
+import 'package:infoctess_koneqt/screens/auth_gate.dart';
 import 'package:infoctess_koneqt/screens/main_screen.dart';
 import 'package:infoctess_koneqt/screens/misc/help_screen.dart';
 import 'package:infoctess_koneqt/screens/misc/privacy.dart';
@@ -89,10 +90,10 @@ class MyApp extends StatelessWidget {
           ),
         ),
         // initialRoute: initialRoute,
-        home: const StartScreen(),
+        home: const AuthGate(),
 
         routes: {
-          '/start': (context) => const StartScreen(),
+          '/start': (context) => const AuthGate(),
           '/login': (context) => const LoginScreen(),
           "/main": (context) => const MainScreen(),
           "/onboarding": (context) => const OnboardingScreen(),
@@ -125,7 +126,6 @@ class MyApp extends StatelessWidget {
           "/check-updates": (context) => const UpdatesScreen(),
           "/help-support": (context) => const HelpSupportScreen(),
           "/manage-events": (context) => const ManageEventsScreen(),
-          
         },
       ),
     );
