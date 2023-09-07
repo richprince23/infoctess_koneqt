@@ -573,7 +573,7 @@ class _OpenWidgetState extends State<OpenWidget> {
                                       ),
                                       SizedBox(width: 5.w),
                                       Text(
-                                        "${poster!.posterName?.split(" ")[0] ?? 'Anonymous'}  ${poster!.posterName?.split(" ")[1].substring(0, 1) ?? '.'}.",
+                                        "${poster?.posterName?.split(" ")[0] ?? 'Anonymous'}  ${poster?.posterName?.split(" ")[1].substring(0, 1) ?? '.'}.",
                                         style: TextStyle(
                                           fontSize: 13.sp + 1,
                                           color: Colors.white,
