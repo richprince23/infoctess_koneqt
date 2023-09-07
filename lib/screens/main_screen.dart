@@ -3,15 +3,12 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/components/appbar.dart';
 import 'package:infoctess_koneqt/components/bottom_nav.dart';
-// import '../../components/drawer.dart';
 import 'package:infoctess_koneqt/components/drawer.dart';
 import 'package:infoctess_koneqt/controllers/network_controller.dart';
 import 'package:infoctess_koneqt/controllers/page_controller.dart';
-import 'package:infoctess_koneqt/controllers/user_provider.dart';
+import 'package:infoctess_koneqt/controllers/user_state.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:provider/provider.dart';
-
-import '../models/user_info.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -22,7 +19,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   // ignore: unused_field
-  User? _user;
+  // MyUser? _user;
   @override
   void initState() {
     super.initState();
@@ -43,11 +40,7 @@ class _MainScreenState extends State<MainScreen> {
 
   void setAll() async {
     //set CurUser
-    Provider.of<UserProvider>(context, listen: false).getUserInfo().then(
-          (value) => setState(() {
-            _user = value;
-          }),
-        );
+    curUser = Provider.of<UserState>(context, listen: false).curUser;
     await Provider.of<NetworkProvider>(context, listen: false)
         .initConnectivity();
   }

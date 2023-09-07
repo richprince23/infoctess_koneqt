@@ -118,7 +118,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     });
   }
 
-  User user = User();
+  // User user = User();
   @override
   void initState() {
     super.initState();

@@ -1,5 +1,5 @@
 class UserInfo {
-  ///[unique] user's unique id. This id is et from the Firebase Auth User id
+  ///[unique] user's unique id. This id is et from the Firebase Auth MyUser id
   String userID;
 
   ///user's fullname
@@ -44,10 +44,10 @@ class UserInfo {
       this.classGroup,
       this.isAdmin = false});
 
-  UserInfo.user({required this.userID, User? user});
+  UserInfo.user({required this.userID, MyUser? user});
 }
 
-class User {
+class MyUser {
   ///user's fullname
   String? fullName;
 
@@ -78,7 +78,7 @@ class User {
   ///If user is an Admin or a normal user
   bool isAdmin;
 
-  User(
+  MyUser(
       {this.avatar,
       this.emailAddress,
       this.classGroup,
@@ -106,8 +106,8 @@ class User {
   }
 
   //to json method
-  static User fromJson(Map<String, Object?> json) {
-    return User(
+  static MyUser fromJson(Map<String, Object?> json) {
+    return MyUser(
         fullName: json[UserFields.fullName] as String?,
         emailAddress: json[UserFields.emailAddress] as String?,
         avatar: json[UserFields.avatar] as String?,

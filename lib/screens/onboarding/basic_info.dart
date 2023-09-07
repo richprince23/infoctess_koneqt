@@ -6,7 +6,7 @@ import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
-import 'package:infoctess_koneqt/controllers/user_provider.dart';
+import 'package:infoctess_koneqt/controllers/user_state.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +23,7 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
   TextEditingController nameCon = TextEditingController();
   var emailCon = TextEditingController();
   var passCon = TextEditingController();
-  final scrollController = ScrollController();
+  final basicFormKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -36,8 +36,8 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
   @override
   void initState() {
     super.initState();
-    nameCon.text = onboardUser!.fullName!;
-    emailCon.text = onboardUser!.emailAddress!;
+    nameCon.text = onboardUser?.fullName ?? "";
+    emailCon.text = onboardUser?.emailAddress ?? "";
   }
 
   void saveBasicInfo() {
@@ -49,187 +49,156 @@ class _BasicInfoScreenState extends State<BasicInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // var size = MediaQuery.of(context).size;
     return KeyboardDismissOnTap(
-      dismissOnCapturedTaps: false,
+      // dismissOnCapturedTaps: false,
       child: Scaffold(
-        body: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              backgroundColor: cPri,
-              elevation: 0,
-              pinned: true,
-              toolbarHeight: 48.w,
-              leading: IconButton(
-                onPressed: () {
-                  Navigator.popAndPushNamed(context, "/login");
-                },
-                icon: const BackButtonIcon(),
-                iconSize: 24.w,
+        appBar: AppBar(
+          backgroundColor: cPri,
+          elevation: 0,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.popAndPushNamed(context, "/login");
+            },
+            icon: const BackButtonIcon(),
+            iconSize: 24.w,
+            color: Colors.white,
+          ),
+          title: Text(
+            "Basic Info",
+            style: GoogleFonts.sarabun(
+                fontSize: 24.w,
                 color: Colors.white,
-              ),
-              expandedHeight: 160.w,
-              flexibleSpace: FlexibleSpaceBar(
-                expandedTitleScale: 1,
-                centerTitle: true,
-                title: Text(
-                  "Basic Info",
-                  style: GoogleFonts.sarabun(
-                      fontSize: 24.w,
-                      color: Colors.white,
-                      fontWeight: FontWeight.normal,
-                      decoration: TextDecoration.none),
-                ),
-                background: Container(
-                  color: cPri,
-                  child: Icon(
-                    Icons.account_circle,
-                    size: 80.w,
-                    color: Colors.white,
+                fontWeight: FontWeight.normal,
+                decoration: TextDecoration.none),
+          ),
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 20.w),
+            child: Form(
+              key: basicFormKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  InputControl(
+                    hintText: "Fullname",
+                    controller: nameCon,
+                    validator: ((value) {
+                      if (value!.isEmpty || value.length < 5) {
+                        return "Enter a fullname";
+                      }
+                      return null;
+                    }),
                   ),
-                ),
-              ),
-            ),
-            SliverFillRemaining(
-              child: SizedBox(
-                height: 70.vh,
-                width: 100.vw,
-                child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 30.w, vertical: 20.w),
-                  child: Form(
-                    key: basicFormKey,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          InputControl(
-                            hintText: "Fullname",
-                            controller: nameCon,
-                            validator: ((value) {
-                              if (value!.isEmpty || value.length < 5) {
-                                return "Enter a fullname";
-                              }
-                              return null;
-                            }),
-                          ),
-                          InputControl(
-                            hintText: "Email Address",
-                            controller: emailCon,
-                            validator: (value) {
-                              if (value!.isEmpty ||
-                                  !RegExp(r'\S+@\S+\.\S+', caseSensitive: false)
-                                      .hasMatch(value)) {
-                                return "Please enter a valid email address";
-                              }
-                              return null;
-                            },
-                          ),
-                          InputControl(
-                            hintText: "Password",
-                            controller: passCon,
-                            isPassword: true,
-                            validator: (value) {
-                              if (value!.isEmpty || value.length < 8) {
-                                return "Password must be 8 or more characters";
-                              }
-                              return null;
-                            },
-                          ),
-                          InputControl(
-                            hintText: "Confirm Password",
-                            isPassword: true,
-                            validator: (value) {
-                              if (value!.isEmpty || value != passCon.text) {
-                                return "Passwords do not match";
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(
-                            height: 10.w,
-                          ),
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: TextButton(
-                              style: TextButton.styleFrom(
-                                minimumSize: btnLarge(context),
-                                backgroundColor: cPri,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
+                  InputControl(
+                    hintText: "Email Address",
+                    controller: emailCon,
+                    validator: (value) {
+                      if (value!.isEmpty ||
+                          !RegExp(r'\S+@\S+\.\S+', caseSensitive: false)
+                              .hasMatch(value)) {
+                        return "Please enter a valid email address";
+                      }
+                      return null;
+                    },
+                  ),
+                  InputControl(
+                    hintText: "Password",
+                    controller: passCon,
+                    isPassword: true,
+                    validator: (value) {
+                      if (value!.isEmpty || value.length < 8) {
+                        return "Password must be 8 or more characters";
+                      }
+                      return null;
+                    },
+                  ),
+                  InputControl(
+                    hintText: "Confirm Password",
+                    isPassword: true,
+                    validator: (value) {
+                      if (value!.isEmpty || value != passCon.text) {
+                        return "Passwords do not match";
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(
+                    height: 10.w,
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        minimumSize: btnLarge(context),
+                        backgroundColor: cPri,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      onPressed: () async {
+                        try {
+                          if (basicFormKey.currentState!.validate()) {
+                            // print("signing up");
+                            showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (context) => Center(
+                                child: Image.asset(
+                                  "assets/images/preload.gif",
+                                  height: 30.w,
+                                  width: 30.w,
                                 ),
                               ),
-                              onPressed: () async {
-                                // print(context.read<OnboardingController>().selectedLevel);
-                                // print(context.read<OnboardingController>().selectedGroup);
-                                // print(context.read<OnboardingController>().selectedGender);
-                                try {
-                                  if (!basicFormKey.currentState!.validate()) {
-                                    return;
-                                  }
-                                  showDialog(
-                                    barrierDismissible: false,
-                                    context: context,
-                                    builder: (context) => Center(
-                                      // title: const Text("Verification"),
-                                      child: Image.asset(
-                                        "assets/images/preload.gif",
-                                        height: 50.w,
-                                        width: 50.w,
-                                      ),
-                                    ),
-                                  );
-                                  await Auth()
-                                      .signUp(
-                                          emailCon.text.trim(), passCon.text)
-                                      .then((value) {
-                                    Auth().updateName(nameCon.text.trim());
-                                    Provider.of<UserProvider>(context,
-                                            listen: false)
-                                        .setUserID(value!.uid);
-                                  }).then((value) {
-                                    Provider.of<OnboardingController>(context,
-                                            listen: false)
-                                        .nextPage();
-                                  });
-                                } on FirebaseAuthException catch (e) {
-                                  if (e.code == 'weak-password') {
-                                    CustomDialog.show(context,
-                                        message:
-                                            "The password provided is too weak");
-                                  } else if (e.code == 'email-already-in-use') {
-                                    CustomDialog.show(context,
-                                        message:
-                                            "The account already exists for that email");
-                                  } else {
-                                    CustomDialog.show(context,
-                                        message: "An error occured");
-                                  }
-                                } finally {
-                                  Navigator.pop(context);
-                                }
-                              },
-                              child: Text(
-                                "next",
-                                style: GoogleFonts.sarabun(
-                                  textStyle: TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    decoration: TextDecoration.none,
-                                    fontSize: 18.w,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
+                            );
+                            await Auth()
+                                .signUp(emailCon.text.trim(), passCon.text)
+                                .then((value) {
+                              Auth().updateName(nameCon.text.trim());
+                              Provider.of<UserState>(context, listen: false)
+                                  .getUser(context);
+                            }).then((value) {
+                              Provider.of<OnboardingController>(context,
+                                      listen: false)
+                                  .nextPage();
+                            });
+                          } else {
+                            CustomDialog.show(context,
+                                message: "Please fill all fields");
+                          }
+                        } on FirebaseAuthException catch (e) {
+                          if (e.code == 'weak-password') {
+                            CustomDialog.show(context,
+                                message: "The password provided is too weak");
+                          } else if (e.code == 'email-already-in-use') {
+                            CustomDialog.show(context,
+                                message:
+                                    "The account already exists for that email");
+                          } else {
+                            CustomDialog.show(context,
+                                message: "An error occured");
+                          }
+                        } finally {
+                          Navigator.pop(context);
+                        }
+                      },
+                      child: Text(
+                        "next",
+                        style: GoogleFonts.sarabun(
+                          textStyle: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            decoration: TextDecoration.none,
+                            fontSize: 18.w,
+                            color: Colors.white,
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );

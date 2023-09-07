@@ -47,12 +47,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
               //todo
               //some validations and savings
-
             } else {
               buttonText = "next";
               //todo
               //validations and savings
-
             }
           });
         },

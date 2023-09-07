@@ -114,7 +114,7 @@ Future<int?> checkUserAccess(String indexNum) async {
     //check user here
     await Auth().checkUserExists(indexNum).then((value) {
       if (value == false) {
-        onboardUser = User(
+        onboardUser = MyUser(
             indexNum: data[0]['index_num'] as int,
             fullName: "${data[0]['othernames']} ${data[0]['surname']}",
             emailAddress: data[0]['email'] ?? "",

@@ -38,8 +38,8 @@ class _AcademicInfoScreenState extends State<AcademicInfoScreen> {
     'Group 10',
   ];
   final List<String> gender = ['Male', 'Female'];
-  // final ScrollController _scrollController = ScrollController();
-  // GlobalKey formKey = GlobalKey<FormState>();
+  final ScrollController _scrollController = ScrollController();
+  final acadFormKey = GlobalKey<FormState>();
   final indexNumCon = TextEditingController();
 
   @override
@@ -52,193 +52,160 @@ class _AcademicInfoScreenState extends State<AcademicInfoScreen> {
   Widget build(BuildContext context) {
     return KeyboardDismissOnTap(
       child: Scaffold(
-        body: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              backgroundColor: cPri,
-              pinned: true,
-              toolbarHeight: 48.w,
-              leading: IconButton(
-                onPressed: () {
-                  Provider.of<OnboardingController>(context, listen: false)
-                      .goBack();
-                },
-                icon: const BackButtonIcon(),
-                color: Colors.white,
-                iconSize: 24.w,
-              ),
-              expandedHeight: 160.w,
-              flexibleSpace: FlexibleSpaceBar(
-                expandedTitleScale: 1,
-                centerTitle: true,
-                title: Text(
-                  "Academic Info",
-                  style: GoogleFonts.sarabun(
-                      fontSize: 24.sp,
-                      color: Colors.white,
-                      fontWeight: FontWeight.normal,
-                      decoration: TextDecoration.none),
-                ),
-                background: Container(
-                  color: cPri,
-                  child: Icon(
-                    Icons.school,
-                    color: Colors.white,
-                    size: 80.w,
-                  ),
-                ),
-              ),
+        appBar: AppBar(
+          backgroundColor: cPri,
+          title: Text(
+            "Academic Info",
+            style: GoogleFonts.sarabun(
+              fontSize: 24.sp,
+              color: Colors.white,
+              fontWeight: FontWeight.normal,
+              decoration: TextDecoration.none,
             ),
-            SliverFillRemaining(
-              child: SizedBox(
-                height: 100.vh,
-                width: 100.vw,
-                child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 30.w, vertical: 20.w),
-                  child: Form(
-                    key: acadFormKey,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          InputControl(
-                            hintText: "Index Number",
-                            controller: indexNumCon,
-                            readOnly: true,
-                          ),
-                          SelectControl(
-                            hintText: "Study Level",
-                            onChanged: (levelVal) => setState(() {
-                              Provider.of<OnboardingController>(context,
-                                      listen: false)
-                                  .selectedLevel = levelVal!;
-                            }),
-                            items: levels
-                                .map(
-                                  (String levelVal) => DropdownMenuItem<String>(
-                                    value: levelVal,
-                                    child: Text(levelVal),
-                                  ),
-                                )
-                                .toList(),
-                            validator: (value) {
-                              if (value == null) {
-                                return "Please select a level";
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
-                          SelectControl(
-                            hintText: "Class Group",
-                            onChanged: (groupVal) => setState(() {
-                              Provider.of<OnboardingController>(context,
-                                      listen: false)
-                                  .selectedGroup = groupVal!;
-                            }),
-                            items: classgroup
-                                .map(
-                                  (String groupVal) => DropdownMenuItem<String>(
-                                    value: groupVal,
-                                    child: Text(groupVal),
-                                  ),
-                                )
-                                .toList(),
-                            validator: (value) {
-                              if (value == null) {
-                                return "Please select a class group";
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
-                          SelectControl(
-                            hintText: "Gender",
-                            onChanged: (genderVal) => setState(() {
-                              Provider.of<OnboardingController>(context,
-                                      listen: false)
-                                  .selectedGender = genderVal!;
-                            }),
-                            items: gender
-                                .map(
-                                  (String genderVal) =>
-                                      DropdownMenuItem<String>(
-                                    value: genderVal,
-                                    child: Text(genderVal),
-                                  ),
-                                )
-                                .toList(),
-                            validator: (value) {
-                              if (value == null) {
-                                return "Please select a gender";
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
-                          SizedBox(
-                            height: 10.w,
-                          ),
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: TextButton(
-                              style: TextButton.styleFrom(
-                                minimumSize: btnLarge(context),
-                                backgroundColor: cPri,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                              ),
-                              onPressed: () async {
-                                // print(context.read<OnboardingController>().selectedLevel);
-                                // print(context.read<OnboardingController>().selectedGroup);
-                                // print(context.read<OnboardingController>().selectedGender);
-                                try {
-                                  if (!acadFormKey.currentState!.validate()) {
-                                    return;
-                                  }
-                                  // Provider.of<OnboardingController>(context,
-                                  //         listen: false)
-                                  //     .indexNum = indexNumCon.text;
-                                  onboardUser!.userLevel = context
-                                      .read<OnboardingController>()
-                                      .selectedLevel;
-                                  onboardUser!.classGroup = context
-                                      .read<OnboardingController>()
-                                      .selectedGroup;
-                                  onboardUser!.gender = context
-                                      .read<OnboardingController>()
-                                      .selectedGender;
-                                } catch (e) {
-                                  CustomDialog.show(context,
-                                      message: "Please fill all fields");
-                                }
-                                Provider.of<OnboardingController>(context,
-                                        listen: false)
-                                    .nextPage();
-                              },
-                              child: Text(
-                                "next",
-                                style: GoogleFonts.sarabun(
-                                  textStyle: TextStyle(
-                                    fontWeight: FontWeight.w400,
-                                    decoration: TextDecoration.none,
-                                    fontSize: 18.sp + 1,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
+          ),
+          leading: IconButton(
+            onPressed: () {
+              Provider.of<OnboardingController>(context, listen: false)
+                  .goBack();
+            },
+            icon: const BackButtonIcon(),
+            iconSize: 24.w,
+            color: Colors.white,
+          ),
+        ),
+        body: Form(
+          key: acadFormKey,
+          child: ListView(
+            controller: _scrollController,
+            padding: EdgeInsets.symmetric(horizontal: 30.w, vertical: 20.w),
+            children: [
+              InputControl(
+                hintText: "Index Number",
+                controller: indexNumCon,
+                readOnly: true,
+              ),
+              SelectControl(
+                hintText: "Study Level",
+                onChanged: (levelVal) => setState(() {
+                  Provider.of<OnboardingController>(context, listen: false)
+                      .selectedLevel = levelVal!;
+                }),
+                items: levels
+                    .map(
+                      (String levelVal) => DropdownMenuItem<String>(
+                        value: levelVal,
+                        child: Text(levelVal),
+                      ),
+                    )
+                    .toList(),
+                validator: (value) {
+                  if (value == null) {
+                    return "Please select a level";
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+              SelectControl(
+                hintText: "Class Group",
+                onChanged: (groupVal) => setState(() {
+                  Provider.of<OnboardingController>(context, listen: false)
+                      .selectedGroup = groupVal!;
+                }),
+                items: classgroup
+                    .map(
+                      (String groupVal) => DropdownMenuItem<String>(
+                        value: groupVal,
+                        child: Text(groupVal),
+                      ),
+                    )
+                    .toList(),
+                validator: (value) {
+                  if (value == null) {
+                    return "Please select a class group";
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+              SelectControl(
+                hintText: "Gender",
+                onChanged: (genderVal) => setState(() {
+                  Provider.of<OnboardingController>(context, listen: false)
+                      .selectedGender = genderVal!;
+                }),
+                items: gender
+                    .map(
+                      (String genderVal) => DropdownMenuItem<String>(
+                        value: genderVal,
+                        child: Text(genderVal),
+                      ),
+                    )
+                    .toList(),
+                validator: (value) {
+                  if (value == null) {
+                    return "Please select a gender";
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+              SizedBox(
+                height: 10.w,
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    minimumSize: btnLarge(context),
+                    backgroundColor: cPri,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                  onPressed: () async {
+                    try {
+                      if (acadFormKey.currentState!.validate()) {
+                        print(onboardUser?.toJson());
+                        onboardUser?.userLevel =
+                            context.read<OnboardingController>().selectedLevel;
+                        onboardUser?.classGroup =
+                            context.read<OnboardingController>().selectedGroup;
+                        onboardUser?.gender =
+                            context.read<OnboardingController>().selectedGender;
+                        Provider.of<OnboardingController>(context,
+                                listen: false)
+                            .nextPage();
+                      }
+                      // else {
+                      //   CustomDialog.show(
+                      //     context,
+                      //     message: "Please fill all fields",
+                      //   );
+                      // }
+                    } catch (e) {
+                      // CustomDialog.show(
+                      //   context,
+                      //   message: "An error occured. Please try again later.",
+                      //   // message: e.toString(),
+                      // );
+                    }
+                  },
+                  child: Text(
+                    "next",
+                    style: GoogleFonts.sarabun(
+                      textStyle: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        decoration: TextDecoration.none,
+                        fontSize: 18.sp + 1,
+                        color: Colors.white,
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:infoctess_koneqt/models/user_info.dart' as myuser;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/env.dart';
+import 'package:infoctess_koneqt/models/user_info.dart';
 import 'package:provider/provider.dart';
 
 class UserProvider extends ChangeNotifier {
@@ -13,9 +13,13 @@ class UserProvider extends ChangeNotifier {
   // String _avatar = "";
   late bool _isLoggedIn;
   late String _userID;
+  bool? _userInit = false;
 
   /// gets user's index number
-  get indexNum async => _indexNum;
+  get indexNum async => _indexNum!;
+
+  //get if the user has been initialized
+  get userInit => _userInit;
 
   set avatar(String avatar) {
     curUser!.avatar = avatar;
@@ -62,12 +66,12 @@ class UserProvider extends ChangeNotifier {
   }
 
   /// gets user's info from UserInfo model
-  Future<myuser.User?> getUserInfo() async {
+  Future<MyUser?> getUserInfo() async {
     return curUser;
   }
 
   /// sets a userinfo from a UserInfo model
-  setUser(myuser.User user) async {
+  setUser(MyUser user) async {
     final userPrefs = await mainPrefs;
     userPrefs.setString('curUser', user.toJson().toString());
     setLoggedIn(true);
@@ -78,7 +82,7 @@ class UserProvider extends ChangeNotifier {
     final userPrefs = await mainPrefs;
     final res = userPrefs.getString("curUser");
     if (res != null) {
-      curUser = myuser.User.fromJson(json.decode(res) as Map<String, dynamic>);
+      curUser = MyUser.fromJson(json.decode(res) as Map<String, dynamic>);
       // curUser = myuser.User.fromJson((res));
     }
     notifyListeners();
@@ -110,7 +114,7 @@ class UserProvider extends ChangeNotifier {
 
     if (userDoc.exists) {
       final userData = userDoc.data();
-      final curUser = myuser.User(
+      final curUser = MyUser(
         avatar: userData!['avatar'],
         emailAddress: userData['emailAddress'],
         classGroup: userData['classGroup'],
@@ -136,7 +140,7 @@ class UserProvider extends ChangeNotifier {
         .get()
         .then((value) => value.docs[0].data());
 
-    curUser = myuser.User(
+    curUser = MyUser(
       avatar: user.photoURL,
       fullName: user.displayName,
       emailAddress: user.email,

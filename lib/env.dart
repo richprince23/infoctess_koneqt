@@ -25,7 +25,7 @@ RemoteConfigSettings configSettings = RemoteConfigSettings(
   minimumFetchInterval: const Duration(hours: 12),
 );
 
-User? curUser;
+MyUser? curUser;
 FirebaseAuth auth = FirebaseAuth.instance;
 
 String? openAiKey = remoteConfig.getString("apiKeys");
@@ -53,13 +53,13 @@ var kMainPages = <Widget>[
 
 final Future<SharedPreferences> mainPrefs = SharedPreferences.getInstance();
 
-User? onboardUser;
+MyUser? onboardUser;
 
 //form keys
 
-final basicFormKey = GlobalKey<FormState>();
-final acadFormKey = GlobalKey<FormState>();
-final profileFormKey = GlobalKey<FormState>();
+// final basicFormKey = GlobalKey<FormState>();
+// final acadFormKey = GlobalKey<FormState>();
+// final profileFormKey = GlobalKey<FormState>();
 
 //onboarding controllers
 
