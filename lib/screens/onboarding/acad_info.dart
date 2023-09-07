@@ -6,7 +6,6 @@ import 'package:infoctess_koneqt/components/select_control1.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
 import 'package:infoctess_koneqt/env.dart';
-import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 
@@ -166,7 +165,7 @@ class _AcademicInfoScreenState extends State<AcademicInfoScreen> {
                   onPressed: () async {
                     try {
                       if (acadFormKey.currentState!.validate()) {
-                        print(onboardUser?.toJson());
+                        // print(onboardUser?.toJson());
                         onboardUser?.userLevel =
                             context.read<OnboardingController>().selectedLevel;
                         onboardUser?.classGroup =

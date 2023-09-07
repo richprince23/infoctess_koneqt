@@ -22,7 +22,6 @@ import 'package:infoctess_koneqt/screens/misc/terms.dart';
 import 'package:infoctess_koneqt/screens/onboarding.dart';
 import 'package:infoctess_koneqt/screens/onboarding/check_index.dart';
 import 'package:infoctess_koneqt/screens/profile.dart';
-import 'package:infoctess_koneqt/screens/start.dart';
 import 'package:infoctess_koneqt/screens/tools/courses/add_course.dart';
 import 'package:infoctess_koneqt/screens/tools/courses/courses.dart';
 import 'package:infoctess_koneqt/screens/tools/dues/dues_main.dart';

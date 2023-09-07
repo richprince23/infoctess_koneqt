@@ -13,7 +13,7 @@ class UserProvider extends ChangeNotifier {
   // String _avatar = "";
   late bool _isLoggedIn;
   late String _userID;
-  bool? _userInit = false;
+  final bool _userInit = false;
 
   /// gets user's index number
   get indexNum async => _indexNum!;

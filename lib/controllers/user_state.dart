@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/models/user_info.dart';
-import 'package:provider/provider.dart';
 
 class UserState extends ChangeNotifier {
   bool _isUserInit = false;
@@ -16,37 +15,43 @@ class UserState extends ChangeNotifier {
   //save user info in shared prefs
   setCurUser(MyUser? user) async {
     _curUser = user;
+    // curUser = user;
     final userPrefs = await mainPrefs;
     userPrefs.setString('curUser', user!.toJson().toString());
+    _isUserInit = true;
     notifyListeners();
   }
 
-  //get and save user details in
-  Future<void> getUser(BuildContext context) async {
+  //retrieves user info from firestore and calls setCurUser to save in shared prefs
+  Future<MyUser?> getUser(BuildContext context) async {
     // final userProvider = Provider.of<UserState>(context, listen: false);
 
     final userDoc = await FirebaseFirestore.instance
         .collection('user_infos')
-        .doc(auth.currentUser!.uid)
+        .where('userID', isEqualTo: auth.currentUser?.uid)
+        // .snapshots();
         .get();
 
-    if (userDoc.exists) {
-      final userData = userDoc.data();
+    if (userDoc.docs.isNotEmpty) {
+      final userData = userDoc.docs.first;
       final curUser = MyUser(
-        avatar: userData!['avatar'] ?? "",
-        emailAddress: userData['emailAddress'] ?? "",
+        avatar: userData['avatar'] ?? "",
+        emailAddress: auth.currentUser?.email ?? "",
         classGroup: userData['classGroup'] ?? "",
         fullName: userData['fullName'] ?? "",
         gender: userData['gender'] ?? "",
-        indexNum: userData['indexNum'],
+        indexNum: int.parse(userData['indexNum']),
         phoneNum: userData['phoneNum'] ?? "",
         userLevel: userData['userLevel'] ?? "",
         userName: userData['userName'] ?? "",
         isAdmin: userData['isAdmin'] ?? false,
       );
 
+      // print("curUser is: ${curUser.toJson()}");
       // _curUser = curUser;
       setCurUser(curUser);
+      return curUser;
     }
+    return null;
   }
 }

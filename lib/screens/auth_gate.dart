@@ -6,7 +6,6 @@ import 'package:infoctess_koneqt/controllers/user_state.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/screens/login_screen.dart';
 import 'package:infoctess_koneqt/screens/main_screen.dart';
-import 'package:infoctess_koneqt/screens/onboarding.dart';
 import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 
@@ -21,6 +20,9 @@ class _AuthGateState extends State<AuthGate> {
   bool isLoggedIn = false;
   User? user;
   StreamSubscription<User?>? userSub;
+
+  // bool isInit = false;
+
   @override
   void initState() {
     super.initState();
@@ -38,21 +40,34 @@ class _AuthGateState extends State<AuthGate> {
         setState(() {
           isLoggedIn = true;
           user = authUser;
-          curUser = Provider.of<UserState>(context, listen: false).curUser;
         });
+        Future.delayed(const Duration(seconds: 2), () {
+          getDetails();
+        });
+        // getDetails();
         // You can check the token expiration here and regenerate if needed.
         checkTokenExpiration(authUser);
       } else {
         auth.currentUser?.getIdTokenResult().then((value) {
           // print("token ${value.token}");
         });
-        setState(() {
-          isLoggedIn = false;
-          user = null;
-          curUser = null;
-        });
+        // setState(() {
+        //   isLoggedIn = false;
+        //   user = null;
+        //   curUser = null;
+        // });
       }
     });
+  }
+
+  Future getDetails() async {
+    await Provider.of<UserState>(context, listen: false)
+        .getUser(context)
+        .then((value) => setState(() {
+              curUser = value;
+              // print("curUser: ${curUser?.toJson()}");
+            }));
+    // curUser = Provider.of<UserState>(context, listen: false).curUser;
   }
 
   // Check token expiration
@@ -77,6 +92,7 @@ class _AuthGateState extends State<AuthGate> {
   Future<void> regenerateAuthTokens(User user) async {
     await user.getIdToken();
     user.refreshToken;
+    await getDetails();
     // print('Auth tokens regenerated successfully.');
   }
 
@@ -101,16 +117,11 @@ class _AuthGateState extends State<AuthGate> {
           );
         }
         // Return mainscreen when userid is present and curUser is not null
-        if (snapshot.data != null &&
-            snapshot.data!.uid.isNotEmpty &&
-            curUser != null) {
+        if (snapshot.data != null && snapshot.data!.uid.isNotEmpty) {
+          // if (curUser == null) {
+          //   return const OnboardingScreen();
+          // }
           return const MainScreen();
-        }
-        // Return onboarding if user is logged in but curUser is empty. ie. not initialized
-        else if (snapshot.data != null &&
-            snapshot.data!.uid.isNotEmpty &&
-            curUser == null) {
-          return const OnboardingScreen();
         } else {
           auth.currentUser?.getIdTokenResult().then((value) {
             debugPrint("token ${value.token}");

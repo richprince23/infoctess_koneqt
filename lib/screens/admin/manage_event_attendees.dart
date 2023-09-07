@@ -41,9 +41,9 @@ class _ManageEventAttendeesScreenState
           children: [
             ColoredBox(
               color: cSec.withOpacity(0.05),
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Text('Select User to edit or delete  '),
                   Icon(Icons.info_outline_rounded),
                 ],

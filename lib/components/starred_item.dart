@@ -11,10 +11,10 @@ class StarredItem extends StatefulWidget {
 class _StarredItemState extends State<StarredItem> {
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
-      children: const [
+      children: [
         Text("User name"),
         ChatBubble(
           hasOptions: false,

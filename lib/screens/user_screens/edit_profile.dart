@@ -11,7 +11,6 @@ import 'package:infoctess_koneqt/components/select_control1.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/user_provider.dart';
 import 'package:infoctess_koneqt/env.dart';
-import 'package:infoctess_koneqt/models/user_info.dart';
 import 'package:infoctess_koneqt/widgets/status_snack.dart';
 import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';

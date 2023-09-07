@@ -8,7 +8,6 @@ import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/onboarding_controller.dart';
-import 'package:infoctess_koneqt/controllers/user_provider.dart';
 import 'package:infoctess_koneqt/controllers/user_state.dart';
 import 'package:infoctess_koneqt/env.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
