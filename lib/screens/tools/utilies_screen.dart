@@ -182,6 +182,7 @@ class UtilItem extends StatelessWidget {
                 color: AppTheme.themeData(false, context).primaryColorLight,
                 fontSize: 14.sp,
               ),
+              textAlign: TextAlign.center,
             ),
           ],
         ),
