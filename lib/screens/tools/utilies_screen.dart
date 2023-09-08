@@ -130,27 +130,18 @@ class _UtilitiesScreenState extends State<UtilitiesScreen> {
                         style: GoogleFonts.sarabun(
                             color: AppTheme.themeData(false, context)
                                 .primaryColorLight,
-                            fontSize: 16.sp + 1),
+                            fontSize: 14.sp),
                       ),
                     ],
                   ),
                 ),
               ),
-              // UtilItem(
-              //   icon: CupertinoIcons.hammer,
-              //   title: 'Other Resources',
-              //   // route: '',
-              // ),
               const UtilItem(
                 icon: CupertinoIcons.bell,
                 title: 'Updates',
                 route: 'check-updates',
               ),
-              // InkWell(
-              //   onTap: () => NotificationService().showNotification(
-              //       title: "Test", body: "Testing instant notifications"),
-              //   child: const Icon(Icons.alarm),
-              // ),
+             
             ],
           ),
         ),
@@ -180,14 +171,17 @@ class UtilItem extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Icon(icon,
-                size: 50.w,
-                color: AppTheme.themeData(false, context).primaryColorLight),
+            Icon(
+              icon,
+              size: 50.w,
+              color: AppTheme.themeData(false, context).primaryColorLight,
+            ),
             Text(
               title,
               style: GoogleFonts.sarabun(
-                  color: AppTheme.themeData(false, context).primaryColorLight,
-                  fontSize: 16.sp + 1),
+                color: AppTheme.themeData(false, context).primaryColorLight,
+                fontSize: 14.sp,
+              ),
             ),
           ],
         ),
