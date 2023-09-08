@@ -6,6 +6,7 @@ import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/constants.dart';
 import 'package:infoctess_koneqt/controllers/user_provider.dart';
+import 'package:infoctess_koneqt/controllers/user_state.dart';
 import 'package:infoctess_koneqt/screens/forgot_password.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
@@ -191,36 +192,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 try {
                                   await Auth()
                                       .signIn(_email.text.trim(), _pass.text)
-                                      .then((user) async => {
-                                            if (user != null)
-                                              {
-                                                await Provider.of<UserProvider>(
-                                                        context,
-                                                        listen: false)
-                                                    .setUserID(user.uid)
-                                                    .then(
-                                                      (value) => {
-                                                        Provider.of<UserProvider>(
-                                                                context,
-                                                                listen: false)
-                                                            .setUserDetails(),
-
-                                                        // save user to shared prefs
-                                                        Provider.of<UserProvider>(
-                                                                context,
-                                                                listen: false)
-                                                            .setLoggedIn(true),
-                                                      },
-                                                    )
-                                                    .then(
-                                                      (value) => Navigator
-                                                          .pushNamedAndRemoveUntil(
-                                                              context,
-                                                              "/",
-                                                              (route) => false),
-                                                    ),
-                                              }
-                                          });
+                                      .then(
+                                        (value) => Navigator.pop(context),
+                                      );
                                 } on FirebaseAuthException catch (e) {
                                   Navigator.pop(context);
                                   if (e.code == 'network-request-failed') {
