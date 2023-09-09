@@ -5,12 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:infoctess_koneqt/auth.dart';
 import 'package:infoctess_koneqt/components/input_control1.dart';
 import 'package:infoctess_koneqt/constants.dart';
-import 'package:infoctess_koneqt/controllers/user_provider.dart';
-import 'package:infoctess_koneqt/controllers/user_state.dart';
 import 'package:infoctess_koneqt/screens/forgot_password.dart';
 import 'package:infoctess_koneqt/theme/mytheme.dart';
 import 'package:infoctess_koneqt/widgets/custom_dialog.dart';
-import 'package:provider/provider.dart';
 import 'package:resize/resize.dart';
 
 class LoginScreen extends StatefulWidget {
