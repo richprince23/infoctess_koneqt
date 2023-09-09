@@ -325,13 +325,16 @@ class UserAccountScreen extends StatelessWidget {
                     ListTile(
                       onTap: () async {
                         CustomDialog.showWithAction(context,
-                            actionText: "Still Delete",
+                            actionText: "Confirm Delete",
                             title: "Delete Account",
                             message:
                                 "Asay, why do you want to delete your account? ",
                             action: () async {
+                              Auth().deleteUser().then((value) {
                           CustomSnackBar.show(context,
-                              message: "Will delete when you complete school!");
+                              message: "Your account has been deleted!");
+                          auth.signOut();
+                              });
                         });
                       },
                       iconColor: Colors.red,

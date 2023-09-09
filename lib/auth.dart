@@ -105,7 +105,6 @@ class Auth {
       }).then((value) async => {
             docID = value.id,
             await saveUserImage(avatar!),
-            
           });
 
       return docID;
@@ -240,6 +239,24 @@ class Auth {
     } catch (e) {
       // print(e);
       // throw Exception(e);
+    }
+  }
+
+  // delete user
+  Future deleteUser() async {
+    try {
+      String userID = _auth.currentUser!.uid;
+      await _auth.currentUser!.delete().then(
+            (value) => db
+                .collection('user_infos')
+                .where("userID", isEqualTo: userID)
+                .get()
+                .then(
+                  (value) => value.docs[0].reference.delete(),
+                ),
+          );
+    } catch (e) {
+      // print(e);
     }
   }
 }
