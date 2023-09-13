@@ -37,7 +37,7 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
           elevation: 0,
           title: Text("Verify", style: TextStyle(fontSize: 18.sp + 1)),
           toolbarHeight: 48.w,
-          automaticallyImplyLeading:  true,
+          automaticallyImplyLeading: true,
           // leading: IconButton(
           //   icon: const BackButtonIcon(),
           //   iconSize: 24.sp,
@@ -177,8 +177,9 @@ class _CheckAccessPageState extends State<CheckAccessPage> {
 
                                   CustomDialog.show(context,
                                       message:
-                                          "An error occured while performing your request",
+                                          "We couldn't find your details. Please try again",
                                       alertStyle: AlertStyle.error);
+
                                   break;
                               }
                             },
